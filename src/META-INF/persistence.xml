@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="OrdinancaPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>ejb.Notification</class>
+    <class>ejb.Doctorvisit</class>
+    <class>ejb.Staff</class>
+    <class>ejb.Analysis</class>
+    <class>ejb.Message</class>
+    <class>ejb.Anamnesisexamiantioncomplaint</class>
+    <class>ejb.Logs</class>
+    <class>ejb.Patient</class>
+    <class>ejb.Appointment</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Ordinanca?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="shad0wd3mon"/>
+    </properties>
+  </persistence-unit>
+</persistence>

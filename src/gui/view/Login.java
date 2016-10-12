@@ -205,9 +205,8 @@ public class Login extends javax.swing.JFrame {
         if(staff.getNumberOfLogins()==0){
             this.dispose();
             new PasswordChangeFrame(staff).setVisible(true);
-        }else
-        {
-            /*Qetu qelet mainFramei */
+        }else{
+            MainFrame mainFrame = new MainFrame(staff);
         }
         
        }catch (NoResultException nre){

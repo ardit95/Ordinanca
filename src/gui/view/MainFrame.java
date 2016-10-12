@@ -447,13 +447,13 @@ public class MainFrame extends javax.swing.JFrame {
         if(pozita.equals("Recepsion")){
             addAddPatient();
         }
-       if(pozita.equals("Doctor")){
+        else if(pozita.equals("Doctor")){
             addSeeNotifications();
         }
-       if(pozita.equals("Director")){
+        else if(pozita.equals("Director")){
             addSeeReports();
         }
-       if(pozita.equals("Administrator")){
+        else if(pozita.equals("Administrator")){
             addAddUsers();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -462,10 +462,10 @@ public class MainFrame extends javax.swing.JFrame {
        if(pozita.equals("Recepsion")){
             addAddNotification();
         }
-       if(pozita.equals("Doctor")){
+       else if(pozita.equals("Doctor")){
             addSeeAppointments();
         }
-       if(pozita.equals("Director")){
+       else if(pozita.equals("Director")){
             addLogs();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -474,10 +474,10 @@ public class MainFrame extends javax.swing.JFrame {
         if(pozita.equals("Recepsion")){
             addAddAppointment();
         }
-       if(pozita.equals("Doctor")){
+        else if(pozita.equals("Doctor")){
             addCreateDoctorVisit();
         }
-       if(pozita.equals("Director")){
+        else if(pozita.equals("Director")){
             addExportReports();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -486,7 +486,7 @@ public class MainFrame extends javax.swing.JFrame {
         if(pozita.equals("Recepsion")){
             addPrintReports();
         }
-       if(pozita.equals("Doctor")){
+        else if(pozita.equals("Doctor")){
             addMessage();
         }
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -495,7 +495,7 @@ public class MainFrame extends javax.swing.JFrame {
         if(pozita.equals("Recepsion")){
             addMessage();
         }
-        if(pozita.equals("Doctor")){
+        else if(pozita.equals("Doctor")){
             addSearch();
         }
     }//GEN-LAST:event_jButton5ActionPerformed

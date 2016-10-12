@@ -1,18 +1,21 @@
 
 package gui.view;
 
+import ExceptionPackage.AppException;
+import ejb.Staff;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 public class MainFrame extends javax.swing.JFrame {
     
     String pozita="";
     
-    public MainFrame(String pozita) {
+    public MainFrame(Staff staff) {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         initComponents();
         this.pozita=pozita;
@@ -438,9 +441,15 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        LoginTemporary loginTemporary=new LoginTemporary();
-        loginTemporary.setVisible(true);
-        dispose();
+        Login login;
+        try {
+            dispose();
+            login = new Login();
+            login.setVisible(true);
+        } catch (AppException ex) {
+            JOptionPane.showMessageDialog(this,ex.getMessage());
+        }
+       
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

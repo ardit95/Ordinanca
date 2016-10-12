@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Doctorvisit.findByPrice", query = "SELECT d FROM Doctorvisit d WHERE d.price = :price"),
     @NamedQuery(name = "Doctorvisit.findByTherapy", query = "SELECT d FROM Doctorvisit d WHERE d.therapy = :therapy"),
     @NamedQuery(name = "Doctorvisit.findByRecommendation", query = "SELECT d FROM Doctorvisit d WHERE d.recommendation = :recommendation")})
-public class Doctorvisit implements Serializable {
+public class DoctorVisit implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -65,19 +65,19 @@ public class Doctorvisit implements Serializable {
     private String recommendation;
     @JoinColumn(name = "AnamnesisExaminationComplaintID", referencedColumnName = "AnamnesisExaminationComplaintID")
     @ManyToOne(optional = false)
-    private Anamnesisexamiantioncomplaint anamnesisExaminationComplaintID;
+    private AnamnesisExaminationComplaint anamnesisExaminationComplaintID;
     @JoinColumn(name = "NotificationID", referencedColumnName = "NotificationID")
     @OneToOne(optional = false)
     private Notification notificationID;
 
-    public Doctorvisit() {
+    public DoctorVisit() {
     }
 
-    public Doctorvisit(Integer doctorVisitID) {
+    public DoctorVisit(Integer doctorVisitID) {
         this.doctorVisitID = doctorVisitID;
     }
 
-    public Doctorvisit(Integer doctorVisitID, Date date, Date time, BigDecimal price) {
+    public DoctorVisit(Integer doctorVisitID, Date date, Date time, BigDecimal price) {
         this.doctorVisitID = doctorVisitID;
         this.date = date;
         this.time = time;
@@ -132,11 +132,11 @@ public class Doctorvisit implements Serializable {
         this.recommendation = recommendation;
     }
 
-    public Anamnesisexamiantioncomplaint getAnamnesisExaminationComplaintID() {
+    public AnamnesisExaminationComplaint getAnamnesisExaminationComplaintID() {
         return anamnesisExaminationComplaintID;
     }
 
-    public void setAnamnesisExaminationComplaintID(Anamnesisexamiantioncomplaint anamnesisExaminationComplaintID) {
+    public void setAnamnesisExaminationComplaintID(AnamnesisExaminationComplaint anamnesisExaminationComplaintID) {
         this.anamnesisExaminationComplaintID = anamnesisExaminationComplaintID;
     }
 
@@ -158,10 +158,10 @@ public class Doctorvisit implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Doctorvisit)) {
+        if (!(object instanceof DoctorVisit)) {
             return false;
         }
-        Doctorvisit other = (Doctorvisit) object;
+        DoctorVisit other = (DoctorVisit) object;
         if ((this.doctorVisitID == null && other.doctorVisitID != null) || (this.doctorVisitID != null && !this.doctorVisitID.equals(other.doctorVisitID))) {
             return false;
         }

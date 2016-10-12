@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS Staff(
     Education varchar(500),
     Specialization varchar(500),
     Role varchar(50),
+    NumberOfLogins int DEFAULT 0,
 	Status varchar(50) DEFAULT 'Active'
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
@@ -66,16 +67,17 @@ CREATE TABLE IF NOT EXISTS Patient(
 	CONSTRAINT fk_Staff_Patient_Username FOREIGN KEY (Username) REFERENCES Staff(Username)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS AnamnesisExamiantionComplaint(
+CREATE TABLE IF NOT EXISTS AnamnesisExaminationComplaint(
 	AnamnesisExaminationComplaintID int PRIMARY KEY AUTO_INCREMENT,
     Date date NOT NULL,
     Time time NOT NULL,
     ComplaintTitle varchar (50) NOT NULL,
     Complaint varchar (300) NOT NULL,
     Anamnesis varchar (300) NOT NULL,
-    Examiantion varchar (300) NOT NULL,
-    CONSTRAINT uc_Complaint_Anamnesis_Examiantion UNIQUE CLUSTERED(Complaint,Anamnesis,Examiantion)  
+    Examination varchar (300) NOT NULL,
+    CONSTRAINT uc_Complaint_Anamnesis_Examination UNIQUE CLUSTERED(Complaint,Anamnesis,Examination)  
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE IF NOT EXISTS Notification(
 	NotificationID int PRIMARY KEY AUTO_INCREMENT,
@@ -102,7 +104,7 @@ CREATE TABLE IF NOT EXISTS DoctorVisit(
     AnamnesisExaminationComplaintID int NOT NULL,
     CONSTRAINT fk_Notification_DoctorVisit_NotificationID  FOREIGN KEY (NotificationID)  REFERENCES Notification(NotificationID) ,
     CONSTRAINT un_Notification_DoctorVisit_NotificationID UNIQUE (NotificationID), 
-    CONSTRAINT fk_AEC_DoctorVisit_AECID FOREIGN KEY (AnamnesisExaminationComplaintID) REFERENCES AnamnesisExamiantionComplaint(AnamnesisExaminationComplaintID)
+    CONSTRAINT fk_AEC_DoctorVisit_AECID FOREIGN KEY (AnamnesisExaminationComplaintID) REFERENCES AnamnesisExaminationComplaint(AnamnesisExaminationComplaintID)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS Analysis(
@@ -115,3 +117,22 @@ CREATE TABLE IF NOT EXISTS Analysis(
     CONSTRAINT fk_Notification_Analysis_NotificationID FOREIGN KEY (NotificationID) REFERENCES Notification(NotificationID)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+	/*Hashing SHA2_512 
+		SELECT SHA2('123459421142',512)
+    */
+    
+    /*Date and Time 
+		SELECT CURRENT_TIMESTAMP
+    */
+    
+    /*Selektimi i userave ne mysql
+		SELECT USER FROM mysql.user;
+	*/
+    
+    /*Sekeltimi i userit aktual
+		SELECT CURRENT_USER
+    */
+    
+    /*krijo user ne mysql
+		CREATE USER Checker@localhost IDENTIFIED BY '12345';
+	*/

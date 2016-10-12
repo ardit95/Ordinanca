@@ -69,7 +69,7 @@ public class Notification implements Serializable {
     @ManyToOne(optional = false)
     private Staff username;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "notificationID")
-    private Doctorvisit doctorvisit;
+    private DoctorVisit doctorvisit;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "notificationID")
     private Analysis analysis;
 
@@ -151,11 +151,11 @@ public class Notification implements Serializable {
         this.username = username;
     }
 
-    public Doctorvisit getDoctorvisit() {
+    public DoctorVisit getDoctorvisit() {
         return doctorvisit;
     }
 
-    public void setDoctorvisit(Doctorvisit doctorvisit) {
+    public void setDoctorvisit(DoctorVisit doctorvisit) {
         this.doctorvisit = doctorvisit;
     }
 

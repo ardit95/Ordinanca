@@ -7,7 +7,6 @@ package ejb;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,8 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,8 +31,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Anamnesisexaminationcomplaint.findAll", query = "SELECT a FROM Anamnesisexaminationcomplaint a"),
     @NamedQuery(name = "Anamnesisexaminationcomplaint.findByAnamnesisExaminationComplaintID", query = "SELECT a FROM Anamnesisexaminationcomplaint a WHERE a.anamnesisExaminationComplaintID = :anamnesisExaminationComplaintID"),
-    @NamedQuery(name = "Anamnesisexaminationcomplaint.findByDate", query = "SELECT a FROM Anamnesisexaminationcomplaint a WHERE a.date = :date"),
-    @NamedQuery(name = "Anamnesisexaminationcomplaint.findByTime", query = "SELECT a FROM Anamnesisexaminationcomplaint a WHERE a.time = :time"),
     @NamedQuery(name = "Anamnesisexaminationcomplaint.findByComplaintTitle", query = "SELECT a FROM Anamnesisexaminationcomplaint a WHERE a.complaintTitle = :complaintTitle"),
     @NamedQuery(name = "Anamnesisexaminationcomplaint.findByComplaint", query = "SELECT a FROM Anamnesisexaminationcomplaint a WHERE a.complaint = :complaint"),
     @NamedQuery(name = "Anamnesisexaminationcomplaint.findByAnamnesis", query = "SELECT a FROM Anamnesisexaminationcomplaint a WHERE a.anamnesis = :anamnesis"),
@@ -48,14 +43,6 @@ public class AnamnesisExaminationComplaint implements Serializable {
     @Basic(optional = false)
     @Column(name = "AnamnesisExaminationComplaintID")
     private Integer anamnesisExaminationComplaintID;
-    @Basic(optional = false)
-    @Column(name = "Date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
-    @Basic(optional = false)
-    @Column(name = "Time")
-    @Temporal(TemporalType.TIME)
-    private Date time;
     @Basic(optional = false)
     @Column(name = "ComplaintTitle")
     private String complaintTitle;
@@ -78,10 +65,8 @@ public class AnamnesisExaminationComplaint implements Serializable {
         this.anamnesisExaminationComplaintID = anamnesisExaminationComplaintID;
     }
 
-    public AnamnesisExaminationComplaint(Integer anamnesisExaminationComplaintID, Date date, Date time, String complaintTitle, String complaint, String anamnesis, String examination) {
+    public AnamnesisExaminationComplaint(Integer anamnesisExaminationComplaintID, String complaintTitle, String complaint, String anamnesis, String examination) {
         this.anamnesisExaminationComplaintID = anamnesisExaminationComplaintID;
-        this.date = date;
-        this.time = time;
         this.complaintTitle = complaintTitle;
         this.complaint = complaint;
         this.anamnesis = anamnesis;
@@ -94,22 +79,6 @@ public class AnamnesisExaminationComplaint implements Serializable {
 
     public void setAnamnesisExaminationComplaintID(Integer anamnesisExaminationComplaintID) {
         this.anamnesisExaminationComplaintID = anamnesisExaminationComplaintID;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
     }
 
     public String getComplaintTitle() {
@@ -162,14 +131,6 @@ public class AnamnesisExaminationComplaint implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AnamnesisExaminationComplaint)) {
-            return false;
-        }
-        AnamnesisExaminationComplaint other = (AnamnesisExaminationComplaint) object;
-        if ((this.anamnesisExaminationComplaintID == null && other.anamnesisExaminationComplaintID != null) || (this.anamnesisExaminationComplaintID != null && !this.anamnesisExaminationComplaintID.equals(other.anamnesisExaminationComplaintID))) {
-            return false;
-        }
         return true;
     }
 

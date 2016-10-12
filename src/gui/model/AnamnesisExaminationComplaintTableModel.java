@@ -53,14 +53,10 @@ public class AnamnesisExaminationComplaintTableModel extends AbstractTableModel{
          DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
          DateFormat timeFormat=new SimpleDateFormat("HH:mm");
         switch(columnNames[columnIndex]){
-            /*AnamnesisExaminationComplaintID Date Time ComplaintTitle Complaint Anamnesis Examiantion */
+            /*AnamnesisExaminationComplaintID  ComplaintTitle Complaint Anamnesis Examiantion */
             
             case "AnamnesisExaminationComplaintID":
                 return aec.getAnamnesisExaminationComplaintID();
-            case "Date":
-                return dateFormat.format(aec.getDate());
-            case "Time":
-                return timeFormat.format(aec.getTime());
             case "ComplaintTitle":
                 return aec.getComplaintTitle();
             case "Complaint":

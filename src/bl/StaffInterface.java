@@ -3,7 +3,6 @@ package bl;
 import ExceptionPackage.AppException;
 import java.util.List;
 import ejb.Staff;
-import java.util.Date;
 
 public interface StaffInterface {
     Staff create (Staff staff)throws AppException;
@@ -13,6 +12,5 @@ public interface StaffInterface {
     String findSalt(String username);
     Staff findByUsernamePassword(String us,byte[] pass);
     byte[] kripto(String pass);
-
     void changeLoginPassword(Staff staff, String text);
 }

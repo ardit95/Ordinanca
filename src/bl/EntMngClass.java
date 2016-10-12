@@ -22,7 +22,6 @@ public class EntMngClass {
             throw new AppException("Passwordi mungon.");
         try{
         EntityManagerFactory emf = null;
-        Class.forName("com.mysql.jdbc.Driver");
         Map properties = new HashMap();
         properties.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
         properties.put("javax.persistence.jdbc.url", "jdbc:mysql://"+serverIp+":3306/Ordinanca?zeroDateTimeBehavior=convertToNull");

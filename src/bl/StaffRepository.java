@@ -1,9 +1,7 @@
 package bl;
 
 import ExceptionPackage.AppException;
-import ejb.Logs;
 import ejb.Staff;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

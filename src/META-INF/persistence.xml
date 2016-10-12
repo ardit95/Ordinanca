@@ -5,11 +5,11 @@
     <class>ejb.Analysis</class>
     <class>ejb.AnamnesisExaminationComplaint</class>
     <class>ejb.Appointment</class>
-    <class>ejb.DoctorVisit</class>
     <class>ejb.Logs</class>
     <class>ejb.Message</class>
     <class>ejb.Notification</class>
     <class>ejb.Patient</class>
     <class>ejb.Staff</class>
+    <class>ejb.DoctorVisit</class>
   </persistence-unit>
 </persistence>

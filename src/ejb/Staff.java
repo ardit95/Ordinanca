@@ -78,7 +78,7 @@ public class Staff implements Serializable {
     @Column(name = "NumberOfLogins")
     private Integer numberOfLogins;
     @Column(name = "Status")
-    private String status;
+    private String status="Active";
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorID")
     private Collection<Notification> notificationCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")

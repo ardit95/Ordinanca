@@ -80,8 +80,8 @@ public class StaffRepository extends EntMngClass implements StaffInterface{
 
     @Override
     public byte[] kripto(String pass) {
-        Query query=em.createNativeQuery("SELECT SHA2("+pass+",512)");
-        return (byte[])query.getSingleResult();
+        Query query=em.createNativeQuery("SELECT SHA2('"+pass+"',512)");
+        return (byte[])query.getSingleResult().toString().getBytes();
     }
 
     @Override

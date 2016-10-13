@@ -31,6 +31,8 @@ public class EntMngClass {
         
         em= (EntityManager) emf.createEntityManager();
         }catch(Throwable thro){
+            thro.printStackTrace();
+            
             if(thro.getMessage().contains("18456"))
                 throw new AppException("Keni gabuar Userin apo Passwordin.");
             else if

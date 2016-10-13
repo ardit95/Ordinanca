@@ -15,7 +15,7 @@ public class PasswordChangeFrame extends javax.swing.JFrame {
         initComponents();
         this.staff=staff;
         /*Duhet me u zavendsu ma vone gjithqysh jo me root me u bo qekjo query*/
-        staffIr=new StaffRepository(new EntMngClass("root","shad0wd3mon","localhost").getEntityManager());
+        staffIr=new StaffRepository(new EntMngClass("root","12345","localhost").getEntityManager());
     }
 
     @SuppressWarnings("unchecked")

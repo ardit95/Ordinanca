@@ -2,10 +2,12 @@
 package gui.view;
 
 import ExceptionPackage.AppException;
+import bl.EntMngClass;
 import ejb.Staff;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,11 +16,14 @@ import javax.swing.JOptionPane;
 public class MainFrame extends javax.swing.JFrame {
     
     String pozita="";
-    
-    public MainFrame(Staff staff) {
+    static EntityManager entityManager;
+    static Staff staff;
+    public MainFrame(Staff staff,EntityManager entityManager) {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         initComponents();
-        this.pozita=pozita;
+        pozita=staff.getRole();
+        this.staff=staff;
+        this.entityManager=entityManager;
         setPrioritys();
     }
     
@@ -69,7 +74,7 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-     AddUsers addUsers= new AddUsers();
+     AddUsers addUsers= new AddUsers(entityManager);
      desktopPane.add(addUsers);
      addUsers.show();
     }

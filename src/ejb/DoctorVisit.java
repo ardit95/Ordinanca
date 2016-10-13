@@ -29,16 +29,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Besniku
  */
 @Entity
-@Table(name = "doctorvisit")
+@Table(name = "DoctorVisit")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Doctorvisit.findAll", query = "SELECT d FROM Doctorvisit d"),
-    @NamedQuery(name = "Doctorvisit.findByDoctorVisitID", query = "SELECT d FROM Doctorvisit d WHERE d.doctorVisitID = :doctorVisitID"),
-    @NamedQuery(name = "Doctorvisit.findByDate", query = "SELECT d FROM Doctorvisit d WHERE d.date = :date"),
-    @NamedQuery(name = "Doctorvisit.findByTime", query = "SELECT d FROM Doctorvisit d WHERE d.time = :time"),
-    @NamedQuery(name = "Doctorvisit.findByPrice", query = "SELECT d FROM Doctorvisit d WHERE d.price = :price"),
-    @NamedQuery(name = "Doctorvisit.findByTherapy", query = "SELECT d FROM Doctorvisit d WHERE d.therapy = :therapy"),
-    @NamedQuery(name = "Doctorvisit.findByRecommendation", query = "SELECT d FROM Doctorvisit d WHERE d.recommendation = :recommendation")})
+    @NamedQuery(name = "DoctorVisit.findAll", query = "SELECT d FROM DoctorVisit d"),
+    @NamedQuery(name = "DoctorVisit.findByDoctorVisitID", query = "SELECT d FROM DoctorVisit d WHERE d.DoctorVisitID = :DoctorVisitID"),
+    @NamedQuery(name = "DoctorVisit.findByDate", query = "SELECT d FROM DoctorVisit d WHERE d.date = :date"),
+    @NamedQuery(name = "DoctorVisit.findByTime", query = "SELECT d FROM DoctorVisit d WHERE d.time = :time"),
+    @NamedQuery(name = "DoctorVisit.findByPrice", query = "SELECT d FROM DoctorVisit d WHERE d.price = :price"),
+    @NamedQuery(name = "DoctorVisit.findByTherapy", query = "SELECT d FROM DoctorVisit d WHERE d.therapy = :therapy"),
+    @NamedQuery(name = "DoctorVisit.findByRecommendation", query = "SELECT d FROM DoctorVisit d WHERE d.recommendation = :recommendation")})
 public class DoctorVisit implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,7 +46,7 @@ public class DoctorVisit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "DoctorVisitID")
-    private Integer doctorVisitID;
+    private Integer DoctorVisitID;
     @Basic(optional = false)
     @Column(name = "Date")
     @Temporal(TemporalType.DATE)
@@ -65,7 +65,7 @@ public class DoctorVisit implements Serializable {
     private String recommendation;
     @JoinColumn(name = "AnamnesisExaminationComplaintID", referencedColumnName = "AnamnesisExaminationComplaintID")
     @ManyToOne(optional = false)
-    private AnamnesisExaminationComplaint anamnesisExaminationComplaintID;
+    private AnamnesisExaminationComplaint AnamnesisExaminationComplaintID;
     @JoinColumn(name = "NotificationID", referencedColumnName = "NotificationID")
     @OneToOne(optional = false)
     private Notification notificationID;
@@ -73,23 +73,23 @@ public class DoctorVisit implements Serializable {
     public DoctorVisit() {
     }
 
-    public DoctorVisit(Integer doctorVisitID) {
-        this.doctorVisitID = doctorVisitID;
+    public DoctorVisit(Integer DoctorVisitID) {
+        this.DoctorVisitID = DoctorVisitID;
     }
 
-    public DoctorVisit(Integer doctorVisitID, Date date, Date time, BigDecimal price) {
-        this.doctorVisitID = doctorVisitID;
+    public DoctorVisit(Integer DoctorVisitID, Date date, Date time, BigDecimal price) {
+        this.DoctorVisitID = DoctorVisitID;
         this.date = date;
         this.time = time;
         this.price = price;
     }
 
     public Integer getDoctorVisitID() {
-        return doctorVisitID;
+        return DoctorVisitID;
     }
 
-    public void setDoctorVisitID(Integer doctorVisitID) {
-        this.doctorVisitID = doctorVisitID;
+    public void setDoctorVisitID(Integer DoctorVisitID) {
+        this.DoctorVisitID = DoctorVisitID;
     }
 
     public Date getDate() {
@@ -133,11 +133,11 @@ public class DoctorVisit implements Serializable {
     }
 
     public AnamnesisExaminationComplaint getAnamnesisExaminationComplaintID() {
-        return anamnesisExaminationComplaintID;
+        return AnamnesisExaminationComplaintID;
     }
 
-    public void setAnamnesisExaminationComplaintID(AnamnesisExaminationComplaint anamnesisExaminationComplaintID) {
-        this.anamnesisExaminationComplaintID = anamnesisExaminationComplaintID;
+    public void setAnamnesisExaminationComplaintID(AnamnesisExaminationComplaint AnamnesisExaminationComplaintID) {
+        this.AnamnesisExaminationComplaintID = AnamnesisExaminationComplaintID;
     }
 
     public Notification getNotificationID() {
@@ -151,7 +151,7 @@ public class DoctorVisit implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (doctorVisitID != null ? doctorVisitID.hashCode() : 0);
+        hash += (DoctorVisitID != null ? DoctorVisitID.hashCode() : 0);
         return hash;
     }
 
@@ -162,7 +162,7 @@ public class DoctorVisit implements Serializable {
             return false;
         }
         DoctorVisit other = (DoctorVisit) object;
-        if ((this.doctorVisitID == null && other.doctorVisitID != null) || (this.doctorVisitID != null && !this.doctorVisitID.equals(other.doctorVisitID))) {
+        if ((this.DoctorVisitID == null && other.DoctorVisitID != null) || (this.DoctorVisitID != null && !this.DoctorVisitID.equals(other.DoctorVisitID))) {
             return false;
         }
         return true;
@@ -170,7 +170,7 @@ public class DoctorVisit implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.Doctorvisit[ doctorVisitID=" + doctorVisitID + " ]";
+        return "ejb.DoctorVisit[ DoctorVisitID=" + DoctorVisitID + " ]";
     }
     
 }

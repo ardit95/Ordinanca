@@ -12,13 +12,13 @@ public class DoctorVisitRepository extends EntMngClass implements DoctorVisitInt
     }
     
     @Override
-    public DoctorVisit create(DoctorVisit doctorVisit)throws AppException {
+    public DoctorVisit create(DoctorVisit DoctorVisit)throws AppException {
         try{
         em.getTransaction().begin();
-        em.persist(doctorVisit);
+        em.persist(DoctorVisit);
         em.flush();
         em.getTransaction().commit();
-        return doctorVisit;
+        return DoctorVisit;
         }catch (Throwable thro){
         if (thro.getMessage().contains("2627")){
             if(thro.getMessage().toLowerCase().contains("unique"))
@@ -33,10 +33,10 @@ public class DoctorVisitRepository extends EntMngClass implements DoctorVisitInt
     }
 
     @Override
-    public void edit(DoctorVisit doctorVisit)throws AppException {
+    public void edit(DoctorVisit DoctorVisit)throws AppException {
         try{
         em.getTransaction().begin();
-        em.merge(doctorVisit);
+        em.merge(DoctorVisit);
         em.getTransaction().commit();
         }catch (Throwable thro){
         if (thro.getMessage().contains("2627")){
@@ -52,9 +52,9 @@ public class DoctorVisitRepository extends EntMngClass implements DoctorVisitInt
     }
 
     @Override
-    public void remove(DoctorVisit doctorVisit) {
+    public void remove(DoctorVisit DoctorVisit) {
         em.getTransaction().begin();
-        em.remove(doctorVisit);
+        em.remove(DoctorVisit);
         em.getTransaction().commit();
     }
 

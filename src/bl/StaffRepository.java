@@ -2,9 +2,16 @@ package bl;
 
 import ExceptionPackage.AppException;
 import ejb.Staff;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 
 public class StaffRepository extends EntMngClass implements StaffInterface{
     
@@ -72,7 +79,7 @@ public class StaffRepository extends EntMngClass implements StaffInterface{
 
     @Override
     public Staff findByUsernamePassword(String us, byte[] pass) {
-        Query query=em.createQuery ("SELECT Object(staff) FROM Staff staff WHERE staff.username= :usern AND staff.password= :pass   ");
+        Query query=em.createQuery ("SELECT object(staff) FROM Staff staff WHERE staff.username= :usern AND staff.password= :pass   ");
         query.setParameter ("usern",us);
         query.setParameter ("pass",pass);
         return (Staff)query.getSingleResult();
@@ -80,14 +87,28 @@ public class StaffRepository extends EntMngClass implements StaffInterface{
 
     @Override
     public byte[] kripto(String pass) {
-        Query query=em.createNativeQuery("SELECT SHA2("+pass+",512)");
-        return (byte[])query.getSingleResult();
+        Query query=em.createNativeQuery("SELECT SHA2('"+pass+"',512) ");
+        return (byte[])query.getSingleResult().toString().getBytes();
     }
 
     @Override
     public void changeLoginPassword(Staff staff, String text){
-        Query query=em.createNativeQuery("SET PASSWORD FOR "+staff.getUsername()+"@localhost =PASSWORD('12345');\n"
-                                        +"SELECT 1;\n");
-        query.getSingleResult();
+        try {
+            String serverIp="localhost";
+            Connection conn = DriverManager.getConnection("jdbc:mysql://"+serverIp+":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
+            Statement statement=conn.createStatement();
+            statement.executeQuery("USE Ordinanca;");
+            statement.executeQuery("SET PASSWORD FOR "+staff.getUsername()+"@localhost =PASSWORD('"+text+"'); ");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    @Override
+    public int getNumberOfLogins(Staff staff) {
+        Query query=em.createQuery ("SELECT staff.numberOfLogins FROM Staff staff WHERE staff.username= :usern");
+        query.setParameter ("usern",staff.getUsername());
+        return Integer.parseInt(query.getSingleResult().toString());
     }
 }

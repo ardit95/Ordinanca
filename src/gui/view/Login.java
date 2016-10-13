@@ -11,18 +11,11 @@ import bl.LogsInterface;
 import bl.LogsRepository;
 import bl.StaffInterface;
 import bl.StaffRepository;
-import ejb.Logs;
 import ejb.Staff;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -60,7 +53,7 @@ public class Login extends javax.swing.JFrame {
         serverIpTxtf = new javax.swing.JTextField();
         backgroundPanel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -73,7 +66,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, 110, 30));
 
         usernameTxtf.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        usernameTxtf.setBorder(null);
         usernameTxtf.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 usernameTxtfKeyPressed(evt);
@@ -82,7 +74,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(usernameTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 235, 225, 30));
 
         passwordTxtf.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        passwordTxtf.setBorder(null);
         passwordTxtf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordTxtfActionPerformed(evt);
@@ -154,14 +145,16 @@ public class Login extends javax.swing.JFrame {
         loginMethod();
     }//GEN-LAST:event_loginBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
+            Login login=null;
         try{
-            new Login().setVisible(true);
+            login=new Login();
+            login.setVisible(true);
         } catch (AppException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.getMessage());
+            if(ex.getMessage().equals("Nuk mund të krijohet lidhja me server.Kontrollo kabllat ose kontakto administratën"))
+                System.exit(0);
         }
     }
 
@@ -179,49 +172,53 @@ public class Login extends javax.swing.JFrame {
        String password=passwordTxtf.getText();       
        String serverip=serverIpTxtf.getText();
        Staff staff;
-       Logs logs=new Logs();
        try{
        
        EntMngClass emc=new EntMngClass(username.trim(),password.trim(),serverip.trim());
        staffIr=new StaffRepository(emc.getEntityManager());
        String salt = staffIr.findSalt(username);
        staff=staffIr.findByUsernamePassword(username,staffIr.kripto(salt+password));
+       int numberOfLogins=staffIr.getNumberOfLogins(staff);
+        /*
        logsIr=new LogsRepository(emc.getEntityManager());
-              
         Date date = logsIr.findDate();
         DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat sdf2 = new SimpleDateFormat("HH:mm");
         String today=sdf.format(date);
         String koha=sdf2.format(date);
+        Logs logs=new Logs();
         String message=staff.getName()+" "+staff.getSurname()+" me username-in: "+staff.getUsername()+" Është kyqur në program në datën : "+today +" në ora "+koha;
-        
         logs.setDate(date);
         logs.setTime(date);
         logs.setMessage(message);
         logs.setType("Login");
         logs.setUsername(staff);
-        
         logsIr.create(logs);
-        if(staff.getNumberOfLogins()==0){
+        */
+        if(numberOfLogins==0){
             this.dispose();
             new PasswordChangeFrame(staff).setVisible(true);
         }else{
             MainFrame mainFrame = new MainFrame(staff);
+            mainFrame.setVisible(true);
         }
         
        }catch (NoResultException nre){
+           nre.printStackTrace();
            JOptionPane.showMessageDialog(null,"Gabimm ");
            usernameTxtf.setText("");
            passwordTxtf.setText("");
        }
        catch(AppException ae){
+           ae.printStackTrace();
            JOptionPane.showMessageDialog(null, ae.getMessage());
        }
        
     }
     
-    private void close(){
+    private  int close(){
         WindowEvent winClosing=new WindowEvent (this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosing);
+        return 0;
     }
 }

@@ -49,33 +49,33 @@ public class DoctorVisitTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-         DoctorVisit doctorVisit= (DoctorVisit)data.get(rowIndex);
+         DoctorVisit DoctorVisit= (DoctorVisit)data.get(rowIndex);
          DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
          DateFormat timeFormat=new SimpleDateFormat("HH:mm");
         switch(columnNames[columnIndex]){
             
             case "DoctorVisitID":
-                return doctorVisit.getDoctorVisitID();
+                return DoctorVisit.getDoctorVisitID();
             case "Date":
-                return dateFormat.format(doctorVisit.getDate()); 
+                return dateFormat.format(DoctorVisit.getDate()); 
             case "Time":
-                return dateFormat.format(doctorVisit.getTime());
+                return dateFormat.format(DoctorVisit.getTime());
             case "Price":
-                return doctorVisit.getPrice();
+                return DoctorVisit.getPrice();
             case "Therapy":
-                return doctorVisit.getTherapy();   
+                return DoctorVisit.getTherapy();   
             case "Recommendation":
-                return doctorVisit.getRecommendation();    
+                return DoctorVisit.getRecommendation();    
             case "NotificationID":
-                return doctorVisit.getNotificationID().getNotificationID();   
+                return DoctorVisit.getNotificationID().getNotificationID();   
             case "AnamnesisExamiantionComplaintID":
-                return doctorVisit.getAnamnesisExaminationComplaintID().getAnamnesisExaminationComplaintID(); 
+                return DoctorVisit.getAnamnesisExaminationComplaintID().getAnamnesisExaminationComplaintID(); 
             case "Anamnesis":
-                return doctorVisit.getAnamnesisExaminationComplaintID().getAnamnesis();
+                return DoctorVisit.getAnamnesisExaminationComplaintID().getAnamnesis();
             case "Examiantion":
-                return doctorVisit.getAnamnesisExaminationComplaintID().getExamination();
+                return DoctorVisit.getAnamnesisExaminationComplaintID().getExamination();
             case "Complaint":
-                return doctorVisit.getAnamnesisExaminationComplaintID().getComplaint();
+                return DoctorVisit.getAnamnesisExaminationComplaintID().getComplaint();
             default:
                  return null;
         }

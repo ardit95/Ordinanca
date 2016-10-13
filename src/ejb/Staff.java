@@ -6,22 +6,18 @@
 package ejb;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -76,40 +72,21 @@ public class Staff implements Serializable {
     @Column(name = "Role")
     private String role;
     @Column(name = "NumberOfLogins")
-    private Integer numberOfLogins;
+    private Integer numberOfLogins=0;
     @Column(name = "Status")
-    private String status;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorID")
-    private Collection<Notification> notificationCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
-    private Collection<Notification> notificationCollection1;
-    @OneToMany(mappedBy = "username")
-    private Collection<Patient> patientCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorID")
-    private Collection<Appointment> appointmentCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
-    private Collection<Appointment> appointmentCollection1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorID")
-    private Collection<Message> messageCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
-    private Collection<Message> messageCollection1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
-    private Collection<Logs> logsCollection;
+    private String status="Active";
 
     public Staff() {
     }
 
-    public Staff(String username) {
-        this.username = username;
-    }
-
-    public Staff(String username, byte[] password, String salt, String name, String surname, String gender) {
+    public Staff(String username, byte[] password, String salt, String name, String surname, String gender,int num) {
         this.username = username;
         this.password = password;
         this.salt = salt;
         this.name = name;
         this.surname = surname;
         this.gender = gender;
+        this.numberOfLogins=num;
     }
 
     public String getUsername() {
@@ -206,78 +183,6 @@ public class Staff implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    @XmlTransient
-    public Collection<Notification> getNotificationCollection() {
-        return notificationCollection;
-    }
-
-    public void setNotificationCollection(Collection<Notification> notificationCollection) {
-        this.notificationCollection = notificationCollection;
-    }
-
-    @XmlTransient
-    public Collection<Notification> getNotificationCollection1() {
-        return notificationCollection1;
-    }
-
-    public void setNotificationCollection1(Collection<Notification> notificationCollection1) {
-        this.notificationCollection1 = notificationCollection1;
-    }
-
-    @XmlTransient
-    public Collection<Patient> getPatientCollection() {
-        return patientCollection;
-    }
-
-    public void setPatientCollection(Collection<Patient> patientCollection) {
-        this.patientCollection = patientCollection;
-    }
-
-    @XmlTransient
-    public Collection<Appointment> getAppointmentCollection() {
-        return appointmentCollection;
-    }
-
-    public void setAppointmentCollection(Collection<Appointment> appointmentCollection) {
-        this.appointmentCollection = appointmentCollection;
-    }
-
-    @XmlTransient
-    public Collection<Appointment> getAppointmentCollection1() {
-        return appointmentCollection1;
-    }
-
-    public void setAppointmentCollection1(Collection<Appointment> appointmentCollection1) {
-        this.appointmentCollection1 = appointmentCollection1;
-    }
-
-    @XmlTransient
-    public Collection<Message> getMessageCollection() {
-        return messageCollection;
-    }
-
-    public void setMessageCollection(Collection<Message> messageCollection) {
-        this.messageCollection = messageCollection;
-    }
-
-    @XmlTransient
-    public Collection<Message> getMessageCollection1() {
-        return messageCollection1;
-    }
-
-    public void setMessageCollection1(Collection<Message> messageCollection1) {
-        this.messageCollection1 = messageCollection1;
-    }
-
-    @XmlTransient
-    public Collection<Logs> getLogsCollection() {
-        return logsCollection;
-    }
-
-    public void setLogsCollection(Collection<Logs> logsCollection) {
-        this.logsCollection = logsCollection;
     }
 
     @Override

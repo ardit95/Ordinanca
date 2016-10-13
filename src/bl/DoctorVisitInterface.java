@@ -6,8 +6,8 @@ import ejb.DoctorVisit;
 import java.util.List;
 
 public interface DoctorVisitInterface {
-    DoctorVisit create(DoctorVisit doctorVisit)throws AppException;
-    void edit(DoctorVisit doctorVisit)throws AppException;
-    void remove(DoctorVisit doctorVisit);
+    DoctorVisit create(DoctorVisit DoctorVisit)throws AppException;
+    void edit(DoctorVisit DoctorVisit)throws AppException;
+    void remove(DoctorVisit DoctorVisit);
     List<DoctorVisit> findAll();
 }

@@ -26,15 +26,15 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Besniku
  */
 @Entity
-@Table(name = "anamnesisexaminationcomplaint")
+@Table(name = "AnamnesisExaminationComplaint")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Anamnesisexaminationcomplaint.findAll", query = "SELECT a FROM Anamnesisexaminationcomplaint a"),
-    @NamedQuery(name = "Anamnesisexaminationcomplaint.findByAnamnesisExaminationComplaintID", query = "SELECT a FROM Anamnesisexaminationcomplaint a WHERE a.anamnesisExaminationComplaintID = :anamnesisExaminationComplaintID"),
-    @NamedQuery(name = "Anamnesisexaminationcomplaint.findByComplaintTitle", query = "SELECT a FROM Anamnesisexaminationcomplaint a WHERE a.complaintTitle = :complaintTitle"),
-    @NamedQuery(name = "Anamnesisexaminationcomplaint.findByComplaint", query = "SELECT a FROM Anamnesisexaminationcomplaint a WHERE a.complaint = :complaint"),
-    @NamedQuery(name = "Anamnesisexaminationcomplaint.findByAnamnesis", query = "SELECT a FROM Anamnesisexaminationcomplaint a WHERE a.anamnesis = :anamnesis"),
-    @NamedQuery(name = "Anamnesisexaminationcomplaint.findByExamination", query = "SELECT a FROM Anamnesisexaminationcomplaint a WHERE a.examination = :examination")})
+    @NamedQuery(name = "AnamnesisExaminationComplaint.findAll", query = "SELECT a FROM AnamnesisExaminationComplaint a"),
+    @NamedQuery(name = "AnamnesisExaminationComplaint.findByAnamnesisExaminationComplaintID", query = "SELECT a FROM AnamnesisExaminationComplaint a WHERE a.AnamnesisExaminationComplaintID = :AnamnesisExaminationComplaintID"),
+    @NamedQuery(name = "AnamnesisExaminationComplaint.findByComplaintTitle", query = "SELECT a FROM AnamnesisExaminationComplaint a WHERE a.complaintTitle = :complaintTitle"),
+    @NamedQuery(name = "AnamnesisExaminationComplaint.findByComplaint", query = "SELECT a FROM AnamnesisExaminationComplaint a WHERE a.complaint = :complaint"),
+    @NamedQuery(name = "AnamnesisExaminationComplaint.findByAnamnesis", query = "SELECT a FROM AnamnesisExaminationComplaint a WHERE a.anamnesis = :anamnesis"),
+    @NamedQuery(name = "AnamnesisExaminationComplaint.findByExamination", query = "SELECT a FROM AnamnesisExaminationComplaint a WHERE a.examination = :examination")})
 public class AnamnesisExaminationComplaint implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +42,7 @@ public class AnamnesisExaminationComplaint implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "AnamnesisExaminationComplaintID")
-    private Integer anamnesisExaminationComplaintID;
+    private Integer AnamnesisExaminationComplaintID;
     @Basic(optional = false)
     @Column(name = "ComplaintTitle")
     private String complaintTitle;
@@ -55,18 +55,18 @@ public class AnamnesisExaminationComplaint implements Serializable {
     @Basic(optional = false)
     @Column(name = "Examination")
     private String examination;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anamnesisExaminationComplaintID")
-    private Collection<DoctorVisit> doctorvisitCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "AnamnesisExaminationComplaintID")
+    private Collection<DoctorVisit> DoctorVisitCollection;
 
     public AnamnesisExaminationComplaint() {
     }
 
-    public AnamnesisExaminationComplaint(Integer anamnesisExaminationComplaintID) {
-        this.anamnesisExaminationComplaintID = anamnesisExaminationComplaintID;
+    public AnamnesisExaminationComplaint(Integer AnamnesisExaminationComplaintID) {
+        this.AnamnesisExaminationComplaintID = AnamnesisExaminationComplaintID;
     }
 
-    public AnamnesisExaminationComplaint(Integer anamnesisExaminationComplaintID, String complaintTitle, String complaint, String anamnesis, String examination) {
-        this.anamnesisExaminationComplaintID = anamnesisExaminationComplaintID;
+    public AnamnesisExaminationComplaint(Integer AnamnesisExaminationComplaintID, String complaintTitle, String complaint, String anamnesis, String examination) {
+        this.AnamnesisExaminationComplaintID = AnamnesisExaminationComplaintID;
         this.complaintTitle = complaintTitle;
         this.complaint = complaint;
         this.anamnesis = anamnesis;
@@ -74,11 +74,11 @@ public class AnamnesisExaminationComplaint implements Serializable {
     }
 
     public Integer getAnamnesisExaminationComplaintID() {
-        return anamnesisExaminationComplaintID;
+        return AnamnesisExaminationComplaintID;
     }
 
-    public void setAnamnesisExaminationComplaintID(Integer anamnesisExaminationComplaintID) {
-        this.anamnesisExaminationComplaintID = anamnesisExaminationComplaintID;
+    public void setAnamnesisExaminationComplaintID(Integer AnamnesisExaminationComplaintID) {
+        this.AnamnesisExaminationComplaintID = AnamnesisExaminationComplaintID;
     }
 
     public String getComplaintTitle() {
@@ -114,29 +114,37 @@ public class AnamnesisExaminationComplaint implements Serializable {
     }
 
     @XmlTransient
-    public Collection<DoctorVisit> getDoctorvisitCollection() {
-        return doctorvisitCollection;
+    public Collection<DoctorVisit> getDoctorVisitCollection() {
+        return DoctorVisitCollection;
     }
 
-    public void setDoctorvisitCollection(Collection<DoctorVisit> doctorvisitCollection) {
-        this.doctorvisitCollection = doctorvisitCollection;
+    public void setDoctorVisitCollection(Collection<DoctorVisit> DoctorVisitCollection) {
+        this.DoctorVisitCollection = DoctorVisitCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (anamnesisExaminationComplaintID != null ? anamnesisExaminationComplaintID.hashCode() : 0);
+        hash += (AnamnesisExaminationComplaintID != null ? AnamnesisExaminationComplaintID.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof AnamnesisExaminationComplaint)) {
+            return false;
+        }
+        AnamnesisExaminationComplaint other = (AnamnesisExaminationComplaint) object;
+        if ((this.AnamnesisExaminationComplaintID == null && other.AnamnesisExaminationComplaintID != null) || (this.AnamnesisExaminationComplaintID != null && !this.AnamnesisExaminationComplaintID.equals(other.AnamnesisExaminationComplaintID))) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "ejb.Anamnesisexaminationcomplaint[ anamnesisExaminationComplaintID=" + anamnesisExaminationComplaintID + " ]";
+        return "ejb.AnamnesisExaminationComplaint[ AnamnesisExaminationComplaintID=" + AnamnesisExaminationComplaintID + " ]";
     }
     
 }

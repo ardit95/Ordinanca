@@ -13,4 +13,5 @@ public interface StaffInterface {
     Staff findByUsernamePassword(String us,byte[] pass);
     byte[] kripto(String pass);
     void changeLoginPassword(Staff staff, String text);
+    int getNumberOfLogins(Staff staff);
 }

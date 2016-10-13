@@ -69,8 +69,6 @@ CREATE TABLE IF NOT EXISTS Patient(
 
 CREATE TABLE IF NOT EXISTS AnamnesisExaminationComplaint(
 	AnamnesisExaminationComplaintID int PRIMARY KEY AUTO_INCREMENT,
-    Date date NOT NULL,
-    Time time NOT NULL,
     ComplaintTitle varchar (50) NOT NULL,
     Complaint varchar (300) NOT NULL,
     Anamnesis varchar (300) NOT NULL,
@@ -117,6 +115,10 @@ CREATE TABLE IF NOT EXISTS Analysis(
     CONSTRAINT fk_Notification_Analysis_NotificationID FOREIGN KEY (NotificationID) REFERENCES Notification(NotificationID)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+	USE Ordinanca;
+	CREATE VIEW NumberOfStaff AS
+	SELECT COUNT(*) FROM Ordinanca.Staff;
+
 	/*Hashing SHA2_512 
 		SELECT SHA2('123459421142',512)
     */
@@ -136,3 +138,13 @@ CREATE TABLE IF NOT EXISTS Analysis(
     /*krijo user ne mysql
 		CREATE USER Checker@localhost IDENTIFIED BY '12345';
 	*/
+    
+    /*Jep te drejta :D
+		 GRANT SELECT ON Ordinanca.Staff TO Checker@localhost
+    */
+    
+    /*Merr te drejta :(
+		DENY SELECT ON Ordinanca.Staff FROM Checker@localhost
+    */
+    
+    

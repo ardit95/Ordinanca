@@ -6,16 +6,18 @@ START TRANSACTION;
 	CREATE USER IF NOT EXISTS Checker@localhost IDENTIFIED BY '12345';
 	USE Ordinanca;
 	GRANT SELECT ON Ordinanca.NumberOfStaff  TO Checker@localhost;
-    
+		
     CREATE USER IF NOT EXISTS Bajra@localhost IDENTIFIED BY '12345';
     GRANT SELECT,DELETE,UPDATE,INSERT ON Ordinanca.* TO Bajra@localhost;
-    INSERT INTO Staff (Username,Password,Salt,Name,Surname,Gender,DateOfBirth,Education,Specialization,Role,NumberOfLogins) 
-	VALUES ('Bajra',SHA2('salti12345',512),'salti','Bajra','Kadriu','M','1995-02-18','Minister','Vrasje Serike','Administrator','1');
-	
-    DELETE FROM STAFF WHERE Username='Bajra';
-    DROP USER Bajra@localhost;
+    INSERT INTO Staff (Username,Password,Salt,Name,Surname,Gender,DateOfBirth,Education,Specialization,Role) 
+	VALUES ('Bajra',SHA2('salti12345',512),'salti','Bajra','Kadriu','M','1995-02-18','Minister','Vrasje Serike','Administrator');
     
-    SELECT * FROM Staff
+    /*
+		DROP USER Bajra@localhost;
+        USE Ordinanca;
+		DELETE FROM Staff WHERE Username='Bajra';
+    */
+
 /*
 USE Ordinanca;
 GRANT SELECT,INSERT,UPDATE ON SCHEMA::dbo TO Administrator;

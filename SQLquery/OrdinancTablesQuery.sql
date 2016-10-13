@@ -3,7 +3,7 @@ USE Ordinanca;
 
 CREATE TABLE IF NOT EXISTS Staff(
 	Username varchar(50) PRIMARY KEY,
-    Password BINARY(64)NOT NULL,
+    Password BINARY(128)NOT NULL,
 	salt varchar(64) NOT NULL,
     Name varchar (50) NOT NULL,
     Surname varchar (50) NOT NULL,

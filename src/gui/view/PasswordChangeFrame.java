@@ -169,6 +169,7 @@ public class PasswordChangeFrame extends javax.swing.JFrame {
             this.dispose();
             new Login().setVisible(true);
         }catch(AppException ae){
+            ae.printStackTrace();
             JOptionPane.showMessageDialog(this,ae.getMessage());
         }
     }

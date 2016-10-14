@@ -33,7 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Message.findAll", query = "SELECT m FROM Message m"),
     @NamedQuery(name = "Message.findByMessageID", query = "SELECT m FROM Message m WHERE m.messageID = :messageID"),
     @NamedQuery(name = "Message.findByDate", query = "SELECT m FROM Message m WHERE m.date = :date"),
-    @NamedQuery(name = "Message.findByTime", query = "SELECT m FROM Message m WHERE m.time = :time"),
     @NamedQuery(name = "Message.findByMessage", query = "SELECT m FROM Message m WHERE m.message = :message"),
     @NamedQuery(name = "Message.findBySeen", query = "SELECT m FROM Message m WHERE m.seen = :seen")})
 public class Message implements Serializable {
@@ -48,10 +47,6 @@ public class Message implements Serializable {
     @Column(name = "Date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    @Basic(optional = false)
-    @Column(name = "Time")
-    @Temporal(TemporalType.TIME)
-    private Date time;
     @Basic(optional = false)
     @Column(name = "Message")
     private String message;
@@ -71,10 +66,9 @@ public class Message implements Serializable {
         this.messageID = messageID;
     }
 
-    public Message(Integer messageID, Date date, Date time, String message) {
+    public Message(Integer messageID, Date date, String message) {
         this.messageID = messageID;
         this.date = date;
-        this.time = time;
         this.message = message;
     }
 
@@ -92,14 +86,6 @@ public class Message implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
     }
 
     public String getMessage() {

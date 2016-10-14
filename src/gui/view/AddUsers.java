@@ -23,14 +23,14 @@ public class AddUsers extends javax.swing.JInternalFrame {
     public AddUsers(EntityManager entityManager) {
         this.entityManager=entityManager;
         initComponents();
-        
-        this.setLocation(220, 10);
-        
+        setLocation(220, 10);
         staffIr=new StaffRepository(entityManager);
         String [] columnNamesTableModel={"Username","Name", "Surname", "DateOfBirth","Role"};
         staffTableModel=new StaffTableModel(columnNamesTableModel);
         staffTabelaLoad();
     }
+    
+    
     
     
     
@@ -77,6 +77,8 @@ public class AddUsers extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Add Users");
+        setMaximumSize(new java.awt.Dimension(1100, 654));
+        setMinimumSize(new java.awt.Dimension(1100, 654));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(null);

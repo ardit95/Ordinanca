@@ -1,6 +1,6 @@
 
 package gui.view;
-
+import java.awt.Dimension;
 
 public class SeeNotifications extends javax.swing.JInternalFrame {
 
@@ -8,6 +8,7 @@ public class SeeNotifications extends javax.swing.JInternalFrame {
     public SeeNotifications() {
         initComponents();
         this.setLocation(220, 10);
+        this.setPreferredSize(new Dimension(1100, 654));
     }
 
     
@@ -17,6 +18,9 @@ public class SeeNotifications extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("See Notifications");
+        setMaximumSize(new java.awt.Dimension(1100, 654));
+        setMinimumSize(new java.awt.Dimension(1100, 654));
+        setPreferredSize(new java.awt.Dimension(1100, 654));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -1,15 +1,16 @@
 
 package gui.view;
 
+import java.awt.Dimension;
+
 
 public class AddPatient extends javax.swing.JInternalFrame {
 
    
     public AddPatient() {
         initComponents();
-        this.setLocation(220, 10);
-    }
-
+        setLocation(220, 10);
+    } 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -21,6 +22,9 @@ public class AddPatient extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Add Patient");
+        setMaximumSize(new java.awt.Dimension(1100, 654));
+        setMinimumSize(new java.awt.Dimension(1100, 654));
+        setPreferredSize(new java.awt.Dimension(1100, 654));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

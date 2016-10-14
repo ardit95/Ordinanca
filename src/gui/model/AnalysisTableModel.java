@@ -50,23 +50,14 @@ public class AnalysisTableModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
          Analysis analysis= (Analysis)data.get(rowIndex);
-         DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
-         DateFormat timeFormat=new SimpleDateFormat("HH:mm");
         switch(columnNames[columnIndex]){
-            /*AnalysisID Date Time Price Analysis NotificationID */
+            /*AnalysisID Analysis Results*/
             case "AnalysisID":
                 return analysis.getAnalysisID();
-            case "Date":
-                return dateFormat.format(analysis.getDate());
-            case "Time":
-                return timeFormat.format(analysis.getTime());
-            case "Price":
-                return analysis.getPrice();
             case "Analysis":
                 return analysis.getAnalysis();
-            case "NotificationID":
-                return analysis.getNotificationID().getNotificationID();
-            
+            case "Results":
+                analysis.getResults();
             default:
                  return null;
         }

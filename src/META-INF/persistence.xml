@@ -3,19 +3,19 @@
   <persistence-unit name="OrdinancaPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>ejb.Analysis</class>
-    <class>ejb.AnamnesisExaminationComplaint</class>
-    <class>ejb.Appointment</class>
+    <class>ejb.AnalysisDetail</class>
+    <class>ejb.AnalysisVisit</class>
+    <class>ejb.DoctorVisit</class>
+    <class>ejb.DoctorVisitDetails</class>
     <class>ejb.Logs</class>
     <class>ejb.Message</class>
-    <class>ejb.Notification</class>
     <class>ejb.Patient</class>
     <class>ejb.Staff</class>
-    <class>ejb.DoctorVisit</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ordinanca?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Ordinanca?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.password" value="12345"/>
     </properties>
   </persistence-unit>
 </persistence>

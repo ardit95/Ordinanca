@@ -32,23 +32,23 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Besniku
  */
 @Entity
-@Table(name = "DoctorVisit")
+@Table(name = "AnalysisVisit")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DoctorVisit.findAll", query = "SELECT d FROM DoctorVisit d"),
-    @NamedQuery(name = "DoctorVisit.findByDoctorVisitID", query = "SELECT d FROM DoctorVisit d WHERE d.DoctorVisitID = :DoctorVisitID"),
-    @NamedQuery(name = "DoctorVisit.findByDate", query = "SELECT d FROM DoctorVisit d WHERE d.date = :date"),
-    @NamedQuery(name = "DoctorVisit.findBySumPrice", query = "SELECT d FROM DoctorVisit d WHERE d.sumPrice = :sumPrice"),
-    @NamedQuery(name = "DoctorVisit.findByRemark", query = "SELECT d FROM DoctorVisit d WHERE d.remark = :remark"),
-    @NamedQuery(name = "DoctorVisit.findByFinished", query = "SELECT d FROM DoctorVisit d WHERE d.finished = :finished")})
-public class DoctorVisit implements Serializable {
+    @NamedQuery(name = "AnalysisVisit.findAll", query = "SELECT a FROM AnalysisVisit a"),
+    @NamedQuery(name = "AnalysisVisit.findByAnalysisVisitID", query = "SELECT a FROM AnalysisVisit a WHERE a.AnalysisVisitID = :AnalysisVisitID"),
+    @NamedQuery(name = "AnalysisVisit.findByDate", query = "SELECT a FROM AnalysisVisit a WHERE a.date = :date"),
+    @NamedQuery(name = "AnalysisVisit.findBySumPrice", query = "SELECT a FROM AnalysisVisit a WHERE a.sumPrice = :sumPrice"),
+    @NamedQuery(name = "AnalysisVisit.findByRemark", query = "SELECT a FROM AnalysisVisit a WHERE a.remark = :remark"),
+    @NamedQuery(name = "AnalysisVisit.findByFinished", query = "SELECT a FROM AnalysisVisit a WHERE a.finished = :finished")})
+public class AnalysisVisit implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "DoctorVisitID")
-    private Integer DoctorVisitID;
+    @Column(name = "AnalysisVisitID")
+    private Integer AnalysisVisitID;
     @Basic(optional = false)
     @Column(name = "Date")
     @Temporal(TemporalType.DATE)
@@ -60,36 +60,36 @@ public class DoctorVisit implements Serializable {
     private String remark;
     @Column(name = "Finished")
     private String finished;
-    @JoinColumn(name = "DoctorID", referencedColumnName = "Username")
+    @JoinColumn(name = "LaboratorTechnicianID", referencedColumnName = "Username")
     @ManyToOne(optional = false)
-    private Staff doctorID;
+    private Staff laboratorTechnicianID;
     @JoinColumn(name = "PatientID", referencedColumnName = "PatientID")
     @ManyToOne
     private Patient patientID;
     @JoinColumn(name = "StaffID", referencedColumnName = "Username")
     @ManyToOne(optional = false)
     private Staff staffID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "DoctorVisitID")
-    private Collection<DoctorVisitDetails> DoctorVisitDetailsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "AnalysisVisitID")
+    private Collection<AnalysisDetail> AnalysisDetailCollection;
 
-    public DoctorVisit() {
+    public AnalysisVisit() {
     }
 
-    public DoctorVisit(Integer DoctorVisitID) {
-        this.DoctorVisitID = DoctorVisitID;
+    public AnalysisVisit(Integer AnalysisVisitID) {
+        this.AnalysisVisitID = AnalysisVisitID;
     }
 
-    public DoctorVisit(Integer DoctorVisitID, Date date) {
-        this.DoctorVisitID = DoctorVisitID;
+    public AnalysisVisit(Integer AnalysisVisitID, Date date) {
+        this.AnalysisVisitID = AnalysisVisitID;
         this.date = date;
     }
 
-    public Integer getDoctorVisitID() {
-        return DoctorVisitID;
+    public Integer getAnalysisVisitID() {
+        return AnalysisVisitID;
     }
 
-    public void setDoctorVisitID(Integer DoctorVisitID) {
-        this.DoctorVisitID = DoctorVisitID;
+    public void setAnalysisVisitID(Integer AnalysisVisitID) {
+        this.AnalysisVisitID = AnalysisVisitID;
     }
 
     public Date getDate() {
@@ -124,12 +124,12 @@ public class DoctorVisit implements Serializable {
         this.finished = finished;
     }
 
-    public Staff getDoctorID() {
-        return doctorID;
+    public Staff getLaboratorTechnicianID() {
+        return laboratorTechnicianID;
     }
 
-    public void setDoctorID(Staff doctorID) {
-        this.doctorID = doctorID;
+    public void setLaboratorTechnicianID(Staff laboratorTechnicianID) {
+        this.laboratorTechnicianID = laboratorTechnicianID;
     }
 
     public Patient getPatientID() {
@@ -149,29 +149,29 @@ public class DoctorVisit implements Serializable {
     }
 
     @XmlTransient
-    public Collection<DoctorVisitDetails> getDoctorVisitDetailsCollection() {
-        return DoctorVisitDetailsCollection;
+    public Collection<AnalysisDetail> getAnalysisDetailCollection() {
+        return AnalysisDetailCollection;
     }
 
-    public void setDoctorVisitDetailsCollection(Collection<DoctorVisitDetails> DoctorVisitDetailsCollection) {
-        this.DoctorVisitDetailsCollection = DoctorVisitDetailsCollection;
+    public void setAnalysisDetailCollection(Collection<AnalysisDetail> AnalysisDetailCollection) {
+        this.AnalysisDetailCollection = AnalysisDetailCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (DoctorVisitID != null ? DoctorVisitID.hashCode() : 0);
+        hash += (AnalysisVisitID != null ? AnalysisVisitID.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DoctorVisit)) {
+        if (!(object instanceof AnalysisVisit)) {
             return false;
         }
-        DoctorVisit other = (DoctorVisit) object;
-        if ((this.DoctorVisitID == null && other.DoctorVisitID != null) || (this.DoctorVisitID != null && !this.DoctorVisitID.equals(other.DoctorVisitID))) {
+        AnalysisVisit other = (AnalysisVisit) object;
+        if ((this.AnalysisVisitID == null && other.AnalysisVisitID != null) || (this.AnalysisVisitID != null && !this.AnalysisVisitID.equals(other.AnalysisVisitID))) {
             return false;
         }
         return true;
@@ -179,7 +179,7 @@ public class DoctorVisit implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.DoctorVisit[ DoctorVisitID=" + DoctorVisitID + " ]";
+        return "ejb.AnalysisVisit[ AnalysisVisitID=" + AnalysisVisitID + " ]";
     }
     
 }

@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS Analysis(
 CREATE TABLE AnalysisVisit(
 	AnalysisVisitID int PRIMARY KEY AUTO_INCREMENT,
     Date date NOT NULL,
+    
     PatientID int ,
     LaboratorTechnicianID varchar(50) NOT NULL,
     SumPrice decimal(10,2),

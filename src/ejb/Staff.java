@@ -6,22 +6,26 @@
 package ejb;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ARDITI
+ * @author Besniku
  */
 @Entity
 @Table(name = "staff")
@@ -72,9 +76,25 @@ public class Staff implements Serializable {
     @Column(name = "Role")
     private String role;
     @Column(name = "NumberOfLogins")
-    private Integer numberOfLogins=0;
+    private Integer numberOfLogins;
     @Column(name = "Status")
-    private String status="Active";
+    private String status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorID")
+    private Collection<DoctorVisit> DoctorVisitCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "staffID")
+    private Collection<DoctorVisit> DoctorVisitCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "laboratorTechnicianID")
+    private Collection<AnalysisVisit> AnalysisVisitCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "staffID")
+    private Collection<AnalysisVisit> AnalysisVisitCollection1;
+    @OneToMany(mappedBy = "username")
+    private Collection<Patient> patientCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorID")
+    private Collection<Message> messageCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
+    private Collection<Message> messageCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
+    private Collection<Logs> logsCollection;
 
     public Staff() {
     }
@@ -186,6 +206,78 @@ public class Staff implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @XmlTransient
+    public Collection<DoctorVisit> getDoctorVisitCollection() {
+        return DoctorVisitCollection;
+    }
+
+    public void setDoctorVisitCollection(Collection<DoctorVisit> DoctorVisitCollection) {
+        this.DoctorVisitCollection = DoctorVisitCollection;
+    }
+
+    @XmlTransient
+    public Collection<DoctorVisit> getDoctorVisitCollection1() {
+        return DoctorVisitCollection1;
+    }
+
+    public void setDoctorVisitCollection1(Collection<DoctorVisit> DoctorVisitCollection1) {
+        this.DoctorVisitCollection1 = DoctorVisitCollection1;
+    }
+
+    @XmlTransient
+    public Collection<AnalysisVisit> getAnalysisVisitCollection() {
+        return AnalysisVisitCollection;
+    }
+
+    public void setAnalysisVisitCollection(Collection<AnalysisVisit> AnalysisVisitCollection) {
+        this.AnalysisVisitCollection = AnalysisVisitCollection;
+    }
+
+    @XmlTransient
+    public Collection<AnalysisVisit> getAnalysisVisitCollection1() {
+        return AnalysisVisitCollection1;
+    }
+
+    public void setAnalysisVisitCollection1(Collection<AnalysisVisit> AnalysisVisitCollection1) {
+        this.AnalysisVisitCollection1 = AnalysisVisitCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Patient> getPatientCollection() {
+        return patientCollection;
+    }
+
+    public void setPatientCollection(Collection<Patient> patientCollection) {
+        this.patientCollection = patientCollection;
+    }
+
+    @XmlTransient
+    public Collection<Message> getMessageCollection() {
+        return messageCollection;
+    }
+
+    public void setMessageCollection(Collection<Message> messageCollection) {
+        this.messageCollection = messageCollection;
+    }
+
+    @XmlTransient
+    public Collection<Message> getMessageCollection1() {
+        return messageCollection1;
+    }
+
+    public void setMessageCollection1(Collection<Message> messageCollection1) {
+        this.messageCollection1 = messageCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Logs> getLogsCollection() {
+        return logsCollection;
+    }
+
+    public void setLogsCollection(Collection<Logs> logsCollection) {
+        this.logsCollection = logsCollection;
     }
 
     @Override

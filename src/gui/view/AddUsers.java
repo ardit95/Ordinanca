@@ -9,6 +9,7 @@ import bl.StaffRepository;
 import ejb.Staff;
 
 import gui.model.StaffTableModel;
+import java.awt.Dimension;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
@@ -22,13 +23,20 @@ public class AddUsers extends javax.swing.JInternalFrame {
     public AddUsers(EntityManager entityManager) {
         this.entityManager=entityManager;
         initComponents();
-        
-        this.setLocation(220, 10);
-        
+        setLocation(220, 10);
+        setFrameSize();
         staffIr=new StaffRepository(entityManager);
         String [] columnNamesTableModel={"Username","Name", "Surname", "DateOfBirth","Role"};
         staffTableModel=new StaffTableModel(columnNamesTableModel);
         staffTabelaLoad();
+    }
+    
+    private void setFrameSize(){
+        Dimension dimension=new Dimension(1100,654);
+        setPreferredSize(dimension);
+        setMaximumSize(dimension);
+        setMinimumSize(dimension);
+        
     }
     
     
@@ -76,6 +84,8 @@ public class AddUsers extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Add Users");
+        setMaximumSize(new java.awt.Dimension(1100, 654));
+        setMinimumSize(new java.awt.Dimension(1100, 654));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(null);

@@ -53,29 +53,25 @@ public class DoctorVisitTableModel extends AbstractTableModel{
          DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
          DateFormat timeFormat=new SimpleDateFormat("HH:mm");
         switch(columnNames[columnIndex]){
-            
+            /*DoctorVisitID Date SumPrice Remark Finished PatientID DoctorID StaffID */
             case "DoctorVisitID":
                 return DoctorVisit.getDoctorVisitID();
             case "Date":
                 return dateFormat.format(DoctorVisit.getDate()); 
             case "Time":
-                return dateFormat.format(DoctorVisit.getTime());
-            case "Price":
-                return DoctorVisit.getPrice();
-            case "Therapy":
-                return DoctorVisit.getTherapy();   
-            case "Recommendation":
-                return DoctorVisit.getRecommendation();    
-            case "NotificationID":
-                return DoctorVisit.getNotificationID().getNotificationID();   
-            case "AnamnesisExamiantionComplaintID":
-                return DoctorVisit.getAnamnesisExaminationComplaintID().getAnamnesisExaminationComplaintID(); 
-            case "Anamnesis":
-                return DoctorVisit.getAnamnesisExaminationComplaintID().getAnamnesis();
-            case "Examiantion":
-                return DoctorVisit.getAnamnesisExaminationComplaintID().getExamination();
-            case "Complaint":
-                return DoctorVisit.getAnamnesisExaminationComplaintID().getComplaint();
+                return timeFormat.format(DoctorVisit.getDate());
+            case "SumPrice":
+                return DoctorVisit.getSumPrice();
+            case "Remark":
+                return DoctorVisit.getRemark();   
+            case "Finished":
+                return DoctorVisit.getFinished();    
+            case "PatientID":
+                return DoctorVisit.getPatientID();   
+            case "DoctorID":
+                return DoctorVisit.getDoctorID(); 
+            case "StaffID":
+                return DoctorVisit.getStaffID();
             default:
                  return null;
         }

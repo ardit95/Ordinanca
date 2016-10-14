@@ -59,7 +59,7 @@ public class MessageTableModel extends AbstractTableModel{
             case "Date":
                 return dateFormat.format(message.getDate()); 
             case "Time":
-                return dateFormat.format(message.getTime());
+                return timeFormat.format(message.getDate());
             case "Message":
                 return message.getMessage();
             case "Username":

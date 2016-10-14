@@ -51,6 +51,8 @@ public class Login extends javax.swing.JFrame {
         usernameTxtf = new javax.swing.JTextField();
         passwordTxtf = new javax.swing.JPasswordField();
         serverIpTxtf = new javax.swing.JTextField();
+        usernameLbl = new javax.swing.JLabel();
+        passwordLbl = new javax.swing.JLabel();
         backgroundPanel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -98,6 +100,12 @@ public class Login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(serverIpTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, -1));
+
+        usernameLbl.setText("Username:");
+        jPanel1.add(usernameLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, -1, -1));
+
+        passwordLbl.setText("Password:");
+        jPanel1.add(passwordLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, -1, -1));
         jPanel1.add(backgroundPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 452, 605));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -162,8 +170,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel backgroundPanel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loginBtn;
+    private javax.swing.JLabel passwordLbl;
     private javax.swing.JPasswordField passwordTxtf;
     private javax.swing.JTextField serverIpTxtf;
+    private javax.swing.JLabel usernameLbl;
     private javax.swing.JTextField usernameTxtf;
     // End of variables declaration//GEN-END:variables
 

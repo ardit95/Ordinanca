@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -80,8 +79,10 @@ public class Patient implements Serializable {
     private String email;
     @Column(name = "Allergies")
     private String allergies;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patientID")
-    private Collection<Notification> notificationCollection;
+    @OneToMany(mappedBy = "patientID")
+    private Collection<DoctorVisit> DoctorVisitCollection;
+    @OneToMany(mappedBy = "patientID")
+    private Collection<AnalysisVisit> AnalysisVisitCollection;
     @JoinColumn(name = "Username", referencedColumnName = "Username")
     @ManyToOne
     private Staff username;
@@ -191,12 +192,21 @@ public class Patient implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Notification> getNotificationCollection() {
-        return notificationCollection;
+    public Collection<DoctorVisit> getDoctorVisitCollection() {
+        return DoctorVisitCollection;
     }
 
-    public void setNotificationCollection(Collection<Notification> notificationCollection) {
-        this.notificationCollection = notificationCollection;
+    public void setDoctorVisitCollection(Collection<DoctorVisit> DoctorVisitCollection) {
+        this.DoctorVisitCollection = DoctorVisitCollection;
+    }
+
+    @XmlTransient
+    public Collection<AnalysisVisit> getAnalysisVisitCollection() {
+        return AnalysisVisitCollection;
+    }
+
+    public void setAnalysisVisitCollection(Collection<AnalysisVisit> AnalysisVisitCollection) {
+        this.AnalysisVisitCollection = AnalysisVisitCollection;
     }
 
     public Staff getUsername() {

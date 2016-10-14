@@ -1,6 +1,8 @@
 
 package gui.view;
 
+import java.awt.Dimension;
+
 
 public class AddAppointment extends javax.swing.JInternalFrame {
 
@@ -8,6 +10,10 @@ public class AddAppointment extends javax.swing.JInternalFrame {
     public AddAppointment() {
         initComponents();
         this.setLocation(220, 10);
+        setPreferredSize(new Dimension(1100, 654));
+        setMaximumSize(new Dimension(1100, 654));
+        setMinimumSize(new Dimension(1100, 654));
+        setMaximizable(true);
     }
 
     /**
@@ -20,17 +26,21 @@ public class AddAppointment extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         setClosable(true);
+        setResizable(true);
         setTitle("Add Appointment");
+        setMaximumSize(new java.awt.Dimension(1100, 654));
+        setMinimumSize(new java.awt.Dimension(1100, 654));
+        setPreferredSize(new java.awt.Dimension(1100, 654));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 1050, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 747, Short.MAX_VALUE)
         );
 
         pack();

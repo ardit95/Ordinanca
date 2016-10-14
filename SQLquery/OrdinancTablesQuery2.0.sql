@@ -109,6 +109,10 @@ CREATE TABLE IF NOT EXISTS DoctorVisitDetails(
 	CONSTRAINT fk_DVD_DoctorVisitID FOREIGN KEY (DoctorVisitID) REFERENCES DoctorVisit(DoctorVisitID)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+	USE Ordinanca;
+	CREATE VIEW NumberOfStaff AS
+	SELECT COUNT(*) FROM Ordinanca.Staff;
+
 /*Hashing SHA2_512 
 		SELECT SHA2('123459421142',512)
     */

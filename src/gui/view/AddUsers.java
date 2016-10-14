@@ -9,6 +9,7 @@ import bl.StaffRepository;
 import ejb.Staff;
 
 import gui.model.StaffTableModel;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
@@ -247,6 +248,8 @@ public class AddUsers extends javax.swing.JInternalFrame {
            addUserMethod();
        } catch (AppException ex) {
            JOptionPane.showMessageDialog(this, ex.getMessage());
+       } catch (SQLException ex) {
+           Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
        }
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -259,13 +262,16 @@ public class AddUsers extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_deleteBtnActionPerformed
     
     /*Krijon dhe ruan ne databaze userin*/
-    private void addUserMethod() throws AppException{
+    private void addUserMethod() throws AppException, SQLException{
         Staff staff=new Staff();
         String salt="";
         char c=(char)ThreadLocalRandom.current().nextInt(65, 122 + 1);
         salt+=c;
         byte[] password = staffIr.kripto(salt+passwordTxtf.getText().trim());
-        
+        String passwordString="";
+        for(int i=0;i<password.length;i++){
+            passwordString+=password[i];
+        }
         staff.setUsername(usernameTxtf.getText().trim());
         staff.setName(nameTxtf.getText().trim());
         staff.setSurname(surnameTxtf.getText().trim());
@@ -277,6 +283,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
         staff.setSpecialization(specializationTxtf.getText().trim());
         staff.setRole(roleCombo.getSelectedItem().toString());
         staff.setNumberOfLogins(1);
+        staffIr.createMySQLUser(staff,passwordString);
         staffIr.create(staff);
         JOptionPane.showMessageDialog(this, "Perdoruesi u shtua me sukses !");
         staffTabelaLoad();

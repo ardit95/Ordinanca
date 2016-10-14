@@ -104,6 +104,17 @@ public class StaffRepository extends EntMngClass implements StaffInterface{
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
+    
+    @Override
+    public void createMySQLUser(Staff staff,String text) throws SQLException {
+        String serverIp="localhost";
+        Connection conn = DriverManager.getConnection("jdbc:mysql://"+serverIp+":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
+        Statement statement=conn.createStatement();
+        statement.executeQuery("USE Ordinanca;");
+        statement.executeQuery("SET PASSWORD FOR "+staff.getUsername()+"@localhost =PASSWORD('"+text+"'); ");
+        statement.executeQuery("GRANT SELECT,DELETE,UPDATE,INSERT ON Ordinanca.* TO "+staff.getUsername()+"@localhost;");
+        
+    }
 
     @Override
     public int getNumberOfLogins(Staff staff) {

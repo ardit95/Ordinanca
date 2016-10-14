@@ -3,6 +3,7 @@ package bl;
 import ExceptionPackage.AppException;
 import java.util.List;
 import ejb.Staff;
+import java.sql.SQLException;
 
 public interface StaffInterface {
     Staff create (Staff staff)throws AppException;
@@ -14,4 +15,5 @@ public interface StaffInterface {
     byte[] kripto(String pass);
     void changeLoginPassword(Staff staff, String text);
     int getNumberOfLogins(Staff staff);
+    void createMySQLUser(Staff staff,String text)throws SQLException;
 }

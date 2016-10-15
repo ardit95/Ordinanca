@@ -7,13 +7,15 @@ import javax.swing.JOptionPane;
 import bl.StaffInterface;
 import bl.StaffRepository;
 import ejb.Staff;
-
 import gui.model.StaffTableModel;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class AddUsers extends javax.swing.JInternalFrame {
 
@@ -28,6 +30,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
         String [] columnNamesTableModel={"Username","Name", "Surname", "DateOfBirth","Role"};
         staffTableModel=new StaffTableModel(columnNamesTableModel);
         staffTabelaLoad();
+        staffTableMoveKey();
     }
     
     
@@ -67,6 +70,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
         clearBtn = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         specializationTxtf = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -164,7 +168,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(okButton);
-        okButton.setBounds(40, 580, 110, 23);
+        okButton.setBounds(10, 580, 110, 23);
 
         roleCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doctor", "Recepsion", "Director", "Administrator" }));
         jPanel1.add(roleCombo);
@@ -181,7 +185,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(deleteBtn);
-        deleteBtn.setBounds(210, 580, 120, 23);
+        deleteBtn.setBounds(130, 580, 120, 23);
 
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -190,7 +194,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(clearBtn);
-        clearBtn.setBounds(390, 580, 130, 23);
+        clearBtn.setBounds(400, 580, 130, 23);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -199,6 +203,15 @@ public class AddUsers extends javax.swing.JInternalFrame {
         jLabel12.setBounds(20, 20, 140, 20);
         jPanel1.add(jTextField1);
         jTextField1.setBounds(630, 25, 300, 30);
+
+        jButton1.setText("Reset Password");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(270, 580, 110, 23);
 
         specializationTxtf.setColumns(20);
         specializationTxtf.setRows(5);
@@ -258,22 +271,52 @@ public class AddUsers extends javax.swing.JInternalFrame {
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         emptyLabels();
     }//GEN-LAST:event_clearBtnActionPerformed
-
+    
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        deleteStaff();
+       try {
+           deleteStaff();
+       } catch (SQLException ex) {
+           Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       resetPassword();
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+     private void staffTableMoveKey(){
+    ListSelectionModel rowSM=staffTbl.getSelectionModel();
+    rowSM.addListSelectionListener (new ListSelectionListener(){
+    @Override
+    public void valueChanged (ListSelectionEvent e){
+    if(e.getValueIsAdjusting())
+        return;
+    ListSelectionModel rowSM = (ListSelectionModel)e.getSource();
+    int selectedIndex = rowSM.getMinSelectionIndex();
+    if(selectedIndex>-1){
+        Staff staff=staffTableModel.getStaff(selectedIndex);
+                    nameTxtf.setText(staff.getName());
+                    surnameTxtf.setText(staff.getSurname());
+                    usernameTxtf.setText(staff.getUsername());
+                    genderCombo.setSelectedItem(staff.getGender());
+                    dateOfBirthCalendar.setDate(staff.getDateOfBirth());
+                    educationTxtf.setText(staff.getEducation());
+                    specializationTxtf.setText(staff.getSpecialization());
+    }
+    }
+    });
+    }
     
     /*Krijon dhe ruan ne databaze userin*/
     private void addUserMethod() throws AppException, SQLException{
         Staff staff=new Staff();
         String salt="";
+        for(int i=0;i<64;i++){
         char c=(char)ThreadLocalRandom.current().nextInt(65, 122 + 1);
         salt+=c;
-        byte[] password = staffIr.kripto(salt+passwordTxtf.getText().trim());
-        String passwordString="";
-        for(int i=0;i<password.length;i++){
-            passwordString+=password[i];
         }
+        byte[] password = staffIr.kripto(salt+passwordTxtf.getText().trim());
+        String passwordString=passwordTxtf.getText().trim();
         staff.setUsername(usernameTxtf.getText().trim());
         staff.setName(nameTxtf.getText().trim());
         staff.setSurname(surnameTxtf.getText().trim());
@@ -285,15 +328,16 @@ public class AddUsers extends javax.swing.JInternalFrame {
         staff.setSpecialization(specializationTxtf.getText().trim());
         staff.setRole(roleCombo.getSelectedItem().toString());
         staff.setNumberOfLogins(1);
-        staffIr.createMySQLUser(staff,passwordString);
         staffIr.create(staff);
         JOptionPane.showMessageDialog(this, "Perdoruesi u shtua me sukses !");
+        staffIr.createMySQLUser(staff,passwordString);
+        JOptionPane.showMessageDialog(this, "Perdoruesi me privilegje shtua me sukses !");
         staffTabelaLoad();
         emptyLabels();
     }
     
     /*Fshin nga databaza userin*/
-    public void deleteStaff(){
+    public void deleteStaff() throws SQLException{
         try{
         if(staffTbl.getSelectedRow()!=-1){
                 String[] opcionet={"Po","Jo"};
@@ -306,7 +350,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
                     if(victimUser.getRole().equals("Administrator"))
                         throw new AppException("Nuk mund të fshihet useri administrator.");
                     staffIr.remove(victimUser);
-                    
+                    staffIr.deleteMySQLUser(victimUser);
                     
                     staffTabelaLoad();
                     JOptionPane.showMessageDialog(this, "Useri u fshi me suksesë.");
@@ -332,6 +376,30 @@ public class AddUsers extends javax.swing.JInternalFrame {
         roleCombo.setSelectedItem("Doctor");
     }
     
+    private void resetPassword(){
+        try{
+           int index;
+            if((index=staffTbl.getSelectedRow())!=-1){
+                Staff staff=staffTableModel.getStaff(index);
+                String[] opcionet={"Po","Jo"};
+                int response = JOptionPane.showOptionDialog(this,
+                "A dëshiron me restartu passwordin e userit : "+staff.getUsername()+" ?","Kujdesë",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, opcionet, opcionet[0]);
+                if(response==0){
+                staff.setNumberOfLogins(0);
+                byte[] passwordi = staffIr.kripto(staff.getSalt()+"12345678");
+                staff.setPassword(passwordi);
+                staffIr.setStaffPassword(staff);
+                staffIr.edit(staff);
+                JOptionPane.showMessageDialog(this, "Passwordi i userit :"+staff.getUsername()+" është 12345678");
+                }
+            }else throw new AppException("Selekto Userin qe deshiron me i restartu passwordin.");
+        }catch(AppException ae){
+           JOptionPane.showMessageDialog(this,ae.getMessage());
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private javax.swing.JButton clearBtn;
@@ -339,6 +407,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
     private javax.swing.JButton deleteBtn;
     private javax.swing.JTextArea educationTxtf;
     private javax.swing.JComboBox<String> genderCombo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;

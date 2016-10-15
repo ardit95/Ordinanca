@@ -5,7 +5,9 @@ import bl.StaffInterface;
 import bl.StaffRepository;
 import ejb.Staff;
 import gui.model.StaffTableModel;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -17,7 +19,7 @@ public class AdministratorRegistration extends javax.swing.JFrame {
    StaffTableModel staffTableModel;
     
     AdministratorRegistration(EntityManager em) {
-        this.entityManager=entityManager;
+        entityManager=em;
         initComponents();
         setLocation(220, 10);
         staffIr=new StaffRepository(entityManager);
@@ -203,12 +205,15 @@ public class AdministratorRegistration extends javax.swing.JFrame {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
     Login login;
     try {
-        this.dispose();
-        login = new Login();
-        login.setVisible(true);
-    }catch (AppException ex) {
-            Logger.getLogger(AdministratorRegistration.class.getName()).log(Level.SEVERE, null, ex);
-    }
+           addUserMethod();
+           login=new Login();
+           dispose();
+           login.setVisible(true);
+       } catch (AppException ex) {
+           JOptionPane.showMessageDialog(this, ex.getMessage());
+       } catch (SQLException ex) {
+           Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
@@ -226,6 +231,32 @@ public class AdministratorRegistration extends javax.swing.JFrame {
         educationTxtf.setText("");
         specializationTxtf.setText("");
         roleCombo.setSelectedItem("Doctor");
+    }
+    
+    private void addUserMethod() throws AppException, SQLException{
+        Staff staff=new Staff();
+        String salt="";
+        for(int i=0;i<64;i++){
+        char c=(char)ThreadLocalRandom.current().nextInt(65, 122 + 1);
+        salt+=c;
+        }
+        byte[] password = staffIr.kripto(salt+passwordTxtf.getText().trim());
+        String passwordString=passwordTxtf.getText().trim();
+        staff.setUsername(usernameTxtf.getText().trim());
+        staff.setName(nameTxtf.getText().trim());
+        staff.setSurname(surnameTxtf.getText().trim());
+        staff.setSalt(salt);
+        staff.setPassword(password);
+        staff.setDateOfBirth(dateOfBirthCalendar.getDate());
+        staff.setGender(genderCombo.getSelectedItem().toString());
+        staff.setEducation(educationTxtf.getText().trim());
+        staff.setSpecialization(specializationTxtf.getText().trim());
+        staff.setRole(roleCombo.getSelectedItem().toString());
+        staff.setNumberOfLogins(0);
+        staffIr.create(staff);
+        staffIr.createMySQLUser(staff,passwordString);
+        JOptionPane.showMessageDialog(this, "Perdoruesi u shtua me sukses !");
+        emptyLabels();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;

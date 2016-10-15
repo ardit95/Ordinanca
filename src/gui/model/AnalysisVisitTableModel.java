@@ -9,10 +9,13 @@ import javax.swing.table.AbstractTableModel;
 public class AnalysisVisitTableModel extends AbstractTableModel{
   static String [] columnNames;
     List<AnalysisVisit> data;
+    DateFormat dateFormat;
+    DateFormat timeFormat;
     
     public AnalysisVisitTableModel(String[] colNames) {
         columnNames=colNames;
-        
+        dateFormat=new SimpleDateFormat("dd-MM-yyyy");
+        timeFormat=new SimpleDateFormat("HH:mm");
     }
     
     public void setColumnNames(String[] colNames){
@@ -49,29 +52,27 @@ public class AnalysisVisitTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-         AnalysisVisit analysisVisit= (AnalysisVisit)data.get(rowIndex);
-         DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
-         DateFormat timeFormat=new SimpleDateFormat("HH:mm");
+         AnalysisVisit AnalysisVisit= (AnalysisVisit)data.get(rowIndex);
         switch(columnNames[columnIndex]){
             /*AnalysisVisitID Date PatientID LaboratorTechnicianID SumPrice Remark StaffID Finished */
             case "AnalysisVisitID":
-                return analysisVisit.getAnalysisVisitID();
+                return AnalysisVisit.getAnalysisVisitID();
             case "Date":
-                return dateFormat.format(analysisVisit.getDate());
+                return dateFormat.format(AnalysisVisit.getDate());
             case "Time":
-                return timeFormat.format(analysisVisit.getDate());
+                return timeFormat.format(AnalysisVisit.getDate());
             case "PaitentID":
-                return analysisVisit.getPatientID();
+                return AnalysisVisit.getPatientID();
             case "LaboratorTechnicianID":
-                return analysisVisit.getLaboratorTechnicianID();
+                return AnalysisVisit.getLaboratorTechnicianID();
             case "SumPrice":
-                return analysisVisit.getSumPrice();
+                return AnalysisVisit.getSumPrice();
             case "Remark":
-                return analysisVisit.getRemark();
+                return AnalysisVisit.getRemark();
             case "StaffID":
-                return analysisVisit.getStaffID();
+                return AnalysisVisit.getStaffID();
             case "Finished":
-                return analysisVisit.getFinished();
+                return AnalysisVisit.getFinished();
             default:
                  return null;
         }

@@ -5,6 +5,8 @@
  */
 package ejb;
 
+import ejb.AnalysisVisit;
+import ejb.DoctorVisit;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -46,6 +48,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Patient.findByEmail", query = "SELECT p FROM Patient p WHERE p.email = :email"),
     @NamedQuery(name = "Patient.findByAllergies", query = "SELECT p FROM Patient p WHERE p.allergies = :allergies")})
 public class Patient implements Serializable {
+
+    @OneToMany(mappedBy = "patientID")
+    private Collection<DoctorVisit> doctorvisitCollection;
+    @OneToMany(mappedBy = "patientID")
+    private Collection<AnalysisVisit> analysisvisitCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -240,6 +247,24 @@ public class Patient implements Serializable {
     @Override
     public String toString() {
         return "ejb.Patient[ patientID=" + patientID + " ]";
+    }
+
+    @XmlTransient
+    public Collection<DoctorVisit> getDoctorvisitCollection() {
+        return doctorvisitCollection;
+    }
+
+    public void setDoctorvisitCollection(Collection<DoctorVisit> doctorvisitCollection) {
+        this.doctorvisitCollection = doctorvisitCollection;
+    }
+
+    @XmlTransient
+    public Collection<AnalysisVisit> getAnalysisvisitCollection() {
+        return analysisvisitCollection;
+    }
+
+    public void setAnalysisvisitCollection(Collection<AnalysisVisit> analysisvisitCollection) {
+        this.analysisvisitCollection = analysisvisitCollection;
     }
     
 }

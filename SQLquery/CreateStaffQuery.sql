@@ -4,7 +4,8 @@ START TRANSACTION;
 	CREATE USER IF NOT EXISTS Checker@localhost IDENTIFIED BY '12345';
 	USE Ordinanca;
 	GRANT SELECT ON Ordinanca.NumberOfStaff  TO Checker@localhost;
-		
+	
+	
     CREATE USER IF NOT EXISTS Bajra@localhost IDENTIFIED BY '12345';
     GRANT SELECT,DELETE,UPDATE,INSERT ON Ordinanca.* TO Bajra@localhost;
     INSERT INTO Staff (Username,Password,Salt,Name,Surname,Gender,DateOfBirth,Education,Specialization,Role) 

@@ -238,7 +238,6 @@ public class MainFrame extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1365, 700));
 
         jButton1.setBackground(new java.awt.Color(51, 204, 0));
         jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -446,15 +445,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        Login login;
-        try {
-            dispose();
-            login = new Login();
-            login.setVisible(true);
-        } catch (AppException ex) {
-            JOptionPane.showMessageDialog(this,ex.getMessage());
-        }
-       
+        logOutMethod();
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -554,5 +545,18 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
+
+    private int logOutMethod() {
+        Login login;
+        try {
+            this.dispose();
+            dispose();
+            login = new Login();
+            login.setVisible(true);
+        } catch (AppException ex) {
+            JOptionPane.showMessageDialog(this,ex.getMessage());
+        }
+        return 0;
+    }
 
 }

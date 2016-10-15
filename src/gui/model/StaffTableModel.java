@@ -9,9 +9,11 @@ import javax.swing.table.AbstractTableModel;
 public class StaffTableModel extends AbstractTableModel{
   static String [] columnNames;
     List<Staff> data;
+    DateFormat dateFormat;
     
     public StaffTableModel(String[] colNames) {
         columnNames=colNames;
+        dateFormat=new SimpleDateFormat("dd-MM-yyyy");
         /*"Name", "Surname", "Data e Lindjes","Numri Personal","Email","Telefoni","Qyteti"*/
     }
     
@@ -50,7 +52,6 @@ public class StaffTableModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
          Staff staff= (Staff)data.get(rowIndex);
-         DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
         switch(columnNames[columnIndex]){
             
             case "Username":

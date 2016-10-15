@@ -5,6 +5,8 @@
  */
 package ejb;
 
+import ejb.AnalysisVisit;
+import ejb.DoctorVisit;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -45,15 +47,24 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Staff.findByStatus", query = "SELECT s FROM Staff s WHERE s.status = :status")})
 public class Staff implements Serializable {
 
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "Password")
+    private byte[] password;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorID")
+    private Collection<DoctorVisit> doctorvisitCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "staffID")
+    private Collection<DoctorVisit> doctorvisitCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "laboratorTechnicianID")
+    private Collection<AnalysisVisit> analysisvisitCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "staffID")
+    private Collection<AnalysisVisit> analysisvisitCollection1;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "Username")
     private String username;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "Password")
-    private byte[] password;
     @Basic(optional = false)
     @Column(name = "salt")
     private String salt;
@@ -120,13 +131,6 @@ public class Staff implements Serializable {
         this.username = username;
     }
 
-    public byte[] getPassword() {
-        return password;
-    }
-
-    public void setPassword(byte[] password) {
-        this.password = password;
-    }
 
     public String getSalt() {
         return salt;
@@ -303,6 +307,50 @@ public class Staff implements Serializable {
     @Override
     public String toString() {
         return "ejb.Staff[ username=" + username + " ]";
+    }
+
+    public byte[] getPassword() {
+        return password;
+    }
+
+    public void setPassword(byte[] password) {
+        this.password = password;
+    }
+
+    @XmlTransient
+    public Collection<DoctorVisit> getDoctorvisitCollection() {
+        return doctorvisitCollection;
+    }
+
+    public void setDoctorvisitCollection(Collection<DoctorVisit> doctorvisitCollection) {
+        this.doctorvisitCollection = doctorvisitCollection;
+    }
+
+    @XmlTransient
+    public Collection<DoctorVisit> getDoctorvisitCollection1() {
+        return doctorvisitCollection1;
+    }
+
+    public void setDoctorvisitCollection1(Collection<DoctorVisit> doctorvisitCollection1) {
+        this.doctorvisitCollection1 = doctorvisitCollection1;
+    }
+
+    @XmlTransient
+    public Collection<AnalysisVisit> getAnalysisvisitCollection() {
+        return analysisvisitCollection;
+    }
+
+    public void setAnalysisvisitCollection(Collection<AnalysisVisit> analysisvisitCollection) {
+        this.analysisvisitCollection = analysisvisitCollection;
+    }
+
+    @XmlTransient
+    public Collection<AnalysisVisit> getAnalysisvisitCollection1() {
+        return analysisvisitCollection1;
+    }
+
+    public void setAnalysisvisitCollection1(Collection<AnalysisVisit> analysisvisitCollection1) {
+        this.analysisvisitCollection1 = analysisvisitCollection1;
     }
     
 }

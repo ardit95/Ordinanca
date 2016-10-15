@@ -9,10 +9,11 @@ import javax.swing.table.AbstractTableModel;
 public class PatientTableModel extends AbstractTableModel{
   static String [] columnNames;
     List<Patient> data;
+    DateFormat dateFormat;
     
     public PatientTableModel(String[] colNames) {
         columnNames=colNames;
-        
+        dateFormat=new SimpleDateFormat("dd-MM-yyyy");
     }
     
     public void setColumnNames(String[] colNames){
@@ -50,7 +51,6 @@ public class PatientTableModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
          Patient patient= (Patient)data.get(rowIndex);
-         DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
         switch(columnNames[columnIndex]){
             /*PatientID Name Surname ParentName Gender DateOfBirth PlaceOFBirth City Phone Email Allergies Allergies Username */
             

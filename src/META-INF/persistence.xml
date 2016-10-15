@@ -3,14 +3,19 @@
   <persistence-unit name="OrdinancaPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>ejb.Analysis</class>
-    <class>ejb.AnalysisDetail</class>
+    <class>ejb.AnalysisForVisit</class>
     <class>ejb.AnalysisVisit</class>
+    <class>ejb.Diagnosis</class>
+    <class>ejb.DiagnosisForVisit</class>
     <class>ejb.DoctorVisit</class>
-    <class>ejb.DoctorVisitDetails</class>
     <class>ejb.Logs</class>
     <class>ejb.Message</class>
     <class>ejb.Patient</class>
     <class>ejb.Staff</class>
-    
+    <class>ejbView.Doctorvisit</class>
+    <class>ejbView.Diagnosisforvisit</class>
+    <class>ejbView.Analysisforvisit</class>
+    <class>ejbView.Analysisvisit</class>
+    <class>ejbView.NumberOfStaff</class>
   </persistence-unit>
 </persistence>

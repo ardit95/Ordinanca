@@ -70,7 +70,7 @@ public class AnalysisVisit implements Serializable {
     @ManyToOne(optional = false)
     private Staff staffID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "AnalysisVisitID")
-    private Collection<AnalysisDetail> AnalysisDetailCollection;
+    private Collection<AnalysisForVisit> analysisforvisitCollection;
 
     public AnalysisVisit() {
     }
@@ -149,12 +149,12 @@ public class AnalysisVisit implements Serializable {
     }
 
     @XmlTransient
-    public Collection<AnalysisDetail> getAnalysisDetailCollection() {
-        return AnalysisDetailCollection;
+    public Collection<AnalysisForVisit> getAnalysisforvisitCollection() {
+        return analysisforvisitCollection;
     }
 
-    public void setAnalysisDetailCollection(Collection<AnalysisDetail> AnalysisDetailCollection) {
-        this.AnalysisDetailCollection = AnalysisDetailCollection;
+    public void setAnalysisforvisitCollection(Collection<AnalysisForVisit> analysisforvisitCollection) {
+        this.analysisforvisitCollection = analysisforvisitCollection;
     }
 
     @Override

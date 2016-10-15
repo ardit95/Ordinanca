@@ -25,20 +25,20 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Besniku
  */
 @Entity
-@Table(name = "AnalysisDetail")
+@Table(name = "AnalysisForVisit")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AnalysisDetail.findAll", query = "SELECT a FROM AnalysisDetail a"),
-    @NamedQuery(name = "AnalysisDetail.findByAnalysisDetailID", query = "SELECT a FROM AnalysisDetail a WHERE a.AnalysisDetailID = :AnalysisDetailID"),
-    @NamedQuery(name = "AnalysisDetail.findByPrice", query = "SELECT a FROM AnalysisDetail a WHERE a.price = :price")})
-public class AnalysisDetail implements Serializable {
+    @NamedQuery(name = "AnalysisForVisit.findAll", query = "SELECT a FROM AnalysisForVisit a"),
+    @NamedQuery(name = "AnalysisForVisit.findByAnalysisForVisitID", query = "SELECT a FROM AnalysisForVisit a WHERE a.AnalysisForVisitID = :AnalysisForVisitID"),
+    @NamedQuery(name = "AnalysisForVisit.findByPrice", query = "SELECT a FROM AnalysisForVisit a WHERE a.price = :price")})
+public class AnalysisForVisit implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "AnalysisDetailID")
-    private Integer AnalysisDetailID;
+    @Column(name = "AnalysisForVisitID")
+    private Integer AnalysisForVisitID;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "Price")
     private BigDecimal price;
@@ -47,21 +47,21 @@ public class AnalysisDetail implements Serializable {
     private Analysis analysisID;
     @JoinColumn(name = "AnalysisVisitID", referencedColumnName = "AnalysisVisitID")
     @ManyToOne(optional = false)
-    private AnalysisVisit AnalysisVisitID;
+    private AnalysisVisit analysisVisitID;
 
-    public AnalysisDetail() {
+    public AnalysisForVisit() {
     }
 
-    public AnalysisDetail(Integer AnalysisDetailID) {
-        this.AnalysisDetailID = AnalysisDetailID;
+    public AnalysisForVisit(Integer AnalysisForVisitID) {
+        this.AnalysisForVisitID = AnalysisForVisitID;
     }
 
-    public Integer getAnalysisDetailID() {
-        return AnalysisDetailID;
+    public Integer getAnalysisForVisitID() {
+        return AnalysisForVisitID;
     }
 
-    public void setAnalysisDetailID(Integer AnalysisDetailID) {
-        this.AnalysisDetailID = AnalysisDetailID;
+    public void setAnalysisForVisitID(Integer AnalysisForVisitID) {
+        this.AnalysisForVisitID = AnalysisForVisitID;
     }
 
     public BigDecimal getPrice() {
@@ -81,28 +81,28 @@ public class AnalysisDetail implements Serializable {
     }
 
     public AnalysisVisit getAnalysisVisitID() {
-        return AnalysisVisitID;
+        return analysisVisitID;
     }
 
-    public void setAnalysisVisitID(AnalysisVisit AnalysisVisitID) {
-        this.AnalysisVisitID = AnalysisVisitID;
+    public void setAnalysisVisitID(AnalysisVisit analysisVisitID) {
+        this.analysisVisitID = analysisVisitID;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (AnalysisDetailID != null ? AnalysisDetailID.hashCode() : 0);
+        hash += (AnalysisForVisitID != null ? AnalysisForVisitID.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AnalysisDetail)) {
+        if (!(object instanceof AnalysisForVisit)) {
             return false;
         }
-        AnalysisDetail other = (AnalysisDetail) object;
-        if ((this.AnalysisDetailID == null && other.AnalysisDetailID != null) || (this.AnalysisDetailID != null && !this.AnalysisDetailID.equals(other.AnalysisDetailID))) {
+        AnalysisForVisit other = (AnalysisForVisit) object;
+        if ((this.AnalysisForVisitID == null && other.AnalysisForVisitID != null) || (this.AnalysisForVisitID != null && !this.AnalysisForVisitID.equals(other.AnalysisForVisitID))) {
             return false;
         }
         return true;
@@ -110,7 +110,7 @@ public class AnalysisDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.AnalysisDetail[ AnalysisDetailID=" + AnalysisDetailID + " ]";
+        return "ejb.AnalysisForVisit[ AnalysisForVisitID=" + AnalysisForVisitID + " ]";
     }
     
 }

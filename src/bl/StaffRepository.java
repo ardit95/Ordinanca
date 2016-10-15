@@ -2,6 +2,7 @@ package bl;
 
 import ExceptionPackage.AppException;
 import ejb.Staff;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -110,16 +111,41 @@ public class StaffRepository extends EntMngClass implements StaffInterface{
         String serverIp="localhost";
         Connection conn = DriverManager.getConnection("jdbc:mysql://"+serverIp+":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
         Statement statement=conn.createStatement();
-        statement.executeQuery("USE Ordinanca;");
-        statement.executeQuery("SET PASSWORD FOR "+staff.getUsername()+"@localhost =PASSWORD('"+text+"'); ");
-        statement.executeQuery("GRANT SELECT,DELETE,UPDATE,INSERT ON Ordinanca.* TO "+staff.getUsername()+"@localhost;");
+        statement.executeUpdate("USE Ordinanca;");
+        statement.executeUpdate("CREATE USER IF NOT EXISTS "+staff.getUsername()+"@localhost IDENTIFIED BY '"+text+"'; ");
+        statement.executeUpdate("GRANT SELECT,DELETE,UPDATE,INSERT ON Ordinanca.* TO "+staff.getUsername()+"@localhost;");
         
     }
-
+    
+     @Override
+    public void deleteMySQLUser(Staff staff) throws SQLException {
+        String serverIp="localhost";
+        Connection conn = DriverManager.getConnection("jdbc:mysql://"+serverIp+":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
+        Statement statement=conn.createStatement();
+        statement.executeUpdate("USE Ordinanca;");
+        statement.executeUpdate("DROP USER "+staff.getUsername()+"@localhost");
+        
+    }
+    
     @Override
     public int getNumberOfLogins(Staff staff) {
         Query query=em.createQuery ("SELECT staff.numberOfLogins FROM Staff staff WHERE staff.username= :usern");
         query.setParameter ("usern",staff.getUsername());
         return Integer.parseInt(query.getSingleResult().toString());
+    }
+    
+    @Override
+    public void setStaffPassword(Staff staff) {
+        try {
+            String serverIp="localhost";
+            Connection conn = DriverManager.getConnection("jdbc:mysql://"+serverIp+":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
+            Statement statement=conn.createStatement();
+            statement.executeQuery("USE Ordinanca;");
+            statement.executeQuery("SET PASSWORD FOR "+staff.getUsername()+"@localhost =PASSWORD('12345678'); ");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        
     }
 }

@@ -327,7 +327,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
         staff.setEducation(educationTxtf.getText().trim());
         staff.setSpecialization(specializationTxtf.getText().trim());
         staff.setRole(roleCombo.getSelectedItem().toString());
-        staff.setNumberOfLogins(1);
+        staff.setNumberOfLogins(0);
         staffIr.create(staff);
         JOptionPane.showMessageDialog(this, "Perdoruesi u shtua me sukses !");
         staffIr.createMySQLUser(staff,passwordString);

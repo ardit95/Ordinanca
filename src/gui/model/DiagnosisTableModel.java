@@ -1,16 +1,16 @@
 package gui.model;
 
-import ejb.DoctorVisitDetails;
+import ejb.Diagnosis;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class DoctorVisitDetailsTableModel extends AbstractTableModel{
+public class DiagnosisTableModel extends AbstractTableModel{
   static String [] columnNames;
-    List<DoctorVisitDetails> data;
+    List<Diagnosis> data;
     
-    public DoctorVisitDetailsTableModel(String[] colNames) {
+    public DiagnosisTableModel(String[] colNames) {
         columnNames=colNames;
         /*"Name", "Surname", "Data e Lindjes","Numri Personal","Email","Telefoni","Qyteti"*/
     }
@@ -24,11 +24,11 @@ public class DoctorVisitDetailsTableModel extends AbstractTableModel{
     }
     
     
-    public DoctorVisitDetailsTableModel(List<DoctorVisitDetails> list) {
+    public DiagnosisTableModel(List<Diagnosis> list) {
         data = list;
     }
 
-    public void add(List<DoctorVisitDetails> list) {
+    public void add(List<Diagnosis> list) {
         data = list;
     }
     
@@ -49,33 +49,29 @@ public class DoctorVisitDetailsTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-         DoctorVisitDetails doctorVisitDetails= (DoctorVisitDetails)data.get(rowIndex);
-         DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
-         DateFormat timeFormat=new SimpleDateFormat("HH:mm");
+         Diagnosis Diagnosis= (Diagnosis)data.get(rowIndex);
         switch(columnNames[columnIndex]){
             /*DoctorVisitDetailID Price Complaint Anamnesis Examination Therapy Recommendation DoctorVisitID */
-            case "DoctorVisitDetailsID":
-                return doctorVisitDetails.getDoctorVisitDetailID();
-            case "Price":
-                return doctorVisitDetails.getPrice();
+            case "DiagnosisID":
+                return Diagnosis.getDiagnosisID();
             case "Complaint":
-                return doctorVisitDetails.getComplaint();
+                return Diagnosis.getComplaint();
             case "Anamnesis":
-                return doctorVisitDetails.getAnamnesis();
+                return Diagnosis.getAnamnesis();
             case "Examination":
-                return doctorVisitDetails.getExamination();
+                return Diagnosis.getExamination();
                 case "Therapy":
-                return doctorVisitDetails.getTherapy();
+                return Diagnosis.getTherapy();
                 case "Recommendation":
-                return doctorVisitDetails.getRecommendation();
+                return Diagnosis.getRecommendation();
                 case "DoctorVisitID":
-                return doctorVisitDetails.getDoctorVisitID();
+                return Diagnosis.getDoctorVisitID();
             default:
                  return null;
         }
     }
     
-    public DoctorVisitDetails getDoctorVisitDetails(int rowIndex){
+    public Diagnosis getDiagnosis(int rowIndex){
         return data.get(rowIndex);
     }
     

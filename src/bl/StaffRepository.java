@@ -122,4 +122,10 @@ public class StaffRepository extends EntMngClass implements StaffInterface{
         query.setParameter ("usern",staff.getUsername());
         return Integer.parseInt(query.getSingleResult().toString());
     }
+
+    @Override
+    public int CheckAdminExists() {
+        Query query=em.createQuery ("SELECT numberOfStaff.numri FROM NumberOfStaff numberOfStaff ");
+        return Integer.parseInt(query.getSingleResult().toString());
+    }
 }

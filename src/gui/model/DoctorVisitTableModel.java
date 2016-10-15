@@ -9,9 +9,13 @@ import javax.swing.table.AbstractTableModel;
 public class DoctorVisitTableModel extends AbstractTableModel{
   static String [] columnNames;
     List<DoctorVisit> data;
+    DateFormat dateFormat;
+    DateFormat timeFormat;
     
     public DoctorVisitTableModel(String[] colNames) {
         columnNames=colNames;
+        dateFormat=new SimpleDateFormat("dd-MM-yyyy");
+        timeFormat=new SimpleDateFormat("HH:mm");
         /*"Name", "Surname", "Data e Lindjes","Numri Personal","Email","Telefoni","Qyteti"*/
     }
     
@@ -50,8 +54,6 @@ public class DoctorVisitTableModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
          DoctorVisit DoctorVisit= (DoctorVisit)data.get(rowIndex);
-         DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
-         DateFormat timeFormat=new SimpleDateFormat("HH:mm");
         switch(columnNames[columnIndex]){
             /*DoctorVisitID Date SumPrice Remark Finished PatientID DoctorID StaffID */
             case "DoctorVisitID":

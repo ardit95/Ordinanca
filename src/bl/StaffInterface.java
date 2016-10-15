@@ -16,4 +16,6 @@ public interface StaffInterface {
     void changeLoginPassword(Staff staff, String text);
     int getNumberOfLogins(Staff staff);
     void createMySQLUser(Staff staff,String text)throws SQLException;
+
+    public int CheckAdminExists();
 }

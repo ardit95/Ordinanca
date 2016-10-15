@@ -1,25 +1,25 @@
+
 package bl;
 
-import ejb.AnalysisDetail;
+import ejb.DiagnosisForVisit;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import ExceptionPackage.AppException;
 
-public class AnalysisDetailRepository extends EntMngClass implements AnalysisDetailInterface{
+public class DiagnosisForVisitRepository extends EntMngClass implements DiagnosisForVisitInterface{
      
-    public AnalysisDetailRepository(EntityManager tempEm){
+    public DiagnosisForVisitRepository(EntityManager tempEm){
         super(tempEm);
     }
     
     @Override
-    public AnalysisDetail create(AnalysisDetail analysisDetail)throws AppException {
+    public DiagnosisForVisit create(DiagnosisForVisit DiagnosisForVisit)throws AppException {
         try{
         em.getTransaction().begin();
-        em.persist(analysisDetail);
+        em.persist(DiagnosisForVisit);
         em.flush();
         em.getTransaction().commit();
-        return analysisDetail;
+        return DiagnosisForVisit;
         }catch (Throwable thro){
         if (thro.getMessage().contains("2627")){
             if(thro.getMessage().toLowerCase().contains("unique"))
@@ -34,10 +34,10 @@ public class AnalysisDetailRepository extends EntMngClass implements AnalysisDet
     }
 
     @Override
-    public void edit(AnalysisDetail analysisDetail)throws AppException {
+    public void edit(DiagnosisForVisit DiagnosisForVisit)throws AppException {
         try{
         em.getTransaction().begin();
-        em.merge(analysisDetail);
+        em.merge(DiagnosisForVisit);
         em.getTransaction().commit();
         }catch (Throwable thro){
         if (thro.getMessage().contains("2627")){
@@ -53,14 +53,15 @@ public class AnalysisDetailRepository extends EntMngClass implements AnalysisDet
     }
 
     @Override
-    public void remove(AnalysisDetail analysisDetail) {
+    public void remove(DiagnosisForVisit DiagnosisForVisit) {
         em.getTransaction().begin();
-        em.remove(analysisDetail);
+        em.remove(DiagnosisForVisit);
         em.getTransaction().commit();
     }
 
     @Override
-    public List<AnalysisDetail> findAll() {
-        return em.createNamedQuery("AnalysisDetail.findAll").getResultList();
+    public List<DiagnosisForVisit> findAll() {
+        return em.createNamedQuery("DiagnosisForVisitRepository.findAll").getResultList();
     }    
 }
+

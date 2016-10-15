@@ -70,7 +70,9 @@ public class DoctorVisit implements Serializable {
     @ManyToOne(optional = false)
     private Staff staffID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "DoctorVisitID")
-    private Collection<DoctorVisitDetails> DoctorVisitDetailsCollection;
+    private Collection<Diagnosis> diagnosisCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "DoctorVisitID")
+    private Collection<DiagnosisForVisit> DiagnosisForVisitCollection;
 
     public DoctorVisit() {
     }
@@ -149,12 +151,21 @@ public class DoctorVisit implements Serializable {
     }
 
     @XmlTransient
-    public Collection<DoctorVisitDetails> getDoctorVisitDetailsCollection() {
-        return DoctorVisitDetailsCollection;
+    public Collection<Diagnosis> getDiagnosisCollection() {
+        return diagnosisCollection;
     }
 
-    public void setDoctorVisitDetailsCollection(Collection<DoctorVisitDetails> DoctorVisitDetailsCollection) {
-        this.DoctorVisitDetailsCollection = DoctorVisitDetailsCollection;
+    public void setDiagnosisCollection(Collection<Diagnosis> diagnosisCollection) {
+        this.diagnosisCollection = diagnosisCollection;
+    }
+
+    @XmlTransient
+    public Collection<DiagnosisForVisit> getDiagnosisForVisitCollection() {
+        return DiagnosisForVisitCollection;
+    }
+
+    public void setDiagnosisForVisitCollection(Collection<DiagnosisForVisit> DiagnosisForVisitCollection) {
+        this.DiagnosisForVisitCollection = DiagnosisForVisitCollection;
     }
 
     @Override

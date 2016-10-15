@@ -1,22 +1,21 @@
 package gui.model;
 
-import ejb.Message;
+import ejb.DiagnosisForVisit;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class MessageTableModel extends AbstractTableModel{
+public class DiagnosisForVisitTableModel extends AbstractTableModel{
   static String [] columnNames;
-    List<Message> data;
+    List<DiagnosisForVisit> data;
     DateFormat dateFormat;
     DateFormat timeFormat;
     
-    public MessageTableModel(String[] colNames) {
+    public DiagnosisForVisitTableModel(String[] colNames) {
         columnNames=colNames;
         dateFormat=new SimpleDateFormat("dd-MM-yyyy");
         timeFormat=new SimpleDateFormat("HH:mm");
-        /*"Name", "Surname", "Data e Lindjes","Numri Personal","Email","Telefoni","Qyteti"*/
     }
     
     public void setColumnNames(String[] colNames){
@@ -28,11 +27,11 @@ public class MessageTableModel extends AbstractTableModel{
     }
     
     
-    public MessageTableModel(List<Message> list) {
+    public DiagnosisForVisitTableModel(List<DiagnosisForVisit> list) {
         data = list;
     }
 
-    public void add(List<Message> list) {
+    public void add(List<DiagnosisForVisit> list) {
         data = list;
     }
     
@@ -52,29 +51,24 @@ public class MessageTableModel extends AbstractTableModel{
     }
 
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-         Message message= (Message)data.get(rowIndex);
+    public Object getValueAt(int rowIndex, int columnIndex){
+         DiagnosisForVisit DiagnosisForVisit= (DiagnosisForVisit)data.get(rowIndex);
         switch(columnNames[columnIndex]){
-            
-            case "MessageID":
-                return message.getMessageID();
-            case "Date":
-                return dateFormat.format(message.getDate()); 
-            case "Time":
-                return timeFormat.format(message.getDate());
-            case "Message":
-                return message.getMessage();
-            case "Username":
-                return message.getUsername().getUsername();   
-            case "DoctorID":
-                return message.getDoctorID().getUsername();    
-            
+            /*DiagnosisForVisitID Price DiagnosisID DoctorVisitID */
+            case "DiagnosisForVisitID":
+                return DiagnosisForVisit.getDiagnosisForVisitID();
+            case "Price":
+                return DiagnosisForVisit.getPrice();
+            case "DiagnosisID":
+                return DiagnosisForVisit.getDiagnosisID();
+            case "DoctorVisitID":
+                return DiagnosisForVisit.getDoctorVisitID();
             default:
                  return null;
         }
     }
     
-    public Message getMessage(int rowIndex){
+    public DiagnosisForVisit getDiagnosisForVisit(int rowIndex){
         return data.get(rowIndex);
     }
     
@@ -82,6 +76,3 @@ public class MessageTableModel extends AbstractTableModel{
         data.remove(rowIndex);
     }  
 }
-
-
-

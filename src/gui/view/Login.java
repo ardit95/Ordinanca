@@ -155,15 +155,20 @@ public class Login extends javax.swing.JFrame {
 
     public static void main(String args[]) {
             Login login=null;
-        try{
-            login=new Login();
-            login.setVisible(true);
-        } catch (AppException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null,ex.getMessage());
-            if(ex.getMessage().equals("Nuk mund të krijohet lidhja me server.Kontrollo kabllat ose kontakto administratën"))
-                System.exit(0);
-        }
+        try {
+            
+                    login=new Login();
+                    if(login.staffIr.CheckAdminExists()==0){
+                        new checkSystemAdmin().setVisible(true);
+                    }
+                    else{
+                    login.setVisible(true);
+                    }
+                    
+                } catch (AppException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

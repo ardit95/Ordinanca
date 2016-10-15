@@ -9,9 +9,13 @@ import javax.swing.table.AbstractTableModel;
 public class LogsTableModel extends AbstractTableModel{
   static String [] columnNames;
     List<Logs> data;
+    DateFormat dateFormat;
+    DateFormat timeFormat;
     
     public LogsTableModel(String[] colNames) {
         columnNames=colNames;
+        dateFormat=new SimpleDateFormat("dd-MM-yyyy");
+        timeFormat=new SimpleDateFormat("HH:mm");
         /*"Name", "Surname", "Data e Lindjes","Numri Personal","Email","Telefoni","Qyteti"*/
     }
     
@@ -50,8 +54,6 @@ public class LogsTableModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
          Logs logs= (Logs)data.get(rowIndex);
-         DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
-         DateFormat timeFormat=new SimpleDateFormat("HH:mm");
         switch(columnNames[columnIndex]){
             
             case "Logs":

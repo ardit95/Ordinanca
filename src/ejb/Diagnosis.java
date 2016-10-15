@@ -5,9 +5,11 @@
  */
 package ejb;
 
+import ejb.DiagnosisForVisit;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,36 +19,37 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Besniku
  */
 @Entity
-@Table(name = "DoctorVisitDetails")
+@Table(name = "diagnosis")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DoctorVisitDetails.findAll", query = "SELECT d FROM DoctorVisitDetails d"),
-    @NamedQuery(name = "DoctorVisitDetails.findByDoctorVisitDetailID", query = "SELECT d FROM DoctorVisitDetails d WHERE d.DoctorVisitDetailID = :DoctorVisitDetailID"),
-    @NamedQuery(name = "DoctorVisitDetails.findByPrice", query = "SELECT d FROM DoctorVisitDetails d WHERE d.price = :price"),
-    @NamedQuery(name = "DoctorVisitDetails.findByComplaint", query = "SELECT d FROM DoctorVisitDetails d WHERE d.complaint = :complaint"),
-    @NamedQuery(name = "DoctorVisitDetails.findByAnamnesis", query = "SELECT d FROM DoctorVisitDetails d WHERE d.anamnesis = :anamnesis"),
-    @NamedQuery(name = "DoctorVisitDetails.findByExamination", query = "SELECT d FROM DoctorVisitDetails d WHERE d.examination = :examination"),
-    @NamedQuery(name = "DoctorVisitDetails.findByTherapy", query = "SELECT d FROM DoctorVisitDetails d WHERE d.therapy = :therapy"),
-    @NamedQuery(name = "DoctorVisitDetails.findByRecommendation", query = "SELECT d FROM DoctorVisitDetails d WHERE d.recommendation = :recommendation")})
-public class DoctorVisitDetails implements Serializable {
+    @NamedQuery(name = "Diagnosis.findAll", query = "SELECT d FROM Diagnosis d"),
+    @NamedQuery(name = "Diagnosis.findByDiagnosisID", query = "SELECT d FROM Diagnosis d WHERE d.diagnosisID = :diagnosisID"),
+    @NamedQuery(name = "Diagnosis.findByComplaint", query = "SELECT d FROM Diagnosis d WHERE d.complaint = :complaint"),
+    @NamedQuery(name = "Diagnosis.findByAnamnesis", query = "SELECT d FROM Diagnosis d WHERE d.anamnesis = :anamnesis"),
+    @NamedQuery(name = "Diagnosis.findByExamination", query = "SELECT d FROM Diagnosis d WHERE d.examination = :examination"),
+    @NamedQuery(name = "Diagnosis.findByTherapy", query = "SELECT d FROM Diagnosis d WHERE d.therapy = :therapy"),
+    @NamedQuery(name = "Diagnosis.findByRecommendation", query = "SELECT d FROM Diagnosis d WHERE d.recommendation = :recommendation")})
+public class Diagnosis implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "diagnosisID")
+    private Collection<DiagnosisForVisit> diagnosisforvisitCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "DoctorVisitDetailID")
-    private Integer DoctorVisitDetailID;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "Price")
-    private BigDecimal price;
+    @Column(name = "DiagnosisID")
+    private Integer diagnosisID;
     @Basic(optional = false)
     @Column(name = "Complaint")
     private String complaint;
@@ -62,34 +65,28 @@ public class DoctorVisitDetails implements Serializable {
     @JoinColumn(name = "DoctorVisitID", referencedColumnName = "DoctorVisitID")
     @ManyToOne(optional = false)
     private DoctorVisit DoctorVisitID;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "diagnosisID")
+    private Collection<DiagnosisForVisit> DiagnosisForVisitCollection;
 
-    public DoctorVisitDetails() {
+    public Diagnosis() {
     }
 
-    public DoctorVisitDetails(Integer DoctorVisitDetailID) {
-        this.DoctorVisitDetailID = DoctorVisitDetailID;
+    public Diagnosis(Integer diagnosisID) {
+        this.diagnosisID = diagnosisID;
     }
 
-    public DoctorVisitDetails(Integer DoctorVisitDetailID, String complaint, String examination) {
-        this.DoctorVisitDetailID = DoctorVisitDetailID;
+    public Diagnosis(Integer diagnosisID, String complaint, String examination) {
+        this.diagnosisID = diagnosisID;
         this.complaint = complaint;
         this.examination = examination;
     }
 
-    public Integer getDoctorVisitDetailID() {
-        return DoctorVisitDetailID;
+    public Integer getDiagnosisID() {
+        return diagnosisID;
     }
 
-    public void setDoctorVisitDetailID(Integer DoctorVisitDetailID) {
-        this.DoctorVisitDetailID = DoctorVisitDetailID;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setDiagnosisID(Integer diagnosisID) {
+        this.diagnosisID = diagnosisID;
     }
 
     public String getComplaint() {
@@ -140,21 +137,30 @@ public class DoctorVisitDetails implements Serializable {
         this.DoctorVisitID = DoctorVisitID;
     }
 
+    @XmlTransient
+    public Collection<DiagnosisForVisit> getDiagnosisForVisitCollection() {
+        return DiagnosisForVisitCollection;
+    }
+
+    public void setDiagnosisForVisitCollection(Collection<DiagnosisForVisit> DiagnosisForVisitCollection) {
+        this.DiagnosisForVisitCollection = DiagnosisForVisitCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (DoctorVisitDetailID != null ? DoctorVisitDetailID.hashCode() : 0);
+        hash += (diagnosisID != null ? diagnosisID.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DoctorVisitDetails)) {
+        if (!(object instanceof Diagnosis)) {
             return false;
         }
-        DoctorVisitDetails other = (DoctorVisitDetails) object;
-        if ((this.DoctorVisitDetailID == null && other.DoctorVisitDetailID != null) || (this.DoctorVisitDetailID != null && !this.DoctorVisitDetailID.equals(other.DoctorVisitDetailID))) {
+        Diagnosis other = (Diagnosis) object;
+        if ((this.diagnosisID == null && other.diagnosisID != null) || (this.diagnosisID != null && !this.diagnosisID.equals(other.diagnosisID))) {
             return false;
         }
         return true;
@@ -162,7 +168,16 @@ public class DoctorVisitDetails implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.DoctorVisitDetails[ DoctorVisitDetailID=" + DoctorVisitDetailID + " ]";
+        return "ejb.Diagnosis[ diagnosisID=" + diagnosisID + " ]";
+    }
+
+    @XmlTransient
+    public Collection<DiagnosisForVisit> getDiagnosisforvisitCollection() {
+        return diagnosisforvisitCollection;
+    }
+
+    public void setDiagnosisforvisitCollection(Collection<DiagnosisForVisit> diagnosisforvisitCollection) {
+        this.diagnosisforvisitCollection = diagnosisforvisitCollection;
     }
     
 }

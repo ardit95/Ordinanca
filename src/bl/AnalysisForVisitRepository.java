@@ -1,25 +1,25 @@
-
 package bl;
 
-import ejb.DoctorVisitDetails;
+import ejb.AnalysisForVisit;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import ExceptionPackage.AppException;
 
-public class DoctorVisitDetailsRepository extends EntMngClass implements DoctorVisitDetailsInterface{
+public class AnalysisForVisitRepository extends EntMngClass implements AnalysisForVisitInterface{
      
-    public DoctorVisitDetailsRepository(EntityManager tempEm){
+    public AnalysisForVisitRepository(EntityManager tempEm){
         super(tempEm);
     }
     
     @Override
-    public DoctorVisitDetails create(DoctorVisitDetails DoctorVisitDetails)throws AppException {
+    public AnalysisForVisit create(AnalysisForVisit AnalysisForVisit)throws AppException {
         try{
         em.getTransaction().begin();
-        em.persist(DoctorVisitDetails);
+        em.persist(AnalysisForVisit);
         em.flush();
         em.getTransaction().commit();
-        return DoctorVisitDetails;
+        return AnalysisForVisit;
         }catch (Throwable thro){
         if (thro.getMessage().contains("2627")){
             if(thro.getMessage().toLowerCase().contains("unique"))
@@ -34,10 +34,10 @@ public class DoctorVisitDetailsRepository extends EntMngClass implements DoctorV
     }
 
     @Override
-    public void edit(DoctorVisitDetails DoctorVisitDetails)throws AppException {
+    public void edit(AnalysisForVisit AnalysisForVisit)throws AppException {
         try{
         em.getTransaction().begin();
-        em.merge(DoctorVisitDetails);
+        em.merge(AnalysisForVisit);
         em.getTransaction().commit();
         }catch (Throwable thro){
         if (thro.getMessage().contains("2627")){
@@ -53,14 +53,14 @@ public class DoctorVisitDetailsRepository extends EntMngClass implements DoctorV
     }
 
     @Override
-    public void remove(DoctorVisitDetails DoctorVisitDetails) {
+    public void remove(AnalysisForVisit AnalysisForVisit) {
         em.getTransaction().begin();
-        em.remove(DoctorVisitDetails);
+        em.remove(AnalysisForVisit);
         em.getTransaction().commit();
     }
 
     @Override
-    public List<DoctorVisitDetails> findAll() {
-        return em.createNamedQuery("DoctorVisitDetailsRepository.findAll").getResultList();
+    public List<AnalysisForVisit> findAll() {
+        return em.createNamedQuery("AnalysisForVisit.findAll").getResultList();
     }    
 }

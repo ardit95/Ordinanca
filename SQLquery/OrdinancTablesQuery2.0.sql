@@ -74,8 +74,8 @@ CREATE TABLE AnalysisVisit(
     CONSTRAINT fk_StaffID_AV FOREIGN KEY (StaffID) REFERENCES Staff(Username)
 );
 
-CREATE TABLE AnalysisDetail(
-	AnalysisDetailID int PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE AnalysisForVisit(
+	AnalysisForVisitID int PRIMARY KEY AUTO_INCREMENT,
     Price decimal(10,2),
     AnalysisID int NOT NULL,
     AnalysisVisitID int NOT NULL,
@@ -98,9 +98,8 @@ CREATE TABLE IF NOT EXISTS DoctorVisit(
     CONSTRAINT fk_DV_StaffID FOREIGN KEY (StaffID) REFERENCES Staff(Username)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS DoctorVisitDetails(
-	DoctorVisitDetailID int PRIMARY KEY AUTO_INCREMENT,
-	Price decimal(10,2),
+CREATE TABLE IF NOT EXISTS Diagnosis(
+	DiagnosisID int PRIMARY KEY AUTO_INCREMENT,
     Complaint varchar(300) NOT NULL,
     Anamnesis varchar (300),
     Examination varchar (300) NOT NULL,
@@ -110,9 +109,22 @@ CREATE TABLE IF NOT EXISTS DoctorVisitDetails(
 	CONSTRAINT fk_DVD_DoctorVisitID FOREIGN KEY (DoctorVisitID) REFERENCES DoctorVisit(DoctorVisitID)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS DiagnosisForVisit(
+    DiagnosisForVisitID int PRIMARY KEY AUTO_INCREMENT,
+    Price decimal(10,2) NOT NULL,
+    DiagnosisID int NOT NULL,
+	DoctorVisitID int NOT NULL,
+    CONSTRAINT fk_DFV_DiagnosisID FOREIGN KEY (DiagnosisID) REFERENCES Diagnosis(DiagnosisID),
+    CONSTRAINT fk_DFV_DoctorVisitID FOREIGN KEY (DoctorVisitID) REFERENCES DoctorVisit(DoctorVisitID)
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
 	USE Ordinanca;
 	CREATE VIEW NumberOfStaff AS
-	SELECT COUNT(*) FROM Ordinanca.Staff;
+	SELECT COUNT(*) AS 'Numri' FROM Ordinanca.Staff;
+    
+	
 
 /*Hashing SHA2_512 
 		SELECT SHA2('123459421142',512)

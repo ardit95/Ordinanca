@@ -4,6 +4,7 @@ import ejb.Message;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 public class MessageTableModel extends AbstractTableModel{
@@ -17,6 +18,12 @@ public class MessageTableModel extends AbstractTableModel{
         dateFormat=new SimpleDateFormat("dd-MM-yyyy");
         timeFormat=new SimpleDateFormat("HH:mm");
         /*"Name", "Surname", "Data e Lindjes","Numri Personal","Email","Telefoni","Qyteti"*/
+    }
+    
+    public boolean isEmpty(){
+        if(data!=null)
+            return (data.isEmpty());
+        return true;
     }
     
     public void setColumnNames(String[] colNames){
@@ -53,22 +60,24 @@ public class MessageTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-         Message message= (Message)data.get(rowIndex);
-        switch(columnNames[columnIndex]){
-            
+        Message message= (Message)data.get(rowIndex);
+        String nameAndSurname;
+         switch(columnNames[columnIndex]){
+             
             case "MessageID":
                 return message.getMessageID();
             case "Date":
-                return dateFormat.format(message.getDate()); 
+                return dateFormat.format(message.getTimeStamp()); 
             case "Time":
-                return timeFormat.format(message.getDate());
+                return timeFormat.format(message.getTimeStamp());
             case "Message":
                 return message.getMessage();
-            case "Username":
-                return message.getUsername().getUsername();   
-            case "DoctorID":
-                return message.getDoctorID().getUsername();    
-            
+            case "Reciever":
+                nameAndSurname=message.getUsername().getName()+" "+message.getUsername().getSurname();
+                return nameAndSurname;   
+            case "Sender":
+                nameAndSurname=message.getDoctorID().getName()+" "+message.getDoctorID().getSurname();
+                return nameAndSurname;
             default:
                  return null;
         }

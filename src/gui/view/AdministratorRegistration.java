@@ -163,14 +163,18 @@ public class AdministratorRegistration extends javax.swing.JFrame {
         jLabel12.setBounds(20, 20, 140, 20);
 
         specializationTxtf.setColumns(20);
+        specializationTxtf.setLineWrap(true);
         specializationTxtf.setRows(5);
+        specializationTxtf.setWrapStyleWord(true);
         jScrollPane1.setViewportView(specializationTxtf);
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(170, 420, 350, 96);
 
         educationTxtf.setColumns(20);
+        educationTxtf.setLineWrap(true);
         educationTxtf.setRows(5);
+        educationTxtf.setWrapStyleWord(true);
         jScrollPane2.setViewportView(educationTxtf);
 
         jPanel1.add(jScrollPane2);

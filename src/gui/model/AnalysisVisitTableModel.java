@@ -58,9 +58,9 @@ public class AnalysisVisitTableModel extends AbstractTableModel{
             case "AnalysisVisitID":
                 return AnalysisVisit.getAnalysisVisitID();
             case "Date":
-                return dateFormat.format(AnalysisVisit.getDate());
+                return dateFormat.format(AnalysisVisit.getTimeStamp());
             case "Time":
-                return timeFormat.format(AnalysisVisit.getDate());
+                return timeFormat.format(AnalysisVisit.getTimeStamp());
             case "PaitentID":
                 return AnalysisVisit.getPatientID();
             case "LaboratorTechnicianID":

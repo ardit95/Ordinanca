@@ -48,7 +48,7 @@ public class DiagnosisForVisit implements Serializable {
     private Diagnosis diagnosisID;
     @JoinColumn(name = "DoctorVisitID", referencedColumnName = "DoctorVisitID")
     @ManyToOne(optional = false)
-    private DoctorVisit DoctorVisitID;
+    private DoctorVisit doctorVisitID;
 
     public DiagnosisForVisit() {
     }
@@ -87,11 +87,11 @@ public class DiagnosisForVisit implements Serializable {
     }
 
     public DoctorVisit getDoctorVisitID() {
-        return DoctorVisitID;
+        return doctorVisitID;
     }
 
-    public void setDoctorVisitID(DoctorVisit DoctorVisitID) {
-        this.DoctorVisitID = DoctorVisitID;
+    public void setDoctorVisitID(DoctorVisit doctorVisitID) {
+        this.doctorVisitID = doctorVisitID;
     }
 
     @Override

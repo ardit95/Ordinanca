@@ -2,6 +2,7 @@ package bl;
 
 import ExceptionPackage.AppException;
 import ejb.Message;
+import ejb.Staff;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -61,6 +62,21 @@ public class MessageRepository extends EntMngClass implements MessageInterface{
     @Override
     public List<Message> findAll() {
         return em.createNamedQuery ("Message.findAll").getResultList();
+    }
+
+    @Override
+    public List<Message> findByReciever(Staff currentUser) {
+        Query query = em.createQuery("SELECT object(message) FROM Message message WHERE message.username.username = :receiver AND message.seen='No'");
+        query.setParameter("receiver", currentUser.getUsername());
+        return (List<Message>)query.getResultList();
+    }
+
+    @Override
+    public List<Message> findBySenderAndReciever(Staff reciever,Staff sender) {
+        Query query= em.createQuery("SELECT Object (message) FROM Message message WHERE message.username.username = :reciever AND message.doctorID.username = :sender ");
+        query.setParameter("sender", sender.getUsername());
+        query.setParameter("reciever", reciever.getUsername());
+        return (List<Message>)query.getResultList();
     }
     
 }

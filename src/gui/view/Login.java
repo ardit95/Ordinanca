@@ -186,14 +186,14 @@ public class Login extends javax.swing.JFrame {
        String username=usernameTxtf.getText();
        String password=passwordTxtf.getText();       
        String serverip=serverIpTxtf.getText();
-       Staff staff;
+       Staff currentUser;
        try{
        
         EntMngClass emc=new EntMngClass(username.trim(),password.trim(),serverip.trim());
         staffIr=new StaffRepository(emc.getEntityManager());
         String salt = staffIr.findSalt(username);
-        staff=staffIr.findByUsernamePassword(username,staffIr.kripto(salt+password));
-        int numberOfLogins=staffIr.getNumberOfLogins(staff);
+        currentUser=staffIr.findByUsernamePassword(username,staffIr.kripto(salt+password));
+        int numberOfLogins=staffIr.getNumberOfLogins(currentUser);
         /*
         logsIr=new LogsRepository(emc.getEntityManager());
         Date date = logsIr.findDate();
@@ -212,9 +212,9 @@ public class Login extends javax.swing.JFrame {
         logsIr.create(logs);*/
         if(numberOfLogins==0){
             this.dispose();
-            new PasswordChangeFrame(staff).setVisible(true);
+            new PasswordChangeFrame(currentUser).setVisible(true);
         }else{
-            MainFrame mainFrame = new MainFrame(staff,emc.getEntityManager());
+            MainFrame mainFrame = new MainFrame(emc.getEntityManager(),currentUser);
             mainFrame.setVisible(true);
             dispose();
         }

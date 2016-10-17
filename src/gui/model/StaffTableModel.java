@@ -48,12 +48,11 @@ public class StaffTableModel extends AbstractTableModel{
     public int getColumnCount() {
        return columnNames.length;
     }
-
+ 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
          Staff staff= (Staff)data.get(rowIndex);
         switch(columnNames[columnIndex]){
-            
             case "Username":
                 return staff.getUsername();
             case "Name":
@@ -83,5 +82,11 @@ public class StaffTableModel extends AbstractTableModel{
     public void remove(int rowIndex) {
         data.remove(rowIndex);
     }  
+
+    public boolean isEmpty() {
+        if(data!=null)
+            return (data.isEmpty());
+        return false;
+    }
 }
 

@@ -19,4 +19,6 @@ public interface StaffInterface {
     public int CheckAdminExists();
     void deleteMySQLUser(Staff staff) throws SQLException;
     void setStaffPassword(Staff staff);
+    List<Staff> findAllWithoutAdministratorAndMyself(Staff currentUser);
+    List<Staff> findAllWithoutAdministrator();
 }

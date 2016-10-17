@@ -59,9 +59,9 @@ public class LogsTableModel extends AbstractTableModel{
             case "Logs":
                 return logs.getLogsID();
             case "Date":
-                return dateFormat.format(logs.getDate()); 
+                return dateFormat.format(logs.getTimeStamp()); 
             case "Time":
-                return timeFormat.format(logs.getDate());
+                return timeFormat.format(logs.getTimeStamp());
             case "Message":
                 return logs.getMessage();
             case "Type":

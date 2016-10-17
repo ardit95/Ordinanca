@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Logs.findAll", query = "SELECT l FROM Logs l"),
     @NamedQuery(name = "Logs.findByLogsID", query = "SELECT l FROM Logs l WHERE l.logsID = :logsID"),
-    @NamedQuery(name = "Logs.findByDate", query = "SELECT l FROM Logs l WHERE l.date = :date"),
+    @NamedQuery(name = "Logs.findByTimeStamp", query = "SELECT l FROM Logs l WHERE l.timeStamp = :timeStamp"),
     @NamedQuery(name = "Logs.findByType", query = "SELECT l FROM Logs l WHERE l.type = :type"),
     @NamedQuery(name = "Logs.findByMessage", query = "SELECT l FROM Logs l WHERE l.message = :message"),
     @NamedQuery(name = "Logs.findBySeen", query = "SELECT l FROM Logs l WHERE l.seen = :seen")})
@@ -45,9 +45,9 @@ public class Logs implements Serializable {
     @Column(name = "LogsID")
     private Integer logsID;
     @Basic(optional = false)
-    @Column(name = "Date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    @Column(name = "timeStamp")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeStamp;
     @Basic(optional = false)
     @Column(name = "Type")
     private String type;
@@ -67,9 +67,9 @@ public class Logs implements Serializable {
         this.logsID = logsID;
     }
 
-    public Logs(Integer logsID, Date date, String type, String message) {
+    public Logs(Integer logsID, Date timeStamp, String type, String message) {
         this.logsID = logsID;
-        this.date = date;
+        this.timeStamp = timeStamp;
         this.type = type;
         this.message = message;
     }
@@ -82,12 +82,12 @@ public class Logs implements Serializable {
         this.logsID = logsID;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public String getType() {

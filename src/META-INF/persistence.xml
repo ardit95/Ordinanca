@@ -17,5 +17,7 @@
     <class>ejbView.Analysisforvisit</class>
     <class>ejbView.Analysisvisit</class>
     <class>ejbView.NumberOfStaff</class>
+    <class>ejb.Diagnosisforvisit</class>
+    <class>ejbView.Numberofstaff</class>
   </persistence-unit>
 </persistence>

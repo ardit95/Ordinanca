@@ -16,13 +16,14 @@ import javax.swing.JOptionPane;
 public class MainFrame extends javax.swing.JFrame {
     
     String pozita="";
-    static EntityManager entityManager;
-    static Staff staff;
-    public MainFrame(Staff staff,EntityManager entityManager) {
+    EntityManager entityManager;
+    Staff currentUser;
+    
+    public MainFrame(EntityManager entityManager,Staff currentUser) {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         initComponents();
-        pozita=staff.getRole();
-        this.staff=staff;
+        this.currentUser=currentUser;
+        pozita=currentUser.getRole();
         this.entityManager=entityManager;
         setPrioritys();
     }
@@ -139,7 +140,7 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-     Message message= new Message();
+     AddMessage message= new AddMessage(entityManager,currentUser);
      desktopPane.add(message);
      message.show();
     }

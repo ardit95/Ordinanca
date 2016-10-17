@@ -154,4 +154,17 @@ public class StaffRepository extends EntMngClass implements StaffInterface{
         }
     }
     
+    @Override
+    public List<Staff> findAllWithoutAdministratorAndMyself(Staff currentUser){
+        Query query = em.createQuery("SELECT Object (staff) FROM Staff staff WHERE staff.role NOT LIKE 'Administrator' AND staff.username NOT LIKE :currentU ");
+        query.setParameter("currentU", currentUser.getUsername());
+        return (List<Staff>)query.getResultList();
+    }
+
+    @Override
+    public List<Staff> findAllWithoutAdministrator() {
+        Query query = em.createQuery("SELECT Object(staff) FROM Staff staff WHERE staff.role NOT LIKE 'Administrator'");
+        return (List<Staff>) query.getResultList();
+    }
+    
 }

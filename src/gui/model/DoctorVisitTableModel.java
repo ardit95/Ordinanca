@@ -59,9 +59,9 @@ public class DoctorVisitTableModel extends AbstractTableModel{
             case "DoctorVisitID":
                 return DoctorVisit.getDoctorVisitID();
             case "Date":
-                return dateFormat.format(DoctorVisit.getDate()); 
+                return dateFormat.format(DoctorVisit.getTimeStamp()); 
             case "Time":
-                return timeFormat.format(DoctorVisit.getDate());
+                return timeFormat.format(DoctorVisit.getTimeStamp());
             case "SumPrice":
                 return DoctorVisit.getSumPrice();
             case "Remark":

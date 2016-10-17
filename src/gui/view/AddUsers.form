@@ -378,6 +378,10 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
+<<<<<<< HEAD
+=======
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+>>>>>>> 2f06bcfd2c22c23342f39f3398b59c0f4b1ec2e0
                 <Property name="wrapStyleWord" type="boolean" value="true"/>
               </Properties>
             </Component>

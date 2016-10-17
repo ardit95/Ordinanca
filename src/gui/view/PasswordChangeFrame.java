@@ -9,13 +9,15 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class PasswordChangeFrame extends javax.swing.JFrame {
+
     Staff staff;
     StaffInterface staffIr;
+
     public PasswordChangeFrame(Staff staff) throws AppException {
         initComponents();
-        this.staff=staff;
+        this.staff = staff;
         /*Duhet me u zavendsu ma vone gjithqysh jo me root me u bo qekjo query*/
-        staffIr=new StaffRepository(new EntMngClass("root","12345","localhost").getEntityManager());
+        staffIr = new StaffRepository(new EntMngClass("root", "12345", "localhost").getEntityManager());
     }
 
     @SuppressWarnings("unchecked")
@@ -139,13 +141,15 @@ public class PasswordChangeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_password1TxtfActionPerformed
 
     private void password1TxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_password1TxtfKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
-        changePasswordMethod();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            changePasswordMethod();
+        }
     }//GEN-LAST:event_password1TxtfKeyPressed
 
     private void password2TxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_password2TxtfKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
-        changePasswordMethod();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            changePasswordMethod();
+        }
     }//GEN-LAST:event_password2TxtfKeyPressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitBtn;
@@ -157,20 +161,21 @@ public class PasswordChangeFrame extends javax.swing.JFrame {
     private javax.swing.JButton saveBtn;
     private javax.swing.JLabel usernameLbl;
     // End of variables declaration//GEN-END:variables
-    private void changePasswordMethod(){
-    try{
-            if(!password1Txtf.getText().equals(password2Txtf.getText()))
+    private void changePasswordMethod() {
+        try {
+            if (!password1Txtf.getText().equals(password2Txtf.getText())) {
                 throw new AppException("Fjalëkalimi i parë dallon nga fjalëkalimi i dytë");
-            byte[] password = staffIr.kripto(staff.getSalt()+password1Txtf.getText().trim());
+            }
+            byte[] password = staffIr.kripto(staff.getSalt() + password1Txtf.getText().trim());
             staff.setPassword(password);
-            staffIr.changeLoginPassword(staff,password1Txtf.getText());
+            staffIr.changeLoginPassword(staff, password1Txtf.getText());
             staff.setNumberOfLogins(1);
             staffIr.edit(staff);
             this.dispose();
             new Login().setVisible(true);
-        }catch(AppException ae){
+        } catch (AppException ae) {
             ae.printStackTrace();
-            JOptionPane.showMessageDialog(this,ae.getMessage());
+            JOptionPane.showMessageDialog(this, ae.getMessage());
         }
     }
 }

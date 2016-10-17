@@ -14,17 +14,18 @@ import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 
 public class AdministratorRegistration extends javax.swing.JFrame {
+
     EntityManager entityManager;
-   StaffInterface staffIr;
-   StaffTableModel staffTableModel;
-    
+    StaffInterface staffIr;
+    StaffTableModel staffTableModel;
+
     AdministratorRegistration(EntityManager em) {
-        entityManager=em;
+        entityManager = em;
         initComponents();
         setLocation(220, 10);
-        staffIr=new StaffRepository(entityManager);
-        String [] columnNamesTableModel={"Username","Name", "Surname", "DateOfBirth","Role"};
-        staffTableModel=new StaffTableModel(columnNamesTableModel);
+        staffIr = new StaffRepository(entityManager);
+        String[] columnNamesTableModel = {"Username", "Name", "Surname", "DateOfBirth", "Role"};
+        staffTableModel = new StaffTableModel(columnNamesTableModel);
     }
 
     @SuppressWarnings("unchecked")
@@ -163,14 +164,18 @@ public class AdministratorRegistration extends javax.swing.JFrame {
         jLabel12.setBounds(20, 20, 140, 20);
 
         specializationTxtf.setColumns(20);
+        specializationTxtf.setLineWrap(true);
         specializationTxtf.setRows(5);
+        specializationTxtf.setWrapStyleWord(true);
         jScrollPane1.setViewportView(specializationTxtf);
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(170, 420, 350, 96);
 
         educationTxtf.setColumns(20);
+        educationTxtf.setLineWrap(true);
         educationTxtf.setRows(5);
+        educationTxtf.setWrapStyleWord(true);
         jScrollPane2.setViewportView(educationTxtf);
 
         jPanel1.add(jScrollPane2);
@@ -203,24 +208,24 @@ public class AdministratorRegistration extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-    Login login;
-    try {
-           addUserMethod();
-           login=new Login();
-           dispose();
-           login.setVisible(true);
-       } catch (AppException ex) {
-           JOptionPane.showMessageDialog(this, ex.getMessage());
-       } catch (SQLException ex) {
-           Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        Login login;
+        try {
+            addUserMethod();
+            login = new Login();
+            dispose();
+            login.setVisible(true);
+        } catch (AppException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         emptyLabels();
     }//GEN-LAST:event_clearBtnActionPerformed
     /*Zbraz te gjith textfields*/
-    private void emptyLabels(){
+    private void emptyLabels() {
         nameTxtf.setText("");
         surnameTxtf.setText("");
         usernameTxtf.setText("");
@@ -232,16 +237,16 @@ public class AdministratorRegistration extends javax.swing.JFrame {
         specializationTxtf.setText("");
         roleCombo.setSelectedItem("Doctor");
     }
-    
-    private void addUserMethod() throws AppException, SQLException{
-        Staff staff=new Staff();
-        String salt="";
-        for(int i=0;i<64;i++){
-        char c=(char)ThreadLocalRandom.current().nextInt(65, 122 + 1);
-        salt+=c;
+
+    private void addUserMethod() throws AppException, SQLException {
+        Staff staff = new Staff();
+        String salt = "";
+        for (int i = 0; i < 64; i++) {
+            char c = (char) ThreadLocalRandom.current().nextInt(65, 122 + 1);
+            salt += c;
         }
-        byte[] password = staffIr.kripto(salt+passwordTxtf.getText().trim());
-        String passwordString=passwordTxtf.getText().trim();
+        byte[] password = staffIr.kripto(salt + passwordTxtf.getText().trim());
+        String passwordString = passwordTxtf.getText().trim();
         staff.setUsername(usernameTxtf.getText().trim());
         staff.setName(nameTxtf.getText().trim());
         staff.setSurname(surnameTxtf.getText().trim());
@@ -254,7 +259,7 @@ public class AdministratorRegistration extends javax.swing.JFrame {
         staff.setRole(roleCombo.getSelectedItem().toString());
         staff.setNumberOfLogins(0);
         staffIr.create(staff);
-        staffIr.createMySQLUser(staff,passwordString);
+        staffIr.createMySQLUser(staff, passwordString);
         JOptionPane.showMessageDialog(this, "Perdoruesi u shtua me sukses !");
         emptyLabels();
     }

@@ -5,7 +5,6 @@
  */
 package ejb;
 
-import ejb.DiagnosisForVisit;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -41,9 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Diagnosis.findByRecommendation", query = "SELECT d FROM Diagnosis d WHERE d.recommendation = :recommendation")})
 public class Diagnosis implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "diagnosisID")
-    private Collection<DiagnosisForVisit> diagnosisforvisitCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,7 +60,7 @@ public class Diagnosis implements Serializable {
     private String recommendation;
     @JoinColumn(name = "DoctorVisitID", referencedColumnName = "DoctorVisitID")
     @ManyToOne(optional = false)
-    private DoctorVisit DoctorVisitID;
+    private DoctorVisit doctorVisitID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "diagnosisID")
     private Collection<DiagnosisForVisit> DiagnosisForVisitCollection;
 
@@ -130,11 +126,11 @@ public class Diagnosis implements Serializable {
     }
 
     public DoctorVisit getDoctorVisitID() {
-        return DoctorVisitID;
+        return doctorVisitID;
     }
 
-    public void setDoctorVisitID(DoctorVisit DoctorVisitID) {
-        this.DoctorVisitID = DoctorVisitID;
+    public void setDoctorVisitID(DoctorVisit doctorVisitID) {
+        this.doctorVisitID = doctorVisitID;
     }
 
     @XmlTransient
@@ -171,13 +167,4 @@ public class Diagnosis implements Serializable {
         return "ejb.Diagnosis[ diagnosisID=" + diagnosisID + " ]";
     }
 
-    @XmlTransient
-    public Collection<DiagnosisForVisit> getDiagnosisforvisitCollection() {
-        return diagnosisforvisitCollection;
-    }
-
-    public void setDiagnosisforvisitCollection(Collection<DiagnosisForVisit> diagnosisforvisitCollection) {
-        this.diagnosisforvisitCollection = diagnosisforvisitCollection;
-    }
-    
 }

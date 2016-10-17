@@ -21,24 +21,25 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 public class Login extends javax.swing.JFrame {
+
     StaffInterface staffIr;
     LogsInterface logsIr;
-    
-    public Login() throws AppException { 
-        try { 
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"); 
-        }catch (Exception ex) { 
-            ex.printStackTrace(); 
+
+    public Login() throws AppException {
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        setSize(452,605);
+        setSize(452, 605);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        int jFramewidth=this.getSize().width;
-        int jFrameheight=this.getSize().height;
-        int locationx=(dim.width-jFramewidth)/2;
-        int locationy=(dim.height-jFrameheight)/2;
-        this.setLocation(locationx,locationy);
+        int jFramewidth = this.getSize().width;
+        int jFrameheight = this.getSize().height;
+        int locationx = (dim.width - jFramewidth) / 2;
+        int locationy = (dim.height - jFrameheight) / 2;
+        this.setLocation(locationx, locationy);
         initComponents();
-        staffIr=new StaffRepository(new EntMngClass("Checker","12345","localhost").getEntityManager());
+        staffIr = new StaffRepository(new EntMngClass("Checker", "12345", "localhost").getEntityManager());
         usernameTxtf.requestFocus();
     }
 
@@ -123,14 +124,14 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void usernameTxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameTxtfKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             loginMethod();
         }
     }//GEN-LAST:event_usernameTxtfKeyPressed
 
     private void passwordTxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordTxtfKeyPressed
 
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             loginMethod();
         }
     }//GEN-LAST:event_passwordTxtfKeyPressed
@@ -140,7 +141,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_serverIpTxtfActionPerformed
 
     private void serverIpTxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_serverIpTxtfKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             loginMethod();
         }
     }//GEN-LAST:event_serverIpTxtfKeyPressed
@@ -154,21 +155,20 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_loginBtnActionPerformed
 
     public static void main(String args[]) {
-            Login login=null;
+        Login login = null;
         try {
-            
-                    login=new Login();
-                    if(login.staffIr.CheckAdminExists()==0){
-                        new checkSystemAdmin().setVisible(true);
-                    }
-                    else{
-                    login.setVisible(true);
-                    }
-                    
-                } catch (AppException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
+
+            login = new Login();
+            if (login.staffIr.CheckAdminExists() == 0) {
+                new checkSystemAdmin().setVisible(true);
+            } else {
+                login.setVisible(true);
+            }
+
+        } catch (AppException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -183,18 +183,18 @@ public class Login extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void loginMethod() {
-       String username=usernameTxtf.getText();
-       String password=passwordTxtf.getText();       
-       String serverip=serverIpTxtf.getText();
-       Staff staff;
-       try{
-       
-        EntMngClass emc=new EntMngClass(username.trim(),password.trim(),serverip.trim());
-        staffIr=new StaffRepository(emc.getEntityManager());
-        String salt = staffIr.findSalt(username);
-        staff=staffIr.findByUsernamePassword(username,staffIr.kripto(salt+password));
-        int numberOfLogins=staffIr.getNumberOfLogins(staff);
-        /*
+        String username = usernameTxtf.getText();
+        String password = passwordTxtf.getText();
+        String serverip = serverIpTxtf.getText();
+        Staff currentUser;
+        try {
+
+            EntMngClass emc = new EntMngClass(username.trim(), password.trim(), serverip.trim());
+            staffIr = new StaffRepository(emc.getEntityManager());
+            String salt = staffIr.findSalt(username);
+            currentUser = staffIr.findByUsernamePassword(username, staffIr.kripto(salt + password));
+            int numberOfLogins = staffIr.getNumberOfLogins(currentUser);
+            /*
         logsIr=new LogsRepository(emc.getEntityManager());
         Date date = logsIr.findDate();
         DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -210,30 +210,29 @@ public class Login extends javax.swing.JFrame {
         logs.setUsername(staff);
         
         logsIr.create(logs);*/
-        if(numberOfLogins==0){
-            this.dispose();
-            new PasswordChangeFrame(staff).setVisible(true);
-        }else{
-            MainFrame mainFrame = new MainFrame(staff,emc.getEntityManager());
-            mainFrame.setVisible(true);
-            dispose();
+            if (numberOfLogins == 0) {
+                this.dispose();
+                new PasswordChangeFrame(currentUser).setVisible(true);
+            } else {
+                MainFrame mainFrame = new MainFrame(emc.getEntityManager(), currentUser);
+                mainFrame.setVisible(true);
+                dispose();
+            }
+
+        } catch (NoResultException nre) {
+            nre.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Gabimm ");
+            usernameTxtf.setText("");
+            passwordTxtf.setText("");
+        } catch (AppException ae) {
+            ae.printStackTrace();
+            JOptionPane.showMessageDialog(null, ae.getMessage());
         }
-        
-       }catch (NoResultException nre){
-           nre.printStackTrace();
-           JOptionPane.showMessageDialog(null,"Gabimm ");
-           usernameTxtf.setText("");
-           passwordTxtf.setText("");
-       }
-       catch(AppException ae){
-           ae.printStackTrace();
-           JOptionPane.showMessageDialog(null, ae.getMessage());
-       }
-       
+
     }
-    
-    private  int close(){
-        WindowEvent winClosing=new WindowEvent (this, WindowEvent.WINDOW_CLOSING);
+
+    private int close() {
+        WindowEvent winClosing = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosing);
         return 0;
     }

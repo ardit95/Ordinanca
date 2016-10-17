@@ -6,24 +6,24 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class DiagnosisTableModel extends AbstractTableModel{
-  static String [] columnNames;
+public class DiagnosisTableModel extends AbstractTableModel {
+
+    static String[] columnNames;
     List<Diagnosis> data;
-    
+
     public DiagnosisTableModel(String[] colNames) {
-        columnNames=colNames;
+        columnNames = colNames;
         /*"Name", "Surname", "Data e Lindjes","Numri Personal","Email","Telefoni","Qyteti"*/
     }
-    
-    public void setColumnNames(String[] colNames){
-            columnNames=colNames;
+
+    public void setColumnNames(String[] colNames) {
+        columnNames = colNames;
     }
 
     public static String[] getColumnNames() {
         return columnNames;
     }
-    
-    
+
     public DiagnosisTableModel(List<Diagnosis> list) {
         data = list;
     }
@@ -31,12 +31,12 @@ public class DiagnosisTableModel extends AbstractTableModel{
     public void add(List<Diagnosis> list) {
         data = list;
     }
-    
+
     @Override
     public int getRowCount() {
         return data.size();
     }
-     
+
     @Override
     public String getColumnName(int col) {
         return columnNames[col];
@@ -44,13 +44,13 @@ public class DiagnosisTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-       return columnNames.length;
+        return columnNames.length;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-         Diagnosis Diagnosis= (Diagnosis)data.get(rowIndex);
-        switch(columnNames[columnIndex]){
+        Diagnosis Diagnosis = (Diagnosis) data.get(rowIndex);
+        switch (columnNames[columnIndex]) {
             /*DoctorVisitDetailID Price Complaint Anamnesis Examination Therapy Recommendation DoctorVisitID */
             case "DiagnosisID":
                 return Diagnosis.getDiagnosisID();
@@ -60,22 +60,22 @@ public class DiagnosisTableModel extends AbstractTableModel{
                 return Diagnosis.getAnamnesis();
             case "Examination":
                 return Diagnosis.getExamination();
-                case "Therapy":
+            case "Therapy":
                 return Diagnosis.getTherapy();
-                case "Recommendation":
+            case "Recommendation":
                 return Diagnosis.getRecommendation();
-                case "DoctorVisitID":
+            case "DoctorVisitID":
                 return Diagnosis.getDoctorVisitID();
             default:
-                 return null;
+                return null;
         }
     }
-    
-    public Diagnosis getDiagnosis(int rowIndex){
+
+    public Diagnosis getDiagnosis(int rowIndex) {
         return data.get(rowIndex);
     }
-    
+
     public void remove(int rowIndex) {
         data.remove(rowIndex);
-    }  
+    }
 }

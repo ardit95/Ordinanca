@@ -1,4 +1,3 @@
-
 package gui.view;
 
 import java.awt.Dimension;
@@ -19,42 +18,40 @@ public class SeeLogs extends javax.swing.JInternalFrame {
     EntityManager entityManager;
     LogsInterface logsIr;
     LogsTableModel logsTM;
+
     public SeeLogs(EntityManager entityManager) {
-        this.entityManager=entityManager;
+        this.entityManager = entityManager;
         initComponents();
         this.setLocation(220, 10);
-        logsIr=new LogsRepository(entityManager);
-        String [] columnNamesTableModel={"Username", "Type","Message", "Date"};
-        logsTM=new LogsTableModel(columnNamesTableModel);
-        
+        logsIr = new LogsRepository(entityManager);
+        String[] columnNamesTableModel = {"Username", "Type", "Message", "Date"};
+        logsTM = new LogsTableModel(columnNamesTableModel);
+
         logsTableLoad();
         logsTableMoveKey();
-        
-        
-        searchTxtf.getDocument().addDocumentListener(new DocumentListener(){
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-           kerkoparticipant();
-        }
 
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            kerkoparticipant();
-        }
+        searchTxtf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                kerkoparticipant();
+            }
 
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-            kerkoparticipant();
-        }
-        
-                public void kerkoparticipant(){
-                    logsTableFindByAll(searchTxtf.getText());
-                }
-          });
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                kerkoparticipant();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                kerkoparticipant();
+            }
+
+            public void kerkoparticipant() {
+                logsTableFindByAll(searchTxtf.getText());
+            }
+        });
     }
 
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -113,33 +110,34 @@ public class SeeLogs extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    public void logsTableLoad(){
-        List <Logs> list=logsIr.findAll();
+
+    public void logsTableLoad() {
+        List<Logs> list = logsIr.findAll();
         logsTM.add(list);
         logsTbl.setModel(logsTM);
         logsTM.fireTableDataChanged();
     }
-    
-    public void logsTableFindByAll(String text){
-        List <Logs> list=logsIr.findByAll(text);
+
+    public void logsTableFindByAll(String text) {
+        List<Logs> list = logsIr.findByAll(text);
         logsTM.add(list);
         logsTbl.setModel(logsTM);
         logsTM.fireTableDataChanged();
     }
-    
-    public void logsTableMoveKey(){
-    ListSelectionModel rowSM=logsTbl.getSelectionModel();
-        rowSM.addListSelectionListener (new ListSelectionListener(){
-        @Override
-        public void valueChanged (ListSelectionEvent e){
-            if(e.getValueIsAdjusting())
-                return;
-            ListSelectionModel rowSM = (ListSelectionModel)e.getSource();
-            int selectedIndex = rowSM.getMinSelectionIndex();
-                if(selectedIndex>-1){
-                        Logs logs=logsTM.getLogs(selectedIndex);
-                        messageTxtf.setText(logs.getMessage());
+
+    public void logsTableMoveKey() {
+        ListSelectionModel rowSM = logsTbl.getSelectionModel();
+        rowSM.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting()) {
+                    return;
+                }
+                ListSelectionModel rowSM = (ListSelectionModel) e.getSource();
+                int selectedIndex = rowSM.getMinSelectionIndex();
+                if (selectedIndex > -1) {
+                    Logs logs = logsTM.getLogs(selectedIndex);
+                    messageTxtf.setText(logs.getMessage());
                 }
             }
         });

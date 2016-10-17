@@ -13,22 +13,23 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class checkSystemAdmin extends javax.swing.JFrame {
+
     StaffInterface staffIr;
     EntityManager em;
-    
+
     public checkSystemAdmin() {
         setLayout(new BorderLayout());
-        setSize(423,155);
+        setSize(423, 155);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        int jFramewidth=this.getSize().width;
-        int jFrameheight=this.getSize().height;
-        int locationx=(dim.width-jFramewidth)/2;
-        int locationy=(dim.height-jFrameheight)/2;
-        this.setLocation(locationx,locationy);
+        int jFramewidth = this.getSize().width;
+        int jFrameheight = this.getSize().height;
+        int locationx = (dim.width - jFramewidth) / 2;
+        int locationy = (dim.height - jFrameheight) / 2;
+        this.setLocation(locationx, locationy);
         initComponents();
         this.setVisible(true);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -177,13 +178,13 @@ public class checkSystemAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameTxtfActionPerformed
 
     private void usernameTxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameTxtfKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             loginMethod();
         }
     }//GEN-LAST:event_usernameTxtfKeyPressed
 
     private void passwordTxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordTxtfKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             loginMethod();
         }
     }//GEN-LAST:event_passwordTxtfKeyPressed
@@ -197,33 +198,33 @@ public class checkSystemAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
-        
-        
+
     }
 
     private void loginMethod() {
-        try{
-        validation();
-        em=new EntMngClass(usernameTxtf.getText().trim(),
-                passwordTxtf.getText().trim(),"localhost").getEntityManager();
-        staffIr=new StaffRepository(em);
-        this.dispose();
-        new AdministratorRegistration(em).setVisible(true);
-        }catch(AppException ae){
-            JOptionPane.showMessageDialog(null,ae.getMessage());
+        try {
+            validation();
+            em = new EntMngClass(usernameTxtf.getText().trim(),
+                    passwordTxtf.getText().trim(), "localhost").getEntityManager();
+            staffIr = new StaffRepository(em);
+            this.dispose();
+            new AdministratorRegistration(em).setVisible(true);
+        } catch (AppException ae) {
+            JOptionPane.showMessageDialog(null, ae.getMessage());
         }
     }
-    
-    public void TextFieldException(JTextField jtf,String s)throws AppException{
-        if (jtf.getText()==null || jtf.getText().isEmpty())
-            throw new AppException (s);
+
+    public void TextFieldException(JTextField jtf, String s) throws AppException {
+        if (jtf.getText() == null || jtf.getText().isEmpty()) {
+            throw new AppException(s);
+        }
     }
-    
-    private void validation()throws AppException {
-        TextFieldException(usernameTxtf,"Shkruaje Usernamin e SystemAdminit.");
-        TextFieldException(passwordTxtf,"Shkruaje Passwordin e SystemAdminit.");
+
+    private void validation() throws AppException {
+        TextFieldException(usernameTxtf, "Shkruaje Usernamin e SystemAdminit.");
+        TextFieldException(passwordTxtf, "Shkruaje Passwordin e SystemAdminit.");
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

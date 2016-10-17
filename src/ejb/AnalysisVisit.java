@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "AnalysisVisit.findAll", query = "SELECT a FROM AnalysisVisit a"),
     @NamedQuery(name = "AnalysisVisit.findByAnalysisVisitID", query = "SELECT a FROM AnalysisVisit a WHERE a.AnalysisVisitID = :AnalysisVisitID"),
-    @NamedQuery(name = "AnalysisVisit.findByDate", query = "SELECT a FROM AnalysisVisit a WHERE a.date = :date"),
+    @NamedQuery(name = "AnalysisVisit.findByTimeStamp", query = "SELECT a FROM AnalysisVisit a WHERE a.timeStamp = :timeStamp"),
     @NamedQuery(name = "AnalysisVisit.findBySumPrice", query = "SELECT a FROM AnalysisVisit a WHERE a.sumPrice = :sumPrice"),
     @NamedQuery(name = "AnalysisVisit.findByRemark", query = "SELECT a FROM AnalysisVisit a WHERE a.remark = :remark"),
     @NamedQuery(name = "AnalysisVisit.findByFinished", query = "SELECT a FROM AnalysisVisit a WHERE a.finished = :finished")})
@@ -50,9 +50,9 @@ public class AnalysisVisit implements Serializable {
     @Column(name = "AnalysisVisitID")
     private Integer AnalysisVisitID;
     @Basic(optional = false)
-    @Column(name = "Date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    @Column(name = "timeStamp")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeStamp;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "SumPrice")
     private BigDecimal sumPrice;
@@ -79,9 +79,9 @@ public class AnalysisVisit implements Serializable {
         this.AnalysisVisitID = AnalysisVisitID;
     }
 
-    public AnalysisVisit(Integer AnalysisVisitID, Date date) {
+    public AnalysisVisit(Integer AnalysisVisitID, Date timeStamp) {
         this.AnalysisVisitID = AnalysisVisitID;
-        this.date = date;
+        this.timeStamp = timeStamp;
     }
 
     public Integer getAnalysisVisitID() {
@@ -92,12 +92,12 @@ public class AnalysisVisit implements Serializable {
         this.AnalysisVisitID = AnalysisVisitID;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public BigDecimal getSumPrice() {
@@ -181,5 +181,5 @@ public class AnalysisVisit implements Serializable {
     public String toString() {
         return "ejb.AnalysisVisit[ AnalysisVisitID=" + AnalysisVisitID + " ]";
     }
-    
+
 }

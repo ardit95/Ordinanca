@@ -1,12 +1,9 @@
-
 package gui.view;
 
 import java.awt.Dimension;
 
-
 public class AddNotification extends javax.swing.JInternalFrame {
 
-   
     public AddNotification() {
         initComponents();
         setLocation(220, 10);
@@ -40,7 +37,6 @@ public class AddNotification extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -43,5 +43,5 @@ public class NumberOfStaff implements Serializable {
     public void setNumri(long numri) {
         this.numri = numri;
     }
-    
+
 }

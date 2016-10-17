@@ -1,4 +1,3 @@
-
 package gui.view;
 
 import ExceptionPackage.AppException;
@@ -27,48 +26,49 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
 public class AddPatient extends javax.swing.JInternalFrame {
-    
+
     EntityManager entityManager;
     PatientInterface patientIr;
     PatientTableModel patientTM;
     Staff staff;
     LogsInterface logsIr;
-    public AddPatient(EntityManager entityManager,Staff staff) {
-        this.entityManager=entityManager;
-        this.staff=staff;
+
+    public AddPatient(EntityManager entityManager, Staff staff) {
+        this.entityManager = entityManager;
+        this.staff = staff;
         initComponents();
         setLocation(220, 10);
-        patientIr=new PatientRepository(entityManager);
-        logsIr=new LogsRepository(entityManager);
-        String [] columnNamesTableModel={"Name","Surname", "ParentName", "Gender","DateOfBirth", "City","Phone", "Allergies"};
-        patientTM=new PatientTableModel(columnNamesTableModel);
-        
+        patientIr = new PatientRepository(entityManager);
+        logsIr = new LogsRepository(entityManager);
+        String[] columnNamesTableModel = {"Name", "Surname", "ParentName", "Gender", "DateOfBirth", "City", "Phone", "Allergies"};
+        patientTM = new PatientTableModel(columnNamesTableModel);
+
         patientTableLoad();
         patientTableMoveKey();
-                
-        searchTxtf.getDocument().addDocumentListener(new DocumentListener(){
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-           kerkoparticipant();
-        }
 
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            kerkoparticipant();
-        }
+        searchTxtf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                kerkoparticipant();
+            }
 
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-            kerkoparticipant();
-        }
-        
-                public void kerkoparticipant(){
-                    staffTableFindByAll(searchTxtf.getText());
-                }
-          });
-    } 
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                kerkoparticipant();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                kerkoparticipant();
+            }
+
+            public void kerkoparticipant() {
+                staffTableFindByAll(searchTxtf.getText());
+            }
+        });
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -239,23 +239,23 @@ public class AddPatient extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void patientTableLoad(){
-        List<Patient>list=patientIr.findAll();
+
+    private void patientTableLoad() {
+        List<Patient> list = patientIr.findAll();
         patientTM.add(list);
         patientTbl.setModel(patientTM);
         patientTM.fireTableDataChanged();
     }
-    
-    public void staffTableFindByAll(String text){
-        List<Patient>list=patientIr.findByAll(text);
+
+    public void staffTableFindByAll(String text) {
+        List<Patient> list = patientIr.findByAll(text);
         patientTM.add(list);
         patientTbl.setModel(patientTM);
         patientTM.fireTableDataChanged();
     }
-    
+
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        try {        
+        try {
             addPatientMethod();
         } catch (AppException ex) {
             ex.printStackTrace();
@@ -270,18 +270,19 @@ public class AddPatient extends javax.swing.JInternalFrame {
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         emptyLabels();
     }//GEN-LAST:event_clearBtnActionPerformed
-    
-     private void patientTableMoveKey(){
-    ListSelectionModel rowSM=patientTbl.getSelectionModel();
-    rowSM.addListSelectionListener (new ListSelectionListener(){
-    @Override
-    public void valueChanged (ListSelectionEvent e){
-    if(e.getValueIsAdjusting())
-        return;
-    ListSelectionModel rowSM = (ListSelectionModel)e.getSource();
-    int selectedIndex = rowSM.getMinSelectionIndex();
-    if(selectedIndex>-1){
-        Patient patient=patientTM.getPatient(selectedIndex);
+
+    private void patientTableMoveKey() {
+        ListSelectionModel rowSM = patientTbl.getSelectionModel();
+        rowSM.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting()) {
+                    return;
+                }
+                ListSelectionModel rowSM = (ListSelectionModel) e.getSource();
+                int selectedIndex = rowSM.getMinSelectionIndex();
+                if (selectedIndex > -1) {
+                    Patient patient = patientTM.getPatient(selectedIndex);
                     nameTxtf.setText(patient.getName());
                     surnameTxtf.setText(patient.getSurname());
                     parentNameTxtf.setText(patient.getParentName());
@@ -292,13 +293,13 @@ public class AddPatient extends javax.swing.JInternalFrame {
                     birthplaceTxtf.setText(patient.getPlaceOFBirth());
                     cityTxtf.setText(patient.getCity());
                     allergiesTxtf.setText(patient.getAllergies());
+                }
+            }
+        });
     }
-    }
-    });
-    }
-    
-    private void addPatientMethod()throws AppException{
-        Patient patient=new Patient();
+
+    private void addPatientMethod() throws AppException {
+        Patient patient = new Patient();
         patient.setName(nameTxtf.getText().trim());
         patient.setSurname(surnameTxtf.getText().trim());
         patient.setParentName(parentNameTxtf.getText().trim());
@@ -315,33 +316,34 @@ public class AddPatient extends javax.swing.JInternalFrame {
         addCreateLog(patient);
         JOptionPane.showMessageDialog(this, "Pacienti u shtua me sukses");
         patientTableLoad();
-        emptyLabels();        
+        emptyLabels();
     }
-    
-     public void deletePatient(){
-        try{
-        if(patientTbl.getSelectedRow()!=-1){
-                String[] opcionet={"Po","Jo"};
+
+    public void deletePatient() {
+        try {
+            if (patientTbl.getSelectedRow() != -1) {
+                String[] opcionet = {"Po", "Jo"};
                 int response = JOptionPane.showOptionDialog(this,
-                "A dëshiron me e fshi Pacientin ?","Kujdesë",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, opcionet, opcionet[0]);
-                if(response==0){
-                    Patient victimPatient=patientTM.getPatient(patientTbl.getSelectedRow());
+                        "A dëshiron me e fshi Pacientin ?", "Kujdesë",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, opcionet, opcionet[0]);
+                if (response == 0) {
+                    Patient victimPatient = patientTM.getPatient(patientTbl.getSelectedRow());
                     patientIr.remove(victimPatient);
                     patientTableLoad();
                     addDeleteLog(victimPatient);
                     JOptionPane.showMessageDialog(this, "Pacienti u fshi me suksesë.");
                     emptyLabels();
                 }
-        }
-        else throw new AppException("Selekto Userin qe deshiron me e fshi.");
-        }catch(AppException ae){
-           JOptionPane.showMessageDialog(this,ae.getMessage());
+            } else {
+                throw new AppException("Selekto Userin qe deshiron me e fshi.");
+            }
+        } catch (AppException ae) {
+            JOptionPane.showMessageDialog(this, ae.getMessage());
         }
     }
-    
-    public void emptyLabels(){
+
+    public void emptyLabels() {
         nameTxtf.setText("");
         surnameTxtf.setText("");
         parentNameTxtf.setText("");
@@ -353,78 +355,78 @@ public class AddPatient extends javax.swing.JInternalFrame {
         genderCombo.setSelectedItem("null");
         allergiesTxtf.setText("");
     }
-    
-    private void validation()throws AppException{
-        if(nameTxtf==null || nameTxtf.getText().trim().equals("") || nameTxtf.getText().trim().length()>50){
+
+    private void validation() throws AppException {
+        if (nameTxtf == null || nameTxtf.getText().trim().equals("") || nameTxtf.getText().trim().length() > 50) {
             throw new AppException("Emri nuk duhet të jetë i zbrazët ose të ketë më shumë se 50 karaktera");
         }
-        if(surnameTxtf==null || surnameTxtf.getText().trim().equals("") || surnameTxtf.getText().trim().length()>50){
+        if (surnameTxtf == null || surnameTxtf.getText().trim().equals("") || surnameTxtf.getText().trim().length() > 50) {
             throw new AppException("Mbiemri nuk duhet të jetë i zbrazët ose të ketë më shumë se 50 karaktera");
         }
-        if(parentNameTxtf==null || parentNameTxtf.getText().trim().equals("") || parentNameTxtf.getText().trim().length()>50){
+        if (parentNameTxtf == null || parentNameTxtf.getText().trim().equals("") || parentNameTxtf.getText().trim().length() > 50) {
             throw new AppException("Emri i prindit nuk duhet të jetë i zbrazët ose të ketë më shumë se 50 karaktera");
         }
-        if(dateOfBirthCalendar.getDate()==null){
+        if (dateOfBirthCalendar.getDate() == null) {
             throw new AppException("Data nuk duhet te jete e zbrazet");
         }
-        if(genderCombo.getSelectedItem().equals("null")){
+        if (genderCombo.getSelectedItem().equals("null")) {
             throw new AppException("Gjinia duhet të zgjedhet");
         }
-        if( phoneTxtf.getText().trim().length()>50){
+        if (phoneTxtf.getText().trim().length() > 50) {
             throw new AppException("Numri i telefonit nuk duhet të ketë më shumë se 50 karaktera");
         }
-        if(emailTxtf.getText().trim().length()>50){
+        if (emailTxtf.getText().trim().length() > 50) {
             throw new AppException("Email nuk duhet të ketë më shumë se 50 karaktera");
         }
-        if(birthplaceTxtf.getText().trim().length()>50){
+        if (birthplaceTxtf.getText().trim().length() > 50) {
             throw new AppException("Vendi i lindjes nuk duhet të ketë më shumë se 50 karaktera");
         }
-        if(cityTxtf.getText().trim().length()>50){
+        if (cityTxtf.getText().trim().length() > 50) {
             throw new AppException("Qyteti nuk duhet të ketë më shumë se 50 karaktera");
         }
-        if(allergiesTxtf.getText().trim().length()>50){
+        if (allergiesTxtf.getText().trim().length() > 50) {
             throw new AppException("Alergjitë nuk duhet të ketë më shumë se 500 karaktera");
         }
     }
-    
-    public void addCreateLog(Patient patient) throws AppException{
-        
-        Logs logs=new Logs();
+
+    public void addCreateLog(Patient patient) throws AppException {
+
+        Logs logs = new Logs();
         Date date = logsIr.findDate();
         DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat sdf2 = new SimpleDateFormat("HH:mm");
-        String today=sdf.format(date);
-        String koha=sdf2.format(date);
-        
-        String message=staff.getName()+" "+staff.getSurname()+" me username-in: "+staff.getUsername()+" Ka shtuar pacientin "+patient.getName()+" "+patient.getSurname()+" në datën : "+today +" në ora "+koha;
-        
+        String today = sdf.format(date);
+        String koha = sdf2.format(date);
+
+        String message = staff.getName() + " " + staff.getSurname() + " me username-in: " + staff.getUsername() + " Ka shtuar pacientin " + patient.getName() + " " + patient.getSurname() + " në datën : " + today + " në ora " + koha;
+
         logs.setUsername(staff);
-        logs.setDate(date);
+        logs.setTimeStamp(date);
         logs.setMessage(message);
         logs.setType("Create");
-        
+
         logsIr.create(logs);
     }
-    
-    public void addDeleteLog(Patient patient) throws AppException{
-        
-        Logs logs=new Logs();
+
+    public void addDeleteLog(Patient patient) throws AppException {
+
+        Logs logs = new Logs();
         Date date = logsIr.findDate();
         DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat sdf2 = new SimpleDateFormat("HH:mm");
-        String today=sdf.format(date);
-        String koha=sdf2.format(date);
-        
-        String message=staff.getName()+" "+staff.getSurname()+" me username-in: "+staff.getUsername()+" Ka fshirë pacientin" +patient.getName()+" "+patient.getSurname()+" në datën : "+today +" në ora "+koha;
-        
+        String today = sdf.format(date);
+        String koha = sdf2.format(date);
+
+        String message = staff.getName() + " " + staff.getSurname() + " me username-in: " + staff.getUsername() + " Ka fshirë pacientin" + patient.getName() + " " + patient.getSurname() + " në datën : " + today + " në ora " + koha;
+
         logs.setUsername(staff);
-        logs.setDate(date);
+        logs.setTimeStamp(date);
         logs.setMessage(message);
         logs.setType("Delete");
-        
+
         logsIr.create(logs);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea allergiesTxtf;
     private javax.swing.JLabel background;

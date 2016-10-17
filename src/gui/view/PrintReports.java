@@ -1,10 +1,9 @@
-
 package gui.view;
+
 import java.awt.Dimension;
 
 public class PrintReports extends javax.swing.JInternalFrame {
 
-    
     public PrintReports() {
         initComponents();
         this.setLocation(220, 10);
@@ -39,7 +38,6 @@ public class PrintReports extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

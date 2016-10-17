@@ -7,49 +7,49 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-public class LogsRepository extends EntMngClass implements LogsInterface{
-    
-    public LogsRepository(EntityManager tempEm){
+public class LogsRepository extends EntMngClass implements LogsInterface {
+
+    public LogsRepository(EntityManager tempEm) {
         super(tempEm);
     }
-    
+
     @Override
-    public Logs create(Logs logs)throws AppException {
-        try{
+    public Logs create(Logs logs) throws AppException {
+        try {
             em.getTransaction().begin();
             em.persist(logs);
             em.getTransaction().commit();
             return logs;
-            }catch (Throwable thro){
-        if (thro.getMessage().contains("2627")){
-            if(thro.getMessage().toLowerCase().contains("unique"))
-            throw new AppException("Ekziston një pjesëmarrës me këto vlera.Secila pjesëmarrës duhet të jetë unike.");
-            else 
-            throw new AppException("Ekziston nje pjesëmarrës me këtë çelës primarë.");
+        } catch (Throwable thro) {
+            if (thro.getMessage().contains("2627")) {
+                if (thro.getMessage().toLowerCase().contains("unique")) {
+                    throw new AppException("Ekziston një pjesëmarrës me këto vlera.Secila pjesëmarrës duhet të jetë unike.");
+                } else {
+                    throw new AppException("Ekziston nje pjesëmarrës me këtë çelës primarë.");
+                }
+            } else {
+                throw new AppException("Create : " + thro.getClass() + " - " + thro.getMessage());
+            }
         }
-        else{
-            throw new AppException("Create : "+thro.getClass()+" - "+thro.getMessage());
-    }
-    }
     }
 
     @Override
     public void edit(Logs logs) throws AppException {
-        try{
+        try {
             em.getTransaction().begin();
             em.merge(logs);
             em.getTransaction().commit();
-            }catch (Throwable thro){
-        if (thro.getMessage().contains("2627")){
-            if(thro.getMessage().toLowerCase().contains("unique"))
-            throw new AppException("Ekziston një pjesëmarrës me këto vlera.Secila pjesëmarrës duhet të jetë unike.");
-            else 
-            throw new AppException("Ekziston nje pjesëmarrës me këtë çelës primarë.");
+        } catch (Throwable thro) {
+            if (thro.getMessage().contains("2627")) {
+                if (thro.getMessage().toLowerCase().contains("unique")) {
+                    throw new AppException("Ekziston një pjesëmarrës me këto vlera.Secila pjesëmarrës duhet të jetë unike.");
+                } else {
+                    throw new AppException("Ekziston nje pjesëmarrës me këtë çelës primarë.");
+                }
+            } else {
+                throw new AppException("Create : " + thro.getClass() + " - " + thro.getMessage());
+            }
         }
-        else{
-            throw new AppException("Create : "+thro.getClass()+" - "+thro.getMessage());
-    }
-    }
     }
 
     @Override
@@ -61,20 +61,19 @@ public class LogsRepository extends EntMngClass implements LogsInterface{
 
     @Override
     public List<Logs> findAll() {
-        return em.createNamedQuery ("Logs.findAll").getResultList();
+        return em.createNamedQuery("Logs.findAll").getResultList();
     }
-    
+
     @Override
-    public Date findDate(){
-        Query query=em.createNativeQuery("SELECT CURRENT_TIMESTAMP");
-        return (Date)query.getSingleResult();
+    public Date findDate() {
+        Query query = em.createNativeQuery("SELECT CURRENT_TIMESTAMP");
+        return (Date) query.getSingleResult();
     }
-    
+
     @Override
     public List<Logs> findByAll(String text) {
-        Query query=em.createQuery ("SELECT object (l) FROM Logs l WHERE l.type LIKE :txt OR l.message LIKE :txt OR l.username.name LIKE :txt OR l.username.surname LIKE :txt");
-        query.setParameter("txt","%"+text+"%");
-        return (List<Logs>)query.getResultList();
+        Query query = em.createQuery("SELECT object (l) FROM Logs l WHERE l.type LIKE :txt OR l.message LIKE :txt OR l.username.name LIKE :txt OR l.username.surname LIKE :txt");
+        query.setParameter("txt", "%" + text + "%");
+        return (List<Logs>) query.getResultList();
     }
 }
-

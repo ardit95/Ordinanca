@@ -5,7 +5,6 @@
  */
 package ejb;
 
-import ejb.AnalysisForVisit;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -36,9 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Analysis.findByResults", query = "SELECT a FROM Analysis a WHERE a.results = :results")})
 public class Analysis implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "analysisID")
-    private Collection<AnalysisForVisit> AnalysisForVisitCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +47,8 @@ public class Analysis implements Serializable {
     @Basic(optional = false)
     @Column(name = "Results")
     private String results;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "analysisID")
+    private Collection<AnalysisForVisit> analysisforvisitCollection;
 
     public Analysis() {
     }
@@ -90,12 +88,12 @@ public class Analysis implements Serializable {
     }
 
     @XmlTransient
-    public Collection<AnalysisForVisit> getAnalysisForVisitCollection() {
-        return AnalysisForVisitCollection;
+    public Collection<AnalysisForVisit> getAnalysisforvisitCollection() {
+        return analysisforvisitCollection;
     }
 
-    public void setAnalysisForVisitCollection(Collection<AnalysisForVisit> AnalysisForVisitCollection) {
-        this.AnalysisForVisitCollection = AnalysisForVisitCollection;
+    public void setAnalysisforvisitCollection(Collection<AnalysisForVisit> analysisforvisitCollection) {
+        this.analysisforvisitCollection = analysisforvisitCollection;
     }
 
     @Override
@@ -122,4 +120,5 @@ public class Analysis implements Serializable {
     public String toString() {
         return "ejb.Analysis[ analysisID=" + analysisID + " ]";
     }
+
 }

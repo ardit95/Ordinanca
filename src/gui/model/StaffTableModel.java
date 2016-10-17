@@ -6,26 +6,26 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class StaffTableModel extends AbstractTableModel{
-  static String [] columnNames;
+public class StaffTableModel extends AbstractTableModel {
+
+    static String[] columnNames;
     List<Staff> data;
     DateFormat dateFormat;
-    
+
     public StaffTableModel(String[] colNames) {
-        columnNames=colNames;
-        dateFormat=new SimpleDateFormat("dd-MM-yyyy");
+        columnNames = colNames;
+        dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         /*"Name", "Surname", "Data e Lindjes","Numri Personal","Email","Telefoni","Qyteti"*/
     }
-    
-    public void setColumnNames(String[] colNames){
-            columnNames=colNames;
+
+    public void setColumnNames(String[] colNames) {
+        columnNames = colNames;
     }
 
     public static String[] getColumnNames() {
         return columnNames;
     }
-    
-    
+
     public StaffTableModel(List<Staff> list) {
         data = list;
     }
@@ -33,12 +33,12 @@ public class StaffTableModel extends AbstractTableModel{
     public void add(List<Staff> list) {
         data = list;
     }
-    
+
     @Override
     public int getRowCount() {
         return data.size();
     }
-     
+
     @Override
     public String getColumnName(int col) {
         return columnNames[col];
@@ -46,14 +46,13 @@ public class StaffTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-       return columnNames.length;
+        return columnNames.length;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-         Staff staff= (Staff)data.get(rowIndex);
-        switch(columnNames[columnIndex]){
-            
+        Staff staff = (Staff) data.get(rowIndex);
+        switch (columnNames[columnIndex]) {
             case "Username":
                 return staff.getUsername();
             case "Name":
@@ -61,29 +60,35 @@ public class StaffTableModel extends AbstractTableModel{
             case "Surname":
                 return staff.getSurname();
             case "Gender":
-                return staff.getGender(); 
+                return staff.getGender();
             case "DateOfBirth":
-                if(staff.getDateOfBirth()!=null){
-                    return dateFormat.format(staff.getDateOfBirth());  
+                if (staff.getDateOfBirth() != null) {
+                    return dateFormat.format(staff.getDateOfBirth());
                 }
             case "Education":
-                return staff.getEducation();    
+                return staff.getEducation();
             case "Specialization":
-                return staff.getSpecialization();     
+                return staff.getSpecialization();
             case "Role":
                 return staff.getRole();
-            
+
             default:
-                 return null;
+                return null;
         }
     }
-    
-    public Staff getStaff(int rowIndex){
+
+    public Staff getStaff(int rowIndex) {
         return data.get(rowIndex);
     }
-    
+
     public void remove(int rowIndex) {
         data.remove(rowIndex);
-    }  
-}
+    }
 
+    public boolean isEmpty() {
+        if (data != null) {
+            return (data.isEmpty());
+        }
+        return false;
+    }
+}

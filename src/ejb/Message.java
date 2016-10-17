@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import ExceptionPackage.AppException;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -32,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Message.findAll", query = "SELECT m FROM Message m"),
     @NamedQuery(name = "Message.findByMessageID", query = "SELECT m FROM Message m WHERE m.messageID = :messageID"),
-    @NamedQuery(name = "Message.findByDate", query = "SELECT m FROM Message m WHERE m.date = :date"),
+    @NamedQuery(name = "Message.findByTimeStamp", query = "SELECT m FROM Message m WHERE m.timeStamp = :timeStamp"),
     @NamedQuery(name = "Message.findByMessage", query = "SELECT m FROM Message m WHERE m.message = :message"),
     @NamedQuery(name = "Message.findBySeen", query = "SELECT m FROM Message m WHERE m.seen = :seen")})
 public class Message implements Serializable {
@@ -44,9 +45,9 @@ public class Message implements Serializable {
     @Column(name = "MessageID")
     private Integer messageID;
     @Basic(optional = false)
-    @Column(name = "Date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    @Column(name = "timeStamp")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeStamp;
     @Basic(optional = false)
     @Column(name = "Message")
     private String message;
@@ -62,13 +63,28 @@ public class Message implements Serializable {
     public Message() {
     }
 
+    public Message(Staff sender, Staff reciever, String message) throws AppException {
+        if (sender == null) {
+            throw new AppException("The sender cannot be null.");
+        }
+        if (reciever == null) {
+            throw new AppException("The reciever cannot be null.");
+        }
+        if (message.trim().length() > 500) {
+            throw new AppException("The message cannot contain more than 500 letters.");
+        }
+        doctorID = sender;
+        username = reciever;
+        this.message = message;
+    }
+
     public Message(Integer messageID) {
         this.messageID = messageID;
     }
 
-    public Message(Integer messageID, Date date, String message) {
+    public Message(Integer messageID, Date timeStamp, String message) {
         this.messageID = messageID;
-        this.date = date;
+        this.timeStamp = timeStamp;
         this.message = message;
     }
 
@@ -80,12 +96,12 @@ public class Message implements Serializable {
         this.messageID = messageID;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public String getMessage() {
@@ -144,5 +160,5 @@ public class Message implements Serializable {
     public String toString() {
         return "ejb.Message[ messageID=" + messageID + " ]";
     }
-    
+
 }

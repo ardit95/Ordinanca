@@ -1,4 +1,3 @@
-
 package gui.view;
 
 import ExceptionPackage.AppException;
@@ -26,49 +25,46 @@ import javax.swing.event.ListSelectionListener;
 
 public class AddUsers extends javax.swing.JInternalFrame {
 
-   EntityManager entityManager;
-   StaffInterface staffIr;
-   LogsInterface logsIr;
-   StaffTableModel staffTableModel;
-   Staff staff;
-    public AddUsers(EntityManager entityManager,Staff staff) {
-        this.entityManager=entityManager;
+    EntityManager entityManager;
+    StaffInterface staffIr;
+    LogsInterface logsIr;
+    StaffTableModel staffTableModel;
+    Staff staff;
+
+    public AddUsers(EntityManager entityManager, Staff staff) {
+        this.entityManager = entityManager;
         initComponents();
         setLocation(220, 10);
-        this.staff=staff;
-        staffIr=new StaffRepository(entityManager);
-        logsIr=new LogsRepository(entityManager);
-        String [] columnNamesTableModel={"Username","Name", "Surname", "DateOfBirth","Role"};
-        staffTableModel=new StaffTableModel(columnNamesTableModel);
+        this.staff = staff;
+        staffIr = new StaffRepository(entityManager);
+        logsIr = new LogsRepository(entityManager);
+        String[] columnNamesTableModel = {"Username", "Name", "Surname", "DateOfBirth", "Role"};
+        staffTableModel = new StaffTableModel(columnNamesTableModel);
         staffTableLoad();
         staffTableMoveKey();
-        
-        searchTxtf.getDocument().addDocumentListener(new DocumentListener(){
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-           kerkoparticipant();
-        }
 
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            kerkoparticipant();
-        }
+        searchTxtf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                kerkoparticipant();
+            }
 
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-            kerkoparticipant();
-        }
-        
-                public void kerkoparticipant(){
-                    staffTableFindByAll(searchTxtf.getText());
-                }
-          });
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                kerkoparticipant();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                kerkoparticipant();
+            }
+
+            public void kerkoparticipant() {
+                staffTableFindByAll(searchTxtf.getText());
+            }
+        });
     }
-    
-    
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -257,6 +253,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
         educationTxtf.setColumns(20);
         educationTxtf.setLineWrap(true);
         educationTxtf.setRows(5);
+        educationTxtf.setToolTipText("");
         educationTxtf.setWrapStyleWord(true);
         jScrollPane2.setViewportView(educationTxtf);
 
@@ -284,59 +281,60 @@ public class AddUsers extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    public void staffTableLoad(){
-        List<Staff>list=staffIr.findAll();
+
+    public void staffTableLoad() {
+        List<Staff> list = staffIr.findAll();
         staffTableModel.add(list);
         staffTbl.setModel(staffTableModel);
         staffTableModel.fireTableDataChanged();
     }
-    
-    public void staffTableFindByAll(String text){
-        List<Staff>list=staffIr.findByAll(text);
+
+    public void staffTableFindByAll(String text) {
+        List<Staff> list = staffIr.findByAll(text);
         staffTableModel.add(list);
         staffTbl.setModel(staffTableModel);
         staffTableModel.fireTableDataChanged();
     }
-    
+
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-       try {
-           addUserMethod();
-       } catch (AppException ex) {
-           ex.printStackTrace();
-           JOptionPane.showMessageDialog(this, ex.getMessage());
-       } catch (SQLException ex) {
-           Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        try {
+            addUserMethod();
+        } catch (AppException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         emptyLabels();
     }//GEN-LAST:event_clearBtnActionPerformed
-    
+
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-       try {
-           deleteStaff();
-       } catch (SQLException ex) {
-           Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        try {
+            deleteStaff();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       resetPassword();
+        resetPassword();
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-     private void staffTableMoveKey(){
-    ListSelectionModel rowSM=staffTbl.getSelectionModel();
-    rowSM.addListSelectionListener (new ListSelectionListener(){
-    @Override
-    public void valueChanged (ListSelectionEvent e){
-    if(e.getValueIsAdjusting())
-        return;
-    ListSelectionModel rowSM = (ListSelectionModel)e.getSource();
-    int selectedIndex = rowSM.getMinSelectionIndex();
-    if(selectedIndex>-1){
-        Staff staff=staffTableModel.getStaff(selectedIndex);
+
+    private void staffTableMoveKey() {
+        ListSelectionModel rowSM = staffTbl.getSelectionModel();
+        rowSM.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting()) {
+                    return;
+                }
+                ListSelectionModel rowSM = (ListSelectionModel) e.getSource();
+                int selectedIndex = rowSM.getMinSelectionIndex();
+                if (selectedIndex > -1) {
+                    Staff staff = staffTableModel.getStaff(selectedIndex);
                     nameTxtf.setText(staff.getName());
                     surnameTxtf.setText(staff.getSurname());
                     usernameTxtf.setText(staff.getUsername());
@@ -344,21 +342,21 @@ public class AddUsers extends javax.swing.JInternalFrame {
                     dateOfBirthCalendar.setDate(staff.getDateOfBirth());
                     educationTxtf.setText(staff.getEducation());
                     specializationTxtf.setText(staff.getSpecialization());
+                }
+            }
+        });
     }
-    }
-    });
-    }
-    
+
     /*Krijon dhe ruan ne databaze userin*/
-    private void addUserMethod() throws AppException, SQLException{
-        Staff staff=new Staff();
-        String salt="";
-        for(int i=0;i<64;i++){
-        char c=(char)ThreadLocalRandom.current().nextInt(65, 122 + 1);
-        salt+=c;
+    private void addUserMethod() throws AppException, SQLException {
+        Staff staff = new Staff();
+        String salt = "";
+        for (int i = 0; i < 64; i++) {
+            char c = (char) ThreadLocalRandom.current().nextInt(65, 122 + 1);
+            salt += c;
         }
-        byte[] password = staffIr.kripto(salt+passwordTxtf.getText().trim());
-        String passwordString=passwordTxtf.getText().trim();
+        byte[] password = staffIr.kripto(salt + passwordTxtf.getText().trim());
+        String passwordString = passwordTxtf.getText().trim();
         staff.setUsername(usernameTxtf.getText().trim());
         staff.setName(nameTxtf.getText().trim());
         staff.setSurname(surnameTxtf.getText().trim());
@@ -372,26 +370,27 @@ public class AddUsers extends javax.swing.JInternalFrame {
         staff.setNumberOfLogins(0);
         validation();
         staffIr.create(staff);
-        staffIr.createMySQLUser(staff,passwordString);
+        staffIr.createMySQLUser(staff, passwordString);
         addCreateLog(staff);
         JOptionPane.showMessageDialog(this, "Perdoruesi u shtua me sukses !");
         staffTableLoad();
         emptyLabels();
     }
-    
+
     /*Fshin nga databaza userin*/
-    public void deleteStaff() throws SQLException{
-        try{
-        if(staffTbl.getSelectedRow()!=-1){
-                String[] opcionet={"Po","Jo"};
+    public void deleteStaff() throws SQLException {
+        try {
+            if (staffTbl.getSelectedRow() != -1) {
+                String[] opcionet = {"Po", "Jo"};
                 int response = JOptionPane.showOptionDialog(this,
-                "A dëshiron me e fshi Userin ?","Kujdesë",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, opcionet, opcionet[0]);
-                if(response==0){
-                    Staff victimUser=staffTableModel.getStaff(staffTbl.getSelectedRow());
-                    if(victimUser.getRole().equals("Administrator"))
+                        "A dëshiron me e fshi Userin ?", "Kujdesë",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, opcionet, opcionet[0]);
+                if (response == 0) {
+                    Staff victimUser = staffTableModel.getStaff(staffTbl.getSelectedRow());
+                    if (victimUser.getRole().equals("Administrator")) {
                         throw new AppException("Nuk mund të fshihet useri administrator.");
+                    }
                     staffIr.remove(victimUser);
                     staffIr.deleteMySQLUser(victimUser);
                     addDeleteLog(victimUser);
@@ -399,15 +398,16 @@ public class AddUsers extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this, "Useri u fshi me suksesë.");
                     emptyLabels();
                 }
-        }
-        else throw new AppException("Selekto Userin qe deshiron me e fshi.");
-        }catch(AppException ae){
-           JOptionPane.showMessageDialog(this,ae.getMessage());
+            } else {
+                throw new AppException("Selekto Userin qe deshiron me e fshi.");
+            }
+        } catch (AppException ae) {
+            JOptionPane.showMessageDialog(this, ae.getMessage());
         }
     }
-    
+
     /*Zbraz te gjith textfields*/
-    private void emptyLabels(){
+    private void emptyLabels() {
         nameTxtf.setText("");
         surnameTxtf.setText("");
         usernameTxtf.setText("");
@@ -419,96 +419,98 @@ public class AddUsers extends javax.swing.JInternalFrame {
         specializationTxtf.setText("");
         roleCombo.setSelectedItem("Doctor");
     }
-    
-    private void resetPassword(){
-        try{
-           int index;
-            if((index=staffTbl.getSelectedRow())!=-1){
-                Staff staff=staffTableModel.getStaff(index);
-                String[] opcionet={"Po","Jo"};
+
+    private void resetPassword() {
+        try {
+            int index;
+            if ((index = staffTbl.getSelectedRow()) != -1) {
+                Staff staff = staffTableModel.getStaff(index);
+                String[] opcionet = {"Po", "Jo"};
                 int response = JOptionPane.showOptionDialog(this,
-                "A dëshiron me restartu passwordin e userit : "+staff.getUsername()+" ?","Kujdesë",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, opcionet, opcionet[0]);
-                if(response==0){
-                staff.setNumberOfLogins(0);
-                byte[] passwordi = staffIr.kripto(staff.getSalt()+"12345678");
-                staff.setPassword(passwordi);
-                staffIr.setStaffPassword(staff);
-                staffIr.edit(staff);
-                JOptionPane.showMessageDialog(this, "Passwordi i userit :"+staff.getUsername()+" është 12345678");
+                        "A dëshiron me restartu passwordin e userit : " + staff.getUsername() + " ?", "Kujdesë",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, opcionet, opcionet[0]);
+                if (response == 0) {
+                    staff.setNumberOfLogins(0);
+                    byte[] passwordi = staffIr.kripto(staff.getSalt() + "12345678");
+                    staff.setPassword(passwordi);
+                    staffIr.setStaffPassword(staff);
+                    staffIr.edit(staff);
+                    JOptionPane.showMessageDialog(this, "Passwordi i userit :" + staff.getUsername() + " është 12345678");
                 }
-            }else throw new AppException("Selekto Userin qe deshiron me i restartu passwordin.");
-        }catch(AppException ae){
-           JOptionPane.showMessageDialog(this,ae.getMessage());
+            } else {
+                throw new AppException("Selekto Userin qe deshiron me i restartu passwordin.");
+            }
+        } catch (AppException ae) {
+            JOptionPane.showMessageDialog(this, ae.getMessage());
         }
     }
-    
-    private void validation()throws AppException{
-        if(nameTxtf==null || nameTxtf.getText().trim().equals("") || nameTxtf.getText().trim().length()>50){
+
+    private void validation() throws AppException {
+        if (nameTxtf == null || nameTxtf.getText().trim().equals("") || nameTxtf.getText().trim().length() > 50) {
             throw new AppException("Emri nuk duhet të jetë i zbrazët ose të ketë më shumë se 50 karaktera");
         }
-        if(surnameTxtf==null || surnameTxtf.getText().trim().equals("") || surnameTxtf.getText().trim().length()>50){
+        if (surnameTxtf == null || surnameTxtf.getText().trim().equals("") || surnameTxtf.getText().trim().length() > 50) {
             throw new AppException("Mbiemri nuk duhet të jetë i zbrazët ose të ketë më shumë se 50 karaktera");
         }
-        if(usernameTxtf==null || usernameTxtf.getText().trim().equals("") || usernameTxtf.getText().trim().length()>50){
+        if (usernameTxtf == null || usernameTxtf.getText().trim().equals("") || usernameTxtf.getText().trim().length() > 50) {
             throw new AppException("Username nuk duhet të jetë i zbrazët ose të ketë më shumë se 50 karaktera");
         }
-        if(passwordTxtf.getText()==null||passwordTxtf.getText().trim().equals("")||passwordTxtf.getText().trim().length()>50){
+        if (passwordTxtf.getText() == null || passwordTxtf.getText().trim().equals("") || passwordTxtf.getText().trim().length() > 50) {
             throw new AppException("Passwordi nuk duhet të jetë i zbrazët dhe nuk duhet të ketë më shumë se 50 karaktera");
         }
-        if(!passwordTxtf.getText().trim().equals(rePasswordTxtf.getText().trim())){
+        if (!passwordTxtf.getText().trim().equals(rePasswordTxtf.getText().trim())) {
             throw new AppException("Passwordi nuk është i njejtë në dy fushat e passwordit");
         }
-        if(genderCombo.getSelectedItem().equals("null")){
+        if (genderCombo.getSelectedItem().equals("null")) {
             throw new AppException("Gjinia duhet të zgjedhet");
         }
-        if( educationTxtf.getText().trim().length()>500){
+        if (educationTxtf.getText().trim().length() > 500) {
             throw new AppException("Edukimi nuk duhet të ketë më shumë se 500 karaktera");
         }
-        if(specializationTxtf.getText().trim().length()>500){
+        if (specializationTxtf.getText().trim().length() > 500) {
             throw new AppException("Specializimi nuk duhet të ketë më shumë se 500 karaktera");
         }
     }
-    
-    public void addCreateLog(Staff newStaff) throws AppException{
-        
-        ejb.Logs logs=new ejb.Logs();
+
+    public void addCreateLog(Staff newStaff) throws AppException {
+
+        ejb.Logs logs = new ejb.Logs();
         Date date = logsIr.findDate();
         DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat sdf2 = new SimpleDateFormat("HH:mm");
-        String today=sdf.format(date);
-        String koha=sdf2.format(date);
-        
-        String message=staff.getName()+" "+staff.getSurname()+" me username-in: "+staff.getUsername()+" Ka shtuar antarin e stafit "+newStaff.getName()+" "+newStaff.getSurname()+" në datën : "+today +" në ora "+koha;
-        
+        String today = sdf.format(date);
+        String koha = sdf2.format(date);
+
+        String message = staff.getName() + " " + staff.getSurname() + " me username-in: " + staff.getUsername() + " Ka shtuar antarin e stafit " + newStaff.getName() + " " + newStaff.getSurname() + " në datën : " + today + " në ora " + koha;
+
         logs.setUsername(staff);
-        logs.setDate(date);
+        logs.setTimeStamp(date);
         logs.setMessage(message);
         logs.setType("Create");
-        
+
         logsIr.create(logs);
     }
-    
-    public void addDeleteLog(Staff victimStaff) throws AppException{
-        
-        ejb.Logs logs=new ejb.Logs();
+
+    public void addDeleteLog(Staff victimStaff) throws AppException {
+
+        ejb.Logs logs = new ejb.Logs();
         Date date = logsIr.findDate();
         DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat sdf2 = new SimpleDateFormat("HH:mm");
-        String today=sdf.format(date);
-        String koha=sdf2.format(date);
-        
-        String message=staff.getName()+" "+staff.getSurname()+" me username-in: "+staff.getUsername()+" Ka fshirë antarin e stafit" +victimStaff.getName()+" "+victimStaff.getSurname()+" në datën : "+today +" në ora "+koha;
-        
+        String today = sdf.format(date);
+        String koha = sdf2.format(date);
+
+        String message = staff.getName() + " " + staff.getSurname() + " me username-in: " + staff.getUsername() + " Ka fshirë antarin e stafit" + victimStaff.getName() + " " + victimStaff.getSurname() + " në datën : " + today + " në ora " + koha;
+
         logs.setUsername(staff);
-        logs.setDate(date);
+        logs.setTimeStamp(date);
         logs.setMessage(message);
         logs.setType("Delete");
-        
+
         logsIr.create(logs);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private javax.swing.JButton clearBtn;

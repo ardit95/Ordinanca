@@ -6,24 +6,24 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class AnalysisTableModel extends AbstractTableModel{
-  static String [] columnNames;
+public class AnalysisTableModel extends AbstractTableModel {
+
+    static String[] columnNames;
     List<Analysis> data;
-    
+
     public AnalysisTableModel(String[] colNames) {
-        columnNames=colNames;
-        
+        columnNames = colNames;
+
     }
-    
-    public void setColumnNames(String[] colNames){
-            columnNames=colNames;
+
+    public void setColumnNames(String[] colNames) {
+        columnNames = colNames;
     }
 
     public static String[] getColumnNames() {
         return columnNames;
     }
-    
-    
+
     public AnalysisTableModel(List<Analysis> list) {
         data = list;
     }
@@ -31,12 +31,12 @@ public class AnalysisTableModel extends AbstractTableModel{
     public void add(List<Analysis> list) {
         data = list;
     }
-    
+
     @Override
     public int getRowCount() {
         return data.size();
     }
-     
+
     @Override
     public String getColumnName(int col) {
         return columnNames[col];
@@ -44,13 +44,13 @@ public class AnalysisTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-       return columnNames.length;
+        return columnNames.length;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-         Analysis analysis= (Analysis)data.get(rowIndex);
-        switch(columnNames[columnIndex]){
+        Analysis analysis = (Analysis) data.get(rowIndex);
+        switch (columnNames[columnIndex]) {
             /*AnalysisID Analysis Results*/
             case "AnalysisID":
                 return analysis.getAnalysisID();
@@ -59,16 +59,15 @@ public class AnalysisTableModel extends AbstractTableModel{
             case "Results":
                 analysis.getResults();
             default:
-                 return null;
+                return null;
         }
     }
-    
-    public Analysis getAnalysis(int rowIndex){
+
+    public Analysis getAnalysis(int rowIndex) {
         return data.get(rowIndex);
     }
-    
+
     public void remove(int rowIndex) {
         data.remove(rowIndex);
-    }  
+    }
 }
-

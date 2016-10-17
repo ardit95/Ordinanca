@@ -112,5 +112,5 @@ public class AnalysisForVisit implements Serializable {
     public String toString() {
         return "ejb.AnalysisForVisit[ AnalysisForVisitID=" + AnalysisForVisitID + " ]";
     }
-    
+
 }

@@ -6,50 +6,50 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import ExceptionPackage.AppException;
 
-public class AnalysisForVisitRepository extends EntMngClass implements AnalysisForVisitInterface{
-     
-    public AnalysisForVisitRepository(EntityManager tempEm){
+public class AnalysisForVisitRepository extends EntMngClass implements AnalysisForVisitInterface {
+
+    public AnalysisForVisitRepository(EntityManager tempEm) {
         super(tempEm);
-    }
-    
-    @Override
-    public AnalysisForVisit create(AnalysisForVisit AnalysisForVisit)throws AppException {
-        try{
-        em.getTransaction().begin();
-        em.persist(AnalysisForVisit);
-        em.flush();
-        em.getTransaction().commit();
-        return AnalysisForVisit;
-        }catch (Throwable thro){
-        if (thro.getMessage().contains("2627")){
-            if(thro.getMessage().toLowerCase().contains("unique"))
-            throw new AppException("Ekziston një kompani me këto vlera.Secila kompani duhet të jetë unike.");
-            else 
-            throw new AppException("Ekziston nje kompani me këtë çelës primarë.");
-        }
-        else{
-            throw new AppException("Create : "+thro.getClass()+" - "+thro.getMessage());
-    }
-    }
     }
 
     @Override
-    public void edit(AnalysisForVisit AnalysisForVisit)throws AppException {
-        try{
-        em.getTransaction().begin();
-        em.merge(AnalysisForVisit);
-        em.getTransaction().commit();
-        }catch (Throwable thro){
-        if (thro.getMessage().contains("2627")){
-            if(thro.getMessage().toLowerCase().contains("unique"))
-            throw new AppException("Ekziston një kompani me këto vlera.Secila kompani duhet të jetë unike.");
-            else 
-            throw new AppException("Ekziston nje kompani me këtë çelës primarë.");
+    public AnalysisForVisit create(AnalysisForVisit AnalysisForVisit) throws AppException {
+        try {
+            em.getTransaction().begin();
+            em.persist(AnalysisForVisit);
+            em.flush();
+            em.getTransaction().commit();
+            return AnalysisForVisit;
+        } catch (Throwable thro) {
+            if (thro.getMessage().contains("2627")) {
+                if (thro.getMessage().toLowerCase().contains("unique")) {
+                    throw new AppException("Ekziston një kompani me këto vlera.Secila kompani duhet të jetë unike.");
+                } else {
+                    throw new AppException("Ekziston nje kompani me këtë çelës primarë.");
+                }
+            } else {
+                throw new AppException("Create : " + thro.getClass() + " - " + thro.getMessage());
+            }
         }
-        else{
-            throw new AppException("Create : "+thro.getClass()+" - "+thro.getMessage());
     }
-    }
+
+    @Override
+    public void edit(AnalysisForVisit AnalysisForVisit) throws AppException {
+        try {
+            em.getTransaction().begin();
+            em.merge(AnalysisForVisit);
+            em.getTransaction().commit();
+        } catch (Throwable thro) {
+            if (thro.getMessage().contains("2627")) {
+                if (thro.getMessage().toLowerCase().contains("unique")) {
+                    throw new AppException("Ekziston një kompani me këto vlera.Secila kompani duhet të jetë unike.");
+                } else {
+                    throw new AppException("Ekziston nje kompani me këtë çelës primarë.");
+                }
+            } else {
+                throw new AppException("Create : " + thro.getClass() + " - " + thro.getMessage());
+            }
+        }
     }
 
     @Override
@@ -62,5 +62,5 @@ public class AnalysisForVisitRepository extends EntMngClass implements AnalysisF
     @Override
     public List<AnalysisForVisit> findAll() {
         return em.createNamedQuery("AnalysisForVisit.findAll").getResultList();
-    }    
+    }
 }

@@ -6,25 +6,25 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class PatientTableModel extends AbstractTableModel{
-  static String [] columnNames;
+public class PatientTableModel extends AbstractTableModel {
+
+    static String[] columnNames;
     List<Patient> data;
     DateFormat dateFormat;
-    
+
     public PatientTableModel(String[] colNames) {
-        columnNames=colNames;
-        dateFormat=new SimpleDateFormat("dd-MM-yyyy");
+        columnNames = colNames;
+        dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     }
-    
-    public void setColumnNames(String[] colNames){
-            columnNames=colNames;
+
+    public void setColumnNames(String[] colNames) {
+        columnNames = colNames;
     }
 
     public static String[] getColumnNames() {
         return columnNames;
     }
-    
-    
+
     public PatientTableModel(List<Patient> list) {
         data = list;
     }
@@ -32,12 +32,12 @@ public class PatientTableModel extends AbstractTableModel{
     public void add(List<Patient> list) {
         data = list;
     }
-    
+
     @Override
     public int getRowCount() {
         return data.size();
     }
-     
+
     @Override
     public String getColumnName(int col) {
         return columnNames[col];
@@ -45,15 +45,15 @@ public class PatientTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-       return columnNames.length;
+        return columnNames.length;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-         Patient patient= (Patient)data.get(rowIndex);
-        switch(columnNames[columnIndex]){
+        Patient patient = (Patient) data.get(rowIndex);
+        switch (columnNames[columnIndex]) {
             /*PatientID Name Surname ParentName Gender DateOfBirth PlaceOFBirth City Phone Email Allergies Allergies Username */
-            
+
             case "PatientID":
                 return patient.getPatientID();
             case "Name":
@@ -79,16 +79,15 @@ public class PatientTableModel extends AbstractTableModel{
             case "Username":
                 return patient.getUsername().getUsername();
             default:
-                 return null;
+                return null;
         }
     }
-    
-    public Patient getPatient(int rowIndex){
+
+    public Patient getPatient(int rowIndex) {
         return data.get(rowIndex);
     }
-    
+
     public void remove(int rowIndex) {
         data.remove(rowIndex);
-    }  
+    }
 }
-

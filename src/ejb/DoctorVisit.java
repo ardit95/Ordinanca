@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "DoctorVisit.findAll", query = "SELECT d FROM DoctorVisit d"),
     @NamedQuery(name = "DoctorVisit.findByDoctorVisitID", query = "SELECT d FROM DoctorVisit d WHERE d.DoctorVisitID = :DoctorVisitID"),
-    @NamedQuery(name = "DoctorVisit.findByDate", query = "SELECT d FROM DoctorVisit d WHERE d.date = :date"),
+    @NamedQuery(name = "DoctorVisit.findByTimeStamp", query = "SELECT d FROM DoctorVisit d WHERE d.timeStamp = :timeStamp"),
     @NamedQuery(name = "DoctorVisit.findBySumPrice", query = "SELECT d FROM DoctorVisit d WHERE d.sumPrice = :sumPrice"),
     @NamedQuery(name = "DoctorVisit.findByRemark", query = "SELECT d FROM DoctorVisit d WHERE d.remark = :remark"),
     @NamedQuery(name = "DoctorVisit.findByFinished", query = "SELECT d FROM DoctorVisit d WHERE d.finished = :finished")})
@@ -50,9 +50,9 @@ public class DoctorVisit implements Serializable {
     @Column(name = "DoctorVisitID")
     private Integer DoctorVisitID;
     @Basic(optional = false)
-    @Column(name = "Date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    @Column(name = "timeStamp")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeStamp;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "SumPrice")
     private BigDecimal sumPrice;
@@ -81,9 +81,9 @@ public class DoctorVisit implements Serializable {
         this.DoctorVisitID = DoctorVisitID;
     }
 
-    public DoctorVisit(Integer DoctorVisitID, Date date) {
+    public DoctorVisit(Integer DoctorVisitID, Date timeStamp) {
         this.DoctorVisitID = DoctorVisitID;
-        this.date = date;
+        this.timeStamp = timeStamp;
     }
 
     public Integer getDoctorVisitID() {
@@ -94,12 +94,12 @@ public class DoctorVisit implements Serializable {
         this.DoctorVisitID = DoctorVisitID;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public BigDecimal getSumPrice() {
@@ -192,5 +192,5 @@ public class DoctorVisit implements Serializable {
     public String toString() {
         return "ejb.DoctorVisit[ DoctorVisitID=" + DoctorVisitID + " ]";
     }
-    
+
 }

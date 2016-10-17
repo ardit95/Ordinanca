@@ -1,17 +1,15 @@
-
 package gui.view;
+
 import java.awt.Dimension;
 
 public class SeeNotifications extends javax.swing.JInternalFrame {
 
-    
     public SeeNotifications() {
         initComponents();
         this.setLocation(220, 10);
         this.setPreferredSize(new Dimension(1100, 654));
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -35,7 +33,6 @@ public class SeeNotifications extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

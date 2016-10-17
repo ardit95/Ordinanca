@@ -1,4 +1,3 @@
-
 package gui.view;
 
 import ExceptionPackage.AppException;
@@ -12,203 +11,217 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-
 public class MainFrame extends javax.swing.JFrame {
-    
-    String pozita="";
-    static EntityManager entityManager;
-    static Staff staff;
-    public MainFrame(Staff staff,EntityManager entityManager) {
+
+    String pozita = "";
+    EntityManager entityManager;
+    Staff currentUser;
+
+    public MainFrame(EntityManager entityManager, Staff currentUser) {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         initComponents();
-        pozita=staff.getRole();
-        this.staff=staff;
-        this.entityManager=entityManager;
+        this.currentUser = currentUser;
+        pozita = currentUser.getRole();
+        this.entityManager = entityManager;
         setPrioritys();
     }
-    
-    public void addAddAppointment(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addAddAppointment() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     AddAppointment addAppointment= new AddAppointment();
-     desktopPane.add(addAppointment);
-     addAppointment.show();
+
+        AddAppointment addAppointment = new AddAppointment();
+        desktopPane.add(addAppointment);
+        addAppointment.show();
     }
-    
-    public void addAddNotification(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addAddNotification() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     AddNotification addNotification= new AddNotification();
-     desktopPane.add(addNotification);
-     addNotification.show();
+
+        AddNotification addNotification = new AddNotification();
+        desktopPane.add(addNotification);
+        addNotification.show();
     }
-    
-    public void addAddPatient(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addAddPatient() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     AddPatient addPatient= new AddPatient(entityManager,staff);
-     desktopPane.add(addPatient);
-     addPatient.show();
+
+        AddPatient addPatient = new AddPatient(entityManager, currentUser);
+        desktopPane.add(addPatient);
+        addPatient.show();
     }
-    
-    public void addAddUsers(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addAddUsers() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     AddUsers addUsers= new AddUsers(entityManager,staff);
-     desktopPane.add(addUsers);
-     addUsers.show();
+
+        AddUsers addUsers = new AddUsers(entityManager, currentUser);
+        desktopPane.add(addUsers);
+        addUsers.show();
     }
-    
-    public void addCreateAnalysis(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addCreateAnalysis() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     CreateAnalysis createAnalysis= new CreateAnalysis();
-     desktopPane.add(createAnalysis);
-     createAnalysis.show();
+
+        CreateAnalysis createAnalysis = new CreateAnalysis();
+        desktopPane.add(createAnalysis);
+        createAnalysis.show();
     }
-    
-    public void addCreateDoctorVisit(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addCreateDoctorVisit() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     CreateDoctorVisit createDoctorVisit= new CreateDoctorVisit();
-     desktopPane.add(createDoctorVisit);
-     createDoctorVisit.show();
+
+        CreateDoctorVisit createDoctorVisit = new CreateDoctorVisit();
+        desktopPane.add(createDoctorVisit);
+        createDoctorVisit.show();
     }
-    
-    public void addExportReports(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addExportReports() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     ExportReports exportReports= new ExportReports();
-     desktopPane.add(exportReports);
-     exportReports.show();
+
+        ExportReports exportReports = new ExportReports();
+        desktopPane.add(exportReports);
+        exportReports.show();
     }
-    
-    public void addLogs(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addLogs() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     SeeLogs logs= new SeeLogs(entityManager);
-     desktopPane.add(logs);
-     logs.show();
+
+        SeeLogs logs = new SeeLogs(entityManager);
+        desktopPane.add(logs);
+        logs.show();
     }
-    
-    public void addMessage(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addMessage() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     Message message= new Message();
-     desktopPane.add(message);
-     message.show();
+
+        AddMessage message = new AddMessage(entityManager, currentUser);
+        desktopPane.add(message);
+        message.show();
     }
-    
-    public void addPrintReports(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addPrintReports() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     PrintReports printReports= new PrintReports();
-     desktopPane.add(printReports);
-     printReports.show();
+
+        PrintReports printReports = new PrintReports();
+        desktopPane.add(printReports);
+        printReports.show();
     }
-    
-    public void addSearch(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addSearch() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     Search search= new Search();
-     desktopPane.add(search);
-     search.show();
+
+        Search search = new Search();
+        desktopPane.add(search);
+        search.show();
     }
-    
-    public void addSeeAppointments(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addSeeAppointments() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     SeeAppointments seeAppointments= new SeeAppointments();
-     desktopPane.add(seeAppointments);
-     seeAppointments.show();
+
+        SeeAppointments seeAppointments = new SeeAppointments();
+        desktopPane.add(seeAppointments);
+        seeAppointments.show();
     }
-    
-    public void addSeeNotifications(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addSeeNotifications() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     SeeNotifications seeNotifications= new SeeNotifications();
-     desktopPane.add(seeNotifications);
-     seeNotifications.show();
+
+        SeeNotifications seeNotifications = new SeeNotifications();
+        desktopPane.add(seeNotifications);
+        seeNotifications.show();
     }
-    
-    public void addSeeReports(){
-        try {if(desktopPane.getSelectedFrame()!=null){
-            desktopPane.getSelectedFrame().setClosed(true);
-        }
+
+    public void addSeeReports() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     SeeReports seeReports= new SeeReports();
-     desktopPane.add(seeReports);
-     seeReports.show();
+
+        SeeReports seeReports = new SeeReports();
+        desktopPane.add(seeReports);
+        seeReports.show();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -403,9 +416,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    public void setPrioritys(){
-        if(pozita.equals("Recepsion")){
+
+    public void setPrioritys() {
+        if (pozita.equals("Recepsion")) {
             jButton1.setText("Add Patient");
             jButton2.setText("Add Notification");
             jButton3.setText("Add Appointments");
@@ -415,7 +428,7 @@ public class MainFrame extends javax.swing.JFrame {
             jButton6.setVisible(false);
             jButton7.setVisible(false);
         }
-        if(pozita.equals("Doctor")){
+        if (pozita.equals("Doctor")) {
             jButton1.setText("See Notifications");
             jButton2.setText("See Appointments");
             jButton3.setText("Create Doctor Visit");
@@ -424,7 +437,7 @@ public class MainFrame extends javax.swing.JFrame {
             jButton6.setText("Print Report");
             jButton7.setText("Add Patient");
         }
-        if(pozita.equals("Director")){
+        if (pozita.equals("Director")) {
             jButton1.setText("See Reports");
             jButton2.setText("Logs");
             jButton3.setText("Export Reports");
@@ -433,7 +446,7 @@ public class MainFrame extends javax.swing.JFrame {
             jButton6.setVisible(false);
             jButton7.setVisible(false);
         }
-        if(pozita.equals("Administrator")){
+        if (pozita.equals("Administrator")) {
             jButton1.setText("Add User");
             jButton2.setVisible(false);
             jButton3.setVisible(false);
@@ -443,82 +456,70 @@ public class MainFrame extends javax.swing.JFrame {
             jButton7.setVisible(false);
         }
     }
-    
+
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         logOutMethod();
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(pozita.equals("Recepsion")){
+        if (pozita.equals("Recepsion")) {
             addAddPatient();
-        }
-        else if(pozita.equals("Doctor")){
+        } else if (pozita.equals("Doctor")) {
             addSeeNotifications();
-        }
-        else if(pozita.equals("Director")){
+        } else if (pozita.equals("Director")) {
             addSeeReports();
-        }
-        else if(pozita.equals("Administrator")){
+        } else if (pozita.equals("Administrator")) {
             addAddUsers();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       if(pozita.equals("Recepsion")){
+        if (pozita.equals("Recepsion")) {
             addAddNotification();
-        }
-       else if(pozita.equals("Doctor")){
+        } else if (pozita.equals("Doctor")) {
             addSeeAppointments();
-        }
-       else if(pozita.equals("Director")){
+        } else if (pozita.equals("Director")) {
             addLogs();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if(pozita.equals("Recepsion")){
+        if (pozita.equals("Recepsion")) {
             addAddAppointment();
-        }
-        else if(pozita.equals("Doctor")){
+        } else if (pozita.equals("Doctor")) {
             addCreateDoctorVisit();
-        }
-        else if(pozita.equals("Director")){
+        } else if (pozita.equals("Director")) {
             addExportReports();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if(pozita.equals("Recepsion")){
+        if (pozita.equals("Recepsion")) {
             addPrintReports();
-        }
-        else if(pozita.equals("Doctor")){
+        } else if (pozita.equals("Doctor")) {
             addMessage();
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if(pozita.equals("Recepsion")){
+        if (pozita.equals("Recepsion")) {
             addMessage();
-        }
-        else if(pozita.equals("Doctor")){
+        } else if (pozita.equals("Doctor")) {
             addSearch();
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        if(pozita.equals("Doctor")){
+        if (pozita.equals("Doctor")) {
             addPrintReports();
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if(pozita.equals("Doctor")){
+        if (pozita.equals("Doctor")) {
             addAddPatient();
         }
     }//GEN-LAST:event_jButton7ActionPerformed
-
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -554,7 +555,7 @@ public class MainFrame extends javax.swing.JFrame {
             login = new Login();
             login.setVisible(true);
         } catch (AppException ex) {
-            JOptionPane.showMessageDialog(this,ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         return 0;
     }

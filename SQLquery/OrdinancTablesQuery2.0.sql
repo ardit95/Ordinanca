@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Staff(
 
 CREATE TABLE IF NOT EXISTS Logs(
 	LogsID int PRIMARY KEY AUTO_INCREMENT,
-    Date date NOT NULL,
+    timeStamp Timestamp NOT NULL,
     Type varchar(50) NOT NULL,
     Message varchar(300) NOT NULL,
     Seen varchar(5) DEFAULT 'No',
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS Logs(
 
 CREATE TABLE IF NOT EXISTS Message(
 	MessageID int PRIMARY KEY AUTO_INCREMENT,
-    Date date NOT NULL,
+    timeStamp Timestamp NOT NULL,
     Message varchar(500) NOT NULL,
     Username varchar(50) NOT NULL,
     DoctorID varchar(50) NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS Analysis(
 
 CREATE TABLE AnalysisVisit(
 	AnalysisVisitID int PRIMARY KEY AUTO_INCREMENT,
-    Date date NOT NULL,
+    timeStamp Timestamp NOT NULL,
     
     PatientID int ,
     LaboratorTechnicianID varchar(50) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE AnalysisForVisit(
 CREATE TABLE IF NOT EXISTS DoctorVisit(
 	DoctorVisitID int PRIMARY KEY AUTO_INCREMENT,
     /*DoctorVisitID Date SumPrice Remark Finished PatientID DoctorID StaffID */
-    Date date NOT NULL,
+    timeStamp Timestamp NOT NULL,
     SumPrice decimal(10,2),
     Remark varchar (500),
     Finished varchar (5) default 'No',

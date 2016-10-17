@@ -12,10 +12,6 @@
     <class>ejb.Message</class>
     <class>ejb.Patient</class>
     <class>ejb.Staff</class>
-    <class>ejbView.Doctorvisit</class>
-    <class>ejbView.Diagnosisforvisit</class>
-    <class>ejbView.Analysisforvisit</class>
-    <class>ejbView.Analysisvisit</class>
     <class>ejbView.NumberOfStaff</class>
   </persistence-unit>
 </persistence>

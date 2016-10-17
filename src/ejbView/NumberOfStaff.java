@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Besniku
+ * @author ARDITI
  */
 @Entity
 @Table(name = "NumberOfStaff")

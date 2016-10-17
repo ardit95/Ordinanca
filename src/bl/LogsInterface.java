@@ -11,4 +11,5 @@ public interface LogsInterface {
     void remove (Logs logs);
     List <Logs> findAll();
     Date findDate();
+    List<Logs> findByAll(String text);
 }

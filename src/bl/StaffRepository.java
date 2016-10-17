@@ -140,6 +140,8 @@ public class StaffRepository extends EntMngClass implements StaffInterface{
         return Integer.parseInt(query.getSingleResult().toString());
     }
     
+    
+    
     @Override
     public void setStaffPassword(Staff staff) {
         try {
@@ -152,6 +154,13 @@ public class StaffRepository extends EntMngClass implements StaffInterface{
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+    }
+    
+    @Override
+    public List<Staff> findByAll(String text) {
+        Query query=em.createQuery ("SELECT object (s) FROM Staff s WHERE s.name LIKE :txt OR s.surname LIKE :txt OR s.username LIKE :txt OR s.gender LIKE :txt OR s.education LIKE :txt OR s.specialization LIKE :txt OR s.role LIKE :txt");
+        query.setParameter("txt","%"+text+"%");
+        return (List<Staff>)query.getResultList();
     }
     
 }

@@ -69,5 +69,12 @@ public class LogsRepository extends EntMngClass implements LogsInterface{
         Query query=em.createNativeQuery("SELECT CURRENT_TIMESTAMP");
         return (Date)query.getSingleResult();
     }
+    
+    @Override
+    public List<Logs> findByAll(String text) {
+        Query query=em.createQuery ("SELECT object (l) FROM Logs l WHERE l.type LIKE :txt OR l.message LIKE :txt OR l.username.name LIKE :txt OR l.username.surname LIKE :txt");
+        query.setParameter("txt","%"+text+"%");
+        return (List<Logs>)query.getResultList();
+    }
 }
 

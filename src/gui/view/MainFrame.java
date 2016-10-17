@@ -61,7 +61,7 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-     AddPatient addPatient= new AddPatient();
+     AddPatient addPatient= new AddPatient(entityManager,staff);
      desktopPane.add(addPatient);
      addPatient.show();
     }
@@ -74,7 +74,7 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-     AddUsers addUsers= new AddUsers(entityManager);
+     AddUsers addUsers= new AddUsers(entityManager,staff);
      desktopPane.add(addUsers);
      addUsers.show();
     }
@@ -126,7 +126,7 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-     Logs logs= new Logs();
+     SeeLogs logs= new SeeLogs(entityManager);
      desktopPane.add(logs);
      logs.show();
     }

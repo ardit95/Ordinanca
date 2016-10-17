@@ -67,7 +67,7 @@ public class LogsTableModel extends AbstractTableModel{
             case "Type":
                 return logs.getType();   
             case "Username":
-                return logs.getUsername().getUsername();    
+                return logs.getUsername();    
             
             default:
                  return null;

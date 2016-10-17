@@ -9,5 +9,6 @@ public interface PatientInterface {
     void edit (Patient patient)throws AppException;
     void remove (Patient patient);
     List <Patient> findAll();
+    List<Patient> findByAll(String text);
 }
 

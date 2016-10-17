@@ -306,7 +306,7 @@ public class Staff implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.Staff[ username=" + username + " ]";
+        return name + " " + surname + " - " + username;
     }
 
     public byte[] getPassword() {

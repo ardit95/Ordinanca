@@ -63,7 +63,9 @@ public class StaffTableModel extends AbstractTableModel{
             case "Gender":
                 return staff.getGender(); 
             case "DateOfBirth":
-                return dateFormat.format(staff.getDateOfBirth());   
+                if(staff.getDateOfBirth()!=null){
+                    return dateFormat.format(staff.getDateOfBirth());  
+                }
             case "Education":
                 return staff.getEducation();    
             case "Specialization":

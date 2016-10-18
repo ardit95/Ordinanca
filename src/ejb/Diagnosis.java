@@ -6,22 +6,16 @@
 package ejb;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -58,11 +52,6 @@ public class Diagnosis implements Serializable {
     private String therapy;
     @Column(name = "Recommendation")
     private String recommendation;
-    @JoinColumn(name = "DoctorVisitID", referencedColumnName = "DoctorVisitID")
-    @ManyToOne(optional = false)
-    private DoctorVisit doctorVisitID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "diagnosisID")
-    private Collection<DiagnosisForVisit> DiagnosisForVisitCollection;
 
     public Diagnosis() {
     }
@@ -125,23 +114,6 @@ public class Diagnosis implements Serializable {
         this.recommendation = recommendation;
     }
 
-    public DoctorVisit getDoctorVisitID() {
-        return doctorVisitID;
-    }
-
-    public void setDoctorVisitID(DoctorVisit doctorVisitID) {
-        this.doctorVisitID = doctorVisitID;
-    }
-
-    @XmlTransient
-    public Collection<DiagnosisForVisit> getDiagnosisForVisitCollection() {
-        return DiagnosisForVisitCollection;
-    }
-
-    public void setDiagnosisForVisitCollection(Collection<DiagnosisForVisit> DiagnosisForVisitCollection) {
-        this.DiagnosisForVisitCollection = DiagnosisForVisitCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -166,5 +138,5 @@ public class Diagnosis implements Serializable {
     public String toString() {
         return "ejb.Diagnosis[ diagnosisID=" + diagnosisID + " ]";
     }
-
+    
 }

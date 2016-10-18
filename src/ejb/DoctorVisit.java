@@ -7,10 +7,8 @@ package ejb;
 
 import ExceptionPackage.AppException;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,12 +18,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -55,11 +51,11 @@ public class DoctorVisit implements Serializable {
     private Date timeStamp;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "SumPrice")
-    private double sumPrice=0;
+    private double sumPrice;
     @Column(name = "Remark")
     private String remark;
     @Column(name = "Finished")
-    private String finished="No";
+    private String finished;
     @JoinColumn(name = "DoctorID", referencedColumnName = "Username")
     @ManyToOne(optional = false)
     private Staff doctorID;
@@ -69,22 +65,28 @@ public class DoctorVisit implements Serializable {
     @JoinColumn(name = "StaffID", referencedColumnName = "Username")
     @ManyToOne(optional = false)
     private Staff staffID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "DoctorVisitID")
-    private Collection<Diagnosis> diagnosisCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "DoctorVisitID")
-    private Collection<DiagnosisForVisit> DiagnosisForVisitCollection;
 
     public DoctorVisit() {
     }
-
+    
     public DoctorVisit(String remark,Staff doctor,Staff registererID)throws AppException{
         if(doctor==null)
-            throw new AppException ("The doctor cannot be null");
+            throw new AppException("The doctor cannot be null");
         if(registererID==null)
             throw new AppException("The registerer cannot be null");
         this.remark=remark;
         doctorID=doctor;
         staffID=registererID;
+    
+    }
+
+    public DoctorVisit(Integer DoctorVisitID) {
+        this.DoctorVisitID = DoctorVisitID;
+    }
+
+    public DoctorVisit(Integer DoctorVisitID, Date timeStamp) {
+        this.DoctorVisitID = DoctorVisitID;
+        this.timeStamp = timeStamp;
     }
 
     public Integer getDoctorVisitID() {
@@ -151,24 +153,6 @@ public class DoctorVisit implements Serializable {
         this.staffID = staffID;
     }
 
-    @XmlTransient
-    public Collection<Diagnosis> getDiagnosisCollection() {
-        return diagnosisCollection;
-    }
-
-    public void setDiagnosisCollection(Collection<Diagnosis> diagnosisCollection) {
-        this.diagnosisCollection = diagnosisCollection;
-    }
-
-    @XmlTransient
-    public Collection<DiagnosisForVisit> getDiagnosisForVisitCollection() {
-        return DiagnosisForVisitCollection;
-    }
-
-    public void setDiagnosisForVisitCollection(Collection<DiagnosisForVisit> DiagnosisForVisitCollection) {
-        this.DiagnosisForVisitCollection = DiagnosisForVisitCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -193,5 +177,5 @@ public class DoctorVisit implements Serializable {
     public String toString() {
         return "ejb.DoctorVisit[ DoctorVisitID=" + DoctorVisitID + " ]";
     }
-
+    
 }

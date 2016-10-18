@@ -245,7 +245,7 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        Search search = new Search();
+        Search search = new Search(entityManager);
         desktopPane.add(search);
         search.show();
     }

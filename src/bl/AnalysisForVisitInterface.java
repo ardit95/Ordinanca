@@ -13,4 +13,6 @@ public interface AnalysisForVisitInterface {
     void remove(AnalysisForVisit AnalysisForVisit);
 
     List<AnalysisForVisit> findAll();
+    
+    List<AnalysisForVisit> findByPatient(int PatientID);
 }

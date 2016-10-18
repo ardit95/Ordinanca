@@ -224,7 +224,7 @@ public class AddPatient extends javax.swing.JInternalFrame {
         patientTbl.setShowVerticalLines(false);
         jScrollPane2.setViewportView(patientTbl);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 84, 590, -1));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 84, 590, 530));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Search :");

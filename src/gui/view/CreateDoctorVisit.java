@@ -40,6 +40,7 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
         this.setPreferredSize(new Dimension(1100, 654));
         createDoctorListeners();
         patientTableLoad();
+        fillTimeCombos();
     }
     
     private void initInterface(EntityManager entityManager){
@@ -62,6 +63,13 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
         }
     }
 
+    private void fillTimeCombos() {
+        for(int i=0;i<60;i++){
+            minuteCombo.addItem(Integer.toString(i));
+            if(i<24)
+                hourCombo.addItem(Integer.toString(i));
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -81,9 +89,16 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
         jPanel4 = new javax.swing.JPanel();
         staffCombo = new javax.swing.JComboBox<>();
         staffLbl = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        staffLbl1 = new javax.swing.JLabel();
+        dateCombo = new com.toedter.calendar.JDateChooser();
+        minuteCombo = new javax.swing.JComboBox<>();
+        hourCombo = new javax.swing.JComboBox<>();
+        minuteLbl = new javax.swing.JLabel();
+        hourLbl = new javax.swing.JLabel();
+        dateLbl = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         patientTbl = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Create Doctor Visit");
@@ -92,7 +107,7 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
         setPreferredSize(new java.awt.Dimension(1100, 654));
 
         visitCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "null", "Biochemical Analysis", "Microbiology Analysis", "Control", "Treatment", "Ultrasound" }));
-        visitCombo.setToolTipText("");
+        visitCombo.setToolTipText("Choose the type of visit");
 
         typeOfVisitLbl.setText("Type Of Visit :");
 
@@ -134,6 +149,7 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
         remarkTxtf.setColumns(20);
         remarkTxtf.setLineWrap(true);
         remarkTxtf.setRows(5);
+        remarkTxtf.setToolTipText("Write down the remark about this visit");
         remarkTxtf.setWrapStyleWord(true);
         jScrollPane2.setViewportView(remarkTxtf);
 
@@ -151,7 +167,7 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
             }
         });
 
-        staffCombo.setToolTipText("");
+        staffCombo.setToolTipText("Choose the staff member who will perform the visit");
 
         staffLbl.setText("Doctor to hold visit :");
 
@@ -173,6 +189,46 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        staffLbl1.setText("Time of Visit:");
+
+        minuteLbl.setText("minute:");
+
+        hourLbl.setText("hour:");
+
+        dateLbl.setText("date:");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addComponent(staffLbl1)
+                .addGap(36, 36, 36)
+                .addComponent(minuteLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(hourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(hourLbl)
+                .addGap(18, 18, 18)
+                .addComponent(minuteCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(dateLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(dateCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(staffLbl1)
+                .addComponent(hourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(minuteCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(minuteLbl)
+                .addComponent(hourLbl)
+                .addComponent(dateLbl))
+            .addComponent(dateCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -182,9 +238,10 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
             .addComponent(jScrollPane2)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,11 +249,13 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveBtn)
                     .addComponent(clearBtn)))
@@ -214,13 +273,6 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
         patientTbl.setShowVerticalLines(false);
         jScrollPane3.setViewportView(patientTbl);
 
-        jButton1.setText("Seen All");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
@@ -229,9 +281,7 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         backgroundPanelLayout.setVerticalGroup(
@@ -241,9 +291,8 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -306,26 +355,29 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
         clearObject();
     }//GEN-LAST:event_clearBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton clearBtn;
-    private javax.swing.JButton jButton1;
+    private com.toedter.calendar.JDateChooser dateCombo;
+    private javax.swing.JLabel dateLbl;
+    private javax.swing.JComboBox<String> hourCombo;
+    private javax.swing.JLabel hourLbl;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JComboBox<String> minuteCombo;
+    private javax.swing.JLabel minuteLbl;
     private javax.swing.JTable patientTbl;
     private javax.swing.JLabel remarkLbl;
     private javax.swing.JTextArea remarkTxtf;
     private javax.swing.JButton saveBtn;
     private javax.swing.JComboBox<String> staffCombo;
     private javax.swing.JLabel staffLbl;
+    private javax.swing.JLabel staffLbl1;
     private javax.swing.JLabel typeOfVisitLbl;
     private javax.swing.JComboBox<String> visitCombo;
     // End of variables declaration//GEN-END:variables
@@ -364,10 +416,12 @@ public class CreateDoctorVisit extends javax.swing.JInternalFrame {
                     } else {
                         role = "Doctor";
                     }
-                    staffCombo.removeAll();
-                    staffList = staffIr.findByRole(role);
-                    for (Staff tempStaff : staffList) {
-                        staffCombo.addItem(tempStaff.toString());
+                    staffCombo.removeAllItems();
+                    if (!temp.equals("null")) {
+                        staffList = staffIr.findByRole(role);
+                        for (Staff tempStaff : staffList) {
+                            staffCombo.addItem(tempStaff.toString());
+                        }
                     }
                     currentState = visitCombo.getSelectedItem().toString();
                 }

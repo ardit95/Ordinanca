@@ -45,15 +45,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Staff.findByStatus", query = "SELECT s FROM Staff s WHERE s.status = :status")})
 public class Staff implements Serializable {
 
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "Password")
+    private byte[] password;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "Username")
     private String username;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "Password")
-    private byte[] password;
     @Basic(optional = false)
     @Column(name = "salt")
     private String salt;
@@ -120,13 +120,6 @@ public class Staff implements Serializable {
         this.username = username;
     }
 
-    public byte[] getPassword() {
-        return password;
-    }
-
-    public void setPassword(byte[] password) {
-        this.password = password;
-    }
 
     public String getSalt() {
         return salt;
@@ -305,4 +298,11 @@ public class Staff implements Serializable {
         return name + " " + surname + " - " + username;
     }
 
+    public byte[] getPassword() {
+        return password;
+    }
+
+    public void setPassword(byte[] password) {
+        this.password = password;
+    }
 }

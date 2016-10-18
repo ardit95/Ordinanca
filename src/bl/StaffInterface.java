@@ -38,4 +38,6 @@ public interface StaffInterface {
     List<Staff> findAllWithoutAdministratorAndMyself(Staff currentUser);
 
     List<Staff> findAllWithoutAdministrator();
+
+    List<Staff> findByRole(String role);
 }

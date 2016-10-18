@@ -157,14 +157,12 @@ public class Login extends javax.swing.JFrame {
     public static void main(String args[]) {
         Login login = null;
         try {
-
             login = new Login();
             if (login.staffIr.CheckAdminExists() == 0) {
                 new checkSystemAdmin().setVisible(true);
             } else {
                 login.setVisible(true);
             }
-
         } catch (AppException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, ex.getMessage());

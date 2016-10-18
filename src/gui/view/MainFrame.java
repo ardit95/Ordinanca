@@ -2,28 +2,86 @@ package gui.view;
 
 import ExceptionPackage.AppException;
 import bl.EntMngClass;
+import bl.MessageInterface;
+import bl.MessageRepository;
+import bl.StaffInterface;
+import bl.StaffRepository;
 import ejb.Staff;
+import java.awt.Color;
 import java.beans.PropertyVetoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class MainFrame extends javax.swing.JFrame {
 
+
+public class MainFrame extends javax.swing.JFrame {
     String pozita = "";
     EntityManager entityManager;
     Staff currentUser;
-
+    StaffInterface staffIr;
+    MessageInterface messageIr;
+    AddMessage addMessage;
+    
     public MainFrame(EntityManager entityManager, Staff currentUser) {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.entityManager=entityManager;
         initComponents();
+        initInterfaces(this.entityManager);
         this.currentUser = currentUser;
         pozita = currentUser.getRole();
-        this.entityManager = entityManager;
         setPrioritys();
+        messageCheckingThread();
+    }
+    
+    public void initInterfaces(EntityManager entityManager){
+        staffIr=new StaffRepository(entityManager);
+        messageIr=new MessageRepository(entityManager);
+    }
+    
+    public void messageCheckingThread(){
+        Thread th;
+        
+        th = new Thread() {
+            long numberOfMessagesUnseen,tempAllMessages;
+            long numberOfMessages=0;
+            long tempUnseenMessages=0;
+            
+            @Override
+            public void run() {
+                try {
+                    if ((numberOfMessagesUnseen = messageIr.countUnseenMessagesForUser(currentUser)) > 0) {
+                        if (currentUser.getRole().equals("Doctor")) {
+                            if(numberOfMessagesUnseen!=tempUnseenMessages){
+                                addMessage.staffTableLoad();
+                                tempUnseenMessages=numberOfMessagesUnseen;
+                            }
+                            jButton4.setForeground(Color.red);
+                            jButton4.setText("Create Message(" + numberOfMessagesUnseen + ")");
+                        }
+                    } else {
+                        jButton4.setForeground(Color.WHITE);
+                        jButton4.setText("Create Message");
+                    }
+                    
+                    if(addMessage!=null){
+                        if(numberOfMessages!=(tempAllMessages=messageIr.countMessagesForUser(currentUser))){
+                            addMessage.staffTableLoad();
+                        }
+                        numberOfMessages=tempAllMessages;
+                    }
+                        
+                    sleep(500);
+                    run();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+            }
+        };
+
+        th.start();
     }
 
     public void addAddAppointment() {
@@ -32,7 +90,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         AddAppointment addAppointment = new AddAppointment();
@@ -46,7 +105,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         AddNotification addNotification = new AddNotification();
@@ -60,7 +120,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         AddPatient addPatient = new AddPatient(entityManager, currentUser);
@@ -74,7 +135,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         AddUsers addUsers = new AddUsers(entityManager, currentUser);
@@ -88,7 +150,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         CreateAnalysis createAnalysis = new CreateAnalysis();
@@ -102,10 +165,11 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        CreateDoctorVisit createDoctorVisit = new CreateDoctorVisit();
+        CreateDoctorVisit createDoctorVisit = new CreateDoctorVisit(entityManager,currentUser);
         desktopPane.add(createDoctorVisit);
         createDoctorVisit.show();
     }
@@ -116,7 +180,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         ExportReports exportReports = new ExportReports();
@@ -130,7 +195,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         SeeLogs logs = new SeeLogs(entityManager);
@@ -144,12 +210,14 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-
-        AddMessage message = new AddMessage(entityManager, currentUser);
-        desktopPane.add(message);
-        message.show();
+    
+        if(addMessage==null)
+            addMessage = new AddMessage(entityManager, currentUser);
+        desktopPane.add(addMessage);
+        addMessage.show();
     }
 
     public void addPrintReports() {
@@ -158,7 +226,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         PrintReports printReports = new PrintReports();
@@ -172,7 +241,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         Search search = new Search();
@@ -186,7 +256,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         SeeAppointments seeAppointments = new SeeAppointments();
@@ -200,7 +271,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         SeeNotifications seeNotifications = new SeeNotifications();
@@ -214,7 +286,8 @@ public class MainFrame extends javax.swing.JFrame {
                 desktopPane.getSelectedFrame().setClosed(true);
             }
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
         SeeReports seeReports = new SeeReports();

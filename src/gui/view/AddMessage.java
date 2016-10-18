@@ -34,23 +34,22 @@ public class AddMessage extends javax.swing.JInternalFrame {
 
     public AddMessage(EntityManager entityManager, Staff currentUser) {
         initComponents();
+        this.entityManager = entityManager;
+        this.currentUser = currentUser;
+        this.setLocation(220, 10);
+        this.setPreferredSize(new Dimension(1100, 654));
         initInterfaces(entityManager);
         initTableModels();
         messageTblListeners();
-        this.currentUser = currentUser;
-        this.entityManager = entityManager;
-        this.setLocation(220, 10);
-        this.setPreferredSize(new Dimension(1100, 654));
         staffList = staffIr.findAllWithoutAdministrator();
         fillComboWithStaff(staffList);
-        staffTableLoad();
     }
 
     public void initTableModels() {
         String[] messageTblColumns = {"Sender", "Message", "Time", "Date"};
         messageTM = new MessageTableModel(messageTblColumns);
-        String[] staffTblColumns = {"Username", "Name", "Surname"};
-        staffTM = new StaffTableModel(staffTblColumns);
+        String[] staffTblColumns = {"Username", "Name", "Surname","Unseen"};
+        staffTM = new StaffTableModel(staffTblColumns,entityManager,currentUser);
     }
 
     /*{
@@ -125,6 +124,7 @@ public class AddMessage extends javax.swing.JInternalFrame {
         clearBtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         messageTbl = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Message");
@@ -237,6 +237,13 @@ public class AddMessage extends javax.swing.JInternalFrame {
         messageTbl.setShowVerticalLines(false);
         jScrollPane3.setViewportView(messageTbl);
 
+        jButton1.setText("Seen All");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
@@ -245,7 +252,9 @@ public class AddMessage extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         backgroundPanelLayout.setVerticalGroup(
@@ -254,7 +263,11 @@ public class AddMessage extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -282,7 +295,6 @@ public class AddMessage extends javax.swing.JInternalFrame {
             validation();
             Message message = new Message(currentUser, staffList.get(staffCombo.getSelectedIndex()), messageTxtf.getText().trim());
             Date date = (new LogsRepository(entityManager).findDate());
-            JOptionPane.showMessageDialog(this, date);
             message.setTimeStamp(date);
             messageIr.create(message);
             clearObject();
@@ -303,6 +315,10 @@ public class AddMessage extends javax.swing.JInternalFrame {
         clearObject();
     }//GEN-LAST:event_clearBtnActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        messageIr.seenAllMyMessages(currentUser);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void validation() throws AppException {
         if (staffCombo == null) {
             throw new AppException("Select the reciever for this message.");
@@ -318,6 +334,7 @@ public class AddMessage extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton clearBtn;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

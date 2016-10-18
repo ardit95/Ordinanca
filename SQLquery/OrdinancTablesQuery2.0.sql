@@ -124,6 +124,7 @@ CREATE TABLE IF NOT EXISTS DiagnosisForVisit(
 	CREATE VIEW NumberOfStaff AS
 	SELECT COUNT(*) AS 'Numri' FROM Ordinanca.Staff;
     
+    SELECT message FROM Message message WHERE message.username.username = :currentU AND message.seen='No';
 	
 
 /*Hashing SHA2_512 

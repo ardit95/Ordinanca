@@ -29,17 +29,17 @@ public class AddUsers extends javax.swing.JInternalFrame {
     StaffInterface staffIr;
     LogsInterface logsIr;
     StaffTableModel staffTableModel;
-    Staff staff;
+    Staff currentUser;
 
-    public AddUsers(EntityManager entityManager, Staff staff) {
+    public AddUsers(EntityManager entityManager, Staff currentUser) {
         this.entityManager = entityManager;
         initComponents();
         setLocation(220, 10);
-        this.staff = staff;
+        this.currentUser = currentUser;
         staffIr = new StaffRepository(entityManager);
         logsIr = new LogsRepository(entityManager);
         String[] columnNamesTableModel = {"Username", "Name", "Surname", "DateOfBirth", "Role"};
-        staffTableModel = new StaffTableModel(columnNamesTableModel);
+        staffTableModel = new StaffTableModel(columnNamesTableModel,this.entityManager,this.currentUser);
         staffTableLoad();
         staffTableMoveKey();
 
@@ -198,7 +198,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
         jPanel1.add(okButton);
         okButton.setBounds(10, 580, 110, 23);
 
-        roleCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doctor", "Recepsion", "Director", "Administrator" }));
+        roleCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doctor", "LaboratorTechnician", "Recepsion", "Director", "Administrator" }));
         jPanel1.add(roleCombo);
         roleCombo.setBounds(170, 530, 190, 30);
 
@@ -482,9 +482,9 @@ public class AddUsers extends javax.swing.JInternalFrame {
         String today = sdf.format(date);
         String koha = sdf2.format(date);
 
-        String message = staff.getName() + " " + staff.getSurname() + " me username-in: " + staff.getUsername() + " Ka shtuar antarin e stafit " + newStaff.getName() + " " + newStaff.getSurname() + " në datën : " + today + " në ora " + koha;
+        String message = currentUser.getName() + " " + currentUser.getSurname() + " me username-in: " + currentUser.getUsername() + " Ka shtuar antarin e stafit " + newStaff.getName() + " " + newStaff.getSurname() + " në datën : " + today + " në ora " + koha;
 
-        logs.setUsername(staff);
+        logs.setUsername(currentUser);
         logs.setTimeStamp(date);
         logs.setMessage(message);
         logs.setType("Create");
@@ -501,9 +501,9 @@ public class AddUsers extends javax.swing.JInternalFrame {
         String today = sdf.format(date);
         String koha = sdf2.format(date);
 
-        String message = staff.getName() + " " + staff.getSurname() + " me username-in: " + staff.getUsername() + " Ka fshirë antarin e stafit" + victimStaff.getName() + " " + victimStaff.getSurname() + " në datën : " + today + " në ora " + koha;
+        String message = currentUser.getName() + " " + currentUser.getSurname() + " me username-in: " + currentUser.getUsername() + " Ka fshirë antarin e stafit" + victimStaff.getName() + " " + victimStaff.getSurname() + " në datën : " + today + " në ora " + koha;
 
-        logs.setUsername(staff);
+        logs.setUsername(currentUser);
         logs.setTimeStamp(date);
         logs.setMessage(message);
         logs.setType("Delete");

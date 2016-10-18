@@ -1,9 +1,12 @@
 package gui.model;
 
+import bl.MessageInterface;
+import bl.MessageRepository;
 import ejb.Staff;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import javax.persistence.EntityManager;
 import javax.swing.table.AbstractTableModel;
 
 public class StaffTableModel extends AbstractTableModel {
@@ -11,8 +14,14 @@ public class StaffTableModel extends AbstractTableModel {
     static String[] columnNames;
     List<Staff> data;
     DateFormat dateFormat;
+    EntityManager entityManager;
+    MessageInterface messageIr;
+    Staff currentUser;
 
-    public StaffTableModel(String[] colNames) {
+    public StaffTableModel(String[] colNames,EntityManager entityManager,Staff currentUser) {
+        this.entityManager=entityManager;
+        this.currentUser=currentUser;
+        this.messageIr=new MessageRepository(this.entityManager);
         columnNames = colNames;
         dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         /*"Name", "Surname", "Data e Lindjes","Numri Personal","Email","Telefoni","Qyteti"*/
@@ -71,7 +80,8 @@ public class StaffTableModel extends AbstractTableModel {
                 return staff.getSpecialization();
             case "Role":
                 return staff.getRole();
-
+            case "Unseen":
+                return messageIr.countUnseenMessagesForSpecificUser(currentUser,staff);
             default:
                 return null;
         }

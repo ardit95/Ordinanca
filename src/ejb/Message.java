@@ -52,7 +52,7 @@ public class Message implements Serializable {
     @Column(name = "Message")
     private String message;
     @Column(name = "Seen")
-    private String seen;
+    private String seen="No";
     @JoinColumn(name = "DoctorID", referencedColumnName = "Username")
     @ManyToOne(optional = false)
     private Staff doctorID;

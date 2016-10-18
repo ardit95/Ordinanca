@@ -18,4 +18,12 @@ public interface MessageInterface {
     List<Message> findByReciever(Staff currentUser);
 
     List<Message> findBySenderAndReciever(Staff reciever, Staff sender);
+
+    int countUnseenMessagesForUser(Staff currentUser);
+
+    int countMessagesForUser(Staff currentUser);
+
+    int countUnseenMessagesForSpecificUser(Staff currentUser, Staff messageFrom);
+
+    void seenAllMyMessages(Staff currentUser);
 }

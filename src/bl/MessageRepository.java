@@ -22,7 +22,7 @@ public class MessageRepository extends EntMngClass implements MessageInterface {
             return message;
         } catch (Throwable thro) {
             if (thro.getMessage().contains("2627")) {
-                if (thro.getMessage().toLowerCase().contains("unique")) {
+                if (thro.getMessage().toLowerCase().contains("unique")){
                     throw new AppException("Ekziston një pjesëmarrës me këto vlera.Secila pjesëmarrës duhet të jetë unike.");
                 } else {
                     throw new AppException("Ekziston nje pjesëmarrës me këtë çelës primarë.");
@@ -77,6 +77,37 @@ public class MessageRepository extends EntMngClass implements MessageInterface {
         query.setParameter("sender", sender.getUsername());
         query.setParameter("reciever", reciever.getUsername());
         return (List<Message>) query.getResultList();
+    }
+
+    @Override
+    public int countUnseenMessagesForUser(Staff currentUser) {
+        Query query = em.createQuery("SELECT Object(message) FROM Message message WHERE message.username.username = :currentU AND message.seen='No'");
+        query.setParameter("currentU", currentUser.getUsername());
+        return query.getResultList().size();
+    }
+
+    @Override
+    public int countMessagesForUser(Staff currentUser) {
+        Query query = em.createQuery("SELECT Object(message) FROM Message message WHERE message.username.username = :currentU  ");
+        query.setParameter("currentU", currentUser.getUsername());
+        return query.getResultList().size();
+    }
+    
+    @Override
+    public int countUnseenMessagesForSpecificUser(Staff currentUser,Staff messageFrom){
+        Query query = em.createQuery("SELECT Object(message) FROM Message message WHERE message.username.username = :currentU AND message.doctorID.username = :messageF AND message.seen='No' ");
+        query.setParameter("currentU", currentUser.getUsername());
+        query.setParameter("messageF",messageFrom.getUsername());
+        return query.getResultList().size();
+    }
+
+    @Override
+    public void seenAllMyMessages(Staff currentUser) {
+        em.getTransaction().begin();
+        Query query = em.createQuery("UPDATE Message message SET message.seen ='Yes' WHERE message.username.username = :currentU");
+        query.setParameter("currentU", currentUser.getUsername());
+        query.executeUpdate();
+        em.getTransaction().commit();
     }
 
 }

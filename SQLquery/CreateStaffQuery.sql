@@ -44,4 +44,9 @@ GRANT DELETE ON [dbo].[Participant_Team] TO stafi;
 */
 COMMIT;
 
+USE Ordinanca;
+
+
+SELECT * FROM Staff staffi WHERE staffi.role NOT LIKE 'Administrator';
+SELECT CURRENT_TIMESTAMP
 

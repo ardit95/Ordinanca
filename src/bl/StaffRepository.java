@@ -173,4 +173,13 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
         return (List<Staff>) query.getResultList();
     }
 
+    @Override
+    public List<Staff> findByRole(String role) {
+        Query query = em.createQuery("SELECT Object(staff) FROM Staff staff WHERE staff.role LIKE :specificRole ");
+        query.setParameter("specificRole", role);
+        return (List<Staff>)query.getResultList();
+    }
+
+    
+
 }

@@ -53,7 +53,6 @@ public class PatientTableModel extends AbstractTableModel {
         Patient patient = (Patient) data.get(rowIndex);
         switch (columnNames[columnIndex]) {
             /*PatientID Name Surname ParentName Gender DateOfBirth PlaceOFBirth City Phone Email Allergies Allergies Username */
-
             case "PatientID":
                 return patient.getPatientID();
             case "Name":
@@ -81,6 +80,13 @@ public class PatientTableModel extends AbstractTableModel {
             default:
                 return null;
         }
+    }
+    
+    public boolean isEmpty() {
+        if (data != null) {
+            return (data.isEmpty());
+        }
+        return false;
     }
 
     public Patient getPatient(int rowIndex) {

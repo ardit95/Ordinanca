@@ -24,8 +24,6 @@ public class AdministratorRegistration extends javax.swing.JFrame {
         initComponents();
         setLocation(220, 10);
         staffIr = new StaffRepository(entityManager);
-        String[] columnNamesTableModel = {"Username", "Name", "Surname", "DateOfBirth", "Role"};
-        staffTableModel = new StaffTableModel(columnNamesTableModel);
     }
 
     @SuppressWarnings("unchecked")

@@ -175,7 +175,7 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Search search = new Search();
+        Search search = new Search(entityManager);
         desktopPane.add(search);
         search.show();
     }

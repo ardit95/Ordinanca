@@ -13,4 +13,7 @@ public interface DiagnosisForVisitInterface {
     void remove(DiagnosisForVisit DiagnosisForVisit);
 
     List<DiagnosisForVisit> findAll();
+
+    List<DiagnosisForVisit> findByPatient(int PatientID);
+            
 }

@@ -63,4 +63,11 @@ public class AnalysisForVisitRepository extends EntMngClass implements AnalysisF
     public List<AnalysisForVisit> findAll() {
         return em.createNamedQuery("AnalysisForVisit.findAll").getResultList();
     }
+    
+    @Override
+    public List<AnalysisForVisit> findByPatient(int PatientID) {
+        Query query=em.createQuery("SELECT object (afv) FROM AnalysisForVisit afv WHERE afv.analysisVisitID.patientID.patientID= :patientID");
+        query.setParameter("patientID", PatientID);
+        return (List <AnalysisForVisit>)query.getResultList();
+    }
 }

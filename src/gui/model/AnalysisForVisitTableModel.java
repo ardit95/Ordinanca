@@ -54,12 +54,20 @@ public class AnalysisForVisitTableModel extends AbstractTableModel {
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
         switch (columnNames[columnIndex]) {
             /*DoctorVisitID Date SumPrice Remark Finished PatientID DoctorID StaffID */
-            case "Price":
+            case "CurrentPrice":
                 return AnalysisForVisit.getPrice();
             case "AnalysisID":
                 return AnalysisForVisit.getAnalysisID();
             case "DiagnosisForVisit":
                 return AnalysisForVisit.getAnalysisForVisitID();
+            case "Patient":
+                return AnalysisForVisit.getAnalysisVisitID().getPatientID();
+            case "Analysis":
+                return AnalysisForVisit.getAnalysisID().getAnalysis();
+            case "Date":
+                return AnalysisForVisit.getAnalysisVisitID().getTimeStamp();
+            case "Price":
+                return AnalysisForVisit.getAnalysisVisitID().getSumPrice();
             default:
                 return null;
         }

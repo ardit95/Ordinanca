@@ -239,7 +239,7 @@ public class Patient implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.Patient[ patientID=" + patientID + " ]";
+        return name+" "+surname;
     }
 
 }

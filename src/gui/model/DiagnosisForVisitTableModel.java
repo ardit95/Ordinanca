@@ -57,12 +57,24 @@ public class DiagnosisForVisitTableModel extends AbstractTableModel {
             /*DiagnosisForVisitID Price DiagnosisID DoctorVisitID */
             case "DiagnosisForVisitID":
                 return DiagnosisForVisit.getDiagnosisForVisitID();
-            case "Price":
+            case "CurrentPrice":
                 return DiagnosisForVisit.getPrice();
             case "DiagnosisID":
                 return DiagnosisForVisit.getDiagnosisID();
             case "DoctorVisitID":
                 return DiagnosisForVisit.getDoctorVisitID();
+            case "Patient":
+                return DiagnosisForVisit.getDoctorVisitID().getPatientID();
+            case "Complaint":
+                return DiagnosisForVisit.getDiagnosisID().getComplaint();
+            case "Examination":
+                return DiagnosisForVisit.getDiagnosisID().getExamination();
+            case "Therapy":
+                return DiagnosisForVisit.getDiagnosisID().getTherapy();
+            case "Date":
+                return DiagnosisForVisit.getDoctorVisitID().getTimeStamp();
+            case "Price":
+                return DiagnosisForVisit.getDoctorVisitID().getSumPrice();
             default:
                 return null;
         }

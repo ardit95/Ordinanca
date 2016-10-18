@@ -64,8 +64,6 @@ public class DiagnosisTableModel extends AbstractTableModel {
                 return Diagnosis.getTherapy();
             case "Recommendation":
                 return Diagnosis.getRecommendation();
-            case "DoctorVisitID":
-                return Diagnosis.getDoctorVisitID();
             default:
                 return null;
         }

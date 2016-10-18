@@ -115,7 +115,6 @@ public class Search extends javax.swing.JInternalFrame {
         patientTbl = new javax.swing.JTable();
         printBtn = new javax.swing.JButton();
         background = new javax.swing.JLabel();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
 
         setClosable(true);
         setTitle("Search");
@@ -164,20 +163,6 @@ public class Search extends javax.swing.JInternalFrame {
         jPanel1.add(background);
         background.setBounds(0, 0, 1080, 620);
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1080, Short.MAX_VALUE)
-        );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(jDesktopPane1);
-        jDesktopPane1.setBounds(0, 0, 1080, 620);
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 620));
 
         pack();
@@ -198,14 +183,12 @@ public class Search extends javax.swing.JInternalFrame {
                 if (patientTbl.getModel() == analysisForVisitTM) {
                     if (e.getButton() == 1) {
                         AnalysisFrame analysisFrame=new AnalysisFrame();
-                        jDesktopPane1.add(analysisFrame);
                         analysisFrame.setVisible(true);
                     }
                 }
                 else if (patientTbl.getModel() == diagnosisForVisitTM) {
                     if (e.getButton() == 1) {
                         DoctorVisitFrame doctorVisitFrame=new DoctorVisitFrame();
-                        jDesktopPane1.add(doctorVisitFrame);
                         doctorVisitFrame.setVisible(true);
                     }
                 }
@@ -229,7 +212,7 @@ public class Search extends javax.swing.JInternalFrame {
                         null, opcionet, opcionet[0]);
                 if (response == 0) {
                     Patient victimPatient = patientTM.getPatient(patientTbl.getSelectedRow());
-                    if(analysisForVisitIr.findByPatient(victimPatient.getPatientID()).size()<=0){
+                    if(analysisForVisitIr.findByPatient(victimPatient.getPatientID()).size()==0){
                         throw new AppException("Nuk ka analiza per kete pacient");
                     }
                     else{
@@ -239,12 +222,14 @@ public class Search extends javax.swing.JInternalFrame {
                 else if(response == 1){
                     Patient victimPatient = patientTM.getPatient(patientTbl.getSelectedRow());
                     
-                    if(diagnosisForVisitIr.findByPatient(victimPatient.getPatientID()).size()<=0){
+                    /*if(diagnosisForVisitIr.findByPatient(victimPatient.getPatientID()).size()==0){
                         throw new AppException("Nuk ka vizita per kete pacient");
-                    }
-                    else{
+                    }*/
+                    //else{
+                    JOptionPane.showMessageDialog(this,diagnosisForVisitIr.findByPatient(victimPatient.getPatientID()).size());
                     patientDoctorVisitTableLoad(victimPatient.getPatientID());
-                    }
+                    
+                    //}
                 }
             } else {
                 throw new AppException("Selekto Userin qe deshiron me e fshi.");
@@ -270,7 +255,6 @@ public class Search extends javax.swing.JInternalFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
-    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

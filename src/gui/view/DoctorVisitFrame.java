@@ -6,11 +6,21 @@ public class DoctorVisitFrame extends javax.swing.JFrame {
     
     String patient;
     String doctor;
+    String complaint;
+    String examination;
+    String therapy;
+    String date;
+    String price;
     
-    public DoctorVisitFrame(String patient,String doctor) {
+    public DoctorVisitFrame(String []visitInfo) {
         initComponents();
-        this.patient=patient;
-        this.doctor=doctor;
+        patient=visitInfo[0];
+        doctor=visitInfo[1];
+        complaint=visitInfo[2];
+        examination=visitInfo[3];
+        therapy=visitInfo[4];
+        date=visitInfo[5];
+        price=visitInfo[6];
         setFieldText();
         
     }
@@ -30,14 +40,14 @@ public class DoctorVisitFrame extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         patientTxtf = new javax.swing.JTextField();
         doctorTxtf = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        dateTxtf = new javax.swing.JTextField();
+        priceTxtf = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        examinationTxtf = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        therapyTxtf = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        complaintTxtf = new javax.swing.JTextArea();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -79,32 +89,49 @@ public class DoctorVisitFrame extends javax.swing.JFrame {
         jLabel7.setText("Price :");
         jPanel1.add(jLabel7);
         jLabel7.setBounds(20, 460, 120, 30);
+
+        patientTxtf.setEditable(false);
         jPanel1.add(patientTxtf);
         patientTxtf.setBounds(150, 20, 200, 30);
+
+        doctorTxtf.setEditable(false);
         jPanel1.add(doctorTxtf);
         doctorTxtf.setBounds(150, 60, 200, 30);
-        jPanel1.add(jTextField3);
-        jTextField3.setBounds(150, 410, 200, 30);
-        jPanel1.add(jTextField4);
-        jTextField4.setBounds(150, 460, 200, 30);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        dateTxtf.setEditable(false);
+        jPanel1.add(dateTxtf);
+        dateTxtf.setBounds(150, 410, 200, 30);
+
+        priceTxtf.setEditable(false);
+        jPanel1.add(priceTxtf);
+        priceTxtf.setBounds(150, 460, 200, 30);
+
+        examinationTxtf.setEditable(false);
+        examinationTxtf.setColumns(20);
+        examinationTxtf.setLineWrap(true);
+        examinationTxtf.setRows(5);
+        examinationTxtf.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(examinationTxtf);
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(150, 210, 360, 80);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        therapyTxtf.setEditable(false);
+        therapyTxtf.setColumns(20);
+        therapyTxtf.setLineWrap(true);
+        therapyTxtf.setRows(5);
+        therapyTxtf.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(therapyTxtf);
 
         jPanel1.add(jScrollPane2);
         jScrollPane2.setBounds(150, 310, 360, 80);
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
+        complaintTxtf.setEditable(false);
+        complaintTxtf.setColumns(20);
+        complaintTxtf.setLineWrap(true);
+        complaintTxtf.setRows(5);
+        complaintTxtf.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(complaintTxtf);
 
         jPanel1.add(jScrollPane3);
         jScrollPane3.setBounds(150, 110, 360, 80);
@@ -119,13 +146,21 @@ public class DoctorVisitFrame extends javax.swing.JFrame {
     private void setFieldText(){
         patientTxtf.setText(patient);
         doctorTxtf.setText(doctor);
+        complaintTxtf.setText(complaint);
+        examinationTxtf.setText(examination);
+        therapyTxtf.setText(therapy);
+        dateTxtf.setText(date);
+        priceTxtf.setText(price);
     }
   
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
+    private javax.swing.JTextArea complaintTxtf;
+    private javax.swing.JTextField dateTxtf;
     private javax.swing.JTextField doctorTxtf;
+    private javax.swing.JTextArea examinationTxtf;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -137,11 +172,8 @@ public class DoctorVisitFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField patientTxtf;
+    private javax.swing.JTextField priceTxtf;
+    private javax.swing.JTextArea therapyTxtf;
     // End of variables declaration//GEN-END:variables
 }

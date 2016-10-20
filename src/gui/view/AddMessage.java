@@ -15,6 +15,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -31,7 +33,7 @@ public class AddMessage extends javax.swing.JInternalFrame {
     StaffTableModel staffTM;
     Staff currentUser;
     List<Staff> staffList;
-
+    
     public AddMessage(EntityManager entityManager, Staff currentUser) {
         initComponents();
         this.entityManager = entityManager;
@@ -80,7 +82,7 @@ public class AddMessage extends javax.swing.JInternalFrame {
         messageIr = new MessageRepository(entityManager);
     }
 
-    public void staffTableLoad() {
+    public synchronized void staffTableLoad() {
         staffTM.add(staffIr.findAllWithoutAdministrator());
         if (!staffTM.isEmpty()) {
             messageTbl.setModel(staffTM);
@@ -292,13 +294,9 @@ public class AddMessage extends javax.swing.JInternalFrame {
 
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
         try {
+            
             validation();
-            Message message = new Message(currentUser, staffList.get(staffCombo.getSelectedIndex()), messageTxtf.getText().trim());
-            Date date = (new LogsRepository(entityManager).findDate());
-            message.setTimeStamp(date);
-            messageIr.create(message);
-            clearObject();
-            JOptionPane.showMessageDialog(this, "The message was sent sucsessfully.");
+            createMessage();
         } catch (AppException ae) {
             ae.printStackTrace();
             JOptionPane.showMessageDialog(this, ae.getMessage());
@@ -316,9 +314,28 @@ public class AddMessage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        messageIr.seenAllMyMessages(currentUser);
+                seenAllMessagesThread().start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private Thread seenAllMessagesThread(){
+        return new Thread(){
+            @Override
+            public void run(){
+                messageIr.seenAllMyMessages(currentUser);
+                staffTableLoad();
+            }
+        };
+    }
+    
+    private synchronized void createMessage()throws AppException{
+        Message message = new Message(currentUser, staffList.get(staffCombo.getSelectedIndex()), messageTxtf.getText().trim());
+            Date date = (new LogsRepository(entityManager).findDate());
+            message.setTimeStamp(date);
+            messageIr.create(message);
+            clearObject();
+            JOptionPane.showMessageDialog(this, "The message was sent sucsessfully.");
+    }
+    
     private void validation() throws AppException {
         if (staffCombo == null) {
             throw new AppException("Select the reciever for this message.");
@@ -416,7 +433,7 @@ public class AddMessage extends javax.swing.JInternalFrame {
                     if (e.getButton() == 1) {
                         try {
                             int row = messageTbl.getSelectedRow();
-                            messageTableLoad(currentUser, staffTM.getStaff(row));
+                            messageTableLoad(currentUser,staffTM.getStaff(row));
                         } catch (AppException ae) {
                             JOptionPane.showMessageDialog(null, ae.getMessage());
                         }

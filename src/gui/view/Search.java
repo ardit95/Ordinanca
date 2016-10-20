@@ -219,8 +219,7 @@ public class Search extends javax.swing.JInternalFrame {
                         else{
                             patientAnalysisTableLoad(victimPatient.getPatientID());
                         }    
-                    }
-                    else if(response == 1){
+                    }else if(response == 1){
                         Patient victimPatient = patientTM.getPatient(patientTbl.getSelectedRow());
 
                         if(diagnosisForVisitIr.findByPatient(victimPatient.getPatientID()).size()==0){

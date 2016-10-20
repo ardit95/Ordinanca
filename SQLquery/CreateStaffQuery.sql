@@ -43,10 +43,18 @@ USE Ordinanca
 GRANT DELETE ON [dbo].[Participant_Team] TO stafi;
 */
 COMMIT;
+USE Ordinanca;
+SELECT * FROM MESSAGE;
 
 USE Ordinanca;
+SELECT * FROM DoctorVisit;
 
 
 SELECT * FROM Staff staffi WHERE staffi.role NOT LIKE 'Administrator';
 SELECT CURRENT_TIMESTAMP
 
+0	11	12:06:26	UPDATE Message
+ SET Seen ='Yes'
+ 
+ WHERE Seen='No'	Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column
+ To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.	0.000 sec

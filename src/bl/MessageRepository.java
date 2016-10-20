@@ -28,6 +28,7 @@ public class MessageRepository extends EntMngClass implements MessageInterface {
                     throw new AppException("Ekziston nje pjesëmarrës me këtë çelës primarë.");
                 }
             } else {
+                em.getTransaction().rollback();
                 throw new AppException("Create : " + thro.getClass() + " - " + thro.getMessage());
             }
         }
@@ -102,7 +103,7 @@ public class MessageRepository extends EntMngClass implements MessageInterface {
     }
 
     @Override
-    public void seenAllMyMessages(Staff currentUser) {
+    public synchronized void seenAllMyMessages(Staff currentUser) {
         em.getTransaction().begin();
         Query query = em.createQuery("UPDATE Message message SET message.seen ='Yes' WHERE message.username.username = :currentU");
         query.setParameter("currentU", currentUser.getUsername());

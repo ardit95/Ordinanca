@@ -28,6 +28,7 @@ public class LogsRepository extends EntMngClass implements LogsInterface {
                     throw new AppException("Ekziston nje pjesëmarrës me këtë çelës primarë.");
                 }
             } else {
+                thro.printStackTrace();
                 throw new AppException("Create : " + thro.getClass() + " - " + thro.getMessage());
             }
         }

@@ -2,6 +2,7 @@ package bl;
 
 import ExceptionPackage.AppException;
 import ejb.DoctorVisit;
+import ejb.Staff;
 import java.util.List;
 
 public interface DoctorVisitInterface {
@@ -13,4 +14,8 @@ public interface DoctorVisitInterface {
     void remove(DoctorVisit DoctorVisit);
 
     List<DoctorVisit> findAll();
+
+    List<DoctorVisit> findPresentAndFuture(Staff currentUser);
+
+    List<DoctorVisit> findAllForCurrentUser(Staff currentUser);
 }

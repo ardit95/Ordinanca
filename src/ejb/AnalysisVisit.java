@@ -5,8 +5,8 @@
  */
 package ejb;
 
+import ExceptionPackage.AppException;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -55,11 +55,11 @@ public class AnalysisVisit implements Serializable {
     private Date timeStamp;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "SumPrice")
-    private BigDecimal sumPrice;
+    private double sumPrice=0;
     @Column(name = "Remark")
     private String remark;
     @Column(name = "Finished")
-    private String finished;
+    private String finished="No";
     @JoinColumn(name = "LaboratorTechnicianID", referencedColumnName = "Username")
     @ManyToOne(optional = false)
     private Staff laboratorTechnicianID;
@@ -75,8 +75,15 @@ public class AnalysisVisit implements Serializable {
     public AnalysisVisit() {
     }
 
-    public AnalysisVisit(Integer AnalysisVisitID) {
-        this.AnalysisVisitID = AnalysisVisitID;
+    public AnalysisVisit(String remark,Staff laboratorTechnician,Staff registrator)throws AppException{
+        if(laboratorTechnician==null)
+            throw new AppException("The lab Technician can't be null.");
+        if(registrator==null)
+            throw new AppException("The registrator can't be null.");
+        
+        this.remark=remark;
+        laboratorTechnicianID=laboratorTechnician;
+        staffID=registrator;
     }
 
     public AnalysisVisit(Integer AnalysisVisitID, Date timeStamp) {
@@ -100,11 +107,11 @@ public class AnalysisVisit implements Serializable {
         this.timeStamp = timeStamp;
     }
 
-    public BigDecimal getSumPrice() {
+    public double getSumPrice() {
         return sumPrice;
     }
 
-    public void setSumPrice(BigDecimal sumPrice) {
+    public void setSumPrice(double sumPrice) {
         this.sumPrice = sumPrice;
     }
 

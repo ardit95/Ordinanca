@@ -18,6 +18,7 @@ import gui.model.DiagnosisForVisitTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -182,13 +183,35 @@ public class Search extends javax.swing.JInternalFrame {
             public void mouseClicked(MouseEvent e) {
                 if (patientTbl.getModel() == analysisForVisitTM) {
                     if (e.getClickCount() == 2) {
-                        AnalysisFrame analysisFrame=new AnalysisFrame();
+                        SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+                        int rowIndex=patientTbl.getSelectedRow();
+                        AnalysisForVisit analysisForVisit=analysisForVisitTM.getAnalysisForVisit(rowIndex);
+                        String [] analysisVisitFrameStrings=new String[6];
+                        analysisVisitFrameStrings[0]=analysisForVisit.getAnalysisVisitID().getPatientID().getName()+" "+analysisForVisit.getAnalysisVisitID().getPatientID().getSurname();
+                        analysisVisitFrameStrings[1]=analysisForVisit.getAnalysisVisitID().getLaboratorTechnicianID().getName()+" "+analysisForVisit.getAnalysisVisitID().getLaboratorTechnicianID().getSurname();
+                        analysisVisitFrameStrings[2]=analysisForVisit.getAnalysisID().getAnalysis();
+                        analysisVisitFrameStrings[3]=analysisForVisit.getAnalysisID().getResults();
+                        analysisVisitFrameStrings[4]=sdf.format(analysisForVisit.getAnalysisVisitID().getTimeStamp()).toString();
+                        analysisVisitFrameStrings[5]=analysisForVisit.getAnalysisVisitID().getSumPrice()+"";
+                        AnalysisFrame analysisFrame=new AnalysisFrame(analysisVisitFrameStrings);
                         analysisFrame.setVisible(true);
                     }
                 }
                 else if (patientTbl.getModel() == diagnosisForVisitTM) {
                     if (e.getClickCount() == 2)  {
-                        DoctorVisitFrame doctorVisitFrame=new DoctorVisitFrame("Aida Dumoshi","Halim Alushi");
+                        SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+                        int rowIndex=patientTbl.getSelectedRow();
+                        DiagnosisForVisit diagnosisForVisit=diagnosisForVisitTM.getDiagnosisForVisit(rowIndex);
+                        String [] doctorVisitFrameStrings=new String[7];
+                        doctorVisitFrameStrings[0]=diagnosisForVisit.getDoctorVisitID().getPatientID().getName()+" "+diagnosisForVisit.getDoctorVisitID().getPatientID().getSurname();
+                        doctorVisitFrameStrings[1]=diagnosisForVisit.getDoctorVisitID().getDoctorID().getName()+" "+diagnosisForVisit.getDoctorVisitID().getDoctorID().getSurname();
+                        doctorVisitFrameStrings[2]=diagnosisForVisit.getDiagnosisID().getComplaint();
+                        doctorVisitFrameStrings[3]=diagnosisForVisit.getDiagnosisID().getExamination();
+                        doctorVisitFrameStrings[4]=diagnosisForVisit.getDiagnosisID().getTherapy();
+                        doctorVisitFrameStrings[5]=sdf.format(diagnosisForVisit.getDoctorVisitID().getTimeStamp()).toString();
+                        doctorVisitFrameStrings[6]=diagnosisForVisit.getDoctorVisitID().getSumPrice()+"";
+                        
+                        DoctorVisitFrame doctorVisitFrame=new DoctorVisitFrame(doctorVisitFrameStrings);
                         doctorVisitFrame.setVisible(true);
                     }
                 }

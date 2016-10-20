@@ -184,7 +184,7 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        ExportReports exportReports = new ExportReports();
+        ExportReports exportReports = new ExportReports(entityManager);
         desktopPane.add(exportReports);
         exportReports.show();
     }

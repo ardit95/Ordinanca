@@ -126,6 +126,35 @@ CREATE TABLE IF NOT EXISTS DiagnosisForVisit(
     
     SELECT message FROM Message message WHERE message.username.username = :currentU AND message.seen='No';
 	
+    
+    CREATE VIEW Report_Month_DoctorVisit
+	AS
+	SELECT YEAR(dv.Timestamp) as 'Viti' ,MONTH(dv.Timestamp) as 'Muaji' , COUNT(DISTINCT dv.DoctorVisitID) as 'Numri_i_Vizitave',COUNT(DISTINCT p.PatientID) as 'Numri_i_Pacienteve'
+	FROM DoctorVisit dv
+	LEFT JOIN Patient p ON dv.PatientID=p.PatientID;
+    
+    DROP VIEW Report_Month;
+    
+    CREATE VIEW Report_Month_AnalysisVisit
+	AS
+	SELECT 
+    (CASE WHEN av.Timestamp IS NULL then 'NULL' else YEAR(av.Timestamp) END) as 'Viti' ,
+	(CASE WHEN av.Timestamp IS NULL then 'NULL' else MONTH(av.Timestamp) END) as 'Muaji' , 
+    COUNT(DISTINCT av.AnalysisVisitID) as 'Numri_i_Analizave',
+    COUNT(DISTINCT p.PatientID) as 'Numri_i_Pacienteve'
+	FROM AnalysisVisit av
+	LEFT JOIN Patient p ON av.PatientID=p.PatientID;
+	
+    
+    
+    CREATE VIEW Report_Doctor
+	AS
+	SELECT YEAR(dv.Timestamp) as 'Viti' ,MONTH(dv.Timestamp) as 'Muaji',(s.Name ) as 'Emri_i_Doktorit',(s.Surname ) as 'Mbiemri_i_Doktorit' , COUNT(DISTINCT dv.DoctorVisitID) as 'Numri_i_Vizitave'
+	FROM DoctorVisit dv
+	LEFT JOIN Staff s ON dv.DoctorID=s.Username 
+    WHERE s.Role='Doctor';
+	
+
 
 /*Hashing SHA2_512 
 		SELECT SHA2('123459421142',512)

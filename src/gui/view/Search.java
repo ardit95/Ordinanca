@@ -226,7 +226,6 @@ public class Search extends javax.swing.JInternalFrame {
                         throw new AppException("Nuk ka vizita per kete pacient");
                     }*/
                     //else{
-                    JOptionPane.showMessageDialog(this,diagnosisForVisitIr.findByPatient(victimPatient.getPatientID()).size());
                     patientDoctorVisitTableLoad(victimPatient.getPatientID());
                     
                     //}

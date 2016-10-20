@@ -54,8 +54,10 @@ public class MainFrame extends javax.swing.JFrame {
                     if ((numberOfMessagesUnseen = messageIr.countUnseenMessagesForUser(currentUser)) > 0) {
                         if (currentUser.getRole().equals("Doctor")) {
                             if(numberOfMessagesUnseen!=tempUnseenMessages){
-                                addMessage.staffTableLoad();
-                                tempUnseenMessages=numberOfMessagesUnseen;
+                                if(addMessage!=null){
+                                    addMessage.staffTableLoad();
+                                    tempUnseenMessages=numberOfMessagesUnseen;
+                                }
                             }
                             jButton4.setForeground(Color.red);
                             jButton4.setText("Create Message(" + numberOfMessagesUnseen + ")");
@@ -108,10 +110,10 @@ public class MainFrame extends javax.swing.JFrame {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-
-        AddNotification addNotification = new AddNotification();
-        desktopPane.add(addNotification);
-        addNotification.show();
+        // sdi qa t'thom biro per qeto veqe sdashta me i fshi e hajt thash qija nanen ma mut sbohet e i lash :D
+        // AddDetailsToVisit addNotification = new AddDetailsToVisit();
+        // desktopPane.add(addNotification);
+        // addNotification.show();
     }
 
     public void addAddPatient() {
@@ -169,7 +171,7 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        CreateDoctorVisit createDoctorVisit = new CreateDoctorVisit(entityManager,currentUser);
+        CreateVisit createDoctorVisit = new CreateVisit(entityManager,currentUser);
         desktopPane.add(createDoctorVisit);
         createDoctorVisit.show();
     }
@@ -216,8 +218,10 @@ public class MainFrame extends javax.swing.JFrame {
     
         if(addMessage==null)
             addMessage = new AddMessage(entityManager, currentUser);
-        desktopPane.add(addMessage);
-        addMessage.show();
+        if(desktopPane.getSelectedFrame()!=addMessage){
+            desktopPane.add(addMessage);
+            addMessage.show();
+        }
     }
 
     public void addPrintReports() {
@@ -265,7 +269,7 @@ public class MainFrame extends javax.swing.JFrame {
         seeAppointments.show();
     }
 
-    public void addSeeNotifications() {
+    public void AddDetailsToVisit() {
         try {
             if (desktopPane.getSelectedFrame() != null) {
                 desktopPane.getSelectedFrame().setClosed(true);
@@ -275,9 +279,9 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        SeeNotifications seeNotifications = new SeeNotifications();
-        desktopPane.add(seeNotifications);
-        seeNotifications.show();
+        AddDetailsToVisit addDetailsToVisit = new AddDetailsToVisit(entityManager,currentUser);
+        desktopPane.add(addDetailsToVisit);
+        addDetailsToVisit.show();
     }
 
     public void addSeeReports() {
@@ -538,7 +542,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (pozita.equals("Recepsion")) {
             addAddPatient();
         } else if (pozita.equals("Doctor")) {
-            addSeeNotifications();
+            AddDetailsToVisit();
         } else if (pozita.equals("Director")) {
             addSeeReports();
         } else if (pozita.equals("Administrator")) {

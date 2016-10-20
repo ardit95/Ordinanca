@@ -104,9 +104,7 @@ CREATE TABLE IF NOT EXISTS Diagnosis(
     Anamnesis varchar (300),
     Examination varchar (300) NOT NULL,
     Therapy varchar (300),
-    Recommendation varchar (300),
-    DoctorVisitID int NOT NULL,
-	CONSTRAINT fk_DVD_DoctorVisitID FOREIGN KEY (DoctorVisitID) REFERENCES DoctorVisit(DoctorVisitID)
+    Recommendation varchar (300)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS DiagnosisForVisit(
@@ -119,14 +117,14 @@ CREATE TABLE IF NOT EXISTS DiagnosisForVisit(
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+USE Ordinanca;
+SELECT * FROM AnalysisVisit;
+
 
 	USE Ordinanca;
 	CREATE VIEW NumberOfStaff AS
 	SELECT COUNT(*) AS 'Numri' FROM Ordinanca.Staff;
     
-    SELECT message FROM Message message WHERE message.username.username = :currentU AND message.seen='No';
-	
-
 /*Hashing SHA2_512 
 		SELECT SHA2('123459421142',512)
     */
@@ -154,3 +152,10 @@ CREATE TABLE IF NOT EXISTS DiagnosisForVisit(
     /*Merr te drejta :(
 		DENY SELECT ON Ordinanca.Staff FROM Checker@localhost
     */
+    
+    SELECT * FROM STAFF;
+    SELECT * FROM doctorVisit;
+    
+    
+    SELECT * FROM DoctorVisit doctorVisit WHERE date(doctorVisit.timeStamp) >= date(CURRENT_TIMESTAMP) AND doctorVisit.DoctorId = 'Ardit';
+    

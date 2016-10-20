@@ -4,6 +4,8 @@ import ejb.DoctorVisit;
 import java.util.List;
 import javax.persistence.EntityManager;
 import ExceptionPackage.AppException;
+import ejb.Staff;
+import javax.persistence.Query;
 
 public class DoctorVisitRepository extends EntMngClass implements DoctorVisitInterface {
 
@@ -62,4 +64,19 @@ public class DoctorVisitRepository extends EntMngClass implements DoctorVisitInt
     public List<DoctorVisit> findAll() {
         return em.createNamedQuery("DoctorVisitRepository.findAll").getResultList();
     }
+
+    @Override
+    public List<DoctorVisit> findPresentAndFuture(Staff currentUser) {
+        Query query = em.createQuery("SELECT Object (doctorVisit) FROM DoctorVisit doctorVisit WHERE FUNC('date',doctorVisit.timeStamp)>= FUNC('date',CURRENT_TIMESTAMP) AND doctorVisit.doctorID.username = :currentU ORDER BY doctorVisit.timeStamp ");
+        query.setParameter("currentU",currentUser.getUsername());
+        return (List<DoctorVisit>)query.getResultList();
+    }
+    
+    @Override
+    public List<DoctorVisit> findAllForCurrentUser(Staff currentUser) {
+        Query query = em.createQuery("SELECT Object (doctorVisit) FROM DoctorVisit doctorVisit WHERE doctorVisit.doctorID.username = :currentU ");
+        query.setParameter("currentU",currentUser.getUsername());
+        return (List<DoctorVisit>)query.getResultList();
+    }
+    
 }

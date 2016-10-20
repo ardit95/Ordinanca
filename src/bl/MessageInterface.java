@@ -25,5 +25,5 @@ public interface MessageInterface {
 
     int countUnseenMessagesForSpecificUser(Staff currentUser, Staff messageFrom);
 
-    void seenAllMyMessages(Staff currentUser);
+    void  seenAllMyMessages(Staff currentUser);
 }

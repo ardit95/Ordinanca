@@ -51,11 +51,11 @@ public class DoctorVisit implements Serializable {
     private Date timeStamp;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "SumPrice")
-    private double sumPrice;
+    private double sumPrice=0;
     @Column(name = "Remark")
     private String remark;
     @Column(name = "Finished")
-    private String finished;
+    private String finished="No";
     @JoinColumn(name = "DoctorID", referencedColumnName = "Username")
     @ManyToOne(optional = false)
     private Staff doctorID;

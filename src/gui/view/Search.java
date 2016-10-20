@@ -181,14 +181,14 @@ public class Search extends javax.swing.JInternalFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (patientTbl.getModel() == analysisForVisitTM) {
-                    if (e.getButton() == 1) {
+                    if (e.getClickCount() == 2) {
                         AnalysisFrame analysisFrame=new AnalysisFrame();
                         analysisFrame.setVisible(true);
                     }
                 }
                 else if (patientTbl.getModel() == diagnosisForVisitTM) {
-                    if (e.getButton() == 1) {
-                        DoctorVisitFrame doctorVisitFrame=new DoctorVisitFrame();
+                    if (e.getClickCount() == 2)  {
+                        DoctorVisitFrame doctorVisitFrame=new DoctorVisitFrame("Aida Dumoshi","Halim Alushi");
                         doctorVisitFrame.setVisible(true);
                     }
                 }
@@ -203,39 +203,40 @@ public class Search extends javax.swing.JInternalFrame {
     }
     
     private void forVisitTableModelSwitch(){
-        try {
-            if (patientTbl.getSelectedRow() != -1) {
-                String[] opcionet = {"Analizat", "Vizitat"};
-                int response = JOptionPane.showOptionDialog(this,
-                        "Dëshironi të shihni analizat apo vizitat e pacientit?", null,
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                        null, opcionet, opcionet[0]);
-                if (response == 0) {
-                    Patient victimPatient = patientTM.getPatient(patientTbl.getSelectedRow());
-                    if(analysisForVisitIr.findByPatient(victimPatient.getPatientID()).size()==0){
-                        throw new AppException("Nuk ka analiza per kete pacient");
+        if(patientTbl.getModel()==patientTM){
+            try {
+                if (patientTbl.getSelectedRow() != -1) {
+                    String[] opcionet = {"Analizat", "Vizitat"};
+                    int response = JOptionPane.showOptionDialog(this,
+                            "Dëshironi të shihni analizat apo vizitat e pacientit?", null,
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                            null, opcionet, opcionet[0]);
+                    if (response == 0) {
+                        Patient victimPatient = patientTM.getPatient(patientTbl.getSelectedRow());
+                        if(analysisForVisitIr.findByPatient(victimPatient.getPatientID()).size()==0){
+                            throw new AppException("Nuk ka analiza per kete pacient");
+                        }
+                        else{
+                            patientAnalysisTableLoad(victimPatient.getPatientID());
+                        }    
+                    }else if(response == 1){
+                        Patient victimPatient = patientTM.getPatient(patientTbl.getSelectedRow());
+
+                        if(diagnosisForVisitIr.findByPatient(victimPatient.getPatientID()).size()==0){
+                            throw new AppException("Nuk ka vizita per kete pacient");
+                        }
+                        else{
+                        patientDoctorVisitTableLoad(victimPatient.getPatientID());
+
+                        }
                     }
-                    else{
-                        patientAnalysisTableLoad(victimPatient.getPatientID());
-                    }    
+                } else {
+                    throw new AppException("Selekto Userin qe deshiron me e fshi.");
                 }
-                else if(response == 1){
-                    Patient victimPatient = patientTM.getPatient(patientTbl.getSelectedRow());
-                    
-                    /*if(diagnosisForVisitIr.findByPatient(victimPatient.getPatientID()).size()==0){
-                        throw new AppException("Nuk ka vizita per kete pacient");
-                    }*/
-                    //else{
-                    patientDoctorVisitTableLoad(victimPatient.getPatientID());
-                    
-                    //}
-                }
-            } else {
-                throw new AppException("Selekto Userin qe deshiron me e fshi.");
+            } catch (AppException ae) {
+                JOptionPane.showMessageDialog(this, ae.getMessage());
             }
-        } catch (AppException ae) {
-            JOptionPane.showMessageDialog(this, ae.getMessage());
-        }
+        }    
     }
     
     public void printoPdf(){

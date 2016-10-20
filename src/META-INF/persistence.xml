@@ -13,5 +13,8 @@
     <class>ejb.Patient</class>
     <class>ejb.Staff</class>
     <class>ejbView.NumberOfStaff</class>
+    <class>ejbView.ReportDoctor</class>
+    <class>ejbView.ReportMonthAnalysisVisit</class>
+    <class>ejbView.ReportMonthDoctorVisit</class>
   </persistence-unit>
 </persistence>

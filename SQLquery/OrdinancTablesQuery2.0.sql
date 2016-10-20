@@ -185,10 +185,3 @@ SELECT * FROM AnalysisVisit;
     /*Merr te drejta :(
 		DENY SELECT ON Ordinanca.Staff FROM Checker@localhost
     */
-    
-    SELECT * FROM STAFF;
-    SELECT * FROM doctorVisit;
-    
-    
-    SELECT * FROM DoctorVisit doctorVisit WHERE date(doctorVisit.timeStamp) >= date(CURRENT_TIMESTAMP) AND doctorVisit.DoctorId = 'Ardit';
-    

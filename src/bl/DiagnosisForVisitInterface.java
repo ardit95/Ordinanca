@@ -3,6 +3,7 @@ package bl;
 import ejb.DiagnosisForVisit;
 import java.util.List;
 import ExceptionPackage.AppException;
+import ejb.DoctorVisit;
 
 public interface DiagnosisForVisitInterface {
 
@@ -15,5 +16,7 @@ public interface DiagnosisForVisitInterface {
     List<DiagnosisForVisit> findAll();
 
     List<DiagnosisForVisit> findByPatient(int PatientID);
+
+    List<DiagnosisForVisit> findByVisit(DoctorVisit doctorVisit);
             
 }

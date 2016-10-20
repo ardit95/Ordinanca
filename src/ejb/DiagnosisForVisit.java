@@ -5,8 +5,8 @@
  */
 package ejb;
 
+import ExceptionPackage.AppException;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,7 +42,7 @@ public class DiagnosisForVisit implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @Column(name = "Price")
-    private BigDecimal price;
+    private double price;
     @JoinColumn(name = "DiagnosisID", referencedColumnName = "DiagnosisID")
     @ManyToOne(optional = false)
     private Diagnosis diagnosisID;
@@ -53,13 +53,17 @@ public class DiagnosisForVisit implements Serializable {
     public DiagnosisForVisit() {
     }
 
-    public DiagnosisForVisit(Integer DiagnosisForVisitID) {
-        this.DiagnosisForVisitID = DiagnosisForVisitID;
-    }
-
-    public DiagnosisForVisit(Integer DiagnosisForVisitID, BigDecimal price) {
-        this.DiagnosisForVisitID = DiagnosisForVisitID;
-        this.price = price;
+    public DiagnosisForVisit(Diagnosis diagnosisID,DoctorVisit doctorVisitID,double price)throws AppException{
+        if(diagnosisID==null)
+            throw new AppException("The diagnosis cannot be null");
+        if(doctorVisitID==null)
+            throw new AppException("The doctorVisit cannot be null");
+        if(price==0)
+            throw new AppException("The price cannot be null");
+        this.diagnosisID=diagnosisID;
+        this.doctorVisitID=doctorVisitID;
+        this.price=price;
+        
     }
 
     public Integer getDiagnosisForVisitID() {
@@ -70,11 +74,11 @@ public class DiagnosisForVisit implements Serializable {
         this.DiagnosisForVisitID = DiagnosisForVisitID;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

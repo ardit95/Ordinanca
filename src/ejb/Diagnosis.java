@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import ExceptionPackage.AppException;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -55,15 +56,18 @@ public class Diagnosis implements Serializable {
 
     public Diagnosis() {
     }
-
-    public Diagnosis(Integer diagnosisID) {
-        this.diagnosisID = diagnosisID;
-    }
-
-    public Diagnosis(Integer diagnosisID, String complaint, String examination) {
-        this.diagnosisID = diagnosisID;
+    
+    public Diagnosis(String complaint, String examination,String anamnesis,String therapy,String recommendation) throws AppException{
+        if(complaint.trim().isEmpty())
+            throw new AppException("Complaint cannot be empty");
+        if(examination.trim().isEmpty())
+            throw new AppException("Examination cannot be empty");
+        
         this.complaint = complaint;
         this.examination = examination;
+        this.anamnesis=anamnesis;
+        this.therapy=therapy;
+        this.recommendation=recommendation;
     }
 
     public Integer getDiagnosisID() {

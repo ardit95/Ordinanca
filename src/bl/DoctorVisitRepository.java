@@ -48,6 +48,7 @@ public class DoctorVisitRepository extends EntMngClass implements DoctorVisitInt
                     throw new AppException("Ekziston nje kompani me këtë çelës primarë.");
                 }
             } else {
+                thro.printStackTrace();
                 throw new AppException("Create : " + thro.getClass() + " - " + thro.getMessage());
             }
         }

@@ -4,6 +4,7 @@ import ejb.DiagnosisForVisit;
 import java.util.List;
 import javax.persistence.EntityManager;
 import ExceptionPackage.AppException;
+import ejb.DoctorVisit;
 import javax.persistence.Query;
 
 public class DiagnosisForVisitRepository extends EntMngClass implements DiagnosisForVisitInterface {
@@ -69,5 +70,12 @@ public class DiagnosisForVisitRepository extends EntMngClass implements Diagnosi
         Query query=em.createQuery("SELECT object (dfv) FROM DiagnosisForVisit dfv WHERE dfv.doctorVisitID.patientID.patientID= :patientID");
         query.setParameter("patientID", PatientID);
         return (List <DiagnosisForVisit>)query.getResultList();
+    }
+
+    @Override
+    public List<DiagnosisForVisit> findByVisit(DoctorVisit doctorVisit) {
+        Query query = em.createQuery("SELECT Object (diagnosisForVisit) FROM DiagnosisForVisit diagnosisForVisit WHERE diagnosisForVisit.doctorVisitID.DoctorVisitID= :doctorV   ");
+        query.setParameter("doctorV",doctorVisit.getDoctorVisitID());
+        return (List<DiagnosisForVisit>)query.getResultList();
     }
 }

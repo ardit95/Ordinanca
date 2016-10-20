@@ -49,12 +49,18 @@ public class DiagnosisForVisitTableModel extends AbstractTableModel {
     public int getColumnCount() {
         return columnNames.length;
     }
+    
+    public boolean isEmpty(){
+        if(data==null)
+            return true;
+        return (data.isEmpty());
+    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         DiagnosisForVisit DiagnosisForVisit = (DiagnosisForVisit) data.get(rowIndex);
         switch (columnNames[columnIndex]) {
-            /*DiagnosisForVisitID Price DiagnosisID DoctorVisitID */
+            /*"DiagnosisForVisitID","CurrentPrice","DiagnosisID","DoctorVisitID","Patient","Complaint","Examination","Therapy","Date","Price"*/
             case "DiagnosisForVisitID":
                 return DiagnosisForVisit.getDiagnosisForVisitID();
             case "CurrentPrice":

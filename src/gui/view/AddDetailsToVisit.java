@@ -8,16 +8,39 @@ import bl.DiagnosisInterface;
 import bl.DiagnosisRepository;
 import bl.DoctorVisitInterface;
 import bl.DoctorVisitRepository;
+import bl.PatientInterface;
+import bl.PatientRepository;
+import ejb.Diagnosis;
 import ejb.DiagnosisForVisit;
 import ejb.DoctorVisit;
+import ejb.Patient;
 import ejb.Staff;
+import gui.model.DiagnosisForVisitTableModel;
 import gui.model.DoctorVisitTableModel;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.text.DateFormatter;
 import javax.swing.text.DefaultCaret;
 
 public class AddDetailsToVisit extends javax.swing.JInternalFrame {
@@ -27,7 +50,10 @@ Staff currentUser;
 DoctorVisitInterface doctorVisitIr;
 DiagnosisInterface diagnosisIr;
 DiagnosisForVisitInterface diagnosisForVisitIr;
+PatientInterface patientIr;
 DoctorVisitTableModel doctorVisitTM;
+DiagnosisForVisitTableModel diagnosisForVisitTM;
+DoctorVisit mainDoctorVisit;
 
     public AddDetailsToVisit(EntityManager entityManager,Staff currentUser) {
         this.currentUser=currentUser;
@@ -38,6 +64,125 @@ DoctorVisitTableModel doctorVisitTM;
         setLocation(220, 10);
         visitTableLoad();
         addDetailsToVisitFormListeners();
+        visitTblListeners();
+        mainScrollBarMethods();
+    }
+    
+    public void mainScrollBarMethods(){
+        setScrollPosition();
+        changeTab();
+        mainScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+    }
+    
+    public void visitTblListeners(){
+        tableMoveKey();
+        clickMoveKey();
+    }
+    
+    public void tableMoveKey() {
+
+        ListSelectionModel visitTblLSM = visitTbl.getSelectionModel();
+        visitTblLSM.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                if (lse.getValueIsAdjusting()) {
+                    return;
+                }
+                ListSelectionModel rowSM = (ListSelectionModel) lse.getSource();
+                int selectedIndex = rowSM.getMinSelectionIndex();
+                if (selectedIndex > -1) {
+                    if (visitTbl.getModel() == doctorVisitTM) {
+                        try {
+                            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                            mainDoctorVisit = doctorVisitTM.getDoctorVisit(selectedIndex);
+                            Patient patient = mainDoctorVisit.getPatientID();
+                            if (patient == null) {
+                                String[] opcionet = {"Yes", "No"};
+                                int response = JOptionPane.showOptionDialog(null,
+                                        "You have to assign a pacient to a visit before giving a diagnosis to it. Press yes to add the patient and no to stop.", "Warning",
+                                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                        null, opcionet, opcionet[0]);
+                                if (response == 0) {
+                                    throw new AppException("The user choose to assign a pacient");
+                                }else if(response ==1){
+                                    throw new StopException("The user doesn't want to continue");
+                                }
+                            }
+                            patientNameLbl.setText(patient.getName() + " (" + patient.getParentName() + ") " + patient.getSurname());
+                            nameLbl.setForeground(Color.BLUE);
+                            patientGenderLbl.setText(patient.getGender());
+                            genderLbl.setForeground(Color.BLUE);
+                            patientDateOfBirthLbl.setText(dateFormat.format(patient.getDateOfBirth()));
+                            dateOfBirthLbl.setForeground(Color.BLUE);
+                            patientPlaceOfBirthLbl.setText(patient.getPlaceOFBirth());
+                            placeOfBirthLbl.setForeground(Color.BLUE);
+                            patientCityLbl.setText(patient.getCity());
+                            cityLbl.setForeground(Color.BLUE);
+                            patientEmailLbl.setText(patient.getEmail());
+                            emailLbl.setForeground(Color.BLUE);
+                            patientPhoneLbl.setText(patient.getPhone());
+                            phoneLbl.setForeground(Color.BLUE);
+                            allergiesTxtf.setText(patient.getAllergies());
+                            allergiesLbl.setForeground(Color.BLUE);
+                            remarkTxtf.setText(mainDoctorVisit.getRemark());
+                            remarkLbl.setForeground(Color.BLUE);
+                        } catch (AppException ex) {
+                            
+                        }catch(StopException se){
+                            
+                        }
+                        
+                    } else if (visitTbl.getModel()==diagnosisForVisitTM){
+                        Diagnosis diagnosis=diagnosisForVisitTM.getDiagnosisForVisit(visitTbl.getSelectedRow()).getDiagnosisID();
+                        complaintTxtf.setText(diagnosis.getComplaint());
+                        complaintLbl.setForeground(Color.BLUE);
+                        anamnesisTxtf.setText(diagnosis.getAnamnesis());
+                        anamensisLbl.setForeground(Color.BLUE);
+                        examinationTxtf.setText(diagnosis.getExamination());
+                        examinationLbl.setForeground(Color.BLUE);
+                        therapyTxtf.setText(diagnosis.getTherapy());
+                        therapyLbl.setForeground(Color.BLUE);
+                        recommendationTxtf.setText(diagnosis.getRecommendation());
+                        recommendationLbl.setForeground(Color.BLUE);
+                    }
+                }
+            }
+        });
+    }
+    
+    public void clickMoveKey() {
+
+        visitTbl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (visitTbl.getModel() == doctorVisitTM) {
+                    if (e.getButton() == 1) {
+                        try {
+                            int row = visitTbl.getSelectedRow();
+                            diagnosisForVisitTableLoad(row);
+                            if (!infoLbl.getText().equals("")) {
+                                infoLbl.setText("");
+                                infoLbl.setForeground(Color.BLACK);
+                            }
+                        } catch (AppException ae) {
+                            infoLbl.setText(ae.getMessage());
+                            infoLbl.setForeground(Color.RED);
+                        }
+                    }
+                } else if (e.getButton() == 3) {
+                    visitTableLoad();
+                }
+
+            }
+        });
+    }
+    
+    public void diagnosisForVisitTableLoad(int row)throws AppException{
+        diagnosisForVisitTM.add(diagnosisForVisitIr.findByVisit(doctorVisitTM.getDoctorVisit(row)));
+        if(diagnosisForVisitTM.isEmpty())
+            throw new AppException("There is no diagnosis for this visit.");
+        // niher per niher ma vone kqyrim visitTbl.setModel(diagnosisForVisitTM);
+        //niher per niher ma vone kqyrim  diagnosisForVisitTM.fireTableDataChanged();
     }
     
     public void visitTableLoad(){
@@ -58,11 +203,14 @@ DoctorVisitTableModel doctorVisitTM;
         doctorVisitIr=new DoctorVisitRepository(entityManager);
         diagnosisIr=new DiagnosisRepository(entityManager);
         diagnosisForVisitIr= new DiagnosisForVisitRepository(entityManager);
+        patientIr= new PatientRepository(entityManager);
     }
     
     private void initTableModels(){
         String[] doctorVisitColumns={"Date","SumPrice","Remark","Finished","PatientID","DoctorID","StaffID"};
         doctorVisitTM=new DoctorVisitTableModel(doctorVisitColumns);
+        String[] diagnosisForVisitColumns={"DiagnosisForVisitID","CurrentPrice","DiagnosisID","DoctorVisitID","Patient","Complaint","Examination","Therapy","Date","Price"};
+        diagnosisForVisitTM=new DiagnosisForVisitTableModel(diagnosisForVisitColumns);
     }
 
     @SuppressWarnings("unchecked")
@@ -76,22 +224,25 @@ DoctorVisitTableModel doctorVisitTM;
         patientNameLbl = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         genderLbl = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        dateOfBirthLbl = new javax.swing.JLabel();
         patientGenderLbl = new javax.swing.JLabel();
         patientDateOfBirthLbl = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         placeOfBirthLbl = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        cityLbl = new javax.swing.JLabel();
         patientPlaceOfBirthLbl = new javax.swing.JLabel();
         patientCityLbl = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         phoneLbl = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        emailLbl = new javax.swing.JLabel();
         patientPhoneLbl = new javax.swing.JLabel();
         patientEmailLbl = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
+        allergiesTxtf = new javax.swing.JTextArea();
+        allergiesLbl = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        remarkTxtf = new javax.swing.JTextArea();
+        remarkLbl = new javax.swing.JLabel();
         mainScrollPane = new javax.swing.JScrollPane();
         mainPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -114,11 +265,15 @@ DoctorVisitTableModel doctorVisitTM;
         jScrollPane9 = new javax.swing.JScrollPane();
         recommendationTxtf = new javax.swing.JTextArea();
         recommendationLbl = new javax.swing.JLabel();
-        clearBtn = new javax.swing.JButton();
-        saveBtn = new javax.swing.JButton();
+        priceTxtf = new javax.swing.JTextField();
+        priceLbl = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         visitTbl = new javax.swing.JTable();
         seeAllCBox = new javax.swing.JCheckBox();
+        infoLbl = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        clearBtn = new javax.swing.JButton();
+        saveBtn = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Add Notification");
@@ -129,7 +284,6 @@ DoctorVisitTableModel doctorVisitTM;
         nameLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameLbl.setText("Name:");
 
-        patientNameLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         patientNameLbl.setMaximumSize(new java.awt.Dimension(40, 14));
         patientNameLbl.setMinimumSize(new java.awt.Dimension(40, 14));
         patientNameLbl.setPreferredSize(new java.awt.Dimension(40, 14));
@@ -139,11 +293,11 @@ DoctorVisitTableModel doctorVisitTM;
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(42, 42, 42)
                 .addComponent(nameLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(patientNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addComponent(patientNameLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,47 +311,41 @@ DoctorVisitTableModel doctorVisitTM;
         genderLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         genderLbl.setText("Gender:");
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel4.setText("DateOfBirth:");
+        dateOfBirthLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        dateOfBirthLbl.setText("DateOfBirth:");
 
         patientGenderLbl.setMaximumSize(new java.awt.Dimension(40, 14));
         patientGenderLbl.setMinimumSize(new java.awt.Dimension(40, 14));
         patientGenderLbl.setPreferredSize(new java.awt.Dimension(40, 14));
-
-        patientDateOfBirthLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(35, Short.MAX_VALUE)
                 .addComponent(genderLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(patientGenderLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
+                .addComponent(patientGenderLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(patientDateOfBirthLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(dateOfBirthLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(patientDateOfBirthLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(genderLbl)
                 .addComponent(patientGenderLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(dateOfBirthLbl, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(patientDateOfBirthLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         placeOfBirthLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         placeOfBirthLbl.setText("PlaceOFBirth:");
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText("City:");
-
-        patientPlaceOfBirthLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-
-        patientCityLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        cityLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        cityLbl.setText("City:");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -206,82 +354,95 @@ DoctorVisitTableModel doctorVisitTM;
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(placeOfBirthLbl)
-                .addGap(18, 18, 18)
-                .addComponent(patientPlaceOfBirthLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(patientCityLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(patientPlaceOfBirthLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addComponent(cityLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(patientCityLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(placeOfBirthLbl)
-                .addComponent(patientPlaceOfBirthLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(patientCityLbl, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(placeOfBirthLbl)
+                    .addComponent(patientPlaceOfBirthLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(cityLbl))
+            .addComponent(patientCityLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         phoneLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         phoneLbl.setText("Phone:");
 
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel11.setText("Email:");
-
-        patientPhoneLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-
-        patientEmailLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        emailLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        emailLbl.setText("Email:");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(phoneLbl)
-                .addGap(18, 18, 18)
-                .addComponent(patientPhoneLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
-                .addComponent(jLabel11)
+                .addComponent(phoneLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(patientEmailLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(patientPhoneLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(emailLbl)
+                .addGap(5, 5, 5)
+                .addComponent(patientEmailLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(phoneLbl)
-                .addComponent(patientPhoneLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(patientEmailLbl, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(phoneLbl)
+                    .addComponent(patientPhoneLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(emailLbl))
+            .addComponent(patientEmailLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        allergiesTxtf.setColumns(20);
+        allergiesTxtf.setRows(5);
+        jScrollPane1.setViewportView(allergiesTxtf);
 
-        jLabel1.setText("Allergies:");
+        allergiesLbl.setText("Allergies:");
+
+        remarkTxtf.setColumns(20);
+        remarkTxtf.setRows(5);
+        jScrollPane2.setViewportView(remarkTxtf);
+
+        remarkLbl.setText("Remark:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(allergiesLbl))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(remarkLbl)))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,10 +455,15 @@ DoctorVisitTableModel doctorVisitTM;
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(allergiesLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(remarkLbl)
+                .addGap(4, 4, 4)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1))
         );
 
         mainScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -502,19 +668,7 @@ DoctorVisitTableModel doctorVisitTM;
                 .addGap(2, 2, 2))
         );
 
-        clearBtn.setText("Clear");
-        clearBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearBtnActionPerformed(evt);
-            }
-        });
-
-        saveBtn.setText("Save");
-        saveBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveBtnActionPerformed(evt);
-            }
-        });
+        priceLbl.setText("Price:");
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -526,12 +680,14 @@ DoctorVisitTableModel doctorVisitTM;
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 143, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(priceLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(priceTxtf, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(160, 160, 160))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -547,9 +703,9 @@ DoctorVisitTableModel doctorVisitTM;
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clearBtn)
-                    .addComponent(saveBtn))
-                .addGap(0, 22, Short.MAX_VALUE))
+                    .addComponent(priceTxtf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(priceLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 55, Short.MAX_VALUE))
         );
 
         mainScrollPane.setViewportView(mainPanel);
@@ -560,8 +716,8 @@ DoctorVisitTableModel doctorVisitTM;
             backgroundLblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLblLayout.createSequentialGroup()
                 .addGroup(backgroundLblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         backgroundLblLayout.setVerticalGroup(
@@ -569,8 +725,8 @@ DoctorVisitTableModel doctorVisitTM;
             .addGroup(backgroundLblLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1030, Short.MAX_VALUE))
+                .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         visitTbl.setModel(new javax.swing.table.DefaultTableModel(
@@ -587,29 +743,74 @@ DoctorVisitTableModel doctorVisitTM;
 
         seeAllCBox.setText("All");
 
+        infoLbl.setMaximumSize(new java.awt.Dimension(34, 14));
+        infoLbl.setMinimumSize(new java.awt.Dimension(34, 14));
+        infoLbl.setPreferredSize(new java.awt.Dimension(34, 14));
+
+        clearBtn.setText("Clear");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
+            }
+        });
+
+        saveBtn.setText("Save");
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(clearBtn)
+                    .addComponent(saveBtn))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(2, 2, 2)
-                .addComponent(backgroundLbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(backgroundLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(seeAllCBox))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(seeAllCBox)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(infoLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 4, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(backgroundLbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(seeAllCBox)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(seeAllCBox)
+                    .addComponent(infoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backgroundLbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -621,15 +822,18 @@ DoctorVisitTableModel doctorVisitTM;
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         try {
-            if(0==0)
-            throw new AppException("");
-            else if (1==1)
-            throw new StopException("");
-
             validation();
+            Diagnosis diagnosis = new Diagnosis(complaintTxtf.getText().trim(),examinationTxtf.getText().trim(),anamnesisTxtf.getText().trim(),therapyTxtf.getText().trim(),recommendationTxtf.getText().trim());
+            diagnosis=diagnosisIr.create(diagnosis);
+            DiagnosisForVisit diagnosisForVisit =new DiagnosisForVisit(diagnosis,mainDoctorVisit,Double.parseDouble(priceTxtf.getText().trim()));
+            diagnosisForVisitIr.create(diagnosisForVisit);
+            mainDoctorVisit.setSumPrice(mainDoctorVisit.getSumPrice()+diagnosisForVisit.getPrice());
+            if(!mainDoctorVisit.getFinished().equals("Yes"))
+                mainDoctorVisit.setFinished("Yes");
+            doctorVisitIr.edit(mainDoctorVisit);
             clearObject();
-
-            JOptionPane.showMessageDialog(this, "The visit was stored sucsesfully.");
+            clearDiagnosis();
+            JOptionPane.showMessageDialog(this, "The diagnosis was added sucsesfully to this visit.");
         } catch (AppException ae) {
             ae.printStackTrace();
             JOptionPane.showMessageDialog(this, ae.getMessage());
@@ -638,20 +842,33 @@ DoctorVisitTableModel doctorVisitTM;
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
+    
+    public void clearDiagnosis(){
+        complaintTxtf.setText("");
+        examinationTxtf.setText("");
+        anamnesisTxtf.setText("");
+        therapyTxtf.setText("");
+        recommendationTxtf.setText("");
+        mainScrollPane.getVerticalScrollBar().setValue(0);
+        complaintTxtf.requestFocus();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel allergiesLbl;
+    private javax.swing.JTextArea allergiesTxtf;
     private javax.swing.JLabel anamensisLbl;
     private javax.swing.JTextArea anamnesisTxtf;
     private javax.swing.JPanel backgroundLbl;
+    private javax.swing.JLabel cityLbl;
     private javax.swing.JButton clearBtn;
     private javax.swing.JLabel complaintLbl;
     private javax.swing.JTextArea complaintTxtf;
+    private javax.swing.JLabel dateOfBirthLbl;
+    private javax.swing.JLabel emailLbl;
     private javax.swing.JLabel examinationLbl;
     private javax.swing.JTextArea examinationTxtf;
     private javax.swing.JLabel genderLbl;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel infoLbl;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -663,13 +880,13 @@ DoctorVisitTableModel doctorVisitTM;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JScrollPane mainScrollPane;
     private javax.swing.JLabel nameLbl;
@@ -682,8 +899,12 @@ DoctorVisitTableModel doctorVisitTM;
     private javax.swing.JLabel patientPlaceOfBirthLbl;
     private javax.swing.JLabel phoneLbl;
     private javax.swing.JLabel placeOfBirthLbl;
+    private javax.swing.JLabel priceLbl;
+    private javax.swing.JTextField priceTxtf;
     private javax.swing.JLabel recommendationLbl;
     private javax.swing.JTextArea recommendationTxtf;
+    private javax.swing.JLabel remarkLbl;
+    private javax.swing.JTextArea remarkTxtf;
     private javax.swing.JButton saveBtn;
     private javax.swing.JCheckBox seeAllCBox;
     private javax.swing.JLabel therapyLbl;
@@ -691,12 +912,131 @@ DoctorVisitTableModel doctorVisitTM;
     private javax.swing.JTable visitTbl;
     // End of variables declaration//GEN-END:variables
 
-    private void validation() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void validation()throws AppException,StopException{
+        if(complaintTxtf.getText().trim().length()>=300){
+            complaintTxtf.requestFocus();
+            throw new AppException("Complaints cannot contain more than 300 characters");
+        }
+        
+        if(anamnesisTxtf.getText().trim().length()>=300){
+            anamnesisTxtf.requestFocus();
+            throw new AppException("Anamensis cannot contain more than 300 characters");
+        }
+        
+        if(examinationTxtf.getText().trim().length()>=300){
+            examinationTxtf.requestFocus();
+            throw new AppException("Examination cannot contain more than 300 characters");
+        }
+        
+        if(therapyTxtf.getText().trim().length()>=300){
+            therapyTxtf.requestFocus();
+            throw new AppException("Therapy cannot contain more than 300 characters");
+        }
+        
+        if(recommendationTxtf.getText().trim().length()>=300){
+            recommendationTxtf.requestFocus();
+            throw new AppException("Therapy cannot contain more than 300 characters");
+        }
+        
+        if(visitTbl.getSelectedRow()==-1)
+            throw new AppException("Choose the visit for which you want to add the diagnosis.");
+        
+        if(complaintTxtf.getText().trim().isEmpty()){
+            complaintTxtf.requestFocus();
+            throw new AppException("You have to write down the complaints of the patient.");
+        }
+        
+        if(examinationTxtf.getText().trim().isEmpty()){
+            examinationTxtf.requestFocus();
+            throw new AppException("You have to write down the examination of the patient.");
+        }
+        
+        if(priceTxtf.getText().trim().isEmpty()){
+            priceTxtf.requestFocus();
+            throw new AppException("You have to set a price for the diagnosis");
+        }
+        
+        if(anamnesisTxtf.getText().trim().isEmpty() 
+                || therapyTxtf.getText().trim().isEmpty() || recommendationTxtf.getText().trim().isEmpty()){
+            String s="Are you sure you want to leave ";
+            if(anamnesisTxtf.getText().trim().isEmpty())
+                s+=" anamnesis ,";
+            if(therapyTxtf.getText().trim().isEmpty())
+                s+=" therapy ,";
+            if(recommendationTxtf.getText().trim().isEmpty())
+                s+=" recommendation ,";
+            s=s.substring(0,s.length()-2);
+            s+=" empty ?";
+            String[] opcionet = {"Po", "Jo"};
+            int response = JOptionPane.showOptionDialog(null,s, "Warning",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                    null, opcionet, opcionet[0]);
+            if (response == 0) {
+            } else {
+                throw new StopException("The user wants to fill the data from nullable fields");
+            }
+        }
+        
+        if(!allergiesTxtf.getText().trim().equals(mainDoctorVisit.getPatientID().getAllergies()))
+        {
+            Patient patient=mainDoctorVisit.getPatientID();
+            String[] opcionet = {"Yes","No","Cancel"};
+            int response = JOptionPane.showOptionDialog(null,
+                    "You have changed the allergies of the patient press yes to save them this way or no to return them to the past value.(Cancel to stop the registration)", "Warning",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                    null, opcionet, opcionet[0]);
+            if (response == 0) {
+                patient.setAllergies(allergiesTxtf.getText().trim());
+                patientIr.edit(patient);
+            } else if (response==1){
+                allergiesTxtf.setText(mainDoctorVisit.getPatientID().getAllergies());
+            }
+            else{
+                throw new StopException("The user has pressed cancel thereby stopping the registration");
+            }
+        }
+        
+        if(!remarkTxtf.getText().trim().equals(mainDoctorVisit.getRemark().trim())){
+            String[] opcionet = {"Yes","No","Cancel"};
+            int response = JOptionPane.showOptionDialog(null,
+                    "You have changed the remark of the visit press yes to save it this way or no to return it to the past value.(Cancel to stop the registration)", "Warning",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                    null, opcionet, opcionet[0]);
+            if(response==0){
+                mainDoctorVisit.setRemark(remarkTxtf.getText().trim());
+                doctorVisitIr.edit(mainDoctorVisit);
+            }
+            else if (response==1){
+                remarkTxtf.setText(mainDoctorVisit.getRemark());
+            }
+            else{
+                throw new StopException("The user has pressed cancel thereby stopping the registration");
+            }
+        }
     }
 
     private void clearObject() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        infoLbl.setText("");
+        infoLbl.setForeground(Color.BLACK);
+        patientNameLbl.setText("");
+        nameLbl.setForeground(Color.BLACK);
+        patientGenderLbl.setText("");
+        genderLbl.setForeground(Color.BLACK);
+        patientDateOfBirthLbl.setText("");
+        dateOfBirthLbl.setForeground(Color.BLACK);
+        patientPlaceOfBirthLbl.setText("");
+        placeOfBirthLbl.setForeground(Color.BLACK);
+        patientCityLbl.setText("");
+        cityLbl.setForeground(Color.BLACK);
+        patientEmailLbl.setText("");
+        emailLbl.setForeground(Color.BLACK);
+        patientPhoneLbl.setText("");
+        phoneLbl.setForeground(Color.BLACK);
+        allergiesTxtf.setText("");
+        allergiesLbl.setForeground(Color.BLACK);
+        remarkTxtf.setText("");
+        remarkLbl.setForeground(Color.BLACK);
+        visitTbl.clearSelection();
     }
     
     /*PatientID Name Surname ParentName Gender DateOfBirth PlaceOFBirth City Phone Email Allergies Allergies Username */
@@ -714,5 +1054,65 @@ DoctorVisitTableModel doctorVisitTM;
         
     }
 
+    private void changeTab(){
+        
+        AbstractAction transferFocus = new AbstractAction ()
+            {
+                public void actionPerformed ( ActionEvent e )
+                {
+                    ( ( Component ) e.getSource () ).transferFocus ();
+                }
+            };
+            complaintTxtf.getInputMap ().put ( KeyStroke.getKeyStroke ( "TAB" ), "transferFocus" );
+            complaintTxtf.getActionMap ().put ( "transferFocus", transferFocus );
+            
+            anamnesisTxtf.getInputMap ().put ( KeyStroke.getKeyStroke ( "TAB" ), "transferFocus" );
+            anamnesisTxtf.getActionMap ().put ( "transferFocus", transferFocus );
+            
+            examinationTxtf.getInputMap ().put ( KeyStroke.getKeyStroke ( "TAB" ), "transferFocus" );
+            examinationTxtf.getActionMap ().put ( "transferFocus", transferFocus );
+            
+            therapyTxtf.getInputMap ().put ( KeyStroke.getKeyStroke ( "TAB" ), "transferFocus" );
+            therapyTxtf.getActionMap ().put ( "transferFocus", transferFocus );
+            
+            recommendationTxtf.getInputMap ().put ( KeyStroke.getKeyStroke ( "TAB" ), "transferFocus" );
+            recommendationTxtf.getActionMap ().put ( "transferFocus", transferFocus );
+            
+            priceTxtf.getInputMap ().put ( KeyStroke.getKeyStroke ( "TAB" ), "transferFocus" );
+            priceTxtf.getActionMap ().put ( "transferFocus", transferFocus );
+            
+           mainScrollPane.getVerticalScrollBar().setValue(jPanel6.getLocation().y);
+            
+    }
+    
+    private void setScrollPosition(){
+        KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                            .addPropertyChangeListener("focusOwner", 
+                     new PropertyChangeListener() {
+
+          @Override
+          public void propertyChange(PropertyChangeEvent evt) {
+           
+                if(complaintTxtf.hasFocus()){
+                    mainScrollPane.getVerticalScrollBar().setValue(0);
+                }
+                if(anamnesisTxtf.hasFocus()){
+                    mainScrollPane.getVerticalScrollBar().setValue(250);
+                }
+                if(examinationTxtf.hasFocus()){
+                    mainScrollPane.getVerticalScrollBar().setValue(510);
+                }
+                if(therapyTxtf.hasFocus()){
+                    mainScrollPane.getVerticalScrollBar().setValue(760);
+                }
+                if(recommendationTxtf.hasFocus()){
+                    mainScrollPane.getVerticalScrollBar().setValue(1030);
+                }
+                if(priceTxtf.hasFocus()){
+                    mainScrollPane.getVerticalScrollBar().setValue(1070);
+                }
+            }
+          });
+        }
     
 }

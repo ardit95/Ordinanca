@@ -16,6 +16,9 @@ START TRANSACTION;
     INSERT INTO Staff (Username,Password,Salt,Name,Surname,Gender,DateOfBirth,Education,Specialization,Role) 
 	VALUES ('Edon',SHA2('salti12345',512),'salti','Edon','Bytyqi','M','1993-02-18','Web-Developer','Thitje Serike','Doctor');
     
+    USE Ordinanca;
+    DELETE FROM Patient WHERE PatientId=4 OR patientID=5;
+    SELECT * FROM Patient;
     /*
 		DROP USER Bajra@localhost;
         USE Ordinanca;

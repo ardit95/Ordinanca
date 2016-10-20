@@ -374,7 +374,7 @@ public class AddMessage extends javax.swing.JInternalFrame {
         }
     }
 
-    public void tabelMoveKey() {
+    public void tableMoveKey() {
         ListSelectionModel messageTblLSM = messageTbl.getSelectionModel();
         messageTblLSM.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -401,7 +401,7 @@ public class AddMessage extends javax.swing.JInternalFrame {
     }
 
     private void messageTblListeners() {
-        tabelMoveKey();
+        tableMoveKey();
         clickMoveKey();
     }
 

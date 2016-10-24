@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS Analysis(
 
 CREATE TABLE AnalysisVisit(
 	AnalysisVisitID int PRIMARY KEY AUTO_INCREMENT,
-    timeStamp Timestamp NOT NULL,
+    timeStamp Timestamp NOT NULL ,
     
     PatientID int ,
     LaboratorTechnicianID varchar(50) NOT NULL,
@@ -156,7 +156,7 @@ SELECT * FROM AnalysisVisit;
     WHERE s.Role='Doctor';
 	
 
-
+SELECT * FROM DiagnosisForVisit;
 
 /*Hashing SHA2_512 
 		SELECT SHA2('123459421142',512)

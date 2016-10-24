@@ -36,6 +36,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -47,6 +48,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
@@ -56,7 +58,9 @@ import javax.swing.text.DateFormatter;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.text.DefaultCaret;
 
 public class AddDetailsToVisit extends javax.swing.JInternalFrame {
@@ -86,10 +90,19 @@ DoctorVisit mainDoctorVisit;
     
     
     
+    
+    
     public void mainScrollBarMethods(){
         setScrollPosition();
         changeTab();
         mainScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+    }
+    
+    private static class JTableButtonRenderer implements TableCellRenderer {        
+        @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JButton button = (JButton)value;
+            return button;  
+        }
     }
     
     public void visitTblListeners(){
@@ -122,7 +135,6 @@ DoctorVisit mainDoctorVisit;
                                 if (response == 0) {
                                     SetPatientToVisit setPatientToVisit = new SetPatientToVisit(AddDetailsToVisit.this, mainDoctorVisit, entityManager, currentUser);
                                     setPatientToVisit.setVisible(true);
-
                                     patientNameLbl.setText("");
                                     nameLbl.setForeground(Color.BLACK);
                                     patientGenderLbl.setText("");
@@ -141,8 +153,10 @@ DoctorVisit mainDoctorVisit;
                                     allergiesLbl.setForeground(Color.BLACK);
                                     remarkTxtf.setText("");
                                     remarkLbl.setForeground(Color.BLACK);
+                                    visitTbl.clearSelection();
                                     throw new AppException("The user choose to assign a pacient");
                                 } else {
+                                    visitTbl.clearSelection();
                                     throw new StopException("The user doesn't want to continue");
                                 }
                             }
@@ -178,32 +192,50 @@ DoctorVisit mainDoctorVisit;
             public void mouseClicked(MouseEvent e) {
                 if (visitTbl.getModel() == doctorVisitTM) {
                     if (e.getButton() == 1) {
-                        try {
-                            int row = visitTbl.getSelectedRow();
-                            diagnosisForVisitTableLoad(row);
-                            if (!infoLbl.getText().equals("")) {
-                                infoLbl.setText("");
-                                infoLbl.setForeground(Color.BLACK);
+                        if ((visitTbl.getColumnModel().getColumnIndexAtX(e.getX())) == 5) {
+                            int column = visitTbl.getColumnModel().getColumnIndexAtX(e.getX()); // get the coloum of the button
+                            int row = e.getY() / visitTbl.getRowHeight(); //get the row of the button
+
+                            //Checking the row or column is valid or not
+                            if (row < visitTbl.getRowCount() && row >= 0 && column < visitTbl.getColumnCount() && column >= 0) {
+                                Object value = visitTbl.getValueAt(row, column);
+                                if (value instanceof JButton) {
+                                    //perform a click event
+                                    ((JButton) value).doClick();
+                                }
                             }
-                        } catch (AppException ae) {
-                            infoLbl.setText(ae.getMessage());
-                            infoLbl.setForeground(Color.RED);
+                        } else {
+                            try {
+                                int row = visitTbl.getSelectedRow();
+                                if (diagnosisForVisitTM.isEmpty()) {
+                                    throw new AppException("There is no diagnosis for this visit.");
+                                }
+                                if (!infoLbl.getText().equals("")) {
+                                    infoLbl.setText("");
+                                    infoLbl.setForeground(Color.BLACK);
+                                }
+                            } catch (AppException ae) {
+                                infoLbl.setText(ae.getMessage());
+                                infoLbl.setForeground(Color.RED);
+                            }
                         }
                     }
                 } else if (e.getButton() == 3) {
                     visitTableLoad();
+                    clearObject();
+                    clearDiagnosis();
                 }
-
             }
         });
     }
     
     public void diagnosisForVisitTableLoad(int row)throws AppException{
-        diagnosisForVisitTM.add(diagnosisForVisitIr.findByVisit(doctorVisitTM.getDoctorVisit(row)));
-        if(diagnosisForVisitTM.isEmpty())
-            throw new AppException("There is no diagnosis for this visit.");
-        // niher per niher ma vone kqyrim visitTbl.setModel(diagnosisForVisitTM);
-        //niher per niher ma vone kqyrim  diagnosisForVisitTM.fireTableDataChanged();
+        List<DiagnosisForVisit> diagnosisForVisitList=diagnosisForVisitIr.findByVisit(doctorVisitTM.getDoctorVisit(row));
+        if(diagnosisForVisitList==null || diagnosisForVisitList.isEmpty())
+            throw new AppException("There's no diagnosis for this patient.");
+        diagnosisForVisitTM.add(diagnosisForVisitList);
+        visitTbl.setModel(diagnosisForVisitTM);
+        diagnosisForVisitTM.fireTableDataChanged();
     }
     
     public void visitTableLoad(){
@@ -216,7 +248,26 @@ DoctorVisit mainDoctorVisit;
         visitTbl.setModel(doctorVisitTM);
         doctorVisitTM.add(visitList);
         doctorVisitTM.fireTableDataChanged();
+        
+        TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+        visitTbl.getColumn("Button").setCellRenderer(buttonRenderer);
     }
+        
+        public void setButtonListener(JButton target,int index){
+            target.addActionListener(new ActionListener(){
+                
+                @Override
+                public void actionPerformed(ActionEvent ae){
+                    try {
+                        diagnosisForVisitTableLoad(index);
+                    } catch (AppException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                    }
+                }
+            });
+        }
+    
+    
     
     private void initInterfaces(EntityManager entityManager) {
         doctorVisitIr=new DoctorVisitRepository(entityManager);
@@ -226,9 +277,9 @@ DoctorVisit mainDoctorVisit;
     }
     
     private void initTableModels(){
-        String[] doctorVisitColumns={"Date","SumPrice","Remark","Finished","PatientID","DoctorID","StaffID"};
-        doctorVisitTM=new DoctorVisitTableModel(doctorVisitColumns);
-        String[] diagnosisForVisitColumns={"DiagnosisForVisitID","CurrentPrice","DiagnosisID","DoctorVisitID","Patient","Complaint","Examination","Therapy","Date","Price"};
+        String[] doctorVisitColumns={"PatientID","Date","Time","SumPrice","Finished","Button"};
+        doctorVisitTM=new DoctorVisitTableModel(doctorVisitColumns,this);
+        String[] diagnosisForVisitColumns={"Complaint","Examination","Therapy","CurrentPrice"};
         diagnosisForVisitTM=new DiagnosisForVisitTableModel(diagnosisForVisitColumns);
     }
 
@@ -837,13 +888,15 @@ DoctorVisit mainDoctorVisit;
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         try {
             validation();
-            Diagnosis diagnosis = new Diagnosis(complaintTxtf.getText().trim(),examinationTxtf.getText().trim(),anamnesisTxtf.getText().trim(),therapyTxtf.getText().trim(),recommendationTxtf.getText().trim());
-            diagnosis=diagnosisIr.create(diagnosis);
-            DiagnosisForVisit diagnosisForVisit =new DiagnosisForVisit(diagnosis,mainDoctorVisit,Double.parseDouble(priceTxtf.getText().trim()));
+            Diagnosis diagnosis = new Diagnosis(complaintTxtf.getText().trim(), examinationTxtf.getText().trim(),
+                    anamnesisTxtf.getText().trim(), therapyTxtf.getText().trim(), recommendationTxtf.getText().trim());
+            diagnosis = diagnosisIr.create(diagnosis);
+            DiagnosisForVisit diagnosisForVisit = new DiagnosisForVisit(diagnosis, mainDoctorVisit, Double.parseDouble(priceTxtf.getText().trim()));
             diagnosisForVisitIr.create(diagnosisForVisit);
-            mainDoctorVisit.setSumPrice(mainDoctorVisit.getSumPrice()+diagnosisForVisit.getPrice());
-            if(!mainDoctorVisit.getFinished().equals("Yes"))
+            mainDoctorVisit.setSumPrice(mainDoctorVisit.getSumPrice() + diagnosisForVisit.getPrice());
+            if (!mainDoctorVisit.getFinished().equals("Yes")) {
                 mainDoctorVisit.setFinished("Yes");
+            }
             doctorVisitIr.edit(mainDoctorVisit);
             clearObject();
             clearDiagnosis();
@@ -932,6 +985,9 @@ DoctorVisit mainDoctorVisit;
     // End of variables declaration//GEN-END:variables
 
     private void validation()throws AppException,StopException{
+        if(mainDoctorVisit.getPatientID()==null)
+            throw new AppException("You must assign a patient to the visit before saving a diagnostic for it.");
+        
         if(complaintTxtf.getText().trim().length()>=300){
             complaintTxtf.requestFocus();
             throw new AppException("Complaints cannot contain more than 300 characters");
@@ -973,6 +1029,13 @@ DoctorVisit mainDoctorVisit;
         if(priceTxtf.getText().trim().isEmpty()){
             priceTxtf.requestFocus();
             throw new AppException("You have to set a price for the diagnosis");
+        }
+        
+        try{
+            Double.parseDouble(priceTxtf.getText().trim());
+        }catch(NumberFormatException nfe){
+            nfe.printStackTrace();
+            throw new AppException("Write the correct price.");
         }
         
         if(anamnesisTxtf.getText().trim().isEmpty() 

@@ -77,16 +77,10 @@ public class DoctorVisit implements Serializable {
         this.remark=remark;
         doctorID=doctor;
         staffID=registererID;
-    
     }
 
     public DoctorVisit(Integer DoctorVisitID) {
         this.DoctorVisitID = DoctorVisitID;
-    }
-
-    public DoctorVisit(Integer DoctorVisitID, Date timeStamp) {
-        this.DoctorVisitID = DoctorVisitID;
-        this.timeStamp = timeStamp;
     }
 
     public Integer getDoctorVisitID() {
@@ -101,7 +95,7 @@ public class DoctorVisit implements Serializable {
         return timeStamp;
     }
 
-    public void setTimeStamp(Date timeStamp) {
+    public void setTimeStamp(Date timeStamp){
         this.timeStamp = timeStamp;
     }
 

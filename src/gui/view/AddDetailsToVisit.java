@@ -84,6 +84,8 @@ DoctorVisit mainDoctorVisit;
         mainScrollBarMethods();
     }
     
+    
+    
     public void mainScrollBarMethods(){
         setScrollPosition();
         changeTab();
@@ -109,7 +111,6 @@ DoctorVisit mainDoctorVisit;
                 if (selectedIndex > -1) {
                     if (visitTbl.getModel() == doctorVisitTM) {
                         try {
-                            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                             mainDoctorVisit = doctorVisitTM.getDoctorVisit(selectedIndex);
                             Patient patient = mainDoctorVisit.getPatientID();
                             if (patient == null) {
@@ -119,37 +120,41 @@ DoctorVisit mainDoctorVisit;
                                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                                         null, opcionet, opcionet[0]);
                                 if (response == 0) {
+                                    SetPatientToVisit setPatientToVisit = new SetPatientToVisit(AddDetailsToVisit.this, mainDoctorVisit, entityManager, currentUser);
+                                    setPatientToVisit.setVisible(true);
+
+                                    patientNameLbl.setText("");
+                                    nameLbl.setForeground(Color.BLACK);
+                                    patientGenderLbl.setText("");
+                                    genderLbl.setForeground(Color.BLACK);
+                                    patientDateOfBirthLbl.setText("");
+                                    dateOfBirthLbl.setForeground(Color.BLACK);
+                                    patientPlaceOfBirthLbl.setText("");
+                                    placeOfBirthLbl.setForeground(Color.BLACK);
+                                    patientCityLbl.setText("");
+                                    cityLbl.setForeground(Color.BLACK);
+                                    patientEmailLbl.setText("");
+                                    emailLbl.setForeground(Color.BLACK);
+                                    patientPhoneLbl.setText("");
+                                    phoneLbl.setForeground(Color.BLACK);
+                                    allergiesTxtf.setText("");
+                                    allergiesLbl.setForeground(Color.BLACK);
+                                    remarkTxtf.setText("");
+                                    remarkLbl.setForeground(Color.BLACK);
                                     throw new AppException("The user choose to assign a pacient");
-                                }else if(response ==1){
+                                } else {
                                     throw new StopException("The user doesn't want to continue");
                                 }
                             }
-                            patientNameLbl.setText(patient.getName() + " (" + patient.getParentName() + ") " + patient.getSurname());
-                            nameLbl.setForeground(Color.BLUE);
-                            patientGenderLbl.setText(patient.getGender());
-                            genderLbl.setForeground(Color.BLUE);
-                            patientDateOfBirthLbl.setText(dateFormat.format(patient.getDateOfBirth()));
-                            dateOfBirthLbl.setForeground(Color.BLUE);
-                            patientPlaceOfBirthLbl.setText(patient.getPlaceOFBirth());
-                            placeOfBirthLbl.setForeground(Color.BLUE);
-                            patientCityLbl.setText(patient.getCity());
-                            cityLbl.setForeground(Color.BLUE);
-                            patientEmailLbl.setText(patient.getEmail());
-                            emailLbl.setForeground(Color.BLUE);
-                            patientPhoneLbl.setText(patient.getPhone());
-                            phoneLbl.setForeground(Color.BLUE);
-                            allergiesTxtf.setText(patient.getAllergies());
-                            allergiesLbl.setForeground(Color.BLUE);
-                            remarkTxtf.setText(mainDoctorVisit.getRemark());
-                            remarkLbl.setForeground(Color.BLUE);
+                            setPatientData(patient);
                         } catch (AppException ex) {
-                            
-                        }catch(StopException se){
-                            
+                            ex.printStackTrace();
+                        } catch (StopException se) {
+                            se.printStackTrace();
                         }
-                        
-                    } else if (visitTbl.getModel()==diagnosisForVisitTM){
-                        Diagnosis diagnosis=diagnosisForVisitTM.getDiagnosisForVisit(visitTbl.getSelectedRow()).getDiagnosisID();
+
+                    } else if (visitTbl.getModel() == diagnosisForVisitTM) {
+                        Diagnosis diagnosis = diagnosisForVisitTM.getDiagnosisForVisit(visitTbl.getSelectedRow()).getDiagnosisID();
                         complaintTxtf.setText(diagnosis.getComplaint());
                         complaintLbl.setForeground(Color.BLUE);
                         anamnesisTxtf.setText(diagnosis.getAnamnesis());
@@ -208,11 +213,9 @@ DoctorVisit mainDoctorVisit;
         else 
             visitList= doctorVisitIr.findPresentAndFuture(currentUser);
         
-        if(!visitList.isEmpty()){
-            doctorVisitTM.add(visitList);
-            visitTbl.setModel(doctorVisitTM);
-            doctorVisitTM.fireTableDataChanged();
-        }
+        visitTbl.setModel(doctorVisitTM);
+        doctorVisitTM.add(visitList);
+        doctorVisitTM.fireTableDataChanged();
     }
     
     private void initInterfaces(EntityManager entityManager) {
@@ -350,9 +353,8 @@ DoctorVisit mainDoctorVisit;
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(genderLbl)
-                .addComponent(patientGenderLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(genderLbl)
+            .addComponent(patientGenderLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(dateOfBirthLbl, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(patientDateOfBirthLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
@@ -415,7 +417,7 @@ DoctorVisit mainDoctorVisit;
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(phoneLbl)
                     .addComponent(patientPhoneLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -694,14 +696,6 @@ DoctorVisit mainDoctorVisit;
             .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 143, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(priceLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -726,8 +720,7 @@ DoctorVisit mainDoctorVisit;
                     .addComponent(priceTxtf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(priceLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 55, Short.MAX_VALUE))
-		);
-
+        );
 
         mainScrollPane.setViewportView(mainPanel);
 
@@ -816,7 +809,7 @@ DoctorVisit mainDoctorVisit;
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 4, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -1140,5 +1133,27 @@ DoctorVisit mainDoctorVisit;
             }
           });
         }
+
+    void setPatientData(Patient patient) {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        patientNameLbl.setText(patient.getName() + " (" + patient.getParentName() + ") " + patient.getSurname());
+        nameLbl.setForeground(Color.BLUE);
+        patientGenderLbl.setText(patient.getGender());
+        genderLbl.setForeground(Color.BLUE);
+        patientDateOfBirthLbl.setText(dateFormat.format(patient.getDateOfBirth()));
+        dateOfBirthLbl.setForeground(Color.BLUE);
+        patientPlaceOfBirthLbl.setText(patient.getPlaceOFBirth());
+        placeOfBirthLbl.setForeground(Color.BLUE);
+        patientCityLbl.setText(patient.getCity());
+        cityLbl.setForeground(Color.BLUE);
+        patientEmailLbl.setText(patient.getEmail());
+        emailLbl.setForeground(Color.BLUE);
+        patientPhoneLbl.setText(patient.getPhone());
+        phoneLbl.setForeground(Color.BLUE);
+        allergiesTxtf.setText(patient.getAllergies());
+        allergiesLbl.setForeground(Color.BLUE);
+        remarkTxtf.setText(mainDoctorVisit.getRemark());
+        remarkLbl.setForeground(Color.BLUE);
+    }
     
 }

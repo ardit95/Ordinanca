@@ -45,7 +45,7 @@
                   <Component id="jPanel1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jScrollPane3" min="-2" pref="523" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="4" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -55,7 +55,6 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-<<<<<<< HEAD
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="seeAllCBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="infoLbl" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -68,17 +67,6 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="backgroundLbl" min="-2" max="-2" attributes="0"/>
-=======
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="backgroundLbl" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="seeAllCBox" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" min="-2" pref="538" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
->>>>>>> da2b73d2f50e6cc4929fc696c2f48348d8e393d8
           </Group>
       </Group>
     </DimensionLayout>
@@ -103,13 +91,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-<<<<<<< HEAD
                   <Component id="mainScrollPane" min="-2" pref="250" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-=======
-                  <Component id="mainScrollPane" min="-2" pref="306" max="-2" attributes="0"/>
-                  <EmptySpace pref="1116" max="32767" attributes="0"/>
->>>>>>> da2b73d2f50e6cc4929fc696c2f48348d8e393d8
               </Group>
           </Group>
         </DimensionLayout>
@@ -238,10 +221,8 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="genderLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="patientGenderLbl" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="genderLbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="patientGenderLbl" min="-2" pref="14" max="-2" attributes="0"/>
                       <Component id="dateOfBirthLbl" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="patientDateOfBirthLbl" alignment="1" min="-2" pref="14" max="-2" attributes="0"/>
                   </Group>
@@ -352,9 +333,9 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="phoneLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="patientPhoneLbl" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                              <Component id="patientPhoneLbl" min="-2" pref="14" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -444,22 +425,6 @@
                       <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
                       <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
                       <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
-<<<<<<< HEAD
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-                              <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                              <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                              <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
-                              <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="143" max="32767" attributes="0"/>
-=======
-                          <Component id="clearBtn" min="-2" pref="227" max="-2" attributes="0"/>
-                          <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
-                          <Component id="saveBtn" min="-2" pref="227" max="-2" attributes="0"/>
->>>>>>> da2b73d2f50e6cc4929fc696c2f48348d8e393d8
-                      </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="priceLbl" min="-2" pref="91" max="-2" attributes="0"/>
@@ -481,20 +446,12 @@
                           <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                           <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="priceTxtf" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="priceLbl" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="55" max="32767" attributes="0"/>
-=======
-                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="clearBtn" min="-2" max="-2" attributes="0"/>
-                              <Component id="saveBtn" min="-2" max="-2" attributes="0"/>
-                          </Group>
->>>>>>> da2b73d2f50e6cc4929fc696c2f48348d8e393d8
                       </Group>
                   </Group>
                 </DimensionLayout>

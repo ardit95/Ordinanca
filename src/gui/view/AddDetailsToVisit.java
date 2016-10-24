@@ -286,20 +286,31 @@ DoctorVisit mainDoctorVisit;
         recommendationLbl = new javax.swing.JLabel();
         priceTxtf = new javax.swing.JTextField();
         priceLbl = new javax.swing.JLabel();
+        seeAllCBox = new javax.swing.JCheckBox();
         jScrollPane3 = new javax.swing.JScrollPane();
         visitTbl = new javax.swing.JTable();
-        seeAllCBox = new javax.swing.JCheckBox();
-        infoLbl = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         clearBtn = new javax.swing.JButton();
         saveBtn = new javax.swing.JButton();
+        infoLbl = new javax.swing.JLabel();
+        background = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Add Notification");
         setMaximumSize(new java.awt.Dimension(1100, 654));
         setMinimumSize(new java.awt.Dimension(1100, 654));
         setPreferredSize(new java.awt.Dimension(1100, 654));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        backgroundLbl.setBackground(new java.awt.Color(102, 102, 102));
+        backgroundLbl.setLayout(null);
+
+        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
+
+        jPanel7.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel7.setOpaque(false);
+
+        nameLbl.setForeground(new java.awt.Color(255, 255, 255));
         nameLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameLbl.setText("Name:");
 
@@ -327,9 +338,14 @@ DoctorVisit mainDoctorVisit;
                 .addGap(1, 1, 1))
         );
 
+        jPanel8.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel8.setOpaque(false);
+
+        genderLbl.setForeground(new java.awt.Color(255, 255, 255));
         genderLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         genderLbl.setText("Gender:");
 
+        dateOfBirthLbl.setForeground(new java.awt.Color(255, 255, 255));
         dateOfBirthLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         dateOfBirthLbl.setText("DateOfBirth:");
 
@@ -359,9 +375,14 @@ DoctorVisit mainDoctorVisit;
             .addComponent(patientDateOfBirthLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        jPanel9.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel9.setOpaque(false);
+
+        placeOfBirthLbl.setForeground(new java.awt.Color(255, 255, 255));
         placeOfBirthLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         placeOfBirthLbl.setText("PlaceOFBirth:");
 
+        cityLbl.setForeground(new java.awt.Color(255, 255, 255));
         cityLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         cityLbl.setText("City:");
 
@@ -393,9 +414,14 @@ DoctorVisit mainDoctorVisit;
             .addComponent(patientCityLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanel11.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel11.setOpaque(false);
+
+        phoneLbl.setForeground(new java.awt.Color(255, 255, 255));
         phoneLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         phoneLbl.setText("Phone:");
 
+        emailLbl.setForeground(new java.awt.Color(255, 255, 255));
         emailLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         emailLbl.setText("Email:");
 
@@ -431,12 +457,14 @@ DoctorVisit mainDoctorVisit;
         allergiesTxtf.setRows(5);
         jScrollPane1.setViewportView(allergiesTxtf);
 
+        allergiesLbl.setForeground(new java.awt.Color(255, 255, 255));
         allergiesLbl.setText("Allergies:");
 
         remarkTxtf.setColumns(20);
         remarkTxtf.setRows(5);
         jScrollPane2.setViewportView(remarkTxtf);
 
+        remarkLbl.setForeground(new java.awt.Color(255, 255, 255));
         remarkLbl.setText("Remark:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -460,7 +488,7 @@ DoctorVisit mainDoctorVisit;
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(remarkLbl)))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,14 +512,22 @@ DoctorVisit mainDoctorVisit;
                 .addGap(1, 1, 1))
         );
 
+        backgroundLbl.add(jPanel2);
+        jPanel2.setBounds(0, 0, 502, 334);
+
+        mainScrollPane.setBackground(new java.awt.Color(102, 102, 102));
         mainScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        mainPanel.setBackground(new java.awt.Color(102, 102, 102));
 
         jPanel4.setMaximumSize(new java.awt.Dimension(164, 94));
         jPanel4.setMinimumSize(new java.awt.Dimension(164, 94));
+        jPanel4.setOpaque(false);
 
         jScrollPane5.setMaximumSize(new java.awt.Dimension(166, 56));
         jScrollPane5.setMinimumSize(new java.awt.Dimension(166, 56));
         jScrollPane5.setPreferredSize(new java.awt.Dimension(166, 56));
+        
 
         complaintTxtf.setColumns(20);
         complaintTxtf.setLineWrap(true);
@@ -502,6 +538,7 @@ DoctorVisit mainDoctorVisit;
         complaintTxtf.setMinimumSize(new java.awt.Dimension(164, 94));
         jScrollPane5.setViewportView(complaintTxtf);
 
+        complaintLbl.setForeground(new java.awt.Color(255, 255, 255));
         complaintLbl.setText("Complaint:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -527,6 +564,7 @@ DoctorVisit mainDoctorVisit;
 
         jPanel5.setMaximumSize(new java.awt.Dimension(164, 94));
         jPanel5.setMinimumSize(new java.awt.Dimension(164, 94));
+        jPanel5.setOpaque(false);
 
         jScrollPane6.setMaximumSize(new java.awt.Dimension(166, 56));
         jScrollPane6.setMinimumSize(new java.awt.Dimension(166, 56));
@@ -541,6 +579,7 @@ DoctorVisit mainDoctorVisit;
         anamnesisTxtf.setMinimumSize(new java.awt.Dimension(164, 94));
         jScrollPane6.setViewportView(anamnesisTxtf);
 
+        anamensisLbl.setForeground(new java.awt.Color(255, 255, 255));
         anamensisLbl.setText("Anamnesis:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -567,6 +606,7 @@ DoctorVisit mainDoctorVisit;
 
         jPanel6.setMaximumSize(new java.awt.Dimension(164, 94));
         jPanel6.setMinimumSize(new java.awt.Dimension(164, 94));
+        jPanel6.setOpaque(false);
 
         jScrollPane7.setMaximumSize(new java.awt.Dimension(166, 56));
         jScrollPane7.setMinimumSize(new java.awt.Dimension(166, 56));
@@ -581,6 +621,7 @@ DoctorVisit mainDoctorVisit;
         examinationTxtf.setMinimumSize(new java.awt.Dimension(164, 94));
         jScrollPane7.setViewportView(examinationTxtf);
 
+        examinationLbl.setForeground(new java.awt.Color(255, 255, 255));
         examinationLbl.setText("Examination:");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -607,6 +648,7 @@ DoctorVisit mainDoctorVisit;
 
         jPanel10.setMaximumSize(new java.awt.Dimension(164, 94));
         jPanel10.setMinimumSize(new java.awt.Dimension(164, 94));
+        jPanel10.setOpaque(false);
 
         jScrollPane8.setMaximumSize(new java.awt.Dimension(166, 56));
         jScrollPane8.setMinimumSize(new java.awt.Dimension(166, 56));
@@ -621,6 +663,7 @@ DoctorVisit mainDoctorVisit;
         therapyTxtf.setMinimumSize(new java.awt.Dimension(164, 94));
         jScrollPane8.setViewportView(therapyTxtf);
 
+        therapyLbl.setForeground(new java.awt.Color(255, 255, 255));
         therapyLbl.setText("Therapy:");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -647,6 +690,7 @@ DoctorVisit mainDoctorVisit;
 
         jPanel12.setMaximumSize(new java.awt.Dimension(164, 94));
         jPanel12.setMinimumSize(new java.awt.Dimension(164, 94));
+        jPanel12.setOpaque(false);
 
         jScrollPane9.setMaximumSize(new java.awt.Dimension(166, 56));
         jScrollPane9.setMinimumSize(new java.awt.Dimension(166, 56));
@@ -661,6 +705,7 @@ DoctorVisit mainDoctorVisit;
         recommendationTxtf.setMinimumSize(new java.awt.Dimension(164, 94));
         jScrollPane9.setViewportView(recommendationTxtf);
 
+        recommendationLbl.setForeground(new java.awt.Color(255, 255, 255));
         recommendationLbl.setText("Recommendation:");
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
@@ -685,6 +730,7 @@ DoctorVisit mainDoctorVisit;
                 .addGap(2, 2, 2))
         );
 
+        priceLbl.setForeground(new java.awt.Color(255, 255, 255));
         priceLbl.setText("Price:");
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -724,24 +770,12 @@ DoctorVisit mainDoctorVisit;
 
         mainScrollPane.setViewportView(mainPanel);
 
-        javax.swing.GroupLayout backgroundLblLayout = new javax.swing.GroupLayout(backgroundLbl);
-        backgroundLbl.setLayout(backgroundLblLayout);
-        backgroundLblLayout.setHorizontalGroup(
-            backgroundLblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundLblLayout.createSequentialGroup()
-                .addGroup(backgroundLblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        backgroundLblLayout.setVerticalGroup(
-            backgroundLblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundLblLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        backgroundLbl.add(mainScrollPane);
+        mainScrollPane.setBounds(0, 340, 502, 260);
+
+        seeAllCBox.setText("All");
+        backgroundLbl.add(seeAllCBox);
+        seeAllCBox.setBounds(520, 10, 37, 23);
 
         visitTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -755,12 +789,13 @@ DoctorVisit mainDoctorVisit;
         visitTbl.setShowVerticalLines(false);
         jScrollPane3.setViewportView(visitTbl);
 
-        seeAllCBox.setText("All");
+        backgroundLbl.add(jScrollPane3);
+        jScrollPane3.setBounds(520, 50, 550, 510);
 
-        infoLbl.setMaximumSize(new java.awt.Dimension(34, 14));
-        infoLbl.setMinimumSize(new java.awt.Dimension(34, 14));
-        infoLbl.setPreferredSize(new java.awt.Dimension(34, 14));
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
+        clearBtn.setBackground(new java.awt.Color(0, 0, 0));
+        clearBtn.setForeground(new java.awt.Color(4, 205, 0));
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -768,6 +803,8 @@ DoctorVisit mainDoctorVisit;
             }
         });
 
+        saveBtn.setBackground(new java.awt.Color(0, 0, 0));
+        saveBtn.setForeground(new java.awt.Color(4, 205, 0));
         saveBtn.setText("Save");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -793,39 +830,18 @@ DoctorVisit mainDoctorVisit;
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(2, 2, 2)
-                .addComponent(backgroundLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(seeAllCBox)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(infoLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(seeAllCBox)
-                    .addComponent(infoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(backgroundLbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        backgroundLbl.add(jPanel1);
+        jPanel1.setBounds(530, 580, 490, 23);
+
+        getContentPane().add(backgroundLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1080, 620));
+
+        infoLbl.setMaximumSize(new java.awt.Dimension(34, 14));
+        infoLbl.setMinimumSize(new java.awt.Dimension(34, 14));
+        infoLbl.setPreferredSize(new java.awt.Dimension(34, 14));
+        getContentPane().add(infoLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 0, 519, -1));
+
+        background.setBackground(new java.awt.Color(102, 102, 102));
+        getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -876,6 +892,7 @@ DoctorVisit mainDoctorVisit;
     private javax.swing.JTextArea allergiesTxtf;
     private javax.swing.JLabel anamensisLbl;
     private javax.swing.JTextArea anamnesisTxtf;
+    private javax.swing.JLabel background;
     private javax.swing.JPanel backgroundLbl;
     private javax.swing.JLabel cityLbl;
     private javax.swing.JButton clearBtn;
@@ -1082,6 +1099,13 @@ DoctorVisit mainDoctorVisit;
                     ( ( Component ) e.getSource () ).transferFocus ();
                 }
             };
+            
+            allergiesTxtf.getInputMap ().put ( KeyStroke.getKeyStroke ( "TAB" ), "transferFocus" );
+            allergiesTxtf.getActionMap ().put ( "transferFocus", transferFocus );
+            
+            remarkTxtf.getInputMap ().put ( KeyStroke.getKeyStroke ( "TAB" ), "transferFocus" );
+            remarkTxtf.getActionMap ().put ( "transferFocus", transferFocus );
+            
             complaintTxtf.getInputMap ().put ( KeyStroke.getKeyStroke ( "TAB" ), "transferFocus" );
             complaintTxtf.getActionMap ().put ( "transferFocus", transferFocus );
             

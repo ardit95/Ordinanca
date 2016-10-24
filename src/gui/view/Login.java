@@ -14,6 +14,8 @@ import bl.StaffRepository;
 import ejb.Staff;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import javax.persistence.NoResultException;
@@ -41,6 +43,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         staffIr = new StaffRepository(new EntMngClass("Checker", "12345", "localhost").getEntityManager());
         usernameTxtf.requestFocus();
+        addFocuseListeners();
     }
 
     @SuppressWarnings("unchecked")
@@ -74,7 +77,7 @@ public class Login extends javax.swing.JFrame {
                 usernameTxtfKeyPressed(evt);
             }
         });
-        jPanel1.add(usernameTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 235, 225, 30));
+        jPanel1.add(usernameTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 235, 225, 40));
 
         passwordTxtf.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         passwordTxtf.addActionListener(new java.awt.event.ActionListener() {
@@ -87,7 +90,7 @@ public class Login extends javax.swing.JFrame {
                 passwordTxtfKeyPressed(evt);
             }
         });
-        jPanel1.add(passwordTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 335, 225, 30));
+        jPanel1.add(passwordTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 335, 225, 40));
 
         serverIpTxtf.setText("localhost");
         serverIpTxtf.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +156,19 @@ public class Login extends javax.swing.JFrame {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         loginMethod();
     }//GEN-LAST:event_loginBtnActionPerformed
+    
+    private void addFocuseListeners(){
+            usernameTxtf.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+            usernameTxtf.setText("");
+            }
 
+            public void focusLost(FocusEvent e) {
+                // nothing
+            }
+        });
+    }
+    
     public static void main(String args[]) {
         Login login = null;
         try {

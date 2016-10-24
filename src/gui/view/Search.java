@@ -124,10 +124,12 @@ public class Search extends javax.swing.JInternalFrame {
         setPreferredSize(new java.awt.Dimension(1100, 654));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(null);
         jPanel1.add(searchTxtf);
         searchTxtf.setBounds(120, 20, 400, 25);
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Search :");
         jPanel1.add(jLabel1);
@@ -151,6 +153,8 @@ public class Search extends javax.swing.JInternalFrame {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(10, 82, 1060, 530);
 
+        printBtn.setBackground(new java.awt.Color(0, 0, 0));
+        printBtn.setForeground(new java.awt.Color(4, 205, 0));
         printBtn.setText("Prito në PDF");
         printBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,6 +164,7 @@ public class Search extends javax.swing.JInternalFrame {
         jPanel1.add(printBtn);
         printBtn.setBounds(720, 10, 160, 40);
 
+        background.setBackground(new java.awt.Color(102, 102, 102));
         background.setOpaque(true);
         jPanel1.add(background);
         background.setBounds(0, 0, 1080, 620);

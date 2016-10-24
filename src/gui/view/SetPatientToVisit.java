@@ -137,42 +137,53 @@ public class SetPatientToVisit extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(null);
 
+        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        nameTxtf0.setForeground(new java.awt.Color(255, 255, 255));
         nameTxtf0.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf0.setText("Name :");
         jPanel2.add(nameTxtf0, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 120, 20));
 
+        nameTxtf1.setForeground(new java.awt.Color(255, 255, 255));
         nameTxtf1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf1.setText("Surname :");
         jPanel2.add(nameTxtf1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 120, 20));
 
+        nameTxtf2.setForeground(new java.awt.Color(255, 255, 255));
         nameTxtf2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf2.setText("Parent Name :");
         jPanel2.add(nameTxtf2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 120, 20));
 
+        nameTxtf3.setForeground(new java.awt.Color(255, 255, 255));
         nameTxtf3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf3.setText("Date Of Birth :");
         jPanel2.add(nameTxtf3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 120, 20));
 
+        nameTxtf4.setForeground(new java.awt.Color(255, 255, 255));
         nameTxtf4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf4.setText("Gender :");
         jPanel2.add(nameTxtf4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 120, 20));
 
+        nameTxtf5.setForeground(new java.awt.Color(255, 255, 255));
         nameTxtf5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf5.setText("Telephone :");
         jPanel2.add(nameTxtf5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 120, 20));
 
+        nameTxtf6.setForeground(new java.awt.Color(255, 255, 255));
         nameTxtf6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf6.setText("Email :");
         jPanel2.add(nameTxtf6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 120, 20));
 
+        nameTxtf7.setForeground(new java.awt.Color(255, 255, 255));
         nameTxtf7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf7.setText("Birthplace :");
         jPanel2.add(nameTxtf7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 120, 20));
 
+        nameTxtf8.setForeground(new java.awt.Color(255, 255, 255));
         nameTxtf8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf8.setText("Allergies :");
         jPanel2.add(nameTxtf8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 120, 20));
@@ -197,6 +208,8 @@ public class SetPatientToVisit extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 260, 150));
 
+        clearBtn.setBackground(new java.awt.Color(0, 0, 0));
+        clearBtn.setForeground(new java.awt.Color(4, 205, 0));
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,6 +218,8 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         });
         jPanel2.add(clearBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 540, 200, 40));
 
+        saveButton.setBackground(new java.awt.Color(0, 0, 0));
+        saveButton.setForeground(new java.awt.Color(4, 205, 0));
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,6 +228,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         });
         jPanel2.add(saveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 200, 40));
 
+        nameTxtf9.setForeground(new java.awt.Color(255, 255, 255));
         nameTxtf9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf9.setText("City :");
         jPanel2.add(nameTxtf9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 120, 20));
@@ -221,6 +237,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         jPanel1.add(jPanel2);
         jPanel2.setBounds(0, 0, 490, 620);
 
+        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         patientTbl.setModel(new javax.swing.table.DefaultTableModel(
@@ -235,16 +252,16 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         patientTbl.setShowVerticalLines(false);
         jScrollPane2.setViewportView(patientTbl);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 84, 590, 530));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 84, 540, 500));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Search :");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 22, 179, 35));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 22, 170, 35));
         jPanel3.add(searchTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 300, 35));
         jPanel3.add(infoLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 580, 10));
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(490, 0, 590, 620);
+        jPanel3.setBounds(500, 10, 570, 600);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

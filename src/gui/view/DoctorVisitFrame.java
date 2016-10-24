@@ -53,38 +53,46 @@ public class DoctorVisitFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(null);
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Patient :");
         jPanel1.add(jLabel1);
         jLabel1.setBounds(20, 20, 120, 30);
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Doctor :");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(20, 60, 120, 30);
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("Complaints :");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(20, 100, 120, 30);
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel4.setText("Examination :");
         jPanel1.add(jLabel4);
         jLabel4.setBounds(20, 200, 120, 30);
 
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel5.setText("Therapy :");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(20, 300, 120, 30);
 
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText("Date :");
         jPanel1.add(jLabel6);
         jLabel6.setBounds(20, 410, 120, 30);
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel7.setText("Price :");
         jPanel1.add(jLabel7);

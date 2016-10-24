@@ -32,32 +32,30 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="backgroundPanel" max="32767" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-          </Group>
+          <Component id="backgroundPanel" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="backgroundPanel" max="32767" attributes="0"/>
-          </Group>
+          <Component id="backgroundPanel" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JPanel" name="backgroundPanel">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="66" green="66" red="66" type="rgb"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Component id="jPanel3" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPane3" min="-2" pref="530" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -73,7 +71,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jPanel3" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="19" max="32767" attributes="0"/>
                           <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane3" min="-2" pref="554" max="-2" attributes="0"/>
@@ -86,6 +84,9 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="jPanel3">
+          <Properties>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -95,8 +96,12 @@
                   <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="sendBtn" min="-2" pref="183" max="-2" attributes="0"/>
-                      <EmptySpace pref="31" max="32767" attributes="0"/>
+                      <EmptySpace pref="162" max="32767" attributes="0"/>
                       <Component id="clearBtn" min="-2" pref="183" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="messageLbl" min="-2" pref="65" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -106,8 +111,10 @@
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Component id="messageLbl" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" pref="527" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="470" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="sendBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -119,14 +126,18 @@
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="jPanel1">
+              <Properties>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="sendToLbl" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="120" max="32767" attributes="0"/>
                           <Component id="staffCombo" min="-2" pref="246" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -156,22 +167,27 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="sendToLbl">
                   <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Send to :"/>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel2">
+              <Properties>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="messageLbl" min="-2" pref="65" max="-2" attributes="0"/>
-                          <EmptySpace pref="41" max="32767" attributes="0"/>
                           <Component id="recievedFromLbl" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="recieverLbl" min="-2" pref="246" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -179,8 +195,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="messageLbl" max="32767" attributes="0"/>
-                              <Component id="recievedFromLbl" max="32767" attributes="0"/>
+                              <Component id="recievedFromLbl" pref="14" max="32767" attributes="0"/>
                               <Component id="recieverLbl" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -189,12 +204,12 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="messageLbl">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Message :"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JLabel" name="recievedFromLbl">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="recieverLbl">
                   <Properties>
@@ -224,6 +239,12 @@
             </Container>
             <Component class="javax.swing.JButton" name="sendBtn">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="cd" red="4" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Send"/>
               </Properties>
               <Events>
@@ -232,11 +253,25 @@
             </Component>
             <Component class="javax.swing.JButton" name="clearBtn">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="cd" red="4" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Clear"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearBtnActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="messageLbl">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Message :"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -268,6 +303,12 @@
         </Container>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="cd" red="4" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Seen All"/>
           </Properties>
           <Events>

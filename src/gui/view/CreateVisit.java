@@ -118,6 +118,12 @@ public class CreateVisit extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(1100, 654));
         setPreferredSize(new java.awt.Dimension(1100, 654));
 
+        backgroundPanel.setBackground(new java.awt.Color(102, 102, 102));
+
+        jPanel3.setBackground(new java.awt.Color(102, 102, 102));
+
+        jPanel1.setOpaque(false);
+
         visitCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose", "Biochemical Analysis", "Microbiology Analysis", "Control", "Treatment", "Ultrasound" }));
         visitCombo.setToolTipText("Choose the type of visit");
 
@@ -143,14 +149,20 @@ public class CreateVisit extends javax.swing.JInternalFrame {
         remarkTxtf.setWrapStyleWord(true);
         jScrollPane2.setViewportView(remarkTxtf);
 
+        jPanel5.setOpaque(false);
+
+        staffLbl1.setForeground(new java.awt.Color(255, 255, 255));
         staffLbl1.setText("Time of Visit:");
 
         dateCalendar.setDateFormatString("dd-MM-yyyy");
 
+        autoDateCBox.setForeground(new java.awt.Color(255, 255, 255));
         autoDateCBox.setText("Now");
 
+        hourLbl.setForeground(new java.awt.Color(255, 255, 255));
         hourLbl.setText("hour:");
 
+        minuteLbl.setForeground(new java.awt.Color(255, 255, 255));
         minuteLbl.setText("minute:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -170,7 +182,7 @@ public class CreateVisit extends javax.swing.JInternalFrame {
                 .addComponent(minuteLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(minuteCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(autoDateCBox)
                 .addContainerGap())
         );
@@ -191,6 +203,9 @@ public class CreateVisit extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        jPanel6.setOpaque(false);
+
+        remarkLbl.setForeground(new java.awt.Color(255, 255, 255));
         remarkLbl.setText("Remark :");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -208,8 +223,11 @@ public class CreateVisit extends javax.swing.JInternalFrame {
                 .addGap(0, 1, Short.MAX_VALUE))
         );
 
+        jPanel4.setOpaque(false);
+
         staffCombo.setToolTipText("Choose the staff member who will perform the visit");
 
+        staffLbl.setForeground(new java.awt.Color(255, 255, 255));
         staffLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         staffLbl.setText("Doctor to hold visit :");
 
@@ -233,6 +251,7 @@ public class CreateVisit extends javax.swing.JInternalFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        typeOfVisitLbl.setForeground(new java.awt.Color(255, 255, 255));
         typeOfVisitLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         typeOfVisitLbl.setText("Type Of Visit :");
 
@@ -262,8 +281,8 @@ public class CreateVisit extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
 
         patientTbl.setModel(new javax.swing.table.DefaultTableModel(
@@ -278,6 +297,8 @@ public class CreateVisit extends javax.swing.JInternalFrame {
         patientTbl.setShowVerticalLines(false);
         jScrollPane3.setViewportView(patientTbl);
 
+        saveBtn.setBackground(new java.awt.Color(0, 0, 0));
+        saveBtn.setForeground(new java.awt.Color(4, 205, 0));
         saveBtn.setText("Save");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -285,6 +306,8 @@ public class CreateVisit extends javax.swing.JInternalFrame {
             }
         });
 
+        clearBtn.setBackground(new java.awt.Color(0, 0, 0));
+        clearBtn.setForeground(new java.awt.Color(4, 205, 0));
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,12 +323,12 @@ public class CreateVisit extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(139, 139, 139)
                         .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         backgroundPanelLayout.setVerticalGroup(
@@ -314,27 +337,24 @@ public class CreateVisit extends javax.swing.JInternalFrame {
                 .addGap(11, 11, 11)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(clearBtn)
                             .addComponent(saveBtn))
                         .addContainerGap())
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 613, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

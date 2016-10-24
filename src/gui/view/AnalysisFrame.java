@@ -44,33 +44,40 @@ public class AnalysisFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(null);
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Pacienti :");
         jPanel1.add(jLabel1);
         jLabel1.setBounds(20, 20, 120, 30);
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Laboranti :");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(20, 60, 120, 30);
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("Analiza :");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(20, 100, 120, 30);
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel4.setText("Rezultatet :");
         jPanel1.add(jLabel4);
         jLabel4.setBounds(20, 140, 120, 30);
 
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel5.setText("Data :");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(20, 800, 120, 30);
 
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText("Çmimi :");
         jPanel1.add(jLabel6);

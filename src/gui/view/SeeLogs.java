@@ -72,8 +72,10 @@ public class SeeLogs extends javax.swing.JInternalFrame {
         setPreferredSize(new java.awt.Dimension(1100, 654));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(null);
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Message :");
         jLabel2.setToolTipText("");
@@ -95,6 +97,7 @@ public class SeeLogs extends javax.swing.JInternalFrame {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(10, 133, 1060, 476);
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("Search :");
         jLabel3.setToolTipText("");
@@ -106,6 +109,8 @@ public class SeeLogs extends javax.swing.JInternalFrame {
         searchTxtf.setBounds(170, 28, 220, 30);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 620));
+
+        background.setBackground(new java.awt.Color(102, 102, 102));
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1084, 624));
 
         pack();

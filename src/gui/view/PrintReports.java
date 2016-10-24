@@ -1,6 +1,33 @@
 package gui.view;
 
 import java.awt.Dimension;
+import java.awt.Font;
+import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.JOptionPane;
+
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
+import java.awt.HeadlessException;
+import java.io.FileNotFoundException;
+
+import java.io.FileOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 
 public class PrintReports extends javax.swing.JInternalFrame {
 
@@ -19,26 +46,211 @@ public class PrintReports extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+
         setClosable(true);
         setTitle("Print Reports");
         setMaximumSize(new java.awt.Dimension(1100, 654));
         setMinimumSize(new java.awt.Dimension(1100, 654));
         setPreferredSize(new java.awt.Dimension(1100, 654));
 
+        jButton1.setText("Printo PDF");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(816, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(511, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        JFileChooser chooser = new JFileChooser(); 
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Chooser");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        String directory="";
+        //
+        // disable the "All files" option.
+        //
+        chooser.setAcceptAllFileFilterUsed(false);
+        //    
+        
+        if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+            
+            directory=chooser.getSelectedFile().toString()+"\\";
+            
+                printPdf(directory);
+       
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Duhet te zgjedhni lokacionin se ku deshironi te ruani file ");
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private void printPdf(String directory){
+        Document document=new Document();
+        try{
+            String patientName="Filan";
+            String patientSurname="Fisteku";
+            String patientGender="M";
+            String patientBirthDate="11-02-1972";
+            String patientAllergies="Peniciline,Amoksicelin,Polen";
+            String doctorName="Halim";
+            String doctorSurname="Kadrushi";
+            String complaint="Dhembje koke";
+            String anamnesis="Migren frontale";
+            String examination="Grip sezonal";
+            String therapy="Antibiotik , qaj kamomil";
+            String recommendation="Pushim dhe qetsi";
+            String price="20,00";
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+            String today=(dateFormat.format(26/10/2016));
+            
+            
+           
+            
+            String path=directory+" "+patientName+" "+patientSurname+" - "+doctorName+" "+doctorSurname+" - "+".pdf";
+            PdfWriter.getInstance(document, new FileOutputStream(path));
+            document.open();
+           
+            
+            
+            
+            Paragraph para=new Paragraph();
+            Chunk t=new Chunk("Klinika Mjeksore diqka",FontFactory.getFont(FontFactory.HELVETICA,18,Font.BOLD));
+            Chunk space=new Chunk("\n");
+            Phrase prat=new Phrase();
+            
+            prat.add(space);
+            prat.add(space);
+            prat.add(t);
+            para.setAlignment(Element.ALIGN_CENTER);
+            para.add(prat);
+           
+            document.add(para);
+            
+            
+            
+            Phrase pha1=new Phrase();
+            Phrase pha2=new Phrase();
+            Phrase pha3=new Phrase();
+            
+            Paragraph para1=new Paragraph();
+            Paragraph para2=new Paragraph();
+            Paragraph para3=new Paragraph();
+            
+            Chunk glue2 = new Chunk(new VerticalPositionMark());
+            
+            
+            Chunk c1=new Chunk("Pacienti :"+patientName+" "+patientSurname,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            Chunk c2=new Chunk("Gjinia :"+patientGender+"                                    Data e Lindjes :"+patientBirthDate,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            Chunk c3=new Chunk("Alergjitë :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c4=new Chunk(patientAllergies);
+            
+            
+            pha1.add(space);
+            pha1.add(space);
+            pha1.add(c1);
+            pha1.add(space);
+            pha1.add(c2);
+            pha1.add(space);
+            pha1.add(c3);
+            pha1.add(space);
+            pha1.add(c4);
+            
+            
+            para1.add(pha1);
+            
+            Chunk c10=new Chunk("Ankesat :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c11=new Chunk(complaint);
+            Chunk c12=new Chunk("Anamnesis ",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c13=new Chunk(anamnesis);
+            Chunk c14=new Chunk("Examination :"+patientAllergies,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c15=new Chunk(examination);
+            Chunk c16=new Chunk("Therapy ",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c17=new Chunk(therapy);
+            Chunk c18=new Chunk("Recommendation :"+patientAllergies,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c19=new Chunk(recommendation);
+            
+            pha2.add(space);
+            pha2.add(space);
+            pha2.add(c10);
+            pha2.add(space);
+            pha2.add(c11);
+            pha2.add(space);
+            pha2.add(c12);
+            pha2.add(space);
+            pha2.add(c13);
+            pha2.add(space);
+            pha2.add(c14);
+            pha2.add(space);
+            pha2.add(c15);
+            pha2.add(space);
+            pha2.add(c16);
+            pha2.add(space);
+            pha2.add(c17);
+            pha2.add(space);
+            pha2.add(c18);
+            pha2.add(space);
+            pha2.add(c19);
+            
+            para2.add(pha2);
+            
+            
+            Chunk c20=new Chunk("Doktori :"+doctorName+" "+doctorSurname,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c21=new Chunk("Data :"+today,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c22=new Chunk("Çmimi : "+price,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            pha3.add(space);
+            pha3.add(space);
+            pha3.add(space);
+            pha3.add(c20);
+            pha3.add(space);
+            pha3.add(c21);
+            pha3.add(new Chunk(glue2));
+            pha3.add(c22);
+            
+            para3.add(pha3);
+            
+            
+            
+            document.add(para1);
+            document.add(para2);
+            document.add(para3);
+            
+            
+            
+            document.close();
+            JOptionPane.showMessageDialog(null,"U ruajt me sukses");
+        }catch(FileNotFoundException | DocumentException | HeadlessException e){
+            e.printStackTrace();
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }

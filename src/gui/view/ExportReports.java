@@ -292,6 +292,7 @@ public class ExportReports extends javax.swing.JInternalFrame {
         setNormalBounds(new java.awt.Rectangle(1100, 654, 654, 654));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(null);
 
         reportTbl.setModel(new javax.swing.table.DefaultTableModel(
@@ -307,6 +308,7 @@ public class ExportReports extends javax.swing.JInternalFrame {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(10, 90, 1060, 520);
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Zgjidh llojin e tabelës  :");
         jPanel1.add(jLabel1);
@@ -317,6 +319,8 @@ public class ExportReports extends javax.swing.JInternalFrame {
         jPanel1.add(tableTypeCombo);
         tableTypeCombo.setBounds(190, 20, 240, 30);
 
+        generateBtn.setBackground(new java.awt.Color(0, 0, 0));
+        generateBtn.setForeground(new java.awt.Color(4, 205, 0));
         generateBtn.setText("Gjenero Tabelën");
         generateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,8 +328,10 @@ public class ExportReports extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(generateBtn);
-        generateBtn.setBounds(450, 20, 160, 30);
+        generateBtn.setBounds(460, 20, 160, 30);
 
+        exportBtn.setBackground(new java.awt.Color(0, 0, 0));
+        exportBtn.setForeground(new java.awt.Color(4, 205, 0));
         exportBtn.setText("Export to Excel");
         exportBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -333,7 +339,7 @@ public class ExportReports extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(exportBtn);
-        exportBtn.setBounds(650, 10, 200, 50);
+        exportBtn.setBounds(660, 10, 200, 50);
         jPanel1.add(background);
         background.setBounds(0, 0, 1080, 620);
 

@@ -68,12 +68,13 @@ public class MainFrame extends javax.swing.JFrame {
                                     tempUnseenMessages=numberOfMessagesUnseen;
                                 }
                             }
-                            jButton4.setForeground(Color.red);
-                            jButton4.setText("Create Message(" + numberOfMessagesUnseen + ")");
+                            
+                            jButton6.setForeground(Color.red);
+                            jButton6.setText("Messages");
                         }
                     } else {
-                        jButton4.setForeground(new Color(204,255,204));
-                        jButton4.setText("Create Message");
+                        jButton6.setForeground(new Color(204,255,204));
+                        jButton6.setText("Messages");
                     }
                     
                     if(addMessage!=null){
@@ -317,7 +318,6 @@ public class MainFrame extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         background2 = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
@@ -415,19 +415,6 @@ public class MainFrame extends javax.swing.JFrame {
         desktopPane.add(jButton6);
         jButton6.setBounds(0, 250, 200, 50);
 
-        jButton7.setBackground(new java.awt.Color(0, 153, 102));
-        jButton7.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(204, 255, 204));
-        jButton7.setText("jButton7");
-        jButton7.setOpaque(false);
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        desktopPane.add(jButton7);
-        jButton7.setBounds(0, 300, 200, 50);
-
         background2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Photo/Medicine Logo.png"))); // NOI18N
         desktopPane.add(background2);
         background2.setBounds(450, 40, 600, 600);
@@ -516,31 +503,27 @@ public class MainFrame extends javax.swing.JFrame {
     public void setPrioritys() {
         if (pozita.equals("Recepsion")) {
             jButton1.setText("Add Patient");
-            jButton2.setText("Add Notification");
-            jButton3.setText("Add Visit");
-            jButton4.setText("Add Reports");
-            jButton5.setText("Notifications");
-            jButton6.setText("Add Patient");
+            jButton2.setText("See Visits");
+            jButton3.setText("Print Visits");
+            jButton4.setText("Messages");
+            jButton5.setVisible(false);
             jButton6.setVisible(false);
-            jButton7.setVisible(false);
         }
         else if (pozita.equals("Doctor")) {
-            jButton1.setText("See DoctorVisit");
-            jButton2.setText("See Appointments");
-            jButton3.setText("Create Doctor Visit");
-            jButton4.setText("Create Message");
-            jButton5.setText("Search");
-            jButton6.setText("Print Report");
-            jButton7.setText("Add Patient");
+            jButton1.setText("Visits");
+            jButton2.setText("Create Visits");
+            jButton3.setText("Search");
+            jButton4.setText("Add Patient");
+            jButton5.setText("Print Reports");
+            jButton6.setText("Messages");
         }
         else if (pozita.equals("Director")) {
-            jButton1.setText("See Reports");
+            jButton1.setText("Export Reports");
             jButton2.setText("Logs");
-            jButton3.setText("Export Reports");
+            jButton3.setText("Messages");
             jButton4.setVisible(false);
             jButton5.setVisible(false);
             jButton6.setVisible(false);
-            jButton7.setVisible(false);
         }
         else if (pozita.equals("Administrator")) {
             jButton1.setText("Add User");
@@ -549,10 +532,14 @@ public class MainFrame extends javax.swing.JFrame {
             jButton4.setVisible(false);
             jButton5.setVisible(false);
             jButton6.setVisible(false);
-            jButton7.setVisible(false);
         }
         else if (pozita.equals("LaboratorTechnician")){
-            jButton1.setText("See AnalysisVisit");
+            jButton1.setText("Visits");
+            jButton2.setText("Create Visits");
+            jButton3.setText("Search");
+            jButton4.setText("Add Patient");
+            jButton5.setText("Print Reports");
+            jButton6.setText("Messages");
         }
     }
 
@@ -561,66 +548,249 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (pozita.equals("Recepsion")) {
-            addAddPatient();
-        } else if (pozita.equals("Doctor")) {
-            addDetailsToVisit();
-        } else if (pozita.equals("Director")) {
-            addSeeReports();
-        } else if (pozita.equals("Administrator")) {
-            addAddUsers();
-        }else if (pozita.equals("LaboratorTechnician")){
-            addDetailsToVisit();
+        switch(jButton1.getText()){
+            case "Add Patient":
+                addAddPatient();
+                break;
+            case "See Visits":
+                addAddAppointment();//zevendso
+                break;
+            case "Create Visits":
+                addCreateDoctorVisit();
+                break;
+            case "Visits":
+                addDetailsToVisit();
+                break;
+            case "Print Visits":
+                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                break;
+            case "Messages":
+                addMessage();
+                break;
+            case "Search":
+                addSearch();
+                break;
+            case "Add User":
+                addAddUsers();
+                break;
+            case "Export Reports":
+                addExportReports();
+                break;
+            case "Logs":
+                addLogs();
+                break;
+            case "Print Reports":
+                addPrintReports();
+                break;    
+            default:
+                JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
+        
+        
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (pozita.equals("Recepsion")) {
-            addAddNotification();
-        } else if (pozita.equals("Doctor")) {
-            addSeeAppointments();
-        } else if (pozita.equals("Director")) {
-            addLogs();
+        switch(jButton2.getText()){
+            case "Add Patient":
+                addAddPatient();
+                break;
+            case "See Visits":
+                addAddAppointment();//zevendso
+                break;
+            case "Create Visits":
+                addCreateDoctorVisit();
+                break;
+            case "Visits":
+                addDetailsToVisit();
+                break;
+            case "Print Visits":
+                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                break;
+            case "Messages":
+                addMessage();
+                break;
+            case "Search":
+                addSearch();
+                break;
+            case "Add user":
+                addAddUsers();
+                break;
+            case "Export Reports":
+                addExportReports();
+                break;
+            case "Logs":
+                addLogs();
+                break;
+            case "Print Reports":
+                addPrintReports();
+                break;    
+            default:
+                JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
+        
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (pozita.equals("Recepsion")) {
-            addCreateDoctorVisit();
-        } else if (pozita.equals("Doctor")) {
-            addCreateDoctorVisit();
-        } else if (pozita.equals("Director")) {
-            addExportReports();
+        switch(jButton3.getText()){
+            case "Add Patient":
+                addAddPatient();
+                break;
+            case "See Visits":
+                addAddAppointment();//zevendso
+                break;
+            case "Create Visits":
+                addCreateDoctorVisit();
+                break;
+            case "Visits":
+                addDetailsToVisit();
+                break;
+            case "Print Visits":
+                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                break;
+            case "Messages":
+                addMessage();
+                break;
+            case "Search":
+                addSearch();
+                break;
+            case "Add user":
+                addAddUsers();
+                break;
+            case "Export Reports":
+                addExportReports();
+                break;
+            case "Logs":
+                addLogs();
+                break;
+            case "Print Reports":
+                addPrintReports();
+                break;    
+            default:
+                JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if (pozita.equals("Recepsion")) {
-            addPrintReports();
-        } else if (pozita.equals("Doctor")) {
-            addMessage();
+        switch(jButton4.getText()){
+            case "Add Patient":
+                addAddPatient();
+                break;
+            case "See Visits":
+                addAddAppointment();//zevendso
+                break;
+            case "Create Visits":
+                addCreateDoctorVisit();
+                break;
+            case "Visits":
+                addDetailsToVisit();
+                break;
+            case "Print Visits":
+                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                break;
+            case "Messages":
+                addMessage();
+                break;
+            case "Search":
+                addSearch();
+                break;
+            case "Add user":
+                addAddUsers();
+                break;
+            case "Export Reports":
+                addExportReports();
+                break;
+            case "Logs":
+                addLogs();
+                break;
+            case "Print Reports":
+                addPrintReports();
+                break;    
+            default:
+                JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if (pozita.equals("Recepsion")) {
-            addMessage();
-        } else if (pozita.equals("Doctor")) {
-            addSearch();
+        switch(jButton5.getText()){
+            case "Add Patient":
+                addAddPatient();
+                break;
+            case "See Visits":
+                addAddAppointment();//zevendso
+                break;
+            case "Create Visits":
+                addCreateDoctorVisit();
+                break;
+            case "Visits":
+                addDetailsToVisit();
+                break;
+            case "Print Visits":
+                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                break;
+            case "Messages":
+                addMessage();
+                break;
+            case "Search":
+                addSearch();
+                break;
+            case "Add user":
+                addAddUsers();
+                break;
+            case "Export Reports":
+                addExportReports();
+                break;
+            case "Logs":
+                addLogs();
+                break;
+            case "Print Reports":
+                addPrintReports();
+                break;    
+            default:
+                JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        if (pozita.equals("Doctor")) {
-            addPrintReports();
+        switch(jButton6.getText()){
+            case "Add Patient":
+                addAddPatient();
+                break;
+            case "See Visits":
+                addAddAppointment();//zevendso
+                break;
+            case "Create Visits":
+                addCreateDoctorVisit();
+                break;
+            case "Visits":
+                addDetailsToVisit();
+                break;
+            case "Print Visits":
+                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                break;
+            case "Messages":
+                addMessage();
+                break;
+            case "Search":
+                addSearch();
+                break;
+            case "Add user":
+                addAddUsers();
+                break;
+            case "Export Reports":
+                addExportReports();
+                break;
+            case "Logs":
+                addLogs();
+                break;
+            case "Print Reports":
+                addPrintReports();
+                break;    
+            default:
+                JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
     }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if (pozita.equals("Doctor")) {
-            addAddPatient();
-        }
-    }//GEN-LAST:event_jButton7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -641,7 +811,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;

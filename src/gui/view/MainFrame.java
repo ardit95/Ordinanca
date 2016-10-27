@@ -50,7 +50,16 @@ public class MainFrame extends javax.swing.JFrame {
             
             @Override
             public void run() {
-                try {
+                try{
+                    tryThread();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+            }
+            
+            private synchronized void tryThread()throws InterruptedException{
+        
                     if ((numberOfMessagesUnseen = messageIr.countUnseenMessagesForUser(currentUser)) > 0) {
                         if (currentUser.getRole().equals("Doctor")) {
                             if(numberOfMessagesUnseen!=tempUnseenMessages){
@@ -76,16 +85,14 @@ public class MainFrame extends javax.swing.JFrame {
                         
                     sleep(500);
                     run();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
-            }
+                
+    }  
         };
-
+        
         th.start();
     }
-
+    
+   
     public void addAddAppointment() {
         try {
             if (desktopPane.getSelectedFrame() != null) {

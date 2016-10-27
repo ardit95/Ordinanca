@@ -268,6 +268,7 @@ String dateForVisit="";
                             try {
                                 mainDoctorVisit = doctorVisitTM.getDoctorVisit(selectedIndex);
                                 patient = mainDoctorVisit.getPatientID();
+                                
                                 if (patient == null) {
                                     String[] opcionet = {"Yes", "No"};
                                     int response = JOptionPane.showOptionDialog(null,
@@ -309,7 +310,9 @@ String dateForVisit="";
                             }
 
                         } else if (visitTbl.getModel() == diagnosisForVisitTM) {
+                            DiagnosisForVisit diagnosisForVisit=diagnosisForVisitTM.getDiagnosisForVisit(visitTbl.getSelectedRow());
                             Diagnosis diagnosis = diagnosisForVisitTM.getDiagnosisForVisit(visitTbl.getSelectedRow()).getDiagnosisID();
+                            patient=diagnosisForVisit.getDoctorVisitID().getPatientID();
                             complaintTxtf.setText(diagnosis.getComplaint());
                             complaintLbl.setForeground(Color.BLUE);
                             anamnesisTxtf.setText(diagnosis.getAnamnesis());
@@ -364,8 +367,8 @@ String dateForVisit="";
                         } catch (AppException ae) {
                         } catch (StopException se) {
                         }
-                        setPatientData(patient);
                     }
+                    setPatientData(patient);
                 }
             }
         });
@@ -1366,11 +1369,12 @@ String dateForVisit="";
         String allTherapys="";
         String allRecommendations="";
         for(int i=0;i<diagnosis.size();i++){
-            allComplaints+=diagnosis.get(i).getComplaint()+" ; ";
-            allAnamnesis+=diagnosis.get(i).getAnamnesis()+" ; ";
-            allExaminations+=diagnosis.get(i).getExamination()+" ; ";
-            allTherapys+=diagnosis.get(i).getTherapy()+" ; ";
-            allRecommendations+=diagnosis.get(i).getRecommendation()+" ; ";
+            int nr=i+1;
+            allComplaints+="Complaint "+ nr +" : "+diagnosis.get(i).getComplaint()+" . \n";
+            allAnamnesis+="Anamnesis "+ nr +" : "+diagnosis.get(i).getAnamnesis()+" . \n";
+            allExaminations+="Examination "+ nr +" : "+diagnosis.get(i).getExamination()+" . \n";
+            allTherapys+="Therapy "+ nr +" : "+diagnosis.get(i).getTherapy()+" . \n";
+            allRecommendations+="Recommendation "+ nr +" : "+diagnosis.get(i).getRecommendation()+" . \n";
         }
         
         
@@ -1761,7 +1765,10 @@ String dateForVisit="";
         phoneLbl.setForeground(Color.BLUE);
         allergiesTxtf.setText(patient.getAllergies());
         allergiesLbl.setForeground(Color.BLUE);
-        remarkTxtf.setText(mainAnalysisVisit.getRemark());
+        if(currentUser.getRole().equals("Doctor"))
+            remarkTxtf.setText(mainDoctorVisit.getRemark());
+        else
+            remarkTxtf.setText(mainAnalysisVisit.getRemark());
         remarkLbl.setForeground(Color.BLUE);
     }
     

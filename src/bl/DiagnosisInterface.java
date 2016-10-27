@@ -13,4 +13,6 @@ public interface DiagnosisInterface {
     void remove(Diagnosis Diagnosis);
 
     List<Diagnosis> findAll();
+    
+    List<Diagnosis> findByDiagnosisForVisit(int DoctorVisitID);
 }

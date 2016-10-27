@@ -227,8 +227,8 @@ public class SetPatientToVisit extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 260, 150));
 
-        clearBtn.setBackground(new java.awt.Color(0, 0, 0));
-        clearBtn.setForeground(new java.awt.Color(4, 205, 0));
+        clearBtn.setBackground(new java.awt.Color(0, 153, 102));
+        clearBtn.setForeground(new java.awt.Color(204, 255, 204));
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -237,8 +237,8 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         });
         jPanel2.add(clearBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 540, 200, 40));
 
-        saveButton.setBackground(new java.awt.Color(0, 0, 0));
-        saveButton.setForeground(new java.awt.Color(4, 205, 0));
+        saveButton.setBackground(new java.awt.Color(0, 153, 102));
+        saveButton.setForeground(new java.awt.Color(204, 255, 204));
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -295,7 +295,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 649, Short.MAX_VALUE)
+            .addGap(0, 620, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)

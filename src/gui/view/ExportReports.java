@@ -319,8 +319,8 @@ public class ExportReports extends javax.swing.JInternalFrame {
         jPanel1.add(tableTypeCombo);
         tableTypeCombo.setBounds(190, 20, 240, 30);
 
-        generateBtn.setBackground(new java.awt.Color(0, 0, 0));
-        generateBtn.setForeground(new java.awt.Color(4, 205, 0));
+        generateBtn.setBackground(new java.awt.Color(0, 153, 102));
+        generateBtn.setForeground(new java.awt.Color(204, 255, 204));
         generateBtn.setText("Gjenero Tabelën");
         generateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -330,8 +330,8 @@ public class ExportReports extends javax.swing.JInternalFrame {
         jPanel1.add(generateBtn);
         generateBtn.setBounds(460, 20, 160, 30);
 
-        exportBtn.setBackground(new java.awt.Color(0, 0, 0));
-        exportBtn.setForeground(new java.awt.Color(4, 205, 0));
+        exportBtn.setBackground(new java.awt.Color(0, 153, 102));
+        exportBtn.setForeground(new java.awt.Color(204, 255, 204));
         exportBtn.setText("Export to Excel");
         exportBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

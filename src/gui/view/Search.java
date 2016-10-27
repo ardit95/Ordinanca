@@ -153,8 +153,8 @@ public class Search extends javax.swing.JInternalFrame {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(10, 82, 1060, 530);
 
-        printBtn.setBackground(new java.awt.Color(0, 0, 0));
-        printBtn.setForeground(new java.awt.Color(4, 205, 0));
+        printBtn.setBackground(new java.awt.Color(0, 153, 102));
+        printBtn.setForeground(new java.awt.Color(204, 255, 204));
         printBtn.setText("Prito në PDF");
         printBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

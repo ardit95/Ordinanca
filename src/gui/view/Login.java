@@ -57,28 +57,37 @@ public class Login extends javax.swing.JFrame {
         serverIpTxtf = new javax.swing.JTextField();
         usernameLbl = new javax.swing.JLabel();
         passwordLbl = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        background2 = new javax.swing.JLabel();
         backgroundPanel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        loginBtn.setBackground(new java.awt.Color(0, 153, 102));
+        loginBtn.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
+        loginBtn.setForeground(new java.awt.Color(204, 255, 204));
         loginBtn.setText("Login");
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, 110, 30));
+        jPanel1.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 440, 270, 50));
 
+        usernameTxtf.setBackground(new java.awt.Color(234, 255, 234));
         usernameTxtf.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         usernameTxtf.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 usernameTxtfKeyPressed(evt);
             }
         });
-        jPanel1.add(usernameTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 235, 225, 40));
+        jPanel1.add(usernameTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 225, 40));
 
+        passwordTxtf.setBackground(new java.awt.Color(234, 255, 234));
         passwordTxtf.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         passwordTxtf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,8 +99,10 @@ public class Login extends javax.swing.JFrame {
                 passwordTxtfKeyPressed(evt);
             }
         });
-        jPanel1.add(passwordTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 335, 225, 40));
+        jPanel1.add(passwordTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, 225, 40));
 
+        serverIpTxtf.setEditable(false);
+        serverIpTxtf.setBackground(new java.awt.Color(234, 255, 234));
         serverIpTxtf.setText("localhost");
         serverIpTxtf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,12 +116,27 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel1.add(serverIpTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, -1));
 
+        usernameLbl.setBackground(new java.awt.Color(255, 255, 255));
+        usernameLbl.setForeground(new java.awt.Color(0, 204, 102));
         usernameLbl.setText("Username:");
-        jPanel1.add(usernameLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, -1, -1));
+        jPanel1.add(usernameLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, -1, -1));
 
+        passwordLbl.setBackground(new java.awt.Color(255, 255, 255));
+        passwordLbl.setForeground(new java.awt.Color(0, 204, 102));
         passwordLbl.setText("Password:");
-        jPanel1.add(passwordLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, -1, -1));
-        jPanel1.add(backgroundPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 452, 605));
+        jPanel1.add(passwordLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, -1, -1));
+
+        jLabel1.setBackground(new java.awt.Color(90, 101, 89));
+        jLabel1.setOpaque(true);
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 340, 270, 80));
+
+        jLabel2.setBackground(new java.awt.Color(90, 101, 89));
+        jLabel2.setOpaque(true);
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, 270, 80));
+
+        background2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Photo/physician-icon-png-10.png"))); // NOI18N
+        jPanel1.add(background2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 190, 200));
+        jPanel1.add(backgroundPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 452, 480));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,7 +146,7 @@ public class Login extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
         );
 
         pack();
@@ -185,7 +211,10 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel background2;
     private javax.swing.JLabel backgroundPanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loginBtn;
     private javax.swing.JLabel passwordLbl;

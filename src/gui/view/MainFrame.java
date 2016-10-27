@@ -63,7 +63,7 @@ public class MainFrame extends javax.swing.JFrame {
                             jButton4.setText("Create Message(" + numberOfMessagesUnseen + ")");
                         }
                     } else {
-                        jButton4.setForeground(Color.GREEN);
+                        jButton4.setForeground(new Color(204,255,204));
                         jButton4.setText("Create Message");
                     }
                     
@@ -330,9 +330,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setBackground(new java.awt.Color(0, 153, 102));
         jButton1.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 204, 0));
+        jButton1.setForeground(new java.awt.Color(204, 255, 204));
         jButton1.setText("jButton1");
         jButton1.setOpaque(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -343,9 +343,9 @@ public class MainFrame extends javax.swing.JFrame {
         desktopPane.add(jButton1);
         jButton1.setBounds(0, 0, 200, 50);
 
-        jButton2.setBackground(new java.awt.Color(0, 0, 0));
+        jButton2.setBackground(new java.awt.Color(0, 153, 102));
         jButton2.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(4, 205, 0));
+        jButton2.setForeground(new java.awt.Color(204, 255, 204));
         jButton2.setText("jButton2");
         jButton2.setOpaque(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -356,9 +356,9 @@ public class MainFrame extends javax.swing.JFrame {
         desktopPane.add(jButton2);
         jButton2.setBounds(0, 50, 200, 50);
 
-        jButton3.setBackground(new java.awt.Color(0, 0, 0));
+        jButton3.setBackground(new java.awt.Color(0, 153, 102));
         jButton3.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(4, 205, 0));
+        jButton3.setForeground(new java.awt.Color(204, 255, 204));
         jButton3.setText("jButton3");
         jButton3.setOpaque(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -369,9 +369,9 @@ public class MainFrame extends javax.swing.JFrame {
         desktopPane.add(jButton3);
         jButton3.setBounds(0, 100, 200, 50);
 
-        jButton4.setBackground(new java.awt.Color(0, 0, 0));
+        jButton4.setBackground(new java.awt.Color(0, 153, 102));
         jButton4.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(4, 205, 0));
+        jButton4.setForeground(new java.awt.Color(204, 255, 204));
         jButton4.setText("jButton4");
         jButton4.setOpaque(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -382,9 +382,9 @@ public class MainFrame extends javax.swing.JFrame {
         desktopPane.add(jButton4);
         jButton4.setBounds(0, 150, 200, 50);
 
-        jButton5.setBackground(new java.awt.Color(0, 0, 0));
+        jButton5.setBackground(new java.awt.Color(0, 153, 102));
         jButton5.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(4, 205, 0));
+        jButton5.setForeground(new java.awt.Color(204, 255, 204));
         jButton5.setText("jButton5");
         jButton5.setOpaque(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -395,9 +395,9 @@ public class MainFrame extends javax.swing.JFrame {
         desktopPane.add(jButton5);
         jButton5.setBounds(0, 200, 200, 50);
 
-        jButton6.setBackground(new java.awt.Color(0, 0, 0));
+        jButton6.setBackground(new java.awt.Color(0, 153, 102));
         jButton6.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(4, 205, 0));
+        jButton6.setForeground(new java.awt.Color(204, 255, 204));
         jButton6.setText("jButton6");
         jButton6.setOpaque(false);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -408,9 +408,9 @@ public class MainFrame extends javax.swing.JFrame {
         desktopPane.add(jButton6);
         jButton6.setBounds(0, 250, 200, 50);
 
-        jButton7.setBackground(new java.awt.Color(0, 0, 0));
+        jButton7.setBackground(new java.awt.Color(0, 153, 102));
         jButton7.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(4, 205, 0));
+        jButton7.setForeground(new java.awt.Color(204, 255, 204));
         jButton7.setText("jButton7");
         jButton7.setOpaque(false);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -421,7 +421,7 @@ public class MainFrame extends javax.swing.JFrame {
         desktopPane.add(jButton7);
         jButton7.setBounds(0, 300, 200, 50);
 
-        background2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Photo/snake-cup-button-medicine-logo-snakes.png"))); // NOI18N
+        background2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Photo/Medicine Logo.png"))); // NOI18N
         desktopPane.add(background2);
         background2.setBounds(450, 40, 600, 600);
 

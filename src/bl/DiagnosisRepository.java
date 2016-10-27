@@ -4,6 +4,7 @@ import ejb.Diagnosis;
 import java.util.List;
 import javax.persistence.EntityManager;
 import ExceptionPackage.AppException;
+import javax.persistence.Query;
 
 public class DiagnosisRepository extends EntMngClass implements DiagnosisInterface {
 
@@ -61,5 +62,12 @@ public class DiagnosisRepository extends EntMngClass implements DiagnosisInterfa
     @Override
     public List<Diagnosis> findAll() {
         return em.createNamedQuery("DiagnosisRepository.findAll").getResultList();
+    }
+    
+    @Override
+    public List<Diagnosis> findByDiagnosisForVisit(int DoctorVisitID) {
+        Query query = em.createQuery("SELECT Object (d) FROM Diagnosis d ,DiagnosisForVisit dfv,DoctorVisit dv WHERE dfv.diagnosisID.diagnosisID=d.diagnosisID AND dfv.doctorVisitID.doctorID =dv.doctorID AND dv.DoctorVisitID= :doctorVisitID ");
+        query.setParameter("doctorVisitID", DoctorVisitID);
+        return (List<Diagnosis>) query.getResultList();
     }
 }

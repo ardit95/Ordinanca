@@ -19,6 +19,15 @@ import bl.PatientRepository;
 import ejb.Analysis;
 import ejb.AnalysisForVisit;
 import ejb.AnalysisVisit;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import ejb.Diagnosis;
 import ejb.DiagnosisForVisit;
 import ejb.DoctorVisit;
@@ -42,6 +51,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.KeyboardFocusManager;
 import java.awt.MouseInfo;
 import java.awt.Panel;
@@ -54,6 +65,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseWheelEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,6 +81,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.DateFormatter;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -100,6 +115,22 @@ AnalysisVisit mainAnalysisVisit;
     private javax.swing.JTextField analysisTxtf;
     JTextField analysisPriceTxtf;
             
+
+int doctorVisitId=0;
+String patientNameForVisit="";
+String patientSurnameForVisit="";
+String patientGenderForVisit="";
+String patientDateOfBirthForVisit="";
+String patientAllergiesForVisit="";
+String doctorNameForVisit="";
+String doctorSurnameForVisit="";
+String complaintForVisit="";
+String anamnesisForVisit="";
+String examinationForVisit="";
+String therapyForVisit="";
+String recommendationForVisit="";
+String priceForVisit="";
+String dateForVisit="";
 
     public AddDetailsToVisit(EntityManager entityManager,Staff currentUser) {
         this.currentUser=currentUser;
@@ -516,6 +547,7 @@ AnalysisVisit mainAnalysisVisit;
         jPanel1 = new javax.swing.JPanel();
         clearBtn = new javax.swing.JButton();
         saveBtn = new javax.swing.JButton();
+        printBtn = new javax.swing.JButton();
         infoLbl = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
@@ -751,8 +783,6 @@ AnalysisVisit mainAnalysisVisit;
         jScrollPane5.setMaximumSize(new java.awt.Dimension(166, 56));
         jScrollPane5.setMinimumSize(new java.awt.Dimension(166, 56));
         jScrollPane5.setPreferredSize(new java.awt.Dimension(166, 56));
-      
-
         complaintTxtf.setColumns(20);
         complaintTxtf.setLineWrap(true);
         complaintTxtf.setRows(5);
@@ -760,6 +790,11 @@ AnalysisVisit mainAnalysisVisit;
         complaintTxtf.setWrapStyleWord(true);
         complaintTxtf.setMaximumSize(new java.awt.Dimension(164, 94));
         complaintTxtf.setMinimumSize(new java.awt.Dimension(164, 94));
+        complaintTxtf.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                complaintTxtfMouseWheelMoved(evt);
+            }
+        });
         jScrollPane5.setViewportView(complaintTxtf);
 
         complaintLbl.setForeground(new java.awt.Color(255, 255, 255));
@@ -789,6 +824,11 @@ AnalysisVisit mainAnalysisVisit;
         jPanel5.setMaximumSize(new java.awt.Dimension(164, 94));
         jPanel5.setMinimumSize(new java.awt.Dimension(164, 94));
         jPanel5.setOpaque(false);
+        jPanel5.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jPanel5MouseWheelMoved(evt);
+            }
+        });
 
         jScrollPane6.setMaximumSize(new java.awt.Dimension(166, 56));
         jScrollPane6.setMinimumSize(new java.awt.Dimension(166, 56));
@@ -1018,8 +1058,8 @@ AnalysisVisit mainAnalysisVisit;
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
-        clearBtn.setBackground(new java.awt.Color(0, 0, 0));
-        clearBtn.setForeground(new java.awt.Color(4, 205, 0));
+        clearBtn.setBackground(new java.awt.Color(0, 153, 102));
+        clearBtn.setForeground(new java.awt.Color(204, 255, 204));
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1027,12 +1067,21 @@ AnalysisVisit mainAnalysisVisit;
             }
         });
 
-        saveBtn.setBackground(new java.awt.Color(0, 0, 0));
-        saveBtn.setForeground(new java.awt.Color(4, 205, 0));
+        saveBtn.setBackground(new java.awt.Color(0, 153, 102));
+        saveBtn.setForeground(new java.awt.Color(204, 255, 204));
         saveBtn.setText("Save");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveBtnActionPerformed(evt);
+            }
+        });
+
+        printBtn.setBackground(new java.awt.Color(0, 153, 102));
+        printBtn.setForeground(new java.awt.Color(204, 255, 204));
+        printBtn.setText("Print Visit");
+        printBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printBtnActionPerformed(evt);
             }
         });
 
@@ -1041,16 +1090,20 @@ AnalysisVisit mainAnalysisVisit;
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(printBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clearBtn)
-                    .addComponent(saveBtn))
+                    .addComponent(saveBtn)
+                    .addComponent(printBtn))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -1108,7 +1161,225 @@ AnalysisVisit mainAnalysisVisit;
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
+    private void printBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printBtnActionPerformed
+        //printi duhet me i shtyp krejt diagnozat e vizites
+        
+        setInfoForPrint();
+        JFileChooser chooser = new JFileChooser(); 
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Chooser");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        String directory="";
+        //
+        // disable the "All files" option.
+        //
+        chooser.setAcceptAllFileFilterUsed(false);
+        //    
+        int selectedRow=visitTbl.getSelectedRow();
+        if(visitTbl.getModel()==doctorVisitTM&&selectedRow>-1){
+            if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
 
+                directory=chooser.getSelectedFile().toString()+"\\";
+
+                    printPdf(directory);
+
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Duhet te zgjedhni lokacionin se ku deshironi te ruani file ");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Choose a visit to print !");
+        }
+    }//GEN-LAST:event_printBtnActionPerformed
+
+    private void jPanel5MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jPanel5MouseWheelMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel5MouseWheelMoved
+
+    private void complaintTxtfMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_complaintTxtfMouseWheelMoved
+       
+    }//GEN-LAST:event_complaintTxtfMouseWheelMoved
+    
+    private void printPdf(String directory){
+        Document document=new Document();
+        try{
+            
+            String path=directory+" "+patientNameForVisit+" "+patientSurnameForVisit+" - "+doctorNameForVisit+" "+doctorSurnameForVisit+" - "+".pdf";
+            PdfWriter.getInstance(document, new FileOutputStream(path));
+            document.open();
+           
+            
+            
+            
+            Paragraph para=new Paragraph();
+            Chunk t=new Chunk("Klinika Mjeksore diqka",FontFactory.getFont(FontFactory.HELVETICA,18,Font.BOLD));
+            Chunk space=new Chunk("\n");
+            Phrase prat=new Phrase();
+            
+            prat.add(space);
+            prat.add(space);
+            prat.add(t);
+            para.setAlignment(Element.ALIGN_CENTER);
+            para.add(prat);
+           
+            document.add(para);
+            
+            
+            
+            Phrase pha1=new Phrase();
+            Phrase pha2=new Phrase();
+            Phrase pha3=new Phrase();
+            
+            Paragraph para1=new Paragraph();
+            Paragraph para2=new Paragraph();
+            Paragraph para3=new Paragraph();
+            
+            Chunk glue2 = new Chunk(new VerticalPositionMark());
+            
+            
+            Chunk c1=new Chunk("Pacienti :"+patientNameForVisit+" "+patientSurnameForVisit,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            Chunk c2=new Chunk("Gjinia :"+patientGenderForVisit,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            Chunk c3=new Chunk("Data e Lindjes :"+patientDateOfBirthForVisit,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            Chunk c4=new Chunk("Alergjitë :"+patientAllergiesForVisit,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            
+            
+            pha1.add(space);
+            pha1.add(space);
+            pha1.add(c1);
+            pha1.add(space);
+            pha1.add(c2);
+            pha1.add(space);
+            pha1.add(c3);
+            pha1.add(space);
+            pha1.add(c4);
+            
+            
+            para1.add(pha1);
+            
+            Chunk c10=new Chunk("Ankesat :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c11=new Chunk(complaintForVisit);
+            Chunk c12=new Chunk("Anamnesis :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c13=new Chunk(anamnesisForVisit);
+            Chunk c14=new Chunk("Examination :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c15=new Chunk(examinationForVisit);
+            Chunk c16=new Chunk("Therapy :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c17=new Chunk(therapyForVisit);
+            Chunk c18=new Chunk("Recommendation :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c19=new Chunk(recommendationForVisit);
+            
+            pha2.add(space);
+            pha2.add(space);
+            pha2.add(c10);
+            pha2.add(space);
+            pha2.add(space);
+            pha2.add(c11);
+            pha2.add(space);
+            pha2.add(space);
+            pha2.add(c12);
+            pha2.add(space);
+            pha2.add(space);
+            pha2.add(c13);
+            pha2.add(space);
+            pha2.add(space);
+            pha2.add(c14);
+            pha2.add(space);
+            pha2.add(space);
+            pha2.add(c15);
+            pha2.add(space);
+            pha2.add(space);
+            pha2.add(c16);
+            pha2.add(space);
+            pha2.add(space);
+            
+            pha2.add(space);
+            pha2.add(c17);
+            pha2.add(space);
+            pha2.add(space);
+            pha2.add(c18);
+            pha2.add(space);
+            pha2.add(space);
+            pha2.add(c19);
+            
+            para2.add(pha2);
+            
+            
+            Chunk c20=new Chunk("Doktori :"+doctorNameForVisit+" "+doctorSurnameForVisit,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c21=new Chunk("Data :"+dateForVisit,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c22=new Chunk("Çmimi : "+priceForVisit,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            pha3.add(space);
+            pha3.add(space);
+            pha3.add(space);
+            pha3.add(c20);
+            pha3.add(space);
+            pha3.add(c21);
+            pha3.add(new Chunk(glue2));
+            pha3.add(c22);
+            
+            para3.add(pha3);
+            
+            
+            
+            document.add(para1);
+            document.add(para2);
+            document.add(para3);
+            
+            
+            
+            document.close();
+            JOptionPane.showMessageDialog(null,"U ruajt me sukses");
+        }catch(FileNotFoundException | DocumentException | HeadlessException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void setInfoForPrint(){
+        
+        DoctorVisit selectedDoctorVisit=new DoctorVisit();
+        int selectedRow=visitTbl.getSelectedRow();
+        if(visitTbl.getModel()==doctorVisitTM&&selectedRow>-1){
+            selectedDoctorVisit=doctorVisitTM.getDoctorVisit(selectedRow);
+        }
+        SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+        
+        doctorVisitId=selectedDoctorVisit.getDoctorVisitID();
+        patientNameForVisit=selectedDoctorVisit.getPatientID().getName();
+        patientSurnameForVisit=selectedDoctorVisit.getPatientID().getSurname();
+        patientDateOfBirthForVisit=sdf.format(selectedDoctorVisit.getPatientID().getDateOfBirth());
+        patientGenderForVisit=selectedDoctorVisit.getPatientID().getGender();
+        patientAllergiesForVisit=selectedDoctorVisit.getPatientID().getAllergies();
+        doctorNameForVisit=selectedDoctorVisit.getDoctorID().getName();
+        doctorSurnameForVisit=selectedDoctorVisit.getDoctorID().getSurname();
+        
+        priceForVisit=selectedDoctorVisit.getSumPrice()+"";
+        dateForVisit=sdf.format(selectedDoctorVisit.getTimeStamp());
+        
+        List<Diagnosis>diagnosis=diagnosisIr.findByDiagnosisForVisit(doctorVisitId);
+        String allComplaints="";
+        String allAnamnesis="";
+        String allExaminations="";
+        String allTherapys="";
+        String allRecommendations="";
+        for(int i=0;i<diagnosis.size();i++){
+            allComplaints+=diagnosis.get(i).getComplaint()+" ; ";
+            allAnamnesis+=diagnosis.get(i).getAnamnesis()+" ; ";
+            allExaminations+=diagnosis.get(i).getExamination()+" ; ";
+            allTherapys+=diagnosis.get(i).getTherapy()+" ; ";
+            allRecommendations+=diagnosis.get(i).getRecommendation()+" ; ";
+        }
+        
+        
+        complaintForVisit=allComplaints;
+        anamnesisForVisit=allAnamnesis;
+        examinationForVisit=allExaminations;
+        therapyForVisit=allTherapys;
+        recommendationForVisit=allRecommendations;
+    }
     
     public void clearDiagnosis(){
         complaintTxtf.setText("");
@@ -1173,6 +1444,7 @@ AnalysisVisit mainAnalysisVisit;
     private javax.swing.JLabel placeOfBirthLbl;
     private javax.swing.JLabel priceLbl;
     private javax.swing.JTextField priceTxtf;
+    private javax.swing.JButton printBtn;
     private javax.swing.JLabel recommendationLbl;
     private javax.swing.JTextArea recommendationTxtf;
     private javax.swing.JLabel remarkLbl;

@@ -43,15 +43,6 @@ public class NewJFrame extends javax.swing.JFrame {
         );
         
     }
-    
-    public static void main(String[]args){
-        NewJFrame nw=new NewJFrame();
-        nw.setVisible(true);
-        
-        
-        
-    }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

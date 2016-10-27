@@ -197,8 +197,8 @@ public class AddUsers extends javax.swing.JInternalFrame {
         jPanel1.add(passwordTxtf);
         passwordTxtf.setBounds(170, 140, 160, 25);
 
-        okButton.setBackground(new java.awt.Color(0, 0, 0));
-        okButton.setForeground(new java.awt.Color(4, 205, 0));
+        okButton.setBackground(new java.awt.Color(0, 153, 102));
+        okButton.setForeground(new java.awt.Color(204, 255, 204));
         okButton.setText("Add User");
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,8 +216,8 @@ public class AddUsers extends javax.swing.JInternalFrame {
         jPanel1.add(dateOfBirthCalendar);
         dateOfBirthCalendar.setBounds(170, 260, 150, 30);
 
-        deleteBtn.setBackground(new java.awt.Color(0, 0, 0));
-        deleteBtn.setForeground(new java.awt.Color(4, 205, 0));
+        deleteBtn.setBackground(new java.awt.Color(0, 153, 102));
+        deleteBtn.setForeground(new java.awt.Color(204, 255, 204));
         deleteBtn.setText("Delete User");
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,8 +227,8 @@ public class AddUsers extends javax.swing.JInternalFrame {
         jPanel1.add(deleteBtn);
         deleteBtn.setBounds(130, 580, 120, 23);
 
-        clearBtn.setBackground(new java.awt.Color(0, 0, 0));
-        clearBtn.setForeground(new java.awt.Color(4, 205, 0));
+        clearBtn.setBackground(new java.awt.Color(0, 153, 102));
+        clearBtn.setForeground(new java.awt.Color(204, 255, 204));
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,8 +245,8 @@ public class AddUsers extends javax.swing.JInternalFrame {
         jPanel1.add(jLabel12);
         jLabel12.setBounds(20, 20, 140, 20);
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 0));
-        jButton1.setForeground(new java.awt.Color(4, 205, 0));
+        jButton1.setBackground(new java.awt.Color(0, 153, 102));
+        jButton1.setForeground(new java.awt.Color(204, 255, 204));
         jButton1.setText("Reset Password");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

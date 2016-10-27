@@ -297,8 +297,8 @@ public class CreateVisit extends javax.swing.JInternalFrame {
         patientTbl.setShowVerticalLines(false);
         jScrollPane3.setViewportView(patientTbl);
 
-        saveBtn.setBackground(new java.awt.Color(0, 0, 0));
-        saveBtn.setForeground(new java.awt.Color(4, 205, 0));
+        saveBtn.setBackground(new java.awt.Color(0, 153, 102));
+        saveBtn.setForeground(new java.awt.Color(204, 255, 204));
         saveBtn.setText("Save");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -306,8 +306,8 @@ public class CreateVisit extends javax.swing.JInternalFrame {
             }
         });
 
-        clearBtn.setBackground(new java.awt.Color(0, 0, 0));
-        clearBtn.setForeground(new java.awt.Color(4, 205, 0));
+        clearBtn.setBackground(new java.awt.Color(0, 153, 102));
+        clearBtn.setForeground(new java.awt.Color(204, 255, 204));
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

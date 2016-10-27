@@ -189,8 +189,8 @@ public class AddPatient extends javax.swing.JInternalFrame {
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 260, 150));
 
-        deleteButton.setBackground(new java.awt.Color(0, 0, 0));
-        deleteButton.setForeground(new java.awt.Color(4, 205, 0));
+        deleteButton.setBackground(new java.awt.Color(0, 153, 102));
+        deleteButton.setForeground(new java.awt.Color(204, 255, 204));
         deleteButton.setText("Delete");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,8 +199,8 @@ public class AddPatient extends javax.swing.JInternalFrame {
         });
         jPanel2.add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 540, 120, 40));
 
-        clearBtn.setBackground(new java.awt.Color(0, 0, 0));
-        clearBtn.setForeground(new java.awt.Color(4, 205, 0));
+        clearBtn.setBackground(new java.awt.Color(0, 153, 102));
+        clearBtn.setForeground(new java.awt.Color(204, 255, 204));
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,8 +209,8 @@ public class AddPatient extends javax.swing.JInternalFrame {
         });
         jPanel2.add(clearBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 540, 120, 40));
 
-        saveButton.setBackground(new java.awt.Color(0, 0, 0));
-        saveButton.setForeground(new java.awt.Color(4, 205, 0));
+        saveButton.setBackground(new java.awt.Color(0, 153, 102));
+        saveButton.setForeground(new java.awt.Color(204, 255, 204));
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

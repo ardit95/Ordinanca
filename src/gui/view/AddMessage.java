@@ -195,8 +195,8 @@ public class AddMessage extends javax.swing.JInternalFrame {
         messageTxtf.setWrapStyleWord(true);
         jScrollPane2.setViewportView(messageTxtf);
 
-        sendBtn.setBackground(new java.awt.Color(0, 0, 0));
-        sendBtn.setForeground(new java.awt.Color(4, 205, 0));
+        sendBtn.setBackground(new java.awt.Color(0, 153, 102));
+        sendBtn.setForeground(new java.awt.Color(204, 255, 204));
         sendBtn.setText("Send");
         sendBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,8 +204,8 @@ public class AddMessage extends javax.swing.JInternalFrame {
             }
         });
 
-        clearBtn.setBackground(new java.awt.Color(0, 0, 0));
-        clearBtn.setForeground(new java.awt.Color(4, 205, 0));
+        clearBtn.setBackground(new java.awt.Color(0, 153, 102));
+        clearBtn.setForeground(new java.awt.Color(204, 255, 204));
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,8 +259,8 @@ public class AddMessage extends javax.swing.JInternalFrame {
         messageTbl.setShowVerticalLines(false);
         jScrollPane3.setViewportView(messageTbl);
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 0));
-        jButton1.setForeground(new java.awt.Color(4, 205, 0));
+        jButton1.setBackground(new java.awt.Color(0, 153, 102));
+        jButton1.setForeground(new java.awt.Color(204, 255, 204));
         jButton1.setText("Seen All");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

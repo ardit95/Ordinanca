@@ -182,7 +182,8 @@ String dateForVisit="";
 
         resultsLbl.setForeground(new java.awt.Color(255, 255, 255));
         resultsLbl.setText("Results:");
-
+        titleOfAnalysisLbl.setText("Title Of Analysis:");
+        titleOfAnalysisLbl.setForeground(Color.WHITE);
         priceLbl.setText("Price:");
 
         javax.swing.GroupLayout analysisPanelLayout = new javax.swing.GroupLayout(analysisPanel);
@@ -364,8 +365,8 @@ String dateForVisit="";
                         } catch (AppException ae) {
                         } catch (StopException se) {
                         }
-                        setPatientData(patient);
                     }
+                    setPatientData(patient);
                 }
             }
         });
@@ -1458,6 +1459,9 @@ String dateForVisit="";
 
     private void validation()throws AppException,StopException{
         if (currentUser.getRole().equals("Doctor")) {
+            if(mainDoctorVisit==null)
+                throw new AppException("You must select a DoctorVisit from the table.");
+            
             if (mainDoctorVisit.getPatientID() == null) {
                 throw new AppException("You must assign a patient to the visit before saving a diagnostic for it.");
             }
@@ -1570,6 +1574,9 @@ String dateForVisit="";
                 }
             }
         } else if (currentUser.getRole().equals("LaboratorTechnician")) {
+            if(mainAnalysisVisit==null)
+                throw new AppException("You must select a AnalysisVisit from the table.");
+            
             if (mainAnalysisVisit.getPatientID() == null) {
                 throw new AppException("You must assign a patient to the visit before saving a diagnostic for it.");
             }

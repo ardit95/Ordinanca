@@ -6,6 +6,7 @@ import ejb.Staff;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 
 public class MessageRepository extends EntMngClass implements MessageInterface {
 

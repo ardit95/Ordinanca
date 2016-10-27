@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "AnalysisVisit.findByTimeStamp", query = "SELECT a FROM AnalysisVisit a WHERE a.timeStamp = :timeStamp"),
     @NamedQuery(name = "AnalysisVisit.findBySumPrice", query = "SELECT a FROM AnalysisVisit a WHERE a.sumPrice = :sumPrice"),
     @NamedQuery(name = "AnalysisVisit.findByRemark", query = "SELECT a FROM AnalysisVisit a WHERE a.remark = :remark"),
+    @NamedQuery(name = "AnalysisVisit.findByTypeOfVisit", query = "SELECT a FROM AnalysisVisit a WHERE a.typeOfVisit = :typeOfVisit"),
     @NamedQuery(name = "AnalysisVisit.findByFinished", query = "SELECT a FROM AnalysisVisit a WHERE a.finished = :finished")})
 public class AnalysisVisit implements Serializable {
 
@@ -58,6 +59,9 @@ public class AnalysisVisit implements Serializable {
     private double sumPrice=0;
     @Column(name = "Remark")
     private String remark;
+    @Basic(optional = false)
+    @Column(name = "typeOfVisit")
+    private String typeOfVisit;
     @Column(name = "Finished")
     private String finished="No";
     @JoinColumn(name = "LaboratorTechnicianID", referencedColumnName = "Username")
@@ -84,11 +88,6 @@ public class AnalysisVisit implements Serializable {
         this.remark=remark;
         laboratorTechnicianID=laboratorTechnician;
         staffID=registrator;
-    }
-
-    public AnalysisVisit(Integer AnalysisVisitID, Date timeStamp) {
-        this.AnalysisVisitID = AnalysisVisitID;
-        this.timeStamp = timeStamp;
     }
 
     public Integer getAnalysisVisitID() {
@@ -121,6 +120,14 @@ public class AnalysisVisit implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getTypeOfVisit() {
+        return typeOfVisit;
+    }
+
+    public void setTypeOfVisit(String typeOfVisit) {
+        this.typeOfVisit = typeOfVisit;
     }
 
     public String getFinished() {
@@ -188,5 +195,5 @@ public class AnalysisVisit implements Serializable {
     public String toString() {
         return "ejb.AnalysisVisit[ AnalysisVisitID=" + AnalysisVisitID + " ]";
     }
-
+    
 }

@@ -240,6 +240,5 @@ public class Patient implements Serializable {
     @Override
     public String toString() {
         return name+" "+surname;
-    }
-
+    }    
 }

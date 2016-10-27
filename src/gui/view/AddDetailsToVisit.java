@@ -2,6 +2,12 @@ package gui.view;
 
 import ExceptionPackage.AppException;
 import ExceptionPackage.StopException;
+import bl.AnalysisForVisitInterface;
+import bl.AnalysisForVisitRepository;
+import bl.AnalysisInterface;
+import bl.AnalysisRepository;
+import bl.AnalysisVisitInterface;
+import bl.AnalysisVisitRepository;
 import bl.DiagnosisForVisitInterface;
 import bl.DiagnosisForVisitRepository;
 import bl.DiagnosisInterface;
@@ -10,11 +16,15 @@ import bl.DoctorVisitInterface;
 import bl.DoctorVisitRepository;
 import bl.PatientInterface;
 import bl.PatientRepository;
+import ejb.Analysis;
+import ejb.AnalysisForVisit;
+import ejb.AnalysisVisit;
 import ejb.Diagnosis;
 import ejb.DiagnosisForVisit;
 import ejb.DoctorVisit;
 import ejb.Patient;
 import ejb.Staff;
+import gui.model.AnalysisVisitTableModel;
 import gui.model.DiagnosisForVisitTableModel;
 import gui.model.DoctorVisitTableModel;
 import java.awt.Color;
@@ -34,6 +44,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.KeyboardFocusManager;
 import java.awt.MouseInfo;
+import java.awt.Panel;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,6 +70,8 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.DefaultCaret;
@@ -70,24 +83,120 @@ Staff currentUser;
 DoctorVisitInterface doctorVisitIr;
 DiagnosisInterface diagnosisIr;
 DiagnosisForVisitInterface diagnosisForVisitIr;
+AnalysisVisitInterface analysisVisitIr;
+AnalysisInterface analysisIr;
+AnalysisForVisitInterface analysisForVisitIr;
 PatientInterface patientIr;
 DoctorVisitTableModel doctorVisitTM;
+AnalysisVisitTableModel analysisVisitTM;
 DiagnosisForVisitTableModel diagnosisForVisitTM;
 DoctorVisit mainDoctorVisit;
+AnalysisVisit mainAnalysisVisit;
+
+    private javax.swing.JLabel resultsLbl;
+    private javax.swing.JLabel titleOfAnalysisLbl;
+    private javax.swing.JPanel analysisPanel;
+    private javax.swing.JTextArea resultTxtf;
+    private javax.swing.JTextField analysisTxtf;
+    JTextField analysisPriceTxtf;
+            
 
     public AddDetailsToVisit(EntityManager entityManager,Staff currentUser) {
         this.currentUser=currentUser;
         this.entityManager=entityManager;
         initComponents();
-        initInterfaces(this.entityManager);
+        initInterfaces();
         initTableModels();
         setLocation(220, 10);
         visitTableLoad();
         addDetailsToVisitFormListeners();
         visitTblListeners();
         mainScrollBarMethods();
+        setPriority();
     }
     
+    public void setPriority(){
+        if(currentUser.getRole().equals("LaboratorTechnician")){
+            mainScrollPane.setVisible(false);
+
+            resultTxtf = new javax.swing.JTextArea();
+            analysisTxtf= new javax.swing.JTextField();
+            analysisPanel = new javax.swing.JPanel();
+            resultsLbl = new javax.swing.JLabel();
+            titleOfAnalysisLbl= new javax.swing.JLabel();
+
+            backgroundPanel.setBackground(new java.awt.Color(102, 102, 102));
+        backgroundPanel.setLayout(null);
+
+        analysisPanel.setMaximumSize(new java.awt.Dimension(164, 94));
+        analysisPanel.setMinimumSize(new java.awt.Dimension(164, 94));
+        analysisPanel.setOpaque(false);
+        analysisPanel.setPreferredSize(new java.awt.Dimension(491, 287));
+
+        jScrollPane6.setMaximumSize(new java.awt.Dimension(166, 56));
+        jScrollPane6.setMinimumSize(new java.awt.Dimension(166, 56));
+        jScrollPane6.setPreferredSize(new java.awt.Dimension(166, 56));
+        
+
+        resultTxtf.setColumns(20);
+        resultTxtf.setLineWrap(true);
+        resultTxtf.setRows(5);
+        resultTxtf.setToolTipText("Write down the remark about this visit");
+        resultTxtf.setWrapStyleWord(true);
+        resultTxtf.setMaximumSize(new java.awt.Dimension(164, 94));
+        resultTxtf.setMinimumSize(new java.awt.Dimension(164, 94));
+        resultTxtf.setEditable(true);
+        jScrollPane6.setViewportView(resultTxtf);
+        priceTxtf.setEditable(true);
+
+        resultsLbl.setForeground(new java.awt.Color(255, 255, 255));
+        resultsLbl.setText("Results:");
+
+        priceLbl.setText("Price:");
+
+        javax.swing.GroupLayout analysisPanelLayout = new javax.swing.GroupLayout(analysisPanel);
+        analysisPanel.setLayout(analysisPanelLayout);
+        analysisPanelLayout.setHorizontalGroup(
+            analysisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(analysisPanelLayout.createSequentialGroup()
+                .addGroup(analysisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(analysisPanelLayout.createSequentialGroup()
+                        .addContainerGap(283, Short.MAX_VALUE)
+                        .addComponent(priceLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(priceTxtf, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(analysisPanelLayout.createSequentialGroup()
+                        .addComponent(resultsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(titleOfAnalysisLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(analysisTxtf)))
+                .addContainerGap())
+        );
+        analysisPanelLayout.setVerticalGroup(
+            analysisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(analysisPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(analysisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(resultsLbl)
+                    .addComponent(titleOfAnalysisLbl)
+                    .addComponent(analysisTxtf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(analysisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(priceTxtf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(priceLbl))
+                .addContainerGap())
+        );
+            
+            
+
+            backgroundPanel.add(analysisPanel);
+            analysisPanel.setBounds(0, 350, 491, 255);
+        }
+    }
     
     
     
@@ -122,63 +231,109 @@ DoctorVisit mainDoctorVisit;
                 ListSelectionModel rowSM = (ListSelectionModel) lse.getSource();
                 int selectedIndex = rowSM.getMinSelectionIndex();
                 if (selectedIndex > -1) {
-                    if (visitTbl.getModel() == doctorVisitTM) {
+                    Patient patient = null;
+                    if (currentUser.getRole().equals("Doctor")) {
+                        if (visitTbl.getModel() == doctorVisitTM) {
+                            try {
+                                mainDoctorVisit = doctorVisitTM.getDoctorVisit(selectedIndex);
+                                patient = mainDoctorVisit.getPatientID();
+                                if (patient == null) {
+                                    String[] opcionet = {"Yes", "No"};
+                                    int response = JOptionPane.showOptionDialog(null,
+                                            "You have to assign a pacient to a visit before giving a diagnosis to it. Press yes to add the patient and no to stop.", "Warning",
+                                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                            null, opcionet, opcionet[0]);
+                                    if (response == 0) {
+                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(AddDetailsToVisit.this, mainDoctorVisit, entityManager, currentUser);
+                                        setPatientToVisit.setVisible(true);
+                                        patientNameLbl.setText("");
+                                        nameLbl.setForeground(Color.BLACK);
+                                        patientGenderLbl.setText("");
+                                        genderLbl.setForeground(Color.BLACK);
+                                        patientDateOfBirthLbl.setText("");
+                                        dateOfBirthLbl.setForeground(Color.BLACK);
+                                        patientPlaceOfBirthLbl.setText("");
+                                        placeOfBirthLbl.setForeground(Color.BLACK);
+                                        patientCityLbl.setText("");
+                                        cityLbl.setForeground(Color.BLACK);
+                                        patientEmailLbl.setText("");
+                                        emailLbl.setForeground(Color.BLACK);
+                                        patientPhoneLbl.setText("");
+                                        phoneLbl.setForeground(Color.BLACK);
+                                        allergiesTxtf.setText("");
+                                        allergiesLbl.setForeground(Color.BLACK);
+                                        remarkTxtf.setText("");
+                                        remarkLbl.setForeground(Color.BLACK);
+                                        visitTbl.clearSelection();
+                                        throw new AppException("The user choose to assign a pacient");
+                                    } else {
+                                        visitTbl.clearSelection();
+                                        throw new StopException("The user doesn't want to continue");
+                                    }
+                                }
+                            } catch (AppException ex) {
+                                ex.printStackTrace();
+                            } catch (StopException se) {
+                                se.printStackTrace();
+                            }
+
+                        } else if (visitTbl.getModel() == diagnosisForVisitTM) {
+                            Diagnosis diagnosis = diagnosisForVisitTM.getDiagnosisForVisit(visitTbl.getSelectedRow()).getDiagnosisID();
+                            complaintTxtf.setText(diagnosis.getComplaint());
+                            complaintLbl.setForeground(Color.BLUE);
+                            anamnesisTxtf.setText(diagnosis.getAnamnesis());
+                            anamensisLbl.setForeground(Color.BLUE);
+                            examinationTxtf.setText(diagnosis.getExamination());
+                            examinationLbl.setForeground(Color.BLUE);
+                            therapyTxtf.setText(diagnosis.getTherapy());
+                            therapyLbl.setForeground(Color.BLUE);
+                            recommendationTxtf.setText(diagnosis.getRecommendation());
+                            recommendationLbl.setForeground(Color.BLUE);
+                        }
+                    } else if (currentUser.getRole().equals("LaboratorTechnician")) {
                         try {
-                            mainDoctorVisit = doctorVisitTM.getDoctorVisit(selectedIndex);
-                            Patient patient = mainDoctorVisit.getPatientID();
-                            if (patient == null) {
-                                String[] opcionet = {"Yes", "No"};
-                                int response = JOptionPane.showOptionDialog(null,
-                                        "You have to assign a pacient to a visit before giving a diagnosis to it. Press yes to add the patient and no to stop.", "Warning",
-                                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                                        null, opcionet, opcionet[0]);
-                                if (response == 0) {
-                                    SetPatientToVisit setPatientToVisit = new SetPatientToVisit(AddDetailsToVisit.this, mainDoctorVisit, entityManager, currentUser);
-                                    setPatientToVisit.setVisible(true);
-                                    patientNameLbl.setText("");
-                                    nameLbl.setForeground(Color.BLACK);
-                                    patientGenderLbl.setText("");
-                                    genderLbl.setForeground(Color.BLACK);
-                                    patientDateOfBirthLbl.setText("");
-                                    dateOfBirthLbl.setForeground(Color.BLACK);
-                                    patientPlaceOfBirthLbl.setText("");
-                                    placeOfBirthLbl.setForeground(Color.BLACK);
-                                    patientCityLbl.setText("");
-                                    cityLbl.setForeground(Color.BLACK);
-                                    patientEmailLbl.setText("");
-                                    emailLbl.setForeground(Color.BLACK);
-                                    patientPhoneLbl.setText("");
-                                    phoneLbl.setForeground(Color.BLACK);
-                                    allergiesTxtf.setText("");
-                                    allergiesLbl.setForeground(Color.BLACK);
-                                    remarkTxtf.setText("");
-                                    remarkLbl.setForeground(Color.BLACK);
-                                    visitTbl.clearSelection();
-                                    throw new AppException("The user choose to assign a pacient");
-                                } else {
-                                    visitTbl.clearSelection();
-                                    throw new StopException("The user doesn't want to continue");
+                            if (visitTbl.getModel() == analysisVisitTM) {
+                                mainAnalysisVisit = analysisVisitTM.getAnalysisVisit(selectedIndex);
+                                patient = mainAnalysisVisit.getPatientID();
+                                if (patient == null) {
+                                    String[] opcionet = {"Yes", "No"};
+                                    int response = JOptionPane.showOptionDialog(null,
+                                            "You have to assign a pacient to a visit before doing an analysis to it. Press yes to add the patient and no to stop.", "Warning",
+                                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                            null, opcionet, opcionet[0]);
+                                    if (response == 0) {
+                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(AddDetailsToVisit.this, mainAnalysisVisit, entityManager, currentUser);
+                                        setPatientToVisit.setVisible(true);
+                                        patientNameLbl.setText("");
+                                        nameLbl.setForeground(Color.BLACK);
+                                        patientGenderLbl.setText("");
+                                        genderLbl.setForeground(Color.BLACK);
+                                        patientDateOfBirthLbl.setText("");
+                                        dateOfBirthLbl.setForeground(Color.BLACK);
+                                        patientPlaceOfBirthLbl.setText("");
+                                        placeOfBirthLbl.setForeground(Color.BLACK);
+                                        patientCityLbl.setText("");
+                                        cityLbl.setForeground(Color.BLACK);
+                                        patientEmailLbl.setText("");
+                                        emailLbl.setForeground(Color.BLACK);
+                                        patientPhoneLbl.setText("");
+                                        phoneLbl.setForeground(Color.BLACK);
+                                        allergiesTxtf.setText("");
+                                        allergiesLbl.setForeground(Color.BLACK);
+                                        remarkTxtf.setText("");
+                                        remarkLbl.setForeground(Color.BLACK);
+                                        visitTbl.clearSelection();
+                                        throw new AppException("The user choose to assign a pacient");
+                                    } else {
+                                        visitTbl.clearSelection();
+                                        throw new StopException("The user doesn't want to continue");
+                                    }
                                 }
                             }
-                            setPatientData(patient);
-                        } catch (AppException ex) {
-                            ex.printStackTrace();
+                        } catch (AppException ae) {
                         } catch (StopException se) {
-                            se.printStackTrace();
                         }
-
-                    } else if (visitTbl.getModel() == diagnosisForVisitTM) {
-                        Diagnosis diagnosis = diagnosisForVisitTM.getDiagnosisForVisit(visitTbl.getSelectedRow()).getDiagnosisID();
-                        complaintTxtf.setText(diagnosis.getComplaint());
-                        complaintLbl.setForeground(Color.BLUE);
-                        anamnesisTxtf.setText(diagnosis.getAnamnesis());
-                        anamensisLbl.setForeground(Color.BLUE);
-                        examinationTxtf.setText(diagnosis.getExamination());
-                        examinationLbl.setForeground(Color.BLUE);
-                        therapyTxtf.setText(diagnosis.getTherapy());
-                        therapyLbl.setForeground(Color.BLUE);
-                        recommendationTxtf.setText(diagnosis.getRecommendation());
-                        recommendationLbl.setForeground(Color.BLUE);
+                        setPatientData(patient);
                     }
                 }
             }
@@ -192,7 +347,7 @@ DoctorVisit mainDoctorVisit;
             public void mouseClicked(MouseEvent e) {
                 if (visitTbl.getModel() == doctorVisitTM) {
                     if (e.getButton() == 1) {
-                        if ((visitTbl.getColumnModel().getColumnIndexAtX(e.getX())) == 5) {
+                        if ((visitTbl.getColumnModel().getColumnIndexAtX(e.getX())) == 6) {
                             int column = visitTbl.getColumnModel().getColumnIndexAtX(e.getX()); // get the coloum of the button
                             int row = e.getY() / visitTbl.getRowHeight(); //get the row of the button
 
@@ -239,18 +394,31 @@ DoctorVisit mainDoctorVisit;
     }
     
     public void visitTableLoad(){
-        List <DoctorVisit> visitList;
-        if(seeAllCBox.isSelected())
-            visitList= doctorVisitIr.findAllForCurrentUser(currentUser);
-        else 
-            visitList= doctorVisitIr.findPresentAndFuture(currentUser);
-        
-        visitTbl.setModel(doctorVisitTM);
-        doctorVisitTM.add(visitList);
-        doctorVisitTM.fireTableDataChanged();
-        
-        TableCellRenderer buttonRenderer = new JTableButtonRenderer();
-        visitTbl.getColumn("Button").setCellRenderer(buttonRenderer);
+        if(currentUser.getRole().equals("Doctor")){
+            List<DoctorVisit> visitList;
+            if (seeAllCBox.isSelected()) {
+                visitList = doctorVisitIr.findAllForCurrentUser(currentUser);
+            } else {
+                visitList = doctorVisitIr.findPresentAndFuture(currentUser);
+            }
+
+            visitTbl.setModel(doctorVisitTM);
+            doctorVisitTM.add(visitList);
+            doctorVisitTM.fireTableDataChanged();
+
+            TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+            visitTbl.getColumn("Button").setCellRenderer(buttonRenderer);
+        }else if (currentUser.getRole().equals("LaboratorTechnician")){
+            List<AnalysisVisit> analysisVisit;
+            if(seeAllCBox.isSelected()){
+                analysisVisit= analysisVisitIr.findAllForCurrentUser(currentUser);
+            }else{
+                analysisVisit= analysisVisitIr.findPresentAndFuture(currentUser);
+            }
+            visitTbl.setModel(analysisVisitTM);
+            analysisVisitTM.add(analysisVisit);
+            analysisVisitTM.fireTableDataChanged();
+        }
     }
         
         public void setButtonListener(JButton target,int index){
@@ -269,25 +437,30 @@ DoctorVisit mainDoctorVisit;
     
     
     
-    private void initInterfaces(EntityManager entityManager) {
+    private void initInterfaces() {
         doctorVisitIr=new DoctorVisitRepository(entityManager);
         diagnosisIr=new DiagnosisRepository(entityManager);
         diagnosisForVisitIr= new DiagnosisForVisitRepository(entityManager);
+        analysisVisitIr=new AnalysisVisitRepository(entityManager);
         patientIr= new PatientRepository(entityManager);
+        analysisIr=new AnalysisRepository(entityManager);
+        analysisForVisitIr=new AnalysisForVisitRepository(entityManager);
     }
     
     private void initTableModels(){
-        String[] doctorVisitColumns={"PatientID","Date","Time","SumPrice","Finished","Button"};
+        String[] doctorVisitColumns={"PatientID","Visit Type","Date","Time","SumPrice","Finished","Button"};
         doctorVisitTM=new DoctorVisitTableModel(doctorVisitColumns,this);
         String[] diagnosisForVisitColumns={"Complaint","Examination","Therapy","CurrentPrice"};
         diagnosisForVisitTM=new DiagnosisForVisitTableModel(diagnosisForVisitColumns);
+        String[] analysisVisitColumns={"PatientID","Visit Type","Date","Time","SumPrice","Finished"};
+        analysisVisitTM= new AnalysisVisitTableModel(analysisVisitColumns);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        backgroundLbl = new javax.swing.JPanel();
+        backgroundPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         nameLbl = new javax.swing.JLabel();
@@ -353,8 +526,8 @@ DoctorVisit mainDoctorVisit;
         setPreferredSize(new java.awt.Dimension(1100, 654));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        backgroundLbl.setBackground(new java.awt.Color(102, 102, 102));
-        backgroundLbl.setLayout(null);
+        backgroundPanel.setBackground(new java.awt.Color(102, 102, 102));
+        backgroundPanel.setLayout(null);
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -563,7 +736,7 @@ DoctorVisit mainDoctorVisit;
                 .addGap(1, 1, 1))
         );
 
-        backgroundLbl.add(jPanel2);
+        backgroundPanel.add(jPanel2);
         jPanel2.setBounds(0, 0, 502, 334);
 
         mainScrollPane.setBackground(new java.awt.Color(102, 102, 102));
@@ -578,7 +751,7 @@ DoctorVisit mainDoctorVisit;
         jScrollPane5.setMaximumSize(new java.awt.Dimension(166, 56));
         jScrollPane5.setMinimumSize(new java.awt.Dimension(166, 56));
         jScrollPane5.setPreferredSize(new java.awt.Dimension(166, 56));
-        
+      
 
         complaintTxtf.setColumns(20);
         complaintTxtf.setLineWrap(true);
@@ -599,15 +772,15 @@ DoctorVisit mainDoctorVisit;
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(complaintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(353, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(complaintLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -821,11 +994,11 @@ DoctorVisit mainDoctorVisit;
 
         mainScrollPane.setViewportView(mainPanel);
 
-        backgroundLbl.add(mainScrollPane);
+        backgroundPanel.add(mainScrollPane);
         mainScrollPane.setBounds(0, 340, 502, 260);
 
         seeAllCBox.setText("All");
-        backgroundLbl.add(seeAllCBox);
+        backgroundPanel.add(seeAllCBox);
         seeAllCBox.setBounds(520, 10, 37, 23);
 
         visitTbl.setModel(new javax.swing.table.DefaultTableModel(
@@ -840,7 +1013,7 @@ DoctorVisit mainDoctorVisit;
         visitTbl.setShowVerticalLines(false);
         jScrollPane3.setViewportView(visitTbl);
 
-        backgroundLbl.add(jScrollPane3);
+        backgroundPanel.add(jScrollPane3);
         jScrollPane3.setBounds(520, 50, 550, 510);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
@@ -881,10 +1054,10 @@ DoctorVisit mainDoctorVisit;
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        backgroundLbl.add(jPanel1);
+        backgroundPanel.add(jPanel1);
         jPanel1.setBounds(530, 580, 490, 23);
 
-        getContentPane().add(backgroundLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1080, 620));
+        getContentPane().add(backgroundPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1080, 620));
 
         infoLbl.setMaximumSize(new java.awt.Dimension(34, 14));
         infoLbl.setMinimumSize(new java.awt.Dimension(34, 14));
@@ -904,16 +1077,26 @@ DoctorVisit mainDoctorVisit;
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         try {
             validation();
-            Diagnosis diagnosis = new Diagnosis(complaintTxtf.getText().trim(), examinationTxtf.getText().trim(),
-                    anamnesisTxtf.getText().trim(), therapyTxtf.getText().trim(), recommendationTxtf.getText().trim());
-            diagnosis = diagnosisIr.create(diagnosis);
-            DiagnosisForVisit diagnosisForVisit = new DiagnosisForVisit(diagnosis, mainDoctorVisit, Double.parseDouble(priceTxtf.getText().trim()));
-            diagnosisForVisitIr.create(diagnosisForVisit);
-            mainDoctorVisit.setSumPrice(mainDoctorVisit.getSumPrice() + diagnosisForVisit.getPrice());
-            if (!mainDoctorVisit.getFinished().equals("Yes")) {
-                mainDoctorVisit.setFinished("Yes");
+            if(currentUser.getRole().equals("Doctor")){
+                Diagnosis diagnosis = new Diagnosis(complaintTxtf.getText().trim(), examinationTxtf.getText().trim(),
+                        anamnesisTxtf.getText().trim(), therapyTxtf.getText().trim(), recommendationTxtf.getText().trim());
+                diagnosis = diagnosisIr.create(diagnosis);
+                DiagnosisForVisit diagnosisForVisit = new DiagnosisForVisit(diagnosis, mainDoctorVisit, Double.parseDouble(priceTxtf.getText().trim()));
+                diagnosisForVisitIr.create(diagnosisForVisit);
+                mainDoctorVisit.setSumPrice(mainDoctorVisit.getSumPrice() + diagnosisForVisit.getPrice());
+                if (!mainDoctorVisit.getFinished().equals("Yes")) {
+                    mainDoctorVisit.setFinished("Yes");
+                }
+                doctorVisitIr.edit(mainDoctorVisit);
+            }else if (currentUser.getRole().equals("LaboratorTechnician")){
+                Analysis analysis = new Analysis (analysisTxtf.getText().trim(),resultTxtf.getText().trim());
+                analysisIr.create(analysis);
+                AnalysisForVisit analysisForVisit = new AnalysisForVisit(Double.parseDouble(priceTxtf.getText().trim()),analysis,mainAnalysisVisit);
+                analysisForVisitIr.create(analysisForVisit);
+                mainAnalysisVisit.setSumPrice(mainAnalysisVisit.getSumPrice()+analysisForVisit.getPrice());
+                analysisVisitIr.create(mainAnalysisVisit);
             }
-            doctorVisitIr.edit(mainDoctorVisit);
+            
             clearObject();
             clearDiagnosis();
             JOptionPane.showMessageDialog(this, "The diagnosis was added sucsesfully to this visit.");
@@ -946,7 +1129,7 @@ DoctorVisit mainDoctorVisit;
     private javax.swing.JLabel anamensisLbl;
     private javax.swing.JTextArea anamnesisTxtf;
     private javax.swing.JLabel background;
-    private javax.swing.JPanel backgroundLbl;
+    private javax.swing.JPanel backgroundPanel;
     private javax.swing.JLabel cityLbl;
     private javax.swing.JButton clearBtn;
     private javax.swing.JLabel complaintLbl;
@@ -1002,116 +1185,183 @@ DoctorVisit mainDoctorVisit;
     // End of variables declaration//GEN-END:variables
 
     private void validation()throws AppException,StopException{
-        if(mainDoctorVisit.getPatientID()==null)
-            throw new AppException("You must assign a patient to the visit before saving a diagnostic for it.");
-        
-        if(complaintTxtf.getText().trim().length()>=300){
-            complaintTxtf.requestFocus();
-            throw new AppException("Complaints cannot contain more than 300 characters");
-        }
-        
-        if(anamnesisTxtf.getText().trim().length()>=300){
-            anamnesisTxtf.requestFocus();
-            throw new AppException("Anamensis cannot contain more than 300 characters");
-        }
-        
-        if(examinationTxtf.getText().trim().length()>=300){
-            examinationTxtf.requestFocus();
-            throw new AppException("Examination cannot contain more than 300 characters");
-        }
-        
-        if(therapyTxtf.getText().trim().length()>=300){
-            therapyTxtf.requestFocus();
-            throw new AppException("Therapy cannot contain more than 300 characters");
-        }
-        
-        if(recommendationTxtf.getText().trim().length()>=300){
-            recommendationTxtf.requestFocus();
-            throw new AppException("Therapy cannot contain more than 300 characters");
-        }
-        
-        if(visitTbl.getSelectedRow()==-1)
-            throw new AppException("Choose the visit for which you want to add the diagnosis.");
-        
-        if(complaintTxtf.getText().trim().isEmpty()){
-            complaintTxtf.requestFocus();
-            throw new AppException("You have to write down the complaints of the patient.");
-        }
-        
-        if(examinationTxtf.getText().trim().isEmpty()){
-            examinationTxtf.requestFocus();
-            throw new AppException("You have to write down the examination of the patient.");
-        }
-        
-        if(priceTxtf.getText().trim().isEmpty()){
-            priceTxtf.requestFocus();
-            throw new AppException("You have to set a price for the diagnosis");
-        }
-        
-        try{
-            Double.parseDouble(priceTxtf.getText().trim());
-        }catch(NumberFormatException nfe){
-            nfe.printStackTrace();
-            throw new AppException("Write the correct price.");
-        }
-        
-        if(anamnesisTxtf.getText().trim().isEmpty() 
-                || therapyTxtf.getText().trim().isEmpty() || recommendationTxtf.getText().trim().isEmpty()){
-            String s="Are you sure you want to leave ";
-            if(anamnesisTxtf.getText().trim().isEmpty())
-                s+=" anamnesis ,";
-            if(therapyTxtf.getText().trim().isEmpty())
-                s+=" therapy ,";
-            if(recommendationTxtf.getText().trim().isEmpty())
-                s+=" recommendation ,";
-            s=s.substring(0,s.length()-2);
-            s+=" empty ?";
-            String[] opcionet = {"Po", "Jo"};
-            int response = JOptionPane.showOptionDialog(null,s, "Warning",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                    null, opcionet, opcionet[0]);
-            if (response == 0) {
-            } else {
-                throw new StopException("The user wants to fill the data from nullable fields");
+        if (currentUser.getRole().equals("Doctor")) {
+            if (mainDoctorVisit.getPatientID() == null) {
+                throw new AppException("You must assign a patient to the visit before saving a diagnostic for it.");
+            }
+
+            if (complaintTxtf.getText().trim().length() >= 300) {
+                complaintTxtf.requestFocus();
+                throw new AppException("Complaints cannot contain more than 300 characters");
+            }
+
+            if (anamnesisTxtf.getText().trim().length() >= 300) {
+                anamnesisTxtf.requestFocus();
+                throw new AppException("Anamensis cannot contain more than 300 characters");
+            }
+
+            if (examinationTxtf.getText().trim().length() >= 300) {
+                examinationTxtf.requestFocus();
+                throw new AppException("Examination cannot contain more than 300 characters");
+            }
+
+            if (therapyTxtf.getText().trim().length() >= 300) {
+                therapyTxtf.requestFocus();
+                throw new AppException("Therapy cannot contain more than 300 characters");
+            }
+
+            if (recommendationTxtf.getText().trim().length() >= 300) {
+                recommendationTxtf.requestFocus();
+                throw new AppException("Therapy cannot contain more than 300 characters");
+            }
+
+            if (visitTbl.getSelectedRow() == -1) {
+                throw new AppException("Choose the visit for which you want to add the diagnosis.");
+            }
+
+            if (complaintTxtf.getText().trim().isEmpty()) {
+                complaintTxtf.requestFocus();
+                throw new AppException("You have to write down the complaints of the patient.");
+            }
+
+            if (examinationTxtf.getText().trim().isEmpty()) {
+                examinationTxtf.requestFocus();
+                throw new AppException("You have to write down the examination of the patient.");
+            }
+
+            if (priceTxtf.getText().trim().isEmpty()) {
+                priceTxtf.requestFocus();
+                throw new AppException("You have to set a price for the diagnosis");
+            }
+
+            try {
+                Double.parseDouble(priceTxtf.getText().trim());
+            } catch (NumberFormatException nfe) {
+                nfe.printStackTrace();
+                throw new AppException("Write the correct price.");
+            }
+
+            if (anamnesisTxtf.getText().trim().isEmpty()
+                    || therapyTxtf.getText().trim().isEmpty() || recommendationTxtf.getText().trim().isEmpty()) {
+                String s = "Are you sure you want to leave ";
+                if (anamnesisTxtf.getText().trim().isEmpty()) {
+                    s += " anamnesis ,";
+                }
+                if (therapyTxtf.getText().trim().isEmpty()) {
+                    s += " therapy ,";
+                }
+                if (recommendationTxtf.getText().trim().isEmpty()) {
+                    s += " recommendation ,";
+                }
+                s = s.substring(0, s.length() - 2);
+                s += " empty ?";
+                String[] opcionet = {"Po", "Jo"};
+                int response = JOptionPane.showOptionDialog(null, s, "Warning",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, opcionet, opcionet[0]);
+                if (response == 0) {
+                } else {
+                    throw new StopException("The user wants to fill the data from nullable fields");
+                }
+            }
+
+            if (!allergiesTxtf.getText().trim().equals(mainDoctorVisit.getPatientID().getAllergies())) {
+                Patient patient = mainDoctorVisit.getPatientID();
+                String[] opcionet = {"Yes", "No", "Cancel"};
+                int response = JOptionPane.showOptionDialog(null,
+                        "You have changed the allergies of the patient press yes to save them this way or no to return them to the past value.(Cancel to stop the registration)", "Warning",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, opcionet, opcionet[0]);
+                if (response == 0) {
+                    patient.setAllergies(allergiesTxtf.getText().trim());
+                    patientIr.edit(patient);
+                } else if (response == 1) {
+                    allergiesTxtf.setText(mainDoctorVisit.getPatientID().getAllergies());
+                } else {
+                    throw new StopException("The user has pressed cancel thereby stopping the registration");
+                }
+            }
+
+            if (!remarkTxtf.getText().trim().equals(mainDoctorVisit.getRemark().trim())) {
+                String[] opcionet = {"Yes", "No", "Cancel"};
+                int response = JOptionPane.showOptionDialog(null,
+                        "You have changed the remark of the visit press yes to save it this way or no to return it to the past value.(Cancel to stop the registration)", "Warning",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, opcionet, opcionet[0]);
+                if (response == 0) {
+                    mainDoctorVisit.setRemark(remarkTxtf.getText().trim());
+                    doctorVisitIr.edit(mainDoctorVisit);
+                } else if (response == 1) {
+                    remarkTxtf.setText(mainDoctorVisit.getRemark());
+                } else {
+                    throw new StopException("The user has pressed cancel thereby stopping the registration");
+                }
+            }
+        } else if (currentUser.getRole().equals("LaboratorTechnician")) {
+            if (mainAnalysisVisit.getPatientID() == null) {
+                throw new AppException("You must assign a patient to the visit before saving a diagnostic for it.");
+            }
+
+            if (visitTbl.getSelectedRow() == -1) {
+                throw new AppException("Choose the visit for which you want to add the analysis.");
+            }
+
+            if (analysisTxtf.getText().trim().isEmpty()) {
+                analysisTxtf.requestFocus();
+                throw new AppException("You have to write down the analysis of the patient.");
+            }
+            
+            if (resultTxtf.getText().trim().isEmpty()) {
+                resultTxtf.requestFocus();
+                throw new AppException("You have to write down the results of the patient.");
+            }
+            
+            if (priceTxtf.getText().trim().isEmpty()) {
+                priceTxtf.requestFocus();
+                throw new AppException("You have to set a price for the diagnosis.");
+            }
+
+            try {
+                Double.parseDouble(priceTxtf.getText().trim());
+            } catch (NumberFormatException nfe) {
+                nfe.printStackTrace();
+                throw new AppException("Write the correct price.");
+            }
+
+            if (!allergiesTxtf.getText().trim().equals(mainAnalysisVisit.getPatientID().getAllergies())) {
+                Patient patient = mainAnalysisVisit.getPatientID();
+                String[] opcionet = {"Yes", "No", "Cancel"};
+                int response = JOptionPane.showOptionDialog(null,
+                        "You have changed the allergies of the patient press yes to save them this way or no to return them to the past value.(Cancel to stop the registration)", "Warning",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, opcionet, opcionet[0]);
+                if (response == 0) {
+                    patient.setAllergies(allergiesTxtf.getText().trim());
+                    patientIr.edit(patient);
+                } else if (response == 1) {
+                    allergiesTxtf.setText(mainAnalysisVisit.getPatientID().getAllergies());
+                } else {
+                    throw new StopException("The user has pressed cancel thereby stopping the registration.");
+                }
+            }
+
+            if (!remarkTxtf.getText().trim().equals(mainAnalysisVisit.getRemark().trim())) {
+                String[] opcionet = {"Yes", "No", "Cancel"};
+                int response = JOptionPane.showOptionDialog(null,
+                        "You have changed the remark of the visit press yes to save it this way or no to return it to the past value.(Cancel to stop the registration)", "Warning",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, opcionet, opcionet[0]);
+                if (response == 0) {
+                    mainAnalysisVisit.setRemark(remarkTxtf.getText().trim());
+                    analysisVisitIr.edit(mainAnalysisVisit);
+                } else if (response == 1) {
+                    remarkTxtf.setText(mainAnalysisVisit.getRemark());
+                } else {
+                    throw new StopException("The user has pressed cancel thereby stopping the registration");
+                }
             }
         }
-        
-        if(!allergiesTxtf.getText().trim().equals(mainDoctorVisit.getPatientID().getAllergies()))
-        {
-            Patient patient=mainDoctorVisit.getPatientID();
-            String[] opcionet = {"Yes","No","Cancel"};
-            int response = JOptionPane.showOptionDialog(null,
-                    "You have changed the allergies of the patient press yes to save them this way or no to return them to the past value.(Cancel to stop the registration)", "Warning",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                    null, opcionet, opcionet[0]);
-            if (response == 0) {
-                patient.setAllergies(allergiesTxtf.getText().trim());
-                patientIr.edit(patient);
-            } else if (response==1){
-                allergiesTxtf.setText(mainDoctorVisit.getPatientID().getAllergies());
-            }
-            else{
-                throw new StopException("The user has pressed cancel thereby stopping the registration");
-            }
-        }
-        
-        if(!remarkTxtf.getText().trim().equals(mainDoctorVisit.getRemark().trim())){
-            String[] opcionet = {"Yes","No","Cancel"};
-            int response = JOptionPane.showOptionDialog(null,
-                    "You have changed the remark of the visit press yes to save it this way or no to return it to the past value.(Cancel to stop the registration)", "Warning",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                    null, opcionet, opcionet[0]);
-            if(response==0){
-                mainDoctorVisit.setRemark(remarkTxtf.getText().trim());
-                doctorVisitIr.edit(mainDoctorVisit);
-            }
-            else if (response==1){
-                remarkTxtf.setText(mainDoctorVisit.getRemark());
-            }
-            else{
-                throw new StopException("The user has pressed cancel thereby stopping the registration");
-            }
-        }
+
     }
 
     private void clearObject() {
@@ -1239,7 +1489,7 @@ DoctorVisit mainDoctorVisit;
         phoneLbl.setForeground(Color.BLUE);
         allergiesTxtf.setText(patient.getAllergies());
         allergiesLbl.setForeground(Color.BLUE);
-        remarkTxtf.setText(mainDoctorVisit.getRemark());
+        remarkTxtf.setText(mainAnalysisVisit.getRemark());
         remarkLbl.setForeground(Color.BLUE);
     }
     

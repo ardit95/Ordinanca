@@ -4,6 +4,8 @@ import ejb.AnalysisVisit;
 import java.util.List;
 import javax.persistence.EntityManager;
 import ExceptionPackage.AppException;
+import ejb.Staff;
+import javax.persistence.Query;
 
 public class AnalysisVisitRepository extends EntMngClass implements AnalysisVisitInterface {
 
@@ -61,5 +63,19 @@ public class AnalysisVisitRepository extends EntMngClass implements AnalysisVisi
     @Override
     public List<AnalysisVisit> findAll() {
         return em.createNamedQuery("AnalysisVisitRepository.findAll").getResultList();
+    }
+
+    @Override
+    public List<AnalysisVisit> findPresentAndFuture(Staff currentUser) {
+        Query query = em.createQuery("SELECT Object (analysisVisit) FROM AnalysisVisit analysisVisit WHERE FUNC('date',analysisVisit.timeStamp )>= FUNC('date',CURRENT_TIMESTAMP) AND analysisVisit.laboratorTechnicianID.username = :currentU ORDER BY analysisVisit.timeStamp ");
+        query.setParameter("currentU",currentUser.getUsername());
+        return (List<AnalysisVisit>)query.getResultList();
+    }
+
+    @Override
+    public List<AnalysisVisit> findAllForCurrentUser(Staff currentUser) {
+        Query query = em.createQuery("SELECT Object (analysisVisit) FROM AnalysisVisit analysisVisit WHERE analysisVisit.laboratorTechnicianID.username = :currentU ORDER BY analysisVisit.timeStamp DESC ");
+        query.setParameter("currentU",currentUser.getUsername());
+        return (List<AnalysisVisit>)query.getResultList();
     }
 }

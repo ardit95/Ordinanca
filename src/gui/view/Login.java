@@ -235,8 +235,8 @@ public class Login extends javax.swing.JFrame {
         } catch (NoResultException nre) {
             nre.printStackTrace();
             JOptionPane.showMessageDialog(null, "Gabimm ");
-            usernameTxtf.setText("");
             passwordTxtf.setText("");
+            passwordTxtf.requestFocus();
         } catch (AppException ae) {
             ae.printStackTrace();
             JOptionPane.showMessageDialog(null, ae.getMessage());

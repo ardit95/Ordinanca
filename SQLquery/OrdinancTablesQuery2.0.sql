@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Staff(
 
 CREATE TABLE IF NOT EXISTS Logs(
 	LogsID int PRIMARY KEY AUTO_INCREMENT,
-    timeStamp Timestamp NOT NULL,
+    timeStamp Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     Type varchar(50) NOT NULL,
     Message varchar(300) NOT NULL,
     Seen varchar(5) DEFAULT 'No',
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS Logs(
 
 CREATE TABLE IF NOT EXISTS Message(
 	MessageID int PRIMARY KEY AUTO_INCREMENT,
-    timeStamp Timestamp NOT NULL,
+    timeStamp Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ,
     Message varchar(500) NOT NULL,
     Username varchar(50) NOT NULL,
     DoctorID varchar(50) NOT NULL,
@@ -59,14 +59,14 @@ CREATE TABLE IF NOT EXISTS Analysis(
     Results varchar (1000) NOT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE AnalysisVisit(
+CREATE TABLE IF NOT EXISTS AnalysisVisit(
 	AnalysisVisitID int PRIMARY KEY AUTO_INCREMENT,
-    timeStamp Timestamp NOT NULL ,
-    
+    timeStamp Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ,
     PatientID int ,
     LaboratorTechnicianID varchar(50) NOT NULL,
     SumPrice decimal(10,2),
     Remark varchar (500),
+    typeOfVisit varchar(50) NOT NULL,
     StaffID varchar (50) NOT NULL,
     Finished varchar (5) default 'No',
     CONSTRAINT fk_Patient_AV FOREIGN KEY (PatientID) REFERENCES Patient(PatientID),
@@ -74,9 +74,9 @@ CREATE TABLE AnalysisVisit(
     CONSTRAINT fk_StaffID_AV FOREIGN KEY (StaffID) REFERENCES Staff(Username)
 );
 
-CREATE TABLE AnalysisForVisit(
+CREATE TABLE IF NOT EXISTS AnalysisForVisit(
 	AnalysisForVisitID int PRIMARY KEY AUTO_INCREMENT,
-    Price decimal(10,2),
+    Price decimal(10,2),    
     AnalysisID int NOT NULL,
     AnalysisVisitID int NOT NULL,
     CONSTRAINT fk_AD_AnalysisID FOREIGN KEY (AnalysisID) REFERENCES Analysis(AnalysisID),
@@ -86,10 +86,11 @@ CREATE TABLE AnalysisForVisit(
 CREATE TABLE IF NOT EXISTS DoctorVisit(
 	DoctorVisitID int PRIMARY KEY AUTO_INCREMENT,
     /*DoctorVisitID Date SumPrice Remark Finished PatientID DoctorID StaffID */
-    timeStamp Timestamp NOT NULL,
+    timeStamp Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     SumPrice decimal(10,2),
     Remark varchar (500),
     Finished varchar (5) default 'No',
+    typeOfVisit varchar(50) NOT NULL,
     PatientID int ,
     DoctorID varchar(50)NOT NULL,
     StaffID varchar (50)NOT NULL,
@@ -116,17 +117,9 @@ CREATE TABLE IF NOT EXISTS DiagnosisForVisit(
     CONSTRAINT fk_DFV_DoctorVisitID FOREIGN KEY (DoctorVisitID) REFERENCES DoctorVisit(DoctorVisitID)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
-USE Ordinanca;
-SELECT * FROM AnalysisVisit;
-
-
 	USE Ordinanca;
 	CREATE VIEW NumberOfStaff AS
 	SELECT COUNT(*) AS 'Numri' FROM Ordinanca.Staff;
-
-    SELECT message FROM Message message WHERE message.username.username = :currentU AND message.seen='No';
-	
     
     CREATE VIEW Report_Month_DoctorVisit
 	AS
@@ -134,7 +127,6 @@ SELECT * FROM AnalysisVisit;
 	FROM DoctorVisit dv
 	LEFT JOIN Patient p ON dv.PatientID=p.PatientID;
     
-    DROP VIEW Report_Month;
     
     CREATE VIEW Report_Month_AnalysisVisit
 	AS
@@ -155,8 +147,6 @@ SELECT * FROM AnalysisVisit;
 	LEFT JOIN Staff s ON dv.DoctorID=s.Username 
     WHERE s.Role='Doctor';
 	
-
-SELECT * FROM DiagnosisForVisit;
 
 /*Hashing SHA2_512 
 		SELECT SHA2('123459421142',512)

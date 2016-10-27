@@ -5,8 +5,8 @@
  */
 package ejb;
 
+import ExceptionPackage.AppException;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +41,7 @@ public class AnalysisForVisit implements Serializable {
     private Integer AnalysisForVisitID;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "Price")
-    private BigDecimal price;
+    private double price;
     @JoinColumn(name = "AnalysisID", referencedColumnName = "AnalysisID")
     @ManyToOne(optional = false)
     private Analysis analysisID;
@@ -52,23 +52,32 @@ public class AnalysisForVisit implements Serializable {
     public AnalysisForVisit() {
     }
 
-    public AnalysisForVisit(Integer AnalysisForVisitID) {
-        this.AnalysisForVisitID = AnalysisForVisitID;
+    public AnalysisForVisit(double price,Analysis analysis, AnalysisVisit analysisVisit)throws AppException{
+        if(price<0)
+            throw new AppException("The price cannot have negative values.");
+        if(analysis==null)
+            throw new AppException("The analysis cannot be empty.");
+        if(analysisVisit==null)
+            throw new AppException("The analysisVisit cannot be empty.");
+        this.price=price;
+        analysisID=analysis;
+        analysisVisitID=analysisVisit;
     }
 
-    public Integer getAnalysisForVisitID() {
+    public int getAnalysisForVisitID(){
         return AnalysisForVisitID;
     }
-
     public void setAnalysisForVisitID(Integer AnalysisForVisitID) {
         this.AnalysisForVisitID = AnalysisForVisitID;
     }
+    
+    
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -112,5 +121,5 @@ public class AnalysisForVisit implements Serializable {
     public String toString() {
         return "ejb.AnalysisForVisit[ AnalysisForVisitID=" + AnalysisForVisitID + " ]";
     }
-
+    
 }

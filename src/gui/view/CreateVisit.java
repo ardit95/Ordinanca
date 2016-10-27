@@ -386,6 +386,7 @@ public class CreateVisit extends javax.swing.JInternalFrame {
     private void createAnalysisVisit()throws AppException,StopException{
         int rowNumber;
         AnalysisVisit analysisVisit= new AnalysisVisit(remarkTxtf.getText().trim(),staffList.get(staffCombo.getSelectedIndex()),currentUser);
+        analysisVisit.setTypeOfVisit(visitCombo.getSelectedItem().toString());
         if(autoDateCBox.isSelected()){
             analysisVisit.setTimeStamp(new LogsRepository(entityManager).findDate());
         }else {
@@ -415,6 +416,7 @@ public class CreateVisit extends javax.swing.JInternalFrame {
     private void createDoctorVisit() throws AppException, StopException {
         int rowNumber;
         DoctorVisit doctorVisit = new DoctorVisit(remarkTxtf.getText().trim(), staffList.get(staffCombo.getSelectedIndex()), currentUser);
+        doctorVisit.setTypeOfVisit(visitCombo.getSelectedItem().toString());
         if (autoDateCBox.isSelected()) {
             doctorVisit.setTimeStamp(new LogsRepository(entityManager).findDate());
         } else {

@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import ExceptionPackage.AppException;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -53,14 +54,13 @@ public class Analysis implements Serializable {
     public Analysis() {
     }
 
-    public Analysis(Integer analysisID) {
-        this.analysisID = analysisID;
-    }
-
-    public Analysis(Integer analysisID, String analysis, String results) {
-        this.analysisID = analysisID;
-        this.analysis = analysis;
-        this.results = results;
+    public Analysis(String analysis,String results)throws AppException{
+        if(analysis.trim().isEmpty())
+            throw new AppException("The analysis values cannot be empty.");
+        if(results.trim().isEmpty())
+            throw new AppException("The results values cannot be empty.");
+        this.analysis=analysis;
+        this.results=results;
     }
 
     public Integer getAnalysisID() {

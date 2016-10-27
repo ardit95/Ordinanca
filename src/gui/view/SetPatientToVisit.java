@@ -1,12 +1,15 @@
 package gui.view;
 
 import ExceptionPackage.AppException;
+import bl.AnalysisVisitInterface;
+import bl.AnalysisVisitRepository;
 import bl.DoctorVisitInterface;
 import bl.DoctorVisitRepository;
 import bl.LogsInterface;
 import bl.LogsRepository;
 import bl.PatientInterface;
 import bl.PatientRepository;
+import ejb.AnalysisVisit;
 import ejb.DoctorVisit;
 import ejb.Logs;
 import ejb.Patient;
@@ -32,10 +35,12 @@ public class SetPatientToVisit extends javax.swing.JFrame {
     PatientInterface patientIr;
     LogsInterface logsIr;
     DoctorVisitInterface doctorVisitIr;
+    AnalysisVisitInterface mainAnalysisIr;
     PatientTableModel patientTM;
     EntityManager entityManager;
     Staff currentUser;
     DoctorVisit mainDoctorVisit;
+    AnalysisVisit mainAnalysisVisit;
     AddDetailsToVisit addDetailsToVisit;
     
     public SetPatientToVisit(AddDetailsToVisit addDetailsToVisit, DoctorVisit mainDoctorVisit,EntityManager entityManager,Staff currentUser) {
@@ -45,6 +50,19 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         initTableModel();
         this.currentUser=currentUser;
         this.mainDoctorVisit=mainDoctorVisit;
+        this.addDetailsToVisit=addDetailsToVisit;
+        patientTableLoad();
+        searchTxtfListener();
+        patientTblListeners();
+    }
+    
+    public SetPatientToVisit(AddDetailsToVisit addDetailsToVisit, AnalysisVisit mainAnalysisVisit,EntityManager entityManager,Staff currentUser) {
+        initComponents();
+        this.entityManager=entityManager;
+        initInterfaces();
+        initTableModel();
+        this.currentUser=currentUser;
+        this.mainAnalysisVisit=mainAnalysisVisit;
         this.addDetailsToVisit=addDetailsToVisit;
         patientTableLoad();
         searchTxtfListener();
@@ -66,6 +84,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
     public final void initInterfaces(){
         patientIr=new PatientRepository(entityManager);
         logsIr=new LogsRepository(entityManager);
+        mainAnalysisIr=new AnalysisVisitRepository(entityManager);
         doctorVisitIr=new DoctorVisitRepository(entityManager);
     }
 
@@ -331,8 +350,9 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         }else {
             patient=patientTM.getPatient(patientTbl.getSelectedRow());
         }
-        editDoctorVisit(patient);
-        addDetailsToVisit.setPatientData(patient);
+        
+        
+            editVisit(patient);
     }
     
     public void addCreateLog(Patient patient) throws AppException {
@@ -444,9 +464,14 @@ public class SetPatientToVisit extends javax.swing.JFrame {
     private javax.swing.JTextField surnameTxtf;
     // End of variables declaration//GEN-END:variables
 
-    private void editDoctorVisit(Patient patient)throws AppException {
-        mainDoctorVisit.setPatientID(patient);
-        doctorVisitIr.edit(mainDoctorVisit);
+    private void editVisit(Patient patient)throws AppException {
+        if(currentUser.getRole().equals("Doctor")){
+            mainDoctorVisit.setPatientID(patient);
+            doctorVisitIr.edit(mainDoctorVisit);
+        }else if (currentUser.getRole().equals("LaboratorTechnician")){
+            mainAnalysisVisit.setPatientID(patient);
+            mainAnalysisIr.edit(mainAnalysisVisit);
+        }
     }
     
     private void patientTblListeners(){

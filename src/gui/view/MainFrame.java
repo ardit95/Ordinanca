@@ -269,7 +269,7 @@ public class MainFrame extends javax.swing.JFrame {
         seeAppointments.show();
     }
 
-    public void AddDetailsToVisit() {
+    public void addDetailsToVisit() {
         try {
             if (desktopPane.getSelectedFrame() != null) {
                 desktopPane.getSelectedFrame().setClosed(true);
@@ -510,15 +510,15 @@ public class MainFrame extends javax.swing.JFrame {
         if (pozita.equals("Recepsion")) {
             jButton1.setText("Add Patient");
             jButton2.setText("Add Notification");
-            jButton3.setText("Add Appointments");
+            jButton3.setText("Add Visit");
             jButton4.setText("Add Reports");
             jButton5.setText("Notifications");
             jButton6.setText("Add Patient");
             jButton6.setVisible(false);
             jButton7.setVisible(false);
         }
-        if (pozita.equals("Doctor")) {
-            jButton1.setText("See Notifications");
+        else if (pozita.equals("Doctor")) {
+            jButton1.setText("See DoctorVisit");
             jButton2.setText("See Appointments");
             jButton3.setText("Create Doctor Visit");
             jButton4.setText("Create Message");
@@ -526,7 +526,7 @@ public class MainFrame extends javax.swing.JFrame {
             jButton6.setText("Print Report");
             jButton7.setText("Add Patient");
         }
-        if (pozita.equals("Director")) {
+        else if (pozita.equals("Director")) {
             jButton1.setText("See Reports");
             jButton2.setText("Logs");
             jButton3.setText("Export Reports");
@@ -535,7 +535,7 @@ public class MainFrame extends javax.swing.JFrame {
             jButton6.setVisible(false);
             jButton7.setVisible(false);
         }
-        if (pozita.equals("Administrator")) {
+        else if (pozita.equals("Administrator")) {
             jButton1.setText("Add User");
             jButton2.setVisible(false);
             jButton3.setVisible(false);
@@ -543,6 +543,9 @@ public class MainFrame extends javax.swing.JFrame {
             jButton5.setVisible(false);
             jButton6.setVisible(false);
             jButton7.setVisible(false);
+        }
+        else if (pozita.equals("LaboratorTechnician")){
+            jButton1.setText("See AnalysisVisit");
         }
     }
 
@@ -554,11 +557,13 @@ public class MainFrame extends javax.swing.JFrame {
         if (pozita.equals("Recepsion")) {
             addAddPatient();
         } else if (pozita.equals("Doctor")) {
-            AddDetailsToVisit();
+            addDetailsToVisit();
         } else if (pozita.equals("Director")) {
             addSeeReports();
         } else if (pozita.equals("Administrator")) {
             addAddUsers();
+        }else if (pozita.equals("LaboratorTechnician")){
+            addDetailsToVisit();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -574,7 +579,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (pozita.equals("Recepsion")) {
-            addAddAppointment();
+            addCreateDoctorVisit();
         } else if (pozita.equals("Doctor")) {
             addCreateDoctorVisit();
         } else if (pozita.equals("Director")) {

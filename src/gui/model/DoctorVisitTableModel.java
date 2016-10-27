@@ -50,10 +50,9 @@ public class DoctorVisitTableModel extends AbstractTableModel {
     
     @Override 
     public Class<?> getColumnClass(int columnIndex) {
-            if(columnIndex==5)
+            if(columnIndex==6)
                 return JButton.class;
             return String.class;
-                
         }
 
     public DoctorVisitTableModel(List<DoctorVisit> list) {
@@ -96,6 +95,8 @@ public class DoctorVisitTableModel extends AbstractTableModel {
                 return timeFormat.format(DoctorVisit.getTimeStamp());
             case "SumPrice":
                 return DoctorVisit.getSumPrice();
+            case "Visit Type":
+                    return DoctorVisit.getTypeOfVisit();
             case "Remark":
                 return DoctorVisit.getRemark();
             case "Finished":

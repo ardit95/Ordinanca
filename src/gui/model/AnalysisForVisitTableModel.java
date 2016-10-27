@@ -58,7 +58,7 @@ public class AnalysisForVisitTableModel extends AbstractTableModel {
                 return AnalysisForVisit.getPrice();
             case "AnalysisID":
                 return AnalysisForVisit.getAnalysisID();
-            case "DiagnosisForVisit":
+            case "AnalysisForVisit":
                 return AnalysisForVisit.getAnalysisForVisitID();
             case "Patient":
                 return AnalysisForVisit.getAnalysisVisitID().getPatientID();

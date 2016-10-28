@@ -23,6 +23,8 @@ public class MainFrame extends javax.swing.JFrame {
     StaffInterface staffIr;
     MessageInterface messageIr;
     AddMessage addMessage;
+    public Thread messagesThread;
+    boolean keepRunning=true;
     
     public MainFrame(EntityManager entityManager, Staff currentUser) {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -41,20 +43,23 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     public void messageCheckingThread(){
-        Thread th;
-        
-        th = new Thread() {
+        messagesThread = new Thread() {
             long numberOfMessagesUnseen,tempAllMessages;
             long numberOfMessages=0;
             long tempUnseenMessages=0;
             
+            
             @Override
             public void run() {
+                
                 try{
-                    tryThread();
+                    synchronized(messagesThread){
+                        while(!keepRunning)
+                            messagesThread.wait();
+                        tryThread();
+                    }
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
             
@@ -105,11 +110,10 @@ public class MainFrame extends javax.swing.JFrame {
                         
                     sleep(500);
                     run();
-                
     }  
         };
         
-        th.start();
+        messagesThread.start();
     }
     
    
@@ -153,7 +157,7 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        AddPatient addPatient = new AddPatient(entityManager, currentUser);
+        AddPatient addPatient = new AddPatient(entityManager, currentUser,this);
         desktopPane.add(addPatient);
         addPatient.show();
     }
@@ -198,7 +202,7 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        CreateVisit createVisit = new CreateVisit(entityManager,currentUser);
+        CreateVisit createVisit = new CreateVisit(entityManager,currentUser,this);
         desktopPane.add(createVisit);
         createVisit.show();
     }
@@ -244,7 +248,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
     
         if(addMessage==null)
-            addMessage = new AddMessage(entityManager, currentUser);
+            addMessage = new AddMessage(entityManager, currentUser,this);
         if(desktopPane.getSelectedFrame()!=addMessage){
             desktopPane.add(addMessage);
             addMessage.show();
@@ -306,7 +310,7 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        AddDetailsToVisit addDetailsToVisit = new AddDetailsToVisit(entityManager,currentUser);
+        AddDetailsToVisit addDetailsToVisit = new AddDetailsToVisit(entityManager,currentUser,this);
         desktopPane.add(addDetailsToVisit);
         addDetailsToVisit.show();
     }

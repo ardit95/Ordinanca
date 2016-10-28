@@ -16,8 +16,9 @@ public class AnalysisFrame extends javax.swing.JFrame {
         laboratorTechnician=analysisInfo[1];
         analysis=analysisInfo[2];
         results=analysisInfo[3];
-        date=analysisInfo[5];
-        price=analysisInfo[6];
+        date=analysisInfo[4];
+        price=analysisInfo[5];
+        setFieldText();
     }
     
     
@@ -41,7 +42,7 @@ public class AnalysisFrame extends javax.swing.JFrame {
         resultsTxtf = new javax.swing.JTextArea();
         background = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));

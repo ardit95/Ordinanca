@@ -107,6 +107,7 @@ AnalysisVisitTableModel analysisVisitTM;
 DiagnosisForVisitTableModel diagnosisForVisitTM;
 DoctorVisit mainDoctorVisit;
 AnalysisVisit mainAnalysisVisit;
+MainFrame mainFrame;
 
     private javax.swing.JLabel resultsLbl;
     private javax.swing.JLabel titleOfAnalysisLbl;
@@ -132,9 +133,10 @@ String recommendationForVisit="";
 String priceForVisit="";
 String dateForVisit="";
 
-    public AddDetailsToVisit(EntityManager entityManager,Staff currentUser) {
+    public AddDetailsToVisit(EntityManager entityManager,Staff currentUser,MainFrame mainFrame) {
         this.currentUser=currentUser;
         this.entityManager=entityManager;
+        this.mainFrame=mainFrame;
         initComponents();
         initInterfaces();
         initTableModels();
@@ -277,7 +279,7 @@ String dateForVisit="";
                                             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                                             null, opcionet, opcionet[0]);
                                     if (response == 0) {
-                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(AddDetailsToVisit.this, mainDoctorVisit, entityManager, currentUser);
+                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(AddDetailsToVisit.this, mainDoctorVisit, entityManager, currentUser,mainFrame);
                                         setPatientToVisit.setVisible(true);
                                         patientNameLbl.setText("");
                                         nameLbl.setForeground(Color.BLACK);
@@ -337,7 +339,7 @@ String dateForVisit="";
                                             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                                             null, opcionet, opcionet[0]);
                                     if (response == 0) {
-                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(AddDetailsToVisit.this, mainAnalysisVisit, entityManager, currentUser);
+                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(AddDetailsToVisit.this, mainAnalysisVisit, entityManager, currentUser,mainFrame);
                                         setPatientToVisit.setVisible(true);
                                         patientNameLbl.setText("");
                                         nameLbl.setForeground(Color.BLACK);
@@ -1133,6 +1135,7 @@ String dateForVisit="";
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        mainFrame.keepRunning=false;
         try {
             validation();
             if(currentUser.getRole().equals("Doctor")){
@@ -1163,6 +1166,11 @@ String dateForVisit="";
             JOptionPane.showMessageDialog(this, ae.getMessage());
         }catch(StopException se){
             se.printStackTrace();
+        }
+        
+        synchronized(mainFrame.messagesThread){
+            mainFrame.keepRunning = true;
+            mainFrame.messagesThread.notifyAll();
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 

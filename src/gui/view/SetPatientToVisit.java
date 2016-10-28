@@ -42,8 +42,8 @@ public class SetPatientToVisit extends javax.swing.JFrame {
     DoctorVisit mainDoctorVisit;
     AnalysisVisit mainAnalysisVisit;
     AddDetailsToVisit addDetailsToVisit;
-    
-    public SetPatientToVisit(AddDetailsToVisit addDetailsToVisit, DoctorVisit mainDoctorVisit,EntityManager entityManager,Staff currentUser) {
+    MainFrame mainFrame;
+    public SetPatientToVisit(AddDetailsToVisit addDetailsToVisit, DoctorVisit mainDoctorVisit,EntityManager entityManager,Staff currentUser,MainFrame mainFrame) {
         initComponents();
         this.entityManager=entityManager;
         initInterfaces();
@@ -51,12 +51,13 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         this.currentUser=currentUser;
         this.mainDoctorVisit=mainDoctorVisit;
         this.addDetailsToVisit=addDetailsToVisit;
+        this.mainFrame=mainFrame;
         patientTableLoad();
         searchTxtfListener();
         patientTblListeners();
     }
     
-    public SetPatientToVisit(AddDetailsToVisit addDetailsToVisit, AnalysisVisit mainAnalysisVisit,EntityManager entityManager,Staff currentUser) {
+    public SetPatientToVisit(AddDetailsToVisit addDetailsToVisit, AnalysisVisit mainAnalysisVisit,EntityManager entityManager,Staff currentUser,MainFrame mainFrame) {
         initComponents();
         this.entityManager=entityManager;
         initInterfaces();
@@ -64,6 +65,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         this.currentUser=currentUser;
         this.mainAnalysisVisit=mainAnalysisVisit;
         this.addDetailsToVisit=addDetailsToVisit;
+        this.mainFrame=mainFrame;
         patientTableLoad();
         searchTxtfListener();
         patientTblListeners();
@@ -311,6 +313,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        mainFrame.keepRunning=false;
         try {
             validation();
                 addPatientToVisitMethod();
@@ -319,6 +322,10 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         } catch (AppException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+        synchronized(mainFrame.messagesThread){
+            mainFrame.keepRunning = true;
+            mainFrame.messagesThread.notifyAll();
         }
     }//GEN-LAST:event_saveButtonActionPerformed
   

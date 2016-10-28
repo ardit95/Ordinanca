@@ -107,7 +107,6 @@ public class MessageRepository extends EntMngClass implements MessageInterface {
     public List<Message> checkUnseenMessages(Staff currentUser){
         Query query=em.createQuery("SELECT Object (message) FROM Message message WHERE message.username.username= :currentU AND message.seen='No'");
         query.setParameter("currentU", currentUser.getUsername());
-        List<Message> unSeenMessages=query.getResultList();
         return (List <Message>)query.getResultList();
     }
     

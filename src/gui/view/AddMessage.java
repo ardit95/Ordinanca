@@ -331,23 +331,24 @@ public class AddMessage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                seenAllMessagesMethod();
+        try {
+            seenAllMessagesMethod();
+        } catch (AppException ex) {
+            Logger.getLogger(AddMessage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
     
-    private void seenAllMessagesMethod(){
-                messageIr.seenAllMyMessages(currentUser);
+    private void seenAllMessagesMethod() throws AppException{
+        List<Message>unSeenMessages=messageIr.checkUnseenMessages(currentUser);
+        for(int i=0;i<unSeenMessages.size();i++){
+            unSeenMessages.get(i).setSeen("Yes");
+            messageIr.edit(unSeenMessages.get(i));
+        }
+        
                 staffTableLoad();
     }
     
-    private Thread seenAllMessagesThread(){
-        return new Thread(){
-            @Override
-            public void run(){
-                messageIr.seenAllMyMessages(currentUser);
-                staffTableLoad();
-            }
-        };
-    }
+    
     
     private synchronized void createMessage()throws AppException{
         Message message = new Message(currentUser, staffList.get(staffCombo.getSelectedIndex()), messageTxtf.getText().trim());

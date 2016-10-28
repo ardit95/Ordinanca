@@ -102,14 +102,15 @@ public class MessageRepository extends EntMngClass implements MessageInterface {
         query.setParameter("messageF",messageFrom.getUsername());
         return query.getResultList().size();
     }
-
+    
     @Override
-    public synchronized void seenAllMyMessages(Staff currentUser) {
-        em.getTransaction().begin();
-        Query query = em.createQuery("UPDATE Message message SET message.seen ='Yes' WHERE message.username.username = :currentU");
+    public List<Message> checkUnseenMessages(Staff currentUser){
+        Query query=em.createQuery("SELECT Object (message) FROM Message message WHERE message.username.username= :currentU AND message.seen='No'");
         query.setParameter("currentU", currentUser.getUsername());
-        query.executeUpdate();
-        em.getTransaction().commit();
+        List<Message> unSeenMessages=query.getResultList();
+        return (List <Message>)query.getResultList();
     }
+    
+    
 
 }

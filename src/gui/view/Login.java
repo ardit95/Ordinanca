@@ -157,7 +157,8 @@ public class Login extends javax.swing.JFrame {
             loginMethod();
         }
     }//GEN-LAST:event_usernameTxtfKeyPressed
-
+    
+    
     private void passwordTxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordTxtfKeyPressed
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -186,7 +187,6 @@ public class Login extends javax.swing.JFrame {
     private void addFocuseListeners(){
             usernameTxtf.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
-            usernameTxtf.setText("");
             }
 
             public void focusLost(FocusEvent e) {

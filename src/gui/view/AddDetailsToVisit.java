@@ -1210,7 +1210,7 @@ String dateForVisit="";
         Document document=new Document();
         try{
             
-            String path=directory+" "+patientNameForVisit+" "+patientSurnameForVisit+" - "+doctorNameForVisit+" "+doctorSurnameForVisit+" - "+".pdf";
+            String path=directory+" "+dateForVisit+"-"+patientNameForVisit+" "+patientSurnameForVisit+" - "+doctorNameForVisit+" "+doctorSurnameForVisit+" - "+".pdf";
             PdfWriter.getInstance(document, new FileOutputStream(path));
             document.open();
            
@@ -1268,45 +1268,34 @@ String dateForVisit="";
             
             Chunk c10=new Chunk("Ankesat :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
             Chunk c11=new Chunk(complaintForVisit);
-            Chunk c12=new Chunk("Anamnesis :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c12=new Chunk("Anamneza :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
             Chunk c13=new Chunk(anamnesisForVisit);
-            Chunk c14=new Chunk("Examination :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c14=new Chunk("Ekzaminimi :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
             Chunk c15=new Chunk(examinationForVisit);
-            Chunk c16=new Chunk("Therapy :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c16=new Chunk("Terapia :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
             Chunk c17=new Chunk(therapyForVisit);
-            Chunk c18=new Chunk("Recommendation :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c18=new Chunk("Rekomandimi :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
             Chunk c19=new Chunk(recommendationForVisit);
             
             pha2.add(space);
             pha2.add(space);
             pha2.add(c10);
             pha2.add(space);
-            pha2.add(space);
             pha2.add(c11);
-            pha2.add(space);
             pha2.add(space);
             pha2.add(c12);
             pha2.add(space);
-            pha2.add(space);
             pha2.add(c13);
-            pha2.add(space);
             pha2.add(space);
             pha2.add(c14);
             pha2.add(space);
-            pha2.add(space);
             pha2.add(c15);
-            pha2.add(space);
             pha2.add(space);
             pha2.add(c16);
             pha2.add(space);
-            pha2.add(space);
-            
-            pha2.add(space);
             pha2.add(c17);
             pha2.add(space);
-            pha2.add(space);
             pha2.add(c18);
-            pha2.add(space);
             pha2.add(space);
             pha2.add(c19);
             
@@ -1372,11 +1361,11 @@ String dateForVisit="";
         String allRecommendations="";
         for(int i=0;i<diagnosis.size();i++){
             int nr=i+1;
-            allComplaints+="Complaint "+ nr +" : "+diagnosis.get(i).getComplaint()+" . \n";
-            allAnamnesis+="Anamnesis "+ nr +" : "+diagnosis.get(i).getAnamnesis()+" . \n";
-            allExaminations+="Examination "+ nr +" : "+diagnosis.get(i).getExamination()+" . \n";
-            allTherapys+="Therapy "+ nr +" : "+diagnosis.get(i).getTherapy()+" . \n";
-            allRecommendations+="Recommendation "+ nr +" : "+diagnosis.get(i).getRecommendation()+" . \n";
+            allComplaints+="    Ankesa "+ nr +" : "+diagnosis.get(i).getComplaint()+" . \n";
+            allAnamnesis+="    Anamneza "+ nr +" : "+diagnosis.get(i).getAnamnesis()+" . \n";
+            allExaminations+="    Examinimi "+ nr +" : "+diagnosis.get(i).getExamination()+" . \n";
+            allTherapys+="    Therapia "+ nr +" : "+diagnosis.get(i).getTherapy()+" . \n";
+            allRecommendations+="    Recommendimi "+ nr +" : "+diagnosis.get(i).getRecommendation()+" . \n";
         }
         
         

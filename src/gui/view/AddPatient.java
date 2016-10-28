@@ -33,8 +33,8 @@ public class AddPatient extends javax.swing.JInternalFrame {
     PatientTableModel patientTM;
     Staff currentUser;
     LogsInterface logsIr;
-
-    public AddPatient(EntityManager entityManager, Staff currentUser) {
+    MainFrame mainFrame;
+    public AddPatient(EntityManager entityManager, Staff currentUser,MainFrame mainFrame) {
         this.entityManager = entityManager;
         this.currentUser = currentUser;
         initComponents();
@@ -43,6 +43,7 @@ public class AddPatient extends javax.swing.JInternalFrame {
         logsIr = new LogsRepository(entityManager);
         String[] columnNamesTableModel = {"Name", "Surname", "ParentName", "Gender", "DateOfBirth", "City", "Phone", "Allergies"};
         patientTM = new PatientTableModel(columnNamesTableModel);
+        this.mainFrame=mainFrame;;
 
         patientTableLoad();
         patientTableMoveKey();
@@ -274,16 +275,26 @@ public class AddPatient extends javax.swing.JInternalFrame {
     }
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        mainFrame.keepRunning=false;
         try {
             addPatientMethod();
         } catch (AppException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
+        synchronized(mainFrame.messagesThread){
+            mainFrame.keepRunning = true;
+            mainFrame.messagesThread.notifyAll();
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        mainFrame.keepRunning=false;
         deletePatient();
+        synchronized(mainFrame.messagesThread){
+            mainFrame.keepRunning = true;
+            mainFrame.messagesThread.notifyAll();
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed

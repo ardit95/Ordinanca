@@ -34,11 +34,13 @@ public class CreateVisit extends javax.swing.JInternalFrame {
     AnalysisVisitInterface analysisVisitIr;
     EntityManager entityManager;
     List<Staff> staffList;
+    MainFrame mainFrame;
     
-    public CreateVisit(EntityManager entityManager,Staff currentUser) {
+    public CreateVisit(EntityManager entityManager,Staff currentUser,MainFrame mainFrame) {
         initComponents();
         this.entityManager=entityManager;
         this.currentUser=currentUser;
+        this.mainFrame=mainFrame;
         initInterface(this.entityManager);
         String[] patientTMColumns={"Name","Surname","ParentName","PlaceOfBirth","DateOfBirth"};
         patientTM=new PatientTableModel(patientTMColumns);
@@ -361,8 +363,8 @@ public class CreateVisit extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        mainFrame.keepRunning=false;
         try {
-            
             validation();
             String typeOfVisit=visitCombo.getSelectedItem().toString();
             if(typeOfVisit.equals("Biochemical Analysis") || typeOfVisit.equals("Microbiology Analysis")){
@@ -380,6 +382,10 @@ public class CreateVisit extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, ae.getMessage());
         }catch(StopException se){
             se.printStackTrace();
+        }
+        synchronized(mainFrame.messagesThread){
+            mainFrame.keepRunning = true;
+            mainFrame.messagesThread.notifyAll();
         }
     }//GEN-LAST:event_saveBtnActionPerformed
     

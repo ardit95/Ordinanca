@@ -106,7 +106,7 @@ public class MessageRepository extends EntMngClass implements MessageInterface {
     @Override
     public synchronized void seenAllMyMessages(Staff currentUser) {
         em.getTransaction().begin();
-        Query query = em.createQuery("UPDATE Message message SET message.seen ='Yes' WHERE message.username.username = :currentU");
+        Query query = em.createQuery("SELECT Object(message) FROM Message message SET message.seen ='Yes' WHERE message.username.username = :currentU");
         query.setParameter("currentU", currentUser.getUsername());
         query.executeUpdate();
         em.getTransaction().commit();

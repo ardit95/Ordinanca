@@ -33,11 +33,13 @@ public class AddMessage extends javax.swing.JInternalFrame {
     StaffTableModel staffTM;
     Staff currentUser;
     List<Staff> staffList;
+    MainFrame mainFrame;
     
-    public AddMessage(EntityManager entityManager, Staff currentUser) {
+    public AddMessage(EntityManager entityManager, Staff currentUser,MainFrame mainFrame) {
         initComponents();
         this.entityManager = entityManager;
         this.currentUser = currentUser;
+        this.mainFrame=mainFrame;
         this.setLocation(220, 10);
         this.setPreferredSize(new Dimension(1100, 654));
         initInterfaces(entityManager);
@@ -310,6 +312,7 @@ public class AddMessage extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
+        mainFrame.keepRunning=false;
         try {
             
             validation();
@@ -318,7 +321,10 @@ public class AddMessage extends javax.swing.JInternalFrame {
             ae.printStackTrace();
             JOptionPane.showMessageDialog(this, ae.getMessage());
         }
-
+        synchronized(mainFrame.messagesThread){
+            mainFrame.keepRunning = true;
+            mainFrame.messagesThread.notifyAll();
+        }
     }//GEN-LAST:event_sendBtnActionPerformed
     private void clearObject() {
         messageTbl.clearSelection();

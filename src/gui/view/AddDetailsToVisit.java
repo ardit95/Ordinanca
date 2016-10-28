@@ -269,7 +269,7 @@ String dateForVisit="";
                             try {
                                 mainDoctorVisit = doctorVisitTM.getDoctorVisit(selectedIndex);
                                 patient = mainDoctorVisit.getPatientID();
-                                
+
                                 if (patient == null) {
                                     String[] opcionet = {"Yes", "No"};
                                     int response = JOptionPane.showOptionDialog(null,
@@ -311,9 +311,9 @@ String dateForVisit="";
                             }
 
                         } else if (visitTbl.getModel() == diagnosisForVisitTM) {
-                            DiagnosisForVisit diagnosisForVisit=diagnosisForVisitTM.getDiagnosisForVisit(visitTbl.getSelectedRow());
+                            DiagnosisForVisit diagnosisForVisit = diagnosisForVisitTM.getDiagnosisForVisit(visitTbl.getSelectedRow());
                             Diagnosis diagnosis = diagnosisForVisitTM.getDiagnosisForVisit(visitTbl.getSelectedRow()).getDiagnosisID();
-                            patient=diagnosisForVisit.getDoctorVisitID().getPatientID();
+                            patient = diagnosisForVisit.getDoctorVisitID().getPatientID();
                             complaintTxtf.setText(diagnosis.getComplaint());
                             complaintLbl.setForeground(Color.BLUE);
                             anamnesisTxtf.setText(diagnosis.getAnamnesis());
@@ -365,11 +365,12 @@ String dateForVisit="";
                                     }
                                 }
                             }
+                            setPatientData(patient);
                         } catch (AppException ae) {
                         } catch (StopException se) {
                         }
+
                     }
-                    setPatientData(patient);
                 }
             }
         });

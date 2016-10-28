@@ -313,7 +313,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         try {
             validation();
-            addPatientToVisitMethod();
+                addPatientToVisitMethod();
             JOptionPane.showMessageDialog(this,"The patient has been added to this visit.");
             this.dispose();
         } catch (AppException ex) {
@@ -375,9 +375,16 @@ public class SetPatientToVisit extends javax.swing.JFrame {
     }
     
     public void validation()throws AppException{
+        if(currentUser.getRole().equals("Doctor")){
         if (mainDoctorVisit.getPatientID() != null) {
             this.dispose();
             throw new AppException("This visit got a patient assigned.");
+        }
+        }else if (currentUser.getRole().equals("LaboratorTechnician")){
+            if(mainAnalysisVisit.getPatientID()!=null){
+                this.dispose();
+                throw new AppException("This analysis got a patient assigned.");
+            }
         }
         
         if (nameTxtf.getText().trim().isEmpty()) {
@@ -413,7 +420,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
             parentNameTxtf.requestFocus();
             throw new AppException("The name cannot contain more than 50 characters.");
         }
-
+        
     }
     
     public void emptyLabels() {

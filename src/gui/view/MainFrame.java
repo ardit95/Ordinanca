@@ -61,20 +61,39 @@ public class MainFrame extends javax.swing.JFrame {
             private synchronized void tryThread()throws InterruptedException{
         
                     if ((numberOfMessagesUnseen = messageIr.countUnseenMessagesForUser(currentUser)) > 0) {
-                        if (currentUser.getRole().equals("Doctor")) {
+                        if (currentUser.getRole().equals("Doctor")||currentUser.getRole().equals("Director")||currentUser.getRole().equals("Recepsion")||currentUser.getRole().equals("LaboratorTechnician")) {
                             if(numberOfMessagesUnseen!=tempUnseenMessages){
                                 if(addMessage!=null){
                                     addMessage.staffTableLoad();
                                     tempUnseenMessages=numberOfMessagesUnseen;
                                 }
                             }
-                            
-                            jButton6.setForeground(Color.red);
-                            jButton6.setText("Messages");
+                            if(currentUser.getRole().equals("Doctor")||currentUser.getRole().equals("LaboratorTechnician")){
+                                jButton6.setForeground(Color.red);
+                                jButton6.setText("Messages ("+numberOfMessagesUnseen+")");
+                            }
+                            if(currentUser.getRole().equals("Recepsion")){
+                                jButton4.setForeground(Color.red);
+                                jButton4.setText("Messages ("+numberOfMessagesUnseen+")");
+                            }
+                            if(currentUser.getRole().equals("Director")){
+                                jButton3.setForeground(Color.red);
+                                jButton3.setText("Messages ("+numberOfMessagesUnseen+")");
+                            }
                         }
                     } else {
-                        jButton6.setForeground(new Color(204,255,204));
-                        jButton6.setText("Messages");
+                            if(currentUser.getRole().equals("Doctor")||currentUser.getRole().equals("LaboratorTechnician")){
+                                jButton6.setForeground(new Color(204,255,204));
+                                jButton6.setText("Messages ("+numberOfMessagesUnseen+")");
+                            }
+                            if(currentUser.getRole().equals("Recepsion")){
+                                jButton4.setForeground(new Color(204,255,204));
+                                jButton4.setText("Messages ("+numberOfMessagesUnseen+")");
+                            }
+                            if(currentUser.getRole().equals("Director")){
+                                jButton3.setForeground(new Color(204,255,204));
+                                jButton3.setText("Messages ("+numberOfMessagesUnseen+")");
+                            }
                     }
                     
                     if(addMessage!=null){
@@ -94,7 +113,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
    
-    public void addAddAppointment() {
+    public void addSeeVisits() {
         try {
             if (desktopPane.getSelectedFrame() != null) {
                 desktopPane.getSelectedFrame().setClosed(true);
@@ -169,7 +188,7 @@ public class MainFrame extends javax.swing.JFrame {
         createAnalysis.show();
     }
 
-    public void addCreateDoctorVisit() {
+    public void addCreateVisit() {
         try {
             if (desktopPane.getSelectedFrame() != null) {
                 desktopPane.getSelectedFrame().setClosed(true);
@@ -179,9 +198,9 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        CreateVisit createDoctorVisit = new CreateVisit(entityManager,currentUser);
-        desktopPane.add(createDoctorVisit);
-        createDoctorVisit.show();
+        CreateVisit createVisit = new CreateVisit(entityManager,currentUser);
+        desktopPane.add(createVisit);
+        createVisit.show();
     }
 
     public void addExportReports() {
@@ -277,7 +296,7 @@ public class MainFrame extends javax.swing.JFrame {
         seeAppointments.show();
     }
 
-    public void addDetailsToVisit() {
+    public void addVisit() {
         try {
             if (desktopPane.getSelectedFrame() != null) {
                 desktopPane.getSelectedFrame().setClosed(true);
@@ -553,13 +572,13 @@ public class MainFrame extends javax.swing.JFrame {
                 addAddPatient();
                 break;
             case "See Visits":
-                addAddAppointment();//zevendso
+                addSeeVisits();//zevendso
                 break;
             case "Create Visits":
-                addCreateDoctorVisit();
+                addCreateVisit();
                 break;
             case "Visits":
-                addDetailsToVisit();
+                addVisit();
                 break;
             case "Print Visits":
                 JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
@@ -583,6 +602,9 @@ public class MainFrame extends javax.swing.JFrame {
                 addPrintReports();
                 break;    
             default:
+                if(jButton1.getText().contains("Message"))
+                    addMessage();
+                else
                 JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
         
@@ -596,13 +618,13 @@ public class MainFrame extends javax.swing.JFrame {
                 addAddPatient();
                 break;
             case "See Visits":
-                addAddAppointment();//zevendso
+                addSeeVisits();//zevendso
                 break;
             case "Create Visits":
-                addCreateDoctorVisit();
+                addCreateVisit();
                 break;
             case "Visits":
-                addDetailsToVisit();
+                addVisit();
                 break;
             case "Print Visits":
                 JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
@@ -613,7 +635,7 @@ public class MainFrame extends javax.swing.JFrame {
             case "Search":
                 addSearch();
                 break;
-            case "Add user":
+            case "Add User":
                 addAddUsers();
                 break;
             case "Export Reports":
@@ -626,6 +648,9 @@ public class MainFrame extends javax.swing.JFrame {
                 addPrintReports();
                 break;    
             default:
+                if(jButton2.getText().contains("Message"))
+                    addMessage();
+                else
                 JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
         
@@ -638,13 +663,13 @@ public class MainFrame extends javax.swing.JFrame {
                 addAddPatient();
                 break;
             case "See Visits":
-                addAddAppointment();//zevendso
+                addSeeVisits();//zevendso
                 break;
             case "Create Visits":
-                addCreateDoctorVisit();
+                addCreateVisit();
                 break;
             case "Visits":
-                addDetailsToVisit();
+                addVisit();
                 break;
             case "Print Visits":
                 JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
@@ -655,7 +680,7 @@ public class MainFrame extends javax.swing.JFrame {
             case "Search":
                 addSearch();
                 break;
-            case "Add user":
+            case "Add User":
                 addAddUsers();
                 break;
             case "Export Reports":
@@ -668,6 +693,9 @@ public class MainFrame extends javax.swing.JFrame {
                 addPrintReports();
                 break;    
             default:
+                if(jButton3.getText().contains("Message"))
+                    addMessage();
+                else
                 JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -678,13 +706,13 @@ public class MainFrame extends javax.swing.JFrame {
                 addAddPatient();
                 break;
             case "See Visits":
-                addAddAppointment();//zevendso
+                addSeeVisits();//zevendso
                 break;
             case "Create Visits":
-                addCreateDoctorVisit();
+                addCreateVisit();
                 break;
             case "Visits":
-                addDetailsToVisit();
+                addVisit();
                 break;
             case "Print Visits":
                 JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
@@ -695,7 +723,7 @@ public class MainFrame extends javax.swing.JFrame {
             case "Search":
                 addSearch();
                 break;
-            case "Add user":
+            case "Add User":
                 addAddUsers();
                 break;
             case "Export Reports":
@@ -708,6 +736,9 @@ public class MainFrame extends javax.swing.JFrame {
                 addPrintReports();
                 break;    
             default:
+                if(jButton4.getText().contains("Message"))
+                    addMessage();
+                else
                 JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -718,13 +749,13 @@ public class MainFrame extends javax.swing.JFrame {
                 addAddPatient();
                 break;
             case "See Visits":
-                addAddAppointment();//zevendso
+                addSeeVisits();//zevendso
                 break;
             case "Create Visits":
-                addCreateDoctorVisit();
+                addCreateVisit();
                 break;
             case "Visits":
-                addDetailsToVisit();
+                addVisit();
                 break;
             case "Print Visits":
                 JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
@@ -735,7 +766,7 @@ public class MainFrame extends javax.swing.JFrame {
             case "Search":
                 addSearch();
                 break;
-            case "Add user":
+            case "Add User":
                 addAddUsers();
                 break;
             case "Export Reports":
@@ -748,6 +779,9 @@ public class MainFrame extends javax.swing.JFrame {
                 addPrintReports();
                 break;    
             default:
+                if(jButton5.getText().contains("Message"))
+                    addMessage();
+                else
                 JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -758,13 +792,13 @@ public class MainFrame extends javax.swing.JFrame {
                 addAddPatient();
                 break;
             case "See Visits":
-                addAddAppointment();//zevendso
+                addSeeVisits();//zevendso
                 break;
             case "Create Visits":
-                addCreateDoctorVisit();
+                addCreateVisit();
                 break;
             case "Visits":
-                addDetailsToVisit();
+                addVisit();
                 break;
             case "Print Visits":
                 JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
@@ -775,7 +809,7 @@ public class MainFrame extends javax.swing.JFrame {
             case "Search":
                 addSearch();
                 break;
-            case "Add user":
+            case "Add User":
                 addAddUsers();
                 break;
             case "Export Reports":
@@ -788,6 +822,9 @@ public class MainFrame extends javax.swing.JFrame {
                 addPrintReports();
                 break;    
             default:
+                if(jButton6.getText().contains("Message"))
+                    addMessage();
+                else
                 JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
         }
     }//GEN-LAST:event_jButton6ActionPerformed

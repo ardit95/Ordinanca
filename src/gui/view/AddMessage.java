@@ -331,9 +331,14 @@ public class AddMessage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                seenAllMessagesThread().start();
+                seenAllMessagesMethod();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    private void seenAllMessagesMethod(){
+                messageIr.seenAllMyMessages(currentUser);
+                staffTableLoad();
+    }
+    
     private Thread seenAllMessagesThread(){
         return new Thread(){
             @Override

@@ -46,7 +46,7 @@ public class CreateVisit extends javax.swing.JInternalFrame {
         patientTM=new PatientTableModel(patientTMColumns);
         this.setLocation(220, 10);
         this.setPreferredSize(new Dimension(1100, 654));
-        createDoctorListeners();
+        createVisitFormListeners();
         patientTableLoad();
         fillTimeCombos();
     }
@@ -126,7 +126,6 @@ public class CreateVisit extends javax.swing.JInternalFrame {
 
         jPanel1.setOpaque(false);
 
-        visitCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose", "Biochemical Analysis", "Microbiology Analysis", "Control", "Treatment", "Ultrasound" }));
         visitCombo.setToolTipText("Choose the type of visit");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -499,9 +498,32 @@ public class CreateVisit extends javax.swing.JInternalFrame {
         }
     }
 
-    private void createDoctorListeners() {
-        checkBoxListener();
-        visitComboListener();
+    private void createVisitFormListeners() {
+        checkBoxListener();//Doctor, LaboratorTechnician, Recepsion
+        if(currentUser.getRole().equals("Recepsion")){
+            visitCombo.addItem("Choose");
+            visitCombo.addItem("Biochemical Analysis");
+            visitCombo.addItem("Microbiology Analysis");
+            visitCombo.addItem("Control");
+            visitCombo.addItem("Treatment");
+            visitCombo.addItem("Ultrasound");
+            visitComboListener();
+        }
+        else if (currentUser.getRole().equals("Doctor")){
+            visitCombo.addItem("Choose");
+            visitCombo.addItem("Control");
+            visitCombo.addItem("Treatment");
+            visitCombo.addItem("Ultrasound");
+            staffCombo.addItem(currentUser.toString());
+        }else if (currentUser.getRole().equals("LaboratorTechnician")){
+            visitCombo.addItem("Choose");
+            visitCombo.addItem("Biochemical Analysis");
+            visitCombo.addItem("Microbiology Analysis");
+            staffCombo.addItem(currentUser.toString());
+        }
+        
+        
+        
 
     }
     
@@ -518,7 +540,7 @@ public class CreateVisit extends javax.swing.JInternalFrame {
             
         });
     }
-
+    
     private void visitComboListener() {
         visitCombo.addItemListener(new ItemListener() {
             String currentState = "";

@@ -41,7 +41,7 @@ public class Login extends javax.swing.JFrame {
         int locationy = (dim.height - jFrameheight) / 2;
         this.setLocation(locationx, locationy);
         initComponents();
-        staffIr = new StaffRepository(new EntMngClass("Checker", "12345", "192.168.1.103").getEntityManager());
+        staffIr = new StaffRepository(new EntMngClass("Checker", "12345", "10.10.37.235").getEntityManager());
         usernameTxtf.requestFocus();
         addFocuseListeners();
     }
@@ -103,7 +103,7 @@ public class Login extends javax.swing.JFrame {
 
         serverIpTxtf.setEditable(false);
         serverIpTxtf.setBackground(new java.awt.Color(234, 255, 234));
-        serverIpTxtf.setText("192.168.1.103");
+        serverIpTxtf.setText("10.10.37.235");
         serverIpTxtf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 serverIpTxtfActionPerformed(evt);

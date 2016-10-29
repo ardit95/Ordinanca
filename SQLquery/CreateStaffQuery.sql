@@ -1,11 +1,11 @@
 START TRANSACTION;
 /*krijon Checkerin user*/
 	USE Ordinanca;
-	CREATE USER IF NOT EXISTS Checker@localhost IDENTIFIED BY '12345';
+	CREATE USER IF NOT EXISTS 'Checker'@'%.%.%.%' IDENTIFIED BY '12345';
 	USE Ordinanca;
-	GRANT SELECT ON Ordinanca.NumberOfStaff  TO Checker@localhost;
+	GRANT SELECT ON Ordinanca.NumberOfStaff  TO 'Checker'@'%.%.%.%';
 	
-	
+	/*
     CREATE USER IF NOT EXISTS Bajra@localhost IDENTIFIED BY '12345';
     GRANT SELECT,DELETE,UPDATE,INSERT ON Ordinanca.* TO Bajra@localhost;
     INSERT INTO Staff (Username,Password,Salt,Name,Surname,Gender,DateOfBirth,Education,Specialization,Role) 
@@ -15,10 +15,7 @@ START TRANSACTION;
     GRANT SELECT,DELETE,UPDATE,INSERT ON Ordinanca.* TO Edon@localhost;
     INSERT INTO Staff (Username,Password,Salt,Name,Surname,Gender,DateOfBirth,Education,Specialization,Role) 
 	VALUES ('Edon',SHA2('salti12345',512),'salti','Edon','Bytyqi','M','1993-02-18','Web-Developer','Thitje Serike','Doctor');
-
-    USE Ordinanca;
-    DELETE FROM Patient WHERE PatientId=4 OR patientID=5;
-    SELECT * FROM Patient;
+    */
     /*
 		DROP USER Bajra@localhost;
         USE Ordinanca;

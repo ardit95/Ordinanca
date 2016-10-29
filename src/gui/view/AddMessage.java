@@ -419,6 +419,14 @@ public class AddMessage extends javax.swing.JInternalFrame {
                         messageTxtf.setText(message.getMessage());
                         recievedFromLbl.setText("Recieved from : ");
                         recieverLbl.setText(message.getDoctorID().getName() + " " + message.getDoctorID().getSurname());
+                        if (message.getSeen().equals("No")) {
+                            try {
+                                message.setSeen("Yes");
+                                messageIr.edit(message);
+                            } catch (AppException ae) {
+                                ae.printStackTrace();
+                            }
+                        }
                     } else {
                         recievedFromLbl.setText("");
                         recieverLbl.setText("");

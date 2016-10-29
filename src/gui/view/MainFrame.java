@@ -526,10 +526,10 @@ public class MainFrame extends javax.swing.JFrame {
     public void setPrioritys() {
         if (pozita.equals("Recepsion")) {
             jButton1.setText("Add Patient");
-            jButton2.setText("See Visits");
-            jButton3.setText("Print Visits");
-            jButton4.setText("Messages");
-            jButton5.setVisible(false);
+            jButton2.setText("Create Visits");
+            jButton3.setText("See Visits");
+            jButton4.setText("Print Visits");
+            jButton5.setText("Messages");
             jButton6.setVisible(false);
         }
         else if (pozita.equals("Doctor")) {

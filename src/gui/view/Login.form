@@ -109,7 +109,11 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ea" green="ff" red="ea" type="rgb"/>
             </Property>
+<<<<<<< HEAD
             <Property name="text" type="java.lang.String" value="10.10.37.235"/>
+=======
+            <Property name="text" type="java.lang.String" value="localhost"/>
+>>>>>>> 58a8b551cb8e602b332f40146745c61e006ff807
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="serverIpTxtfActionPerformed"/>

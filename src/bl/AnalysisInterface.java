@@ -13,4 +13,6 @@ public interface AnalysisInterface {
     void remove(Analysis analysis);
 
     List<Analysis> findAll();
+    
+    List<Analysis> findByAnalysisForVisit(int AnalysisVisitID);
 }

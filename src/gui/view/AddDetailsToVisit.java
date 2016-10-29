@@ -339,7 +339,7 @@ String dateForVisit="";
                                             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                                             null, opcionet, opcionet[0]);
                                     if (response == 0) {
-                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(AddDetailsToVisit.this, mainAnalysisVisit, entityManager, currentUser);
+                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(AddDetailsToVisit.this, mainAnalysisVisit, entityManager, currentUser,mainFrame);
                                         setPatientToVisit.setVisible(true);
                                         patientNameLbl.setText("");
                                         nameLbl.setForeground(Color.BLACK);

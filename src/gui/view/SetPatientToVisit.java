@@ -57,7 +57,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         patientTblListeners();
     }
     
-    public SetPatientToVisit(AddDetailsToVisit addDetailsToVisit, AnalysisVisit mainAnalysisVisit,EntityManager entityManager,Staff currentUser) {
+    public SetPatientToVisit(AddDetailsToVisit addDetailsToVisit, AnalysisVisit mainAnalysisVisit,EntityManager entityManager,Staff currentUser,MainFrame mainFrame) {
         initComponents();
         this.entityManager=entityManager;
         initInterfaces();
@@ -65,6 +65,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         this.currentUser=currentUser;
         this.mainAnalysisVisit=mainAnalysisVisit;
         this.addDetailsToVisit=addDetailsToVisit;
+        this.mainFrame=mainFrame;
         patientTableLoad();
         searchTxtfListener();
         patientTblListeners();

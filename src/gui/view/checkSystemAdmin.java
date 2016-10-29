@@ -200,7 +200,7 @@ public class checkSystemAdmin extends javax.swing.JFrame {
         try {
             validation();
             em = new EntMngClass(usernameTxtf.getText().trim(),
-                    passwordTxtf.getText().trim(), "192.168.1.103").getEntityManager();
+                    passwordTxtf.getText().trim(), "localhost").getEntityManager();
             staffIr = new StaffRepository(em);
             this.dispose();
             new AdministratorRegistration(em).setVisible(true);

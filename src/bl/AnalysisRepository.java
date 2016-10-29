@@ -63,4 +63,11 @@ public class AnalysisRepository extends EntMngClass implements AnalysisInterface
     public List<Analysis> findAll() {
         return em.createNamedQuery("Analysis.findAll").getResultList();
     }
+    
+    @Override
+    public List<Analysis> findByAnalysisForVisit(int AnalysisVisitID) {
+        Query query = em.createQuery("SELECT Object (a) FROM Analysis a ,AnalysisForVisit afv,AnalysisVisit av WHERE afv.analysisID.analysisID= a.analysisID AND afv.analysisVisitID.laboratorTechnicianID =av.laboratorTechnicianID AND av.AnalysisVisitID= :analysisVisitID ");
+        query.setParameter("analysisVisitID", AnalysisVisitID);
+        return (List<Analysis>) query.getResultList();
+    }
 }

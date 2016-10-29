@@ -115,14 +115,14 @@ MainFrame mainFrame;
     private javax.swing.JTextArea resultTxtf;
     private javax.swing.JTextField analysisTxtf;
     JTextField analysisPriceTxtf;
-            
-
-int doctorVisitId=0;
+ 
+/*Info needed for doctor visit print*/
 String patientNameForVisit="";
 String patientSurnameForVisit="";
 String patientGenderForVisit="";
 String patientDateOfBirthForVisit="";
 String patientAllergiesForVisit="";
+int doctorVisitId=0;
 String doctorNameForVisit="";
 String doctorSurnameForVisit="";
 String complaintForVisit="";
@@ -132,6 +132,20 @@ String therapyForVisit="";
 String recommendationForVisit="";
 String priceForVisit="";
 String dateForVisit="";
+
+/*Info needed for analysis visit print*/
+int analysisVisitId=0;
+String patientNameForAnalysis="";
+String patientSurnameForAnalysis="";
+String patientGenderForAnalysis="";
+String patientDateOfBirthForAnalysis="";
+String patientAllergiesForAnalysis="";
+String doctorNameForAnalysis="";
+String doctorSurnameForAnalysis="";
+String analysisForAnalysis="";
+String resultsForAnalysis="";
+String priceForAnalysis="";
+String dateForAnalysis="";
 
     public AddDetailsToVisit(EntityManager entityManager,Staff currentUser,MainFrame mainFrame) {
         this.currentUser=currentUser;
@@ -1176,8 +1190,14 @@ String dateForVisit="";
 
     private void printBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printBtnActionPerformed
         //printi duhet me i shtyp krejt diagnozat e vizites
+        int selectedRow=visitTbl.getSelectedRow();
+        if(visitTbl.getModel()==doctorVisitTM&&selectedRow>-1){
+            setInfoForDoctorVisitPrint();
+        }
+        if(visitTbl.getModel()==analysisVisitTM&&selectedRow>-1){
+            setInfoForAnalysisVisitPrint();
+        }
         
-        setInfoForPrint();
         JFileChooser chooser = new JFileChooser(); 
         chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setDialogTitle("Chooser");
@@ -1188,13 +1208,29 @@ String dateForVisit="";
         //
         chooser.setAcceptAllFileFilterUsed(false);
         //    
-        int selectedRow=visitTbl.getSelectedRow();
+        
         if(visitTbl.getModel()==doctorVisitTM&&selectedRow>-1){
             if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
 
                 directory=chooser.getSelectedFile().toString()+"\\";
 
-                    printPdf(directory);
+                    printDocotorVisitPdf(directory);
+
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Duhet te zgjedhni lokacionin se ku deshironi te ruani file ");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Choose a visit to print !");
+        }
+        
+        if(visitTbl.getModel()==analysisVisitTM&&selectedRow>-1){
+            if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+
+                directory=chooser.getSelectedFile().toString()+"\\";
+
+                    printAnalysisVisitPdf(directory);
 
             }
             else{
@@ -1214,7 +1250,7 @@ String dateForVisit="";
        
     }//GEN-LAST:event_complaintTxtfMouseWheelMoved
     
-    private void printPdf(String directory){
+    private void printDocotorVisitPdf(String directory){
         Document document=new Document();
         try{
             
@@ -1339,8 +1375,116 @@ String dateForVisit="";
             e.printStackTrace();
         }
     }
-
-    private void setInfoForPrint(){
+    
+    private void printAnalysisVisitPdf(String directory){
+        Document document=new Document();
+        try{
+            
+            String path=directory+" "+dateForAnalysis+"-"+patientNameForAnalysis+" "+patientSurnameForAnalysis+" - "+doctorNameForAnalysis+" "+doctorSurnameForAnalysis+" - "+".pdf";
+            PdfWriter.getInstance(document, new FileOutputStream(path));
+            document.open();
+           
+            
+            
+            
+            Paragraph para=new Paragraph();
+            Chunk t=new Chunk("Klinika Mjeksore diqka",FontFactory.getFont(FontFactory.HELVETICA,18,Font.BOLD));
+            Chunk space=new Chunk("\n");
+            Phrase prat=new Phrase();
+            
+            prat.add(space);
+            prat.add(space);
+            prat.add(t);
+            para.setAlignment(Element.ALIGN_CENTER);
+            para.add(prat);
+           
+            document.add(para);
+            
+            
+            
+            Phrase pha1=new Phrase();
+            Phrase pha2=new Phrase();
+            Phrase pha3=new Phrase();
+            
+            Paragraph para1=new Paragraph();
+            Paragraph para2=new Paragraph();
+            Paragraph para3=new Paragraph();
+            
+            Chunk glue2 = new Chunk(new VerticalPositionMark());
+            
+            
+            Chunk c1=new Chunk("Pacienti :"+patientNameForAnalysis+" "+patientSurnameForAnalysis,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            Chunk c2=new Chunk("Gjinia :"+patientGenderForAnalysis,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            Chunk c3=new Chunk("Data e Lindjes :"+patientDateOfBirthForAnalysis,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            Chunk c4=new Chunk("Alergjitë :"+patientAllergiesForAnalysis,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            
+            
+            pha1.add(space);
+            pha1.add(space);
+            pha1.add(c1);
+            pha1.add(space);
+            pha1.add(c2);
+            pha1.add(space);
+            pha1.add(c3);
+            pha1.add(space);
+            pha1.add(c4);
+            
+            
+            para1.add(pha1);
+            
+            Chunk c10=new Chunk("Analiza :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c11=new Chunk(analysisForAnalysis);
+            Chunk c12=new Chunk("Rezultati :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c13=new Chunk(resultsForAnalysis);
+            
+            pha2.add(space);
+            pha2.add(space);
+            pha2.add(c10);
+            pha2.add(space);
+            pha2.add(c11);
+            pha2.add(space);
+            pha2.add(c12);
+            pha2.add(space);
+            pha2.add(c13);
+            
+            para2.add(pha2);
+            
+            
+            Chunk c20=new Chunk("Laboranti :"+doctorNameForAnalysis+" "+doctorSurnameForAnalysis,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c21=new Chunk("Data :"+dateForAnalysis,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c22=new Chunk("Çmimi : "+priceForAnalysis,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            
+            pha3.add(space);
+            pha3.add(space);
+            pha3.add(space);
+            pha3.add(c20);
+            pha3.add(space);
+            pha3.add(c21);
+            pha3.add(new Chunk(glue2));
+            pha3.add(c22);
+            
+            para3.add(pha3);
+            
+            
+            
+            document.add(para1);
+            document.add(para2);
+            document.add(para3);
+            
+            
+            
+            document.close();
+            JOptionPane.showMessageDialog(null,"U ruajt me sukses");
+        }catch(FileNotFoundException | DocumentException | HeadlessException e){
+            e.printStackTrace();
+        }
+    }
+    
+    private void setInfoForDoctorVisitPrint(){
         
         DoctorVisit selectedDoctorVisit=new DoctorVisit();
         int selectedRow=visitTbl.getSelectedRow();
@@ -1392,6 +1536,40 @@ String dateForVisit="";
         recommendationTxtf.setText("");
         mainScrollPane.getVerticalScrollBar().setValue(0);
         complaintTxtf.requestFocus();
+    }
+    
+    
+    private void setInfoForAnalysisVisitPrint(){
+        
+        AnalysisVisit selectedAnalysisVisit=new AnalysisVisit();
+        int selectedRow=visitTbl.getSelectedRow();
+        if(visitTbl.getModel()==analysisVisitTM&&selectedRow>-1){
+            selectedAnalysisVisit=analysisVisitTM.getAnalysisVisit(selectedRow);
+        }
+        SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+        
+        analysisVisitId=selectedAnalysisVisit.getAnalysisVisitID();
+        patientNameForAnalysis=selectedAnalysisVisit.getPatientID().getName();
+        patientSurnameForAnalysis=selectedAnalysisVisit.getPatientID().getSurname();
+        patientDateOfBirthForAnalysis=sdf.format(selectedAnalysisVisit.getPatientID().getDateOfBirth());
+        patientGenderForAnalysis=selectedAnalysisVisit.getPatientID().getGender();
+        patientAllergiesForAnalysis=selectedAnalysisVisit.getPatientID().getAllergies();
+        doctorNameForAnalysis=selectedAnalysisVisit.getLaboratorTechnicianID().getName();
+        doctorSurnameForAnalysis=selectedAnalysisVisit.getLaboratorTechnicianID().getSurname();
+        
+        priceForAnalysis=selectedAnalysisVisit.getSumPrice()+"";
+        dateForAnalysis=sdf.format(selectedAnalysisVisit.getTimeStamp());
+        
+        List<Analysis> analysis=analysisIr.findByAnalysisForVisit(analysisVisitId);
+        String allAnalysis="";
+        String allResults="";
+        for(int i=0;i<analysis.size();i++){
+            allAnalysis+="Analysis "+ (i+1)+":"+analysis.get(i).getAnalysis();
+            allResults+="Results "+ (i+1)+":"+analysis.get(i).getResults();
+        }
+        analysisForAnalysis=allAnalysis;
+        resultsForAnalysis=allResults;
+        
     }
     
     

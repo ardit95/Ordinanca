@@ -96,7 +96,7 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
     @Override
     public void changeLoginPassword(Staff staff, String text) {
         try {
-            String serverIp = "localhost";
+            String serverIp = "192.168.1.103";
             Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
             Statement statement = conn.createStatement();
             statement.executeQuery("USE Ordinanca;");
@@ -109,7 +109,7 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
 
     @Override
     public void createMySQLUser(Staff staff, String text) throws SQLException {
-        String serverIp = "localhost";
+        String serverIp = "192.168.1.103";
         Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
         Statement statement = conn.createStatement();
         statement.executeUpdate("USE Ordinanca;");
@@ -119,7 +119,7 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
 
     @Override
     public void deleteMySQLUser(Staff staff) throws SQLException {
-        String serverIp = "localhost";
+        String serverIp = "192.168.1.103";
         Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
         Statement statement = conn.createStatement();
         statement.executeUpdate("USE Ordinanca;");
@@ -143,7 +143,7 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
     @Override
     public void setStaffPassword(Staff staff) {
         try {
-            String serverIp = "localhost";
+            String serverIp = "192.168.1.103";
             Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
             Statement statement = conn.createStatement();
             statement.executeQuery("USE Ordinanca;");

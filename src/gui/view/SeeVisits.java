@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.CheckBox;
 import javax.persistence.EntityManager;
 import javax.swing.JButton;
@@ -968,6 +970,14 @@ public class SeeVisits extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeDetailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeDetailsBtnActionPerformed
+        if(visitTbl.getSelectedRow()!=-1){
+        
+        }else
+            try {
+                throw new AppException("");
+        } catch (AppException ex) {
+            Logger.getLogger(SeeVisits.class.getName()).log(Level.SEVERE, null, ex);
+        }
         clearObject();
     }//GEN-LAST:event_changeDetailsBtnActionPerformed
 

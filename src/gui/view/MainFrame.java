@@ -74,26 +74,24 @@ public class MainFrame extends javax.swing.JFrame {
                                 }
                             }
                             if(currentUser.getRole().equals("Doctor")||currentUser.getRole().equals("LaboratorTechnician")){
-                                jButton6.setForeground(Color.red);
-                                jButton6.setText("Messages ("+numberOfMessagesUnseen+")");
-                            }
-                            if(currentUser.getRole().equals("Recepsion")){
-                                jButton4.setForeground(Color.red);
-                                jButton4.setText("Messages ("+numberOfMessagesUnseen+")");
-                            }
-                            if(currentUser.getRole().equals("Director")){
-                                jButton3.setForeground(Color.red);
+                                jButton7.setForeground(Color.RED);
+                                jButton7.setText("Messages ("+numberOfMessagesUnseen+")");
+                            }else if(currentUser.getRole().equals("Recepsion")){
+                                jButton5.setForeground(Color.RED);
+                                jButton5.setText("Messages ("+numberOfMessagesUnseen+")");
+                            }else if(currentUser.getRole().equals("Director")){
+                                jButton3.setForeground(Color.RED);
                                 jButton3.setText("Messages ("+numberOfMessagesUnseen+")");
                             }
                         }
                     } else {
                             if(currentUser.getRole().equals("Doctor")||currentUser.getRole().equals("LaboratorTechnician")){
-                                jButton6.setForeground(new Color(204,255,204));
-                                jButton6.setText("Messages ("+numberOfMessagesUnseen+")");
+                                jButton7.setForeground(new Color(204,255,204));
+                                jButton7.setText("Messages ("+numberOfMessagesUnseen+")");
                             }
                             if(currentUser.getRole().equals("Recepsion")){
-                                jButton4.setForeground(new Color(204,255,204));
-                                jButton4.setText("Messages ("+numberOfMessagesUnseen+")");
+                                jButton5.setForeground(new Color(204,255,204));
+                                jButton5.setText("Messages ("+numberOfMessagesUnseen+")");
                             }
                             if(currentUser.getRole().equals("Director")){
                                 jButton3.setForeground(new Color(204,255,204));
@@ -127,9 +125,9 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        AddAppointment addAppointment = new AddAppointment();
-        desktopPane.add(addAppointment);
-        addAppointment.show();
+        SeeVisits seeVisits = new SeeVisits(entityManager,currentUser,this);
+        desktopPane.add(seeVisits);
+        seeVisits.show();
     }
 
     public void addAddNotification() {
@@ -340,6 +338,7 @@ public class MainFrame extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         background2 = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
@@ -424,6 +423,19 @@ public class MainFrame extends javax.swing.JFrame {
         });
         desktopPane.add(jButton5);
         jButton5.setBounds(0, 200, 200, 50);
+
+        jButton7.setBackground(new java.awt.Color(0, 153, 102));
+        jButton7.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(204, 255, 204));
+        jButton7.setText("jButton7");
+        jButton7.setOpaque(false);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        desktopPane.add(jButton7);
+        jButton7.setBounds(0, 300, 200, 50);
 
         jButton6.setBackground(new java.awt.Color(0, 153, 102));
         jButton6.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
@@ -531,14 +543,16 @@ public class MainFrame extends javax.swing.JFrame {
             jButton4.setText("Print Visits");
             jButton5.setText("Messages");
             jButton6.setVisible(false);
+            jButton7.setVisible(false);
         }
         else if (pozita.equals("Doctor")) {
             jButton1.setText("Visits");
             jButton2.setText("Create Visits");
-            jButton3.setText("Search");
-            jButton4.setText("Add Patient");
-            jButton5.setText("Print Reports");
-            jButton6.setText("Messages");
+            jButton3.setText("See Visits");
+            jButton4.setText("Search");
+            jButton5.setText("Add Patient");
+            jButton6.setText("Print Reports");
+            jButton7.setText("Messages");
         }
         else if (pozita.equals("Director")) {
             jButton1.setText("Export Reports");
@@ -547,6 +561,7 @@ public class MainFrame extends javax.swing.JFrame {
             jButton4.setVisible(false);
             jButton5.setVisible(false);
             jButton6.setVisible(false);
+            jButton7.setVisible(false);
         }
         else if (pozita.equals("Administrator")) {
             jButton1.setText("Add User");
@@ -555,14 +570,16 @@ public class MainFrame extends javax.swing.JFrame {
             jButton4.setVisible(false);
             jButton5.setVisible(false);
             jButton6.setVisible(false);
+            jButton7.setVisible(false);
         }
         else if (pozita.equals("LaboratorTechnician")){
             jButton1.setText("Visits");
             jButton2.setText("Create Visits");
-            jButton3.setText("Search");
-            jButton4.setText("Add Patient");
-            jButton5.setText("Print Reports");
-            jButton6.setText("Messages");
+            jButton3.setText("See Visits");
+            jButton4.setText("Search");
+            jButton5.setText("Add Patient");
+            jButton6.setText("Print Reports");
+            jButton7.setText("Messages");
         }
     }
 
@@ -833,6 +850,10 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JLabel background;
@@ -852,6 +873,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;

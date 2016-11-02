@@ -4,6 +4,8 @@ import ejb.AnalysisVisit;
 import java.util.List;
 import ExceptionPackage.AppException;
 import ejb.Staff;
+import ejb.Visit;
+import java.util.Collection;
 
 public interface AnalysisVisitInterface {
 
@@ -17,5 +19,7 @@ public interface AnalysisVisitInterface {
 
     List<AnalysisVisit> findPresentAndFuture(Staff currentUser);
 
+    List<AnalysisVisit> findPresentAndFuture();
+    
     List<AnalysisVisit> findAllForCurrentUser(Staff currentUser);
 }

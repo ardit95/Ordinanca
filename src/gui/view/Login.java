@@ -41,7 +41,7 @@ public class Login extends javax.swing.JFrame {
         int locationy = (dim.height - jFrameheight) / 2;
         this.setLocation(locationx, locationy);
         initComponents();
-        staffIr = new StaffRepository(new EntMngClass("Checker", "12345", "10.10.37.235").getEntityManager());
+        staffIr = new StaffRepository(new EntMngClass("Checker", "12345", "10.10.20.22").getEntityManager());
         usernameTxtf.requestFocus();
         addFocuseListeners();
     }
@@ -103,7 +103,7 @@ public class Login extends javax.swing.JFrame {
 
         serverIpTxtf.setEditable(false);
         serverIpTxtf.setBackground(new java.awt.Color(234, 255, 234));
-        serverIpTxtf.setText("10.10.37.235");
+        serverIpTxtf.setText("10.10.20.22");
         serverIpTxtf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 serverIpTxtfActionPerformed(evt);
@@ -254,7 +254,8 @@ public class Login extends javax.swing.JFrame {
         logsIr.create(logs);*/
             if (numberOfLogins == 0) {
                 this.dispose();
-                new PasswordChangeFrame(currentUser).setVisible(true);
+                PasswordChangeFrame passFrame=new PasswordChangeFrame(currentUser);
+                passFrame.setVisible(true);
             } else {
                 MainFrame mainFrame = new MainFrame(emc.getEntityManager(), currentUser);
                 mainFrame.setVisible(true);

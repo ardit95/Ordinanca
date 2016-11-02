@@ -3,6 +3,7 @@ package gui.model;
 import ExceptionPackage.AppException;
 import ejb.DoctorVisit;
 import gui.view.AddDetailsToVisit;
+import gui.view.SeeVisits;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ public class DoctorVisitTableModel extends AbstractTableModel {
     DateFormat dateFormat;
     DateFormat timeFormat;
     AddDetailsToVisit addDetailsToVisit;
+    SeeVisits seeVisits;
     
     public DoctorVisitTableModel(String[] colNames) {
         columnNames = colNames;
@@ -33,6 +35,15 @@ public class DoctorVisitTableModel extends AbstractTableModel {
     
     public DoctorVisitTableModel(String[] colNames,AddDetailsToVisit addDetailsToVisit) {
         this.addDetailsToVisit=addDetailsToVisit;
+        columnNames = colNames;
+        dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        timeFormat = new SimpleDateFormat("HH:mm");
+        today=Calendar.getInstance().getTime();
+        /*"Name", "Surname", "Data e Lindjes","Numri Personal","Email","Telefoni","Qyteti"*/
+    }
+    
+    public DoctorVisitTableModel(String[] colNames,SeeVisits seeVisits) {
+        this.seeVisits=seeVisits;
         columnNames = colNames;
         dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         timeFormat = new SimpleDateFormat("HH:mm");
@@ -122,6 +133,19 @@ public class DoctorVisitTableModel extends AbstractTableModel {
                             }
                         }
                     });
+                }else if(seeVisits!=null){
+                    jb.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(java.awt.event.ActionEvent ae) {
+                            if (seeVisits != null) {try{
+                                seeVisits.diagnosisForVisitTableLoad(rowIndex);
+                            }catch(AppException appExcep){
+                                appExcep.printStackTrace();
+                                JOptionPane.showMessageDialog(seeVisits, appExcep.getMessage());
+                            }
+                            }
+                        }
+                    });
                 }
                 return jb;
             default:
@@ -135,5 +159,10 @@ public class DoctorVisitTableModel extends AbstractTableModel {
 
     public void remove(int rowIndex) {
         data.remove(rowIndex);
+    }
+
+    public void clear() {
+        if(data!=null)
+            data.clear();
     }
 }

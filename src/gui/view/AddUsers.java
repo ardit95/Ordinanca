@@ -478,6 +478,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
                 throw new AppException("Selekto Userin qe deshiron me i restartu passwordin.");
             }
         } catch (AppException ae) {
+            ae.printStackTrace();
             JOptionPane.showMessageDialog(this, ae.getMessage());
         }
     }

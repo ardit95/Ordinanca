@@ -101,25 +101,25 @@ public class SeeVisits extends javax.swing.JInternalFrame {
     
     private void clearObject() {
         infoLbl.setText("");
-        infoLbl.setForeground(Color.BLACK);
+        infoLbl.setForeground(Color.WHITE);
         patientNameLbl.setText("");
-        nameLbl.setForeground(Color.BLACK);
+        nameLbl.setForeground(Color.WHITE);
         patientGenderLbl.setText("");
-        genderLbl.setForeground(Color.BLACK);
+        genderLbl.setForeground(Color.WHITE);
         patientDateOfBirthLbl.setText("");
-        dateOfBirthLbl.setForeground(Color.BLACK);
+        dateOfBirthLbl.setForeground(Color.WHITE);
         patientPlaceOfBirthLbl.setText("");
-        placeOfBirthLbl.setForeground(Color.BLACK);
+        placeOfBirthLbl.setForeground(Color.WHITE);
         patientCityLbl.setText("");
-        cityLbl.setForeground(Color.BLACK);
+        cityLbl.setForeground(Color.WHITE);
         patientEmailLbl.setText("");
-        emailLbl.setForeground(Color.BLACK);
+        emailLbl.setForeground(Color.WHITE);
         patientPhoneLbl.setText("");
-        phoneLbl.setForeground(Color.BLACK);
+        phoneLbl.setForeground(Color.WHITE);
         allergiesTxtf.setText("");
-        allergiesLbl.setForeground(Color.BLACK);
+        allergiesLbl.setForeground(Color.WHITE);
         remarkTxtf.setText("");
-        remarkLbl.setForeground(Color.BLACK);
+        remarkLbl.setForeground(Color.WHITE);
         mainVisit=null;
         visitTbl.clearSelection();
     }
@@ -191,23 +191,23 @@ public class SeeVisits extends javax.swing.JInternalFrame {
                                         SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser,mainFrame,SeeVisits.this);
                                         setPatientToVisit.setVisible(true);
                                         patientNameLbl.setText("");
-                                        nameLbl.setForeground(Color.BLACK);
+                                        nameLbl.setForeground(Color.WHITE);
                                         patientGenderLbl.setText("");
-                                        genderLbl.setForeground(Color.BLACK);
+                                        genderLbl.setForeground(Color.WHITE);
                                         patientDateOfBirthLbl.setText("");
-                                        dateOfBirthLbl.setForeground(Color.BLACK);
+                                        dateOfBirthLbl.setForeground(Color.WHITE);
                                         patientPlaceOfBirthLbl.setText("");
-                                        placeOfBirthLbl.setForeground(Color.BLACK);
+                                        placeOfBirthLbl.setForeground(Color.WHITE);
                                         patientCityLbl.setText("");
-                                        cityLbl.setForeground(Color.BLACK);
+                                        cityLbl.setForeground(Color.WHITE);
                                         patientEmailLbl.setText("");
-                                        emailLbl.setForeground(Color.BLACK);
+                                        emailLbl.setForeground(Color.WHITE);
                                         patientPhoneLbl.setText("");
-                                        phoneLbl.setForeground(Color.BLACK);
+                                        phoneLbl.setForeground(Color.WHITE);
                                         allergiesTxtf.setText("");
-                                        allergiesLbl.setForeground(Color.BLACK);
+                                        allergiesLbl.setForeground(Color.WHITE);
                                         remarkTxtf.setText("");
-                                        remarkLbl.setForeground(Color.BLACK);
+                                        remarkLbl.setForeground(Color.WHITE);
                                         visitTbl.clearSelection();
                                         throw new AppException("The user choose to assign a pacient");
                                     } else {
@@ -239,23 +239,23 @@ public class SeeVisits extends javax.swing.JInternalFrame {
                                         SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser,mainFrame,SeeVisits.this);
                                         setPatientToVisit.setVisible(true);
                                         patientNameLbl.setText("");
-                                        nameLbl.setForeground(Color.BLACK);
+                                        nameLbl.setForeground(Color.WHITE);
                                         patientGenderLbl.setText("");
-                                        genderLbl.setForeground(Color.BLACK);
+                                        genderLbl.setForeground(Color.WHITE);
                                         patientDateOfBirthLbl.setText("");
-                                        dateOfBirthLbl.setForeground(Color.BLACK);
+                                        dateOfBirthLbl.setForeground(Color.WHITE);
                                         patientPlaceOfBirthLbl.setText("");
-                                        placeOfBirthLbl.setForeground(Color.BLACK);
+                                        placeOfBirthLbl.setForeground(Color.WHITE);
                                         patientCityLbl.setText("");
-                                        cityLbl.setForeground(Color.BLACK);
+                                        cityLbl.setForeground(Color.WHITE);
                                         patientEmailLbl.setText("");
-                                        emailLbl.setForeground(Color.BLACK);
+                                        emailLbl.setForeground(Color.WHITE);
                                         patientPhoneLbl.setText("");
-                                        phoneLbl.setForeground(Color.BLACK);
+                                        phoneLbl.setForeground(Color.WHITE);
                                         allergiesTxtf.setText("");
-                                        allergiesLbl.setForeground(Color.BLACK);
+                                        allergiesLbl.setForeground(Color.WHITE);
                                         remarkTxtf.setText("");
-                                        remarkLbl.setForeground(Color.BLACK);
+                                        remarkLbl.setForeground(Color.WHITE);
                                         visitTbl.clearSelection();
                                         throw new AppException("The user choose to assign a pacient");
                                     } else {
@@ -289,23 +289,23 @@ public class SeeVisits extends javax.swing.JInternalFrame {
                                         SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser,mainFrame,SeeVisits.this);
                                         setPatientToVisit.setVisible(true);
                                         patientNameLbl.setText("");
-                                        nameLbl.setForeground(Color.BLACK);
+                                        nameLbl.setForeground(Color.WHITE);
                                         patientGenderLbl.setText("");
-                                        genderLbl.setForeground(Color.BLACK);
+                                        genderLbl.setForeground(Color.WHITE);
                                         patientDateOfBirthLbl.setText("");
-                                        dateOfBirthLbl.setForeground(Color.BLACK);
+                                        dateOfBirthLbl.setForeground(Color.WHITE);
                                         patientPlaceOfBirthLbl.setText("");
-                                        placeOfBirthLbl.setForeground(Color.BLACK);
+                                        placeOfBirthLbl.setForeground(Color.WHITE);
                                         patientCityLbl.setText("");
-                                        cityLbl.setForeground(Color.BLACK);
+                                        cityLbl.setForeground(Color.WHITE);
                                         patientEmailLbl.setText("");
-                                        emailLbl.setForeground(Color.BLACK);
+                                        emailLbl.setForeground(Color.WHITE);
                                         patientPhoneLbl.setText("");
-                                        phoneLbl.setForeground(Color.BLACK);
+                                        phoneLbl.setForeground(Color.WHITE);
                                         allergiesTxtf.setText("");
-                                        allergiesLbl.setForeground(Color.BLACK);
+                                        allergiesLbl.setForeground(Color.WHITE);
                                         remarkTxtf.setText("");
-                                        remarkLbl.setForeground(Color.BLACK);
+                                        remarkLbl.setForeground(Color.WHITE);
                                         visitTbl.clearSelection();
                                         throw new AppException("The user choose to assign a pacient");
                                     } else {
@@ -327,21 +327,21 @@ public class SeeVisits extends javax.swing.JInternalFrame {
     public void setPatientData(Patient patient) {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         patientNameLbl.setText(patient.getName() + " (" + patient.getParentName() + ") " + patient.getSurname());
-        nameLbl.setForeground(Color.BLUE);
+        nameLbl.setForeground(Color.WHITE);
         patientGenderLbl.setText(patient.getGender());
-        genderLbl.setForeground(Color.BLUE);
+        genderLbl.setForeground(Color.WHITE);
         patientDateOfBirthLbl.setText(dateFormat.format(patient.getDateOfBirth()));
-        dateOfBirthLbl.setForeground(Color.BLUE);
+        dateOfBirthLbl.setForeground(Color.WHITE);
         patientPlaceOfBirthLbl.setText(patient.getPlaceOFBirth());
-        placeOfBirthLbl.setForeground(Color.BLUE);
+        placeOfBirthLbl.setForeground(Color.WHITE);
         patientCityLbl.setText(patient.getCity());
-        cityLbl.setForeground(Color.BLUE);
+        cityLbl.setForeground(Color.WHITE);
         patientEmailLbl.setText(patient.getEmail());
-        emailLbl.setForeground(Color.BLUE);
+        emailLbl.setForeground(Color.WHITE);
         patientPhoneLbl.setText(patient.getPhone());
-        phoneLbl.setForeground(Color.BLUE);
+        phoneLbl.setForeground(Color.WHITE);
         allergiesTxtf.setText(patient.getAllergies());
-        allergiesLbl.setForeground(Color.BLUE);
+        allergiesLbl.setForeground(Color.WHITE);
         Date date;
         if(currentUser.getRole().equals("Doctor")){
             remarkTxtf.setText(((DoctorVisit)mainVisit).getRemark());
@@ -373,7 +373,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
                 minuteCombo.setSelectedIndex(date.getMinutes()+1);
             }
         }
-        remarkLbl.setForeground(Color.BLUE);
+        remarkLbl.setForeground(Color.WHITE);
     }
     
     private void fillTimeCombos() {
@@ -415,7 +415,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
             if (seeAllCBox.isSelected()) {
                 visitList = doctorVisitIr.findAllForCurrentUser(currentUser);
             } else {
-                visitList = doctorVisitIr.findPresentAndFuture(currentUser);
+                visitList = doctorVisitIr.findPresentAndFutureForCurrentUser(currentUser);
             }
 
             visitTbl.setModel(doctorVisitTM);
@@ -430,7 +430,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
             if(seeAllCBox.isSelected()){
                 analysisVisit= analysisVisitIr.findAllForCurrentUser(currentUser);
             }else{
-                analysisVisit= analysisVisitIr.findPresentAndFuture(currentUser);
+                analysisVisit= analysisVisitIr.findPresentAndFutureForCurrentUser(currentUser);
             }
             visitTbl.setModel(analysisVisitTM);
             analysisVisitTM.add(analysisVisit);
@@ -511,7 +511,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
                                 }
                                 if (!infoLbl.getText().equals("")) {
                                     infoLbl.setText("");
-                                    infoLbl.setForeground(Color.BLACK);
+                                    infoLbl.setForeground(Color.WHITE);
                                 }
                             } catch (AppException ae) {
                                 infoLbl.setText(ae.getMessage());
@@ -580,8 +580,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
         infoLbl = new javax.swing.JLabel();
 
         setClosable(true);
-        setResizable(true);
-        setTitle("Add Appointment");
+        setTitle("See Visits");
         setMaximumSize(new java.awt.Dimension(1100, 654));
         setMinimumSize(new java.awt.Dimension(1100, 654));
         setPreferredSize(new java.awt.Dimension(1100, 654));

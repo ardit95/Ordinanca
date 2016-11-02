@@ -92,7 +92,7 @@ import javax.swing.KeyStroke;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.DefaultCaret;
 
-public class AddDetailsToVisit extends javax.swing.JInternalFrame {
+public class Visits extends javax.swing.JInternalFrame {
 EntityManager entityManager;
 Staff currentUser;
 
@@ -147,7 +147,7 @@ String resultsForAnalysis="";
 String priceForAnalysis="";
 String dateForAnalysis="";
 
-    public AddDetailsToVisit(EntityManager entityManager,Staff currentUser,MainFrame mainFrame) {
+    public Visits(EntityManager entityManager,Staff currentUser,MainFrame mainFrame) {
         this.currentUser=currentUser;
         this.entityManager=entityManager;
         this.mainFrame=mainFrame;
@@ -283,6 +283,28 @@ String dateForAnalysis="";
                     if (currentUser.getRole().equals("Doctor")) {
                         if (visitTbl.getModel() == doctorVisitTM) {
                             try {
+                                SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+                                mainVisit = doctorVisitTM.getDoctorVisit(selectedIndex);
+                                patient = ((DoctorVisit)mainVisit).getPatientID();
+                                /*
+                                patientNameLbl.setText(patient.getName()+" "+patient.getSurname());
+                                nameLbl.setForeground(Color.WHITE);
+                                patientGenderLbl.setText(patient.getGender());
+                                genderLbl.setForeground(Color.WHITE);
+                                patientDateOfBirthLbl.setText(sdf.format(patient.getDateOfBirth()));
+                                dateOfBirthLbl.setForeground(Color.WHITE);
+                                patientPlaceOfBirthLbl.setText(patient.getPlaceOFBirth());
+                                placeOfBirthLbl.setForeground(Color.WHITE);
+                                patientCityLbl.setText(patient.getCity());
+                                cityLbl.setForeground(Color.WHITE);
+                                patientEmailLbl.setText(patient.getEmail());
+                                emailLbl.setForeground(Color.WHITE);
+                                patientPhoneLbl.setText(patient.getPhone());
+                                phoneLbl.setForeground(Color.WHITE);
+                                allergiesTxtf.setText(patient.getAllergies());
+                                allergiesLbl.setForeground(Color.WHITE);
+                                remarkTxtf.setText((DoctorVisit)mainVisit).getRemark());
+                                */
                                 mainVisit = doctorVisitTM.getDoctorVisit(selectedIndex);
                                 patient = ((DoctorVisit)mainVisit).getPatientID();
 
@@ -293,26 +315,26 @@ String dateForAnalysis="";
                                             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                                             null, opcionet, opcionet[0]);
                                     if (response == 0) {
-                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser,mainFrame,AddDetailsToVisit.this);
+                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser,mainFrame,Visits.this);
                                         setPatientToVisit.setVisible(true);
                                         patientNameLbl.setText("");
-                                        nameLbl.setForeground(Color.BLACK);
+                                        nameLbl.setForeground(Color.WHITE);
                                         patientGenderLbl.setText("");
-                                        genderLbl.setForeground(Color.BLACK);
+                                        genderLbl.setForeground(Color.WHITE);
                                         patientDateOfBirthLbl.setText("");
-                                        dateOfBirthLbl.setForeground(Color.BLACK);
+                                        dateOfBirthLbl.setForeground(Color.WHITE);
                                         patientPlaceOfBirthLbl.setText("");
-                                        placeOfBirthLbl.setForeground(Color.BLACK);
+                                        placeOfBirthLbl.setForeground(Color.WHITE);
                                         patientCityLbl.setText("");
-                                        cityLbl.setForeground(Color.BLACK);
+                                        cityLbl.setForeground(Color.WHITE);
                                         patientEmailLbl.setText("");
-                                        emailLbl.setForeground(Color.BLACK);
+                                        emailLbl.setForeground(Color.WHITE);
                                         patientPhoneLbl.setText("");
-                                        phoneLbl.setForeground(Color.BLACK);
+                                        phoneLbl.setForeground(Color.WHITE);
                                         allergiesTxtf.setText("");
-                                        allergiesLbl.setForeground(Color.BLACK);
+                                        allergiesLbl.setForeground(Color.WHITE);
                                         remarkTxtf.setText("");
-                                        remarkLbl.setForeground(Color.BLACK);
+                                        remarkLbl.setForeground(Color.WHITE);
                                         visitTbl.clearSelection();
                                         throw new AppException("The user choose to assign a pacient");
                                     } else {
@@ -331,15 +353,15 @@ String dateForAnalysis="";
                             Diagnosis diagnosis = diagnosisForVisitTM.getDiagnosisForVisit(visitTbl.getSelectedRow()).getDiagnosisID();
                             patient = diagnosisForVisit.getDoctorVisitID().getPatientID();
                             complaintTxtf.setText(diagnosis.getComplaint());
-                            complaintLbl.setForeground(Color.BLUE);
+                            complaintLbl.setForeground(Color.WHITE);
                             anamnesisTxtf.setText(diagnosis.getAnamnesis());
-                            anamensisLbl.setForeground(Color.BLUE);
+                            anamensisLbl.setForeground(Color.WHITE);
                             examinationTxtf.setText(diagnosis.getExamination());
-                            examinationLbl.setForeground(Color.BLUE);
+                            examinationLbl.setForeground(Color.WHITE);
                             therapyTxtf.setText(diagnosis.getTherapy());
-                            therapyLbl.setForeground(Color.BLUE);
+                            therapyLbl.setForeground(Color.WHITE);
                             recommendationTxtf.setText(diagnosis.getRecommendation());
-                            recommendationLbl.setForeground(Color.BLUE);
+                            recommendationLbl.setForeground(Color.WHITE);
                         }
                     } else if (currentUser.getRole().equals("LaboratorTechnician")) {
                         try {
@@ -353,26 +375,26 @@ String dateForAnalysis="";
                                             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                                             null, opcionet, opcionet[0]);
                                     if (response == 0) {
-                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser,mainFrame,AddDetailsToVisit.this);
+                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser,mainFrame,Visits.this);
                                         setPatientToVisit.setVisible(true);
                                         patientNameLbl.setText("");
-                                        nameLbl.setForeground(Color.BLACK);
+                                        nameLbl.setForeground(Color.WHITE);
                                         patientGenderLbl.setText("");
-                                        genderLbl.setForeground(Color.BLACK);
+                                        genderLbl.setForeground(Color.WHITE);
                                         patientDateOfBirthLbl.setText("");
-                                        dateOfBirthLbl.setForeground(Color.BLACK);
+                                        dateOfBirthLbl.setForeground(Color.WHITE);
                                         patientPlaceOfBirthLbl.setText("");
-                                        placeOfBirthLbl.setForeground(Color.BLACK);
+                                        placeOfBirthLbl.setForeground(Color.WHITE);
                                         patientCityLbl.setText("");
-                                        cityLbl.setForeground(Color.BLACK);
+                                        cityLbl.setForeground(Color.WHITE);
                                         patientEmailLbl.setText("");
-                                        emailLbl.setForeground(Color.BLACK);
+                                        emailLbl.setForeground(Color.WHITE);
                                         patientPhoneLbl.setText("");
-                                        phoneLbl.setForeground(Color.BLACK);
+                                        phoneLbl.setForeground(Color.WHITE);
                                         allergiesTxtf.setText("");
-                                        allergiesLbl.setForeground(Color.BLACK);
+                                        allergiesLbl.setForeground(Color.WHITE);
                                         remarkTxtf.setText("");
-                                        remarkLbl.setForeground(Color.BLACK);
+                                        remarkLbl.setForeground(Color.WHITE);
                                         visitTbl.clearSelection();
                                         throw new AppException("The user choose to assign a pacient");
                                     } else {
@@ -381,12 +403,12 @@ String dateForAnalysis="";
                                     }
                                 }
                             }
-                            setPatientData(patient);
+                            
                         } catch (AppException ae) {
                         } catch (StopException se) {
                         }
-
                     }
+                    setPatientData(patient);
                 }
             }
         });
@@ -419,7 +441,7 @@ String dateForAnalysis="";
                                 }
                                 if (!infoLbl.getText().equals("")) {
                                     infoLbl.setText("");
-                                    infoLbl.setForeground(Color.BLACK);
+                                    infoLbl.setForeground(Color.WHITE);
                                 }
                             } catch (AppException ae) {
                                 infoLbl.setText(ae.getMessage());
@@ -451,7 +473,7 @@ String dateForAnalysis="";
             if (seeAllCBox.isSelected()) {
                 visitList = doctorVisitIr.findAllForCurrentUser(currentUser);
             } else {
-                visitList = doctorVisitIr.findPresentAndFuture(currentUser);
+                visitList = doctorVisitIr.findPresentAndFutureForCurrentUser(currentUser);
             }
 
             visitTbl.setModel(doctorVisitTM);
@@ -465,7 +487,7 @@ String dateForAnalysis="";
             if(seeAllCBox.isSelected()){
                 analysisVisit= analysisVisitIr.findAllForCurrentUser(currentUser);
             }else{
-                analysisVisit= analysisVisitIr.findPresentAndFuture(currentUser);
+                analysisVisit= analysisVisitIr.findPresentAndFutureForCurrentUser(currentUser);
             }
             visitTbl.setModel(analysisVisitTM);
             analysisVisitTM.add(analysisVisit);
@@ -589,8 +611,9 @@ String dateForAnalysis="";
 
         nameLbl.setForeground(new java.awt.Color(255, 255, 255));
         nameLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        nameLbl.setText("Name:");
+        nameLbl.setText("Name :");
 
+        patientNameLbl.setForeground(new java.awt.Color(255, 255, 255));
         patientNameLbl.setMaximumSize(new java.awt.Dimension(40, 14));
         patientNameLbl.setMinimumSize(new java.awt.Dimension(40, 14));
         patientNameLbl.setPreferredSize(new java.awt.Dimension(40, 14));
@@ -620,15 +643,18 @@ String dateForAnalysis="";
 
         genderLbl.setForeground(new java.awt.Color(255, 255, 255));
         genderLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        genderLbl.setText("Gender:");
+        genderLbl.setText("Gender :");
 
         dateOfBirthLbl.setForeground(new java.awt.Color(255, 255, 255));
         dateOfBirthLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        dateOfBirthLbl.setText("DateOfBirth:");
+        dateOfBirthLbl.setText("Date Of Birth :");
 
+        patientGenderLbl.setForeground(new java.awt.Color(255, 255, 255));
         patientGenderLbl.setMaximumSize(new java.awt.Dimension(40, 14));
         patientGenderLbl.setMinimumSize(new java.awt.Dimension(40, 14));
         patientGenderLbl.setPreferredSize(new java.awt.Dimension(40, 14));
+
+        patientDateOfBirthLbl.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -657,11 +683,15 @@ String dateForAnalysis="";
 
         placeOfBirthLbl.setForeground(new java.awt.Color(255, 255, 255));
         placeOfBirthLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        placeOfBirthLbl.setText("PlaceOFBirth:");
+        placeOfBirthLbl.setText("Place Of Birth :");
 
         cityLbl.setForeground(new java.awt.Color(255, 255, 255));
         cityLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        cityLbl.setText("City:");
+        cityLbl.setText("City :");
+
+        patientPlaceOfBirthLbl.setForeground(new java.awt.Color(255, 255, 255));
+
+        patientCityLbl.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -696,11 +726,15 @@ String dateForAnalysis="";
 
         phoneLbl.setForeground(new java.awt.Color(255, 255, 255));
         phoneLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        phoneLbl.setText("Phone:");
+        phoneLbl.setText("Phone :");
 
         emailLbl.setForeground(new java.awt.Color(255, 255, 255));
         emailLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        emailLbl.setText("Email:");
+        emailLbl.setText("Email :");
+
+        patientPhoneLbl.setForeground(new java.awt.Color(255, 255, 255));
+
+        patientEmailLbl.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -711,11 +745,11 @@ String dateForAnalysis="";
                 .addComponent(phoneLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(patientPhoneLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addGap(51, 51, 51)
                 .addComponent(emailLbl)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(patientEmailLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -724,7 +758,7 @@ String dateForAnalysis="";
                     .addComponent(phoneLbl)
                     .addComponent(patientPhoneLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+            .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(emailLbl))
             .addComponent(patientEmailLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -735,7 +769,8 @@ String dateForAnalysis="";
         jScrollPane1.setViewportView(allergiesTxtf);
 
         allergiesLbl.setForeground(new java.awt.Color(255, 255, 255));
-        allergiesLbl.setText("Allergies:");
+        allergiesLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        allergiesLbl.setText("Allergies :");
 
         remarkTxtf.setColumns(20);
         remarkTxtf.setRows(5);
@@ -804,6 +839,8 @@ String dateForAnalysis="";
         jScrollPane5.setMaximumSize(new java.awt.Dimension(166, 56));
         jScrollPane5.setMinimumSize(new java.awt.Dimension(166, 56));
         jScrollPane5.setPreferredSize(new java.awt.Dimension(166, 56));
+        
+
         complaintTxtf.setColumns(20);
         complaintTxtf.setLineWrap(true);
         complaintTxtf.setRows(5);
@@ -1059,6 +1096,11 @@ String dateForAnalysis="";
         mainScrollPane.setBounds(0, 340, 502, 260);
 
         seeAllCBox.setText("All");
+        seeAllCBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seeAllCBoxActionPerformed(evt);
+            }
+        });
         backgroundPanel.add(seeAllCBox);
         seeAllCBox.setBounds(520, 10, 37, 23);
 
@@ -1129,7 +1171,7 @@ String dateForAnalysis="";
         );
 
         backgroundPanel.add(jPanel1);
-        jPanel1.setBounds(530, 580, 490, 23);
+        jPanel1.setBounds(530, 580, 530, 23);
 
         getContentPane().add(backgroundPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1080, 620));
 
@@ -1249,6 +1291,10 @@ String dateForAnalysis="";
     private void complaintTxtfMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_complaintTxtfMouseWheelMoved
        
     }//GEN-LAST:event_complaintTxtfMouseWheelMoved
+
+    private void seeAllCBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seeAllCBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_seeAllCBoxActionPerformed
     
     private void printDocotorVisitPdf(String directory){
         Document document=new Document();
@@ -1825,25 +1871,25 @@ String dateForAnalysis="";
 
     private void clearObject() {
         infoLbl.setText("");
-        infoLbl.setForeground(Color.BLACK);
+        infoLbl.setForeground(Color.WHITE);
         patientNameLbl.setText("");
-        nameLbl.setForeground(Color.BLACK);
+        nameLbl.setForeground(Color.WHITE);
         patientGenderLbl.setText("");
-        genderLbl.setForeground(Color.BLACK);
+        genderLbl.setForeground(Color.WHITE);
         patientDateOfBirthLbl.setText("");
-        dateOfBirthLbl.setForeground(Color.BLACK);
+        dateOfBirthLbl.setForeground(Color.WHITE);
         patientPlaceOfBirthLbl.setText("");
-        placeOfBirthLbl.setForeground(Color.BLACK);
+        placeOfBirthLbl.setForeground(Color.WHITE);
         patientCityLbl.setText("");
-        cityLbl.setForeground(Color.BLACK);
+        cityLbl.setForeground(Color.WHITE);
         patientEmailLbl.setText("");
-        emailLbl.setForeground(Color.BLACK);
+        emailLbl.setForeground(Color.WHITE);
         patientPhoneLbl.setText("");
-        phoneLbl.setForeground(Color.BLACK);
+        phoneLbl.setForeground(Color.WHITE);
         allergiesTxtf.setText("");
-        allergiesLbl.setForeground(Color.BLACK);
+        allergiesLbl.setForeground(Color.WHITE);
         remarkTxtf.setText("");
-        remarkLbl.setForeground(Color.BLACK);
+        remarkLbl.setForeground(Color.WHITE);
         visitTbl.clearSelection();
     }
     
@@ -1933,26 +1979,26 @@ String dateForAnalysis="";
     public void setPatientData(Patient patient) {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         patientNameLbl.setText(patient.getName() + " (" + patient.getParentName() + ") " + patient.getSurname());
-        nameLbl.setForeground(Color.BLUE);
+        nameLbl.setForeground(Color.WHITE);
         patientGenderLbl.setText(patient.getGender());
-        genderLbl.setForeground(Color.BLUE);
+        genderLbl.setForeground(Color.WHITE);
         patientDateOfBirthLbl.setText(dateFormat.format(patient.getDateOfBirth()));
-        dateOfBirthLbl.setForeground(Color.BLUE);
+        dateOfBirthLbl.setForeground(Color.WHITE);
         patientPlaceOfBirthLbl.setText(patient.getPlaceOFBirth());
-        placeOfBirthLbl.setForeground(Color.BLUE);
+        placeOfBirthLbl.setForeground(Color.WHITE);
         patientCityLbl.setText(patient.getCity());
-        cityLbl.setForeground(Color.BLUE);
+        cityLbl.setForeground(Color.WHITE);
         patientEmailLbl.setText(patient.getEmail());
-        emailLbl.setForeground(Color.BLUE);
+        emailLbl.setForeground(Color.WHITE);
         patientPhoneLbl.setText(patient.getPhone());
-        phoneLbl.setForeground(Color.BLUE);
+        phoneLbl.setForeground(Color.WHITE);
         allergiesTxtf.setText(patient.getAllergies());
-        allergiesLbl.setForeground(Color.BLUE);
+        allergiesLbl.setForeground(Color.WHITE);
         if(currentUser.getRole().equals("Doctor"))
             remarkTxtf.setText(((DoctorVisit)mainVisit).getRemark());
         else
             remarkTxtf.setText(((AnalysisVisit)mainVisit).getRemark());
-        remarkLbl.setForeground(Color.BLUE);
+        remarkLbl.setForeground(Color.WHITE);
     }
     
 }

@@ -24,7 +24,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class AddMessage extends javax.swing.JInternalFrame {
+public class Messages extends javax.swing.JInternalFrame {
 
     StaffInterface staffIr;
     MessageInterface messageIr;
@@ -35,7 +35,7 @@ public class AddMessage extends javax.swing.JInternalFrame {
     List<Staff> staffList;
     MainFrame mainFrame;
     
-    public AddMessage(EntityManager entityManager, Staff currentUser,MainFrame mainFrame) {
+    public Messages(EntityManager entityManager, Staff currentUser,MainFrame mainFrame) {
         initComponents();
         this.entityManager = entityManager;
         this.currentUser = currentUser;
@@ -340,7 +340,7 @@ public class AddMessage extends javax.swing.JInternalFrame {
         try {
             seenAllMessagesMethod();
         } catch (AppException ex) {
-            Logger.getLogger(AddMessage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Messages.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
     
@@ -376,7 +376,11 @@ public class AddMessage extends javax.swing.JInternalFrame {
             throw new AppException("The message cannot contain more than 500 letters.");
         }
     }
-
+    
+    private void setRowColor(){
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton clearBtn;

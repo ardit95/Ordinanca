@@ -487,8 +487,8 @@ public class SetPatientToVisit extends javax.swing.JFrame {
         }
         if(patientDataFrame instanceof SeeVisits){
             ((SeeVisits)patientDataFrame).setPatientData(patient);
-        }else if (patientDataFrame instanceof AddDetailsToVisit){
-            ((AddDetailsToVisit)patientDataFrame).setPatientData(patient);
+        }else if (patientDataFrame instanceof Visits){
+            ((Visits)patientDataFrame).setPatientData(patient);
         }
     }
     
@@ -513,7 +513,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
                     birthplaceTxtf.setText("");
                     cityTxtf.setText("");
                     allergiesTxtf.setText("");
-                    infoLbl.setForeground(Color.BLACK);
+                    infoLbl.setForeground(Color.WHITE);
                     infoLbl.setText("");
                 }
             }

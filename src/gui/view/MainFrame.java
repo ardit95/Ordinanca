@@ -22,7 +22,7 @@ public class MainFrame extends javax.swing.JFrame {
     Staff currentUser;
     StaffInterface staffIr;
     MessageInterface messageIr;
-    AddMessage addMessage;
+    Messages addMessage;
     public Thread messagesThread;
     boolean keepRunning=true;
     
@@ -74,6 +74,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 }
                             }
                             if(currentUser.getRole().equals("Doctor")||currentUser.getRole().equals("LaboratorTechnician")){
+
                                 jButton7.setForeground(Color.RED);
                                 jButton7.setText("Messages ("+numberOfMessagesUnseen+")");
                             }else if(currentUser.getRole().equals("Recepsion")){
@@ -246,7 +247,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
     
         if(addMessage==null)
-            addMessage = new AddMessage(entityManager, currentUser,this);
+            addMessage = new Messages(entityManager, currentUser,this);
         if(desktopPane.getSelectedFrame()!=addMessage){
             desktopPane.add(addMessage);
             addMessage.show();
@@ -308,7 +309,7 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        AddDetailsToVisit addDetailsToVisit = new AddDetailsToVisit(entityManager,currentUser,this);
+        Visits addDetailsToVisit = new Visits(entityManager,currentUser,this);
         desktopPane.add(addDetailsToVisit);
         addDetailsToVisit.show();
     }
@@ -326,6 +327,21 @@ public class MainFrame extends javax.swing.JFrame {
         SeeReports seeReports = new SeeReports();
         desktopPane.add(seeReports);
         seeReports.show();
+    }
+    
+    public void addPrintVisits() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
+        } catch (PropertyVetoException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+        PrintVisits printVisits= new PrintVisits(entityManager, currentUser,this);
+        desktopPane.add(printVisits);
+        printVisits.show();
     }
 
     @SuppressWarnings("unchecked")
@@ -602,7 +618,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();
@@ -648,7 +664,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();
@@ -693,7 +709,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();
@@ -736,7 +752,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();
@@ -779,7 +795,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();
@@ -822,7 +838,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();
@@ -851,7 +867,46 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        switch(jButton7.getText()){
+            case "Add Patient":
+                addAddPatient();
+                break;
+            case "See Visits":
+                addSeeVisits();//zevendso
+                break;
+            case "Create Visits":
+                addCreateVisit();
+                break;
+            case "Visits":
+                addVisit();
+                break;
+            case "Print Visits":
+                addPrintVisits();
+                break;
+            case "Messages":
+                addMessage();
+                break;
+            case "Search":
+                addSearch();
+                break;
+            case "Add User":
+                addAddUsers();
+                break;
+            case "Export Reports":
+                addExportReports();
+                break;
+            case "Logs":
+                addLogs();
+                break;
+            case "Print Reports":
+                addPrintReports();
+                break;    
+            default:
+                if(jButton7.getText().contains("Message"))
+                    addMessage();
+                else
+                JOptionPane.showMessageDialog(null, "Kontakto Administratorin !");
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -6,7 +6,7 @@ import ejb.DoctorVisit;
 import ejb.Visit;
 import static gui.model.DoctorVisitTableModel.columnNames;
 import static gui.model.DoctorVisitTableModel.today;
-import gui.view.AddDetailsToVisit;
+import gui.view.Visits;
 import gui.view.SeeVisits;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;

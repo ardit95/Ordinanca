@@ -63,11 +63,11 @@ public class DoctorVisitRepository extends EntMngClass implements DoctorVisitInt
 
     @Override
     public List<DoctorVisit> findAll() {
-        return em.createNamedQuery("DoctorVisitRepository.findAll").getResultList();
+        return em.createNamedQuery("DoctorVisit.findAll").getResultList();
     }
 
     @Override
-    public List<DoctorVisit> findPresentAndFuture(Staff currentUser) {
+    public List<DoctorVisit> findPresentAndFutureForCurrentUser(Staff currentUser) {
         Query query = em.createQuery("SELECT Object (doctorVisit) FROM DoctorVisit doctorVisit WHERE FUNC('date',doctorVisit.timeStamp)>= FUNC('date',CURRENT_TIMESTAMP) AND doctorVisit.doctorID.username = :currentU ORDER BY doctorVisit.timeStamp ");
         query.setParameter("currentU",currentUser.getUsername());
         return (List<DoctorVisit>)query.getResultList();
@@ -78,6 +78,19 @@ public class DoctorVisitRepository extends EntMngClass implements DoctorVisitInt
         Query query = em.createQuery("SELECT Object (doctorVisit) FROM DoctorVisit doctorVisit WHERE doctorVisit.doctorID.username = :currentU ORDER BY doctorVisit.timeStamp DESC ");
         query.setParameter("currentU",currentUser.getUsername());
         return (List<DoctorVisit>)query.getResultList();
+    }
+    
+    @Override
+    public List<DoctorVisit> findPresentAndFuture() {
+        Query query = em.createQuery("SELECT Object (doctorVisit) FROM DoctorVisit doctorVisit WHERE FUNC('date',doctorVisit.timeStamp)>= FUNC('date',CURRENT_TIMESTAMP) ORDER BY doctorVisit.timeStamp ");
+        return (List<DoctorVisit>)query.getResultList();
+    }
+    
+    @Override
+    public List<DoctorVisit> findByAll(String text) {
+        Query query = em.createQuery("SELECT object (dv) FROM DoctorVisit dv WHERE dv.patientID.name LIKE :txt OR dv.patientID.surname LIKE :txt OR dv.doctorID.name LIKE :txt OR dv.doctorID.surname LIKE :txt OR dv.remark LIKE :txt");
+        query.setParameter("txt", "%" + text + "%");
+        return (List<DoctorVisit>) query.getResultList();
     }
     
 }

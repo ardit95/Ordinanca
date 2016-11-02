@@ -78,8 +78,8 @@ public class MainFrame extends javax.swing.JFrame {
                                 jButton6.setText("Messages ("+numberOfMessagesUnseen+")");
                             }
                             if(currentUser.getRole().equals("Recepsion")){
-                                jButton4.setForeground(Color.red);
-                                jButton4.setText("Messages ("+numberOfMessagesUnseen+")");
+                                jButton5.setForeground(Color.red);
+                                jButton5.setText("Messages ("+numberOfMessagesUnseen+")");
                             }
                             if(currentUser.getRole().equals("Director")){
                                 jButton3.setForeground(Color.red);
@@ -92,8 +92,8 @@ public class MainFrame extends javax.swing.JFrame {
                                 jButton6.setText("Messages ("+numberOfMessagesUnseen+")");
                             }
                             if(currentUser.getRole().equals("Recepsion")){
-                                jButton4.setForeground(new Color(204,255,204));
-                                jButton4.setText("Messages ("+numberOfMessagesUnseen+")");
+                                jButton5.setForeground(new Color(204,255,204));
+                                jButton5.setText("Messages ("+numberOfMessagesUnseen+")");
                             }
                             if(currentUser.getRole().equals("Director")){
                                 jButton3.setForeground(new Color(204,255,204));
@@ -328,6 +328,21 @@ public class MainFrame extends javax.swing.JFrame {
         SeeReports seeReports = new SeeReports();
         desktopPane.add(seeReports);
         seeReports.show();
+    }
+    
+    public void addPrintVisits() {
+        try {
+            if (desktopPane.getSelectedFrame() != null) {
+                desktopPane.getSelectedFrame().setClosed(true);
+            }
+        } catch (PropertyVetoException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+        PrintVisits printVisits= new PrintVisits(entityManager, currentUser,this);
+        desktopPane.add(printVisits);
+        printVisits.show();
     }
 
     @SuppressWarnings("unchecked")
@@ -585,7 +600,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();
@@ -631,7 +646,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();
@@ -676,7 +691,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();
@@ -719,7 +734,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();
@@ -762,7 +777,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();
@@ -805,7 +820,7 @@ public class MainFrame extends javax.swing.JFrame {
                 addVisit();
                 break;
             case "Print Visits":
-                JOptionPane.showMessageDialog(null, "Duhet me kriju qet frame");
+                addPrintVisits();
                 break;
             case "Messages":
                 addMessage();

@@ -15,4 +15,6 @@ public interface DiagnosisInterface {
     List<Diagnosis> findAll();
     
     List<Diagnosis> findByDiagnosisForVisit(int DoctorVisitID);
+    
+    List<Diagnosis> findByDoctorVisit(int DoctorVisitID);
 }

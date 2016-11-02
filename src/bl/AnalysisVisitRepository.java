@@ -62,11 +62,11 @@ public class AnalysisVisitRepository extends EntMngClass implements AnalysisVisi
 
     @Override
     public List<AnalysisVisit> findAll() {
-        return em.createNamedQuery("AnalysisVisitRepository.findAll").getResultList();
+        return em.createNamedQuery("AnalysisVisit.findAll").getResultList();
     }
 
     @Override
-    public List<AnalysisVisit> findPresentAndFuture(Staff currentUser) {
+    public List<AnalysisVisit> findPresentAndFutureForCurrentUser(Staff currentUser) {
         Query query = em.createQuery("SELECT Object (analysisVisit) FROM AnalysisVisit analysisVisit WHERE FUNC('date',analysisVisit.timeStamp )>= FUNC('date',CURRENT_TIMESTAMP) AND analysisVisit.laboratorTechnicianID.username = :currentU ORDER BY analysisVisit.timeStamp ");
         query.setParameter("currentU",currentUser.getUsername());
         return (List<AnalysisVisit>)query.getResultList();
@@ -77,5 +77,19 @@ public class AnalysisVisitRepository extends EntMngClass implements AnalysisVisi
         Query query = em.createQuery("SELECT Object (analysisVisit) FROM AnalysisVisit analysisVisit WHERE analysisVisit.laboratorTechnicianID.username = :currentU ORDER BY analysisVisit.timeStamp DESC ");
         query.setParameter("currentU",currentUser.getUsername());
         return (List<AnalysisVisit>)query.getResultList();
+    }
+    
+    @Override
+    public List<AnalysisVisit> findPresentAndFuture() {
+        Query query = em.createQuery("SELECT Object (analysisVisit) FROM AnalysisVisit analysisVisit WHERE FUNC('date',analysisVisit.timeStamp )>= FUNC('date',CURRENT_TIMESTAMP)ORDER BY analysisVisit.timeStamp ");
+        
+        return (List<AnalysisVisit>)query.getResultList();
+    }
+    
+    @Override
+    public List<AnalysisVisit> findByAll(String text) {
+        Query query = em.createQuery("SELECT object (av) FROM AnalysisVisit av WHERE av.patientID.name LIKE :txt OR av.patientID.surname LIKE :txt OR av.laboratorTechnicianID.name LIKE :txt OR av.laboratorTechnicianID.surname LIKE :txt OR av.remark LIKE :txt");
+        query.setParameter("txt", "%" + text + "%");
+        return (List<AnalysisVisit>) query.getResultList();
     }
 }

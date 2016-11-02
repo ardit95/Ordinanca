@@ -15,4 +15,6 @@ public interface AnalysisInterface {
     List<Analysis> findAll();
     
     List<Analysis> findByAnalysisForVisit(int AnalysisVisitID);
+    
+    List<Analysis> findByAnalysisVisit(int AnalysisVisitID);
 }

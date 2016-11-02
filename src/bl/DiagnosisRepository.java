@@ -70,4 +70,11 @@ public class DiagnosisRepository extends EntMngClass implements DiagnosisInterfa
         query.setParameter("doctorVisitID", DoctorVisitID);
         return (List<Diagnosis>) query.getResultList();
     }
+    
+    @Override
+    public List<Diagnosis> findByDoctorVisit(int DoctorVisitID) {
+        Query query = em.createQuery("SELECT Object (d) FROM Diagnosis d ,DiagnosisForVisit dfv,DoctorVisit dv WHERE dfv.diagnosisID.diagnosisID=d.diagnosisID AND dfv.doctorVisitID.DoctorVisitID =dv.DoctorVisitID AND dv.DoctorVisitID= :doctorVisitID ");
+        query.setParameter("doctorVisitID", DoctorVisitID);
+        return (List<Diagnosis>) query.getResultList();
+    }
 }

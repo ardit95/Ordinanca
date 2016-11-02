@@ -15,7 +15,11 @@ public interface AnalysisVisitInterface {
 
     List<AnalysisVisit> findAll();
 
-    List<AnalysisVisit> findPresentAndFuture(Staff currentUser);
+    List<AnalysisVisit> findPresentAndFutureForCurrentUser(Staff currentUser);
 
     List<AnalysisVisit> findAllForCurrentUser(Staff currentUser);
+    
+    List<AnalysisVisit> findPresentAndFuture();
+    
+    List<AnalysisVisit> findByAll(String text);
 }

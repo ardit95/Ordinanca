@@ -376,7 +376,11 @@ public class AddMessage extends javax.swing.JInternalFrame {
             throw new AppException("The message cannot contain more than 500 letters.");
         }
     }
-
+    
+    private void setRowColor(){
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton clearBtn;

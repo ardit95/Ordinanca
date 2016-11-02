@@ -14,6 +14,7 @@ import ejb.DoctorVisit;
 import ejb.Logs;
 import ejb.Patient;
 import ejb.Staff;
+import ejb.Visit;
 import gui.model.PatientTableModel;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
@@ -39,32 +41,17 @@ public class SetPatientToVisit extends javax.swing.JFrame {
     PatientTableModel patientTM;
     EntityManager entityManager;
     Staff currentUser;
-    DoctorVisit mainDoctorVisit;
-    AnalysisVisit mainAnalysisVisit;
-    AddDetailsToVisit addDetailsToVisit;
+    Visit mainVisit;
     MainFrame mainFrame;
-    public SetPatientToVisit(AddDetailsToVisit addDetailsToVisit, DoctorVisit mainDoctorVisit,EntityManager entityManager,Staff currentUser,MainFrame mainFrame) {
+    JInternalFrame patientDataFrame;
+    public SetPatientToVisit(Visit mainVisit,EntityManager entityManager,Staff currentUser,MainFrame mainFrame,JInternalFrame patientDataFrame) {
         initComponents();
+        this.patientDataFrame=patientDataFrame;
         this.entityManager=entityManager;
         initInterfaces();
         initTableModel();
         this.currentUser=currentUser;
-        this.mainDoctorVisit=mainDoctorVisit;
-        this.addDetailsToVisit=addDetailsToVisit;
-        this.mainFrame=mainFrame;
-        patientTableLoad();
-        searchTxtfListener();
-        patientTblListeners();
-    }
-    
-    public SetPatientToVisit(AddDetailsToVisit addDetailsToVisit, AnalysisVisit mainAnalysisVisit,EntityManager entityManager,Staff currentUser,MainFrame mainFrame) {
-        initComponents();
-        this.entityManager=entityManager;
-        initInterfaces();
-        initTableModel();
-        this.currentUser=currentUser;
-        this.mainAnalysisVisit=mainAnalysisVisit;
-        this.addDetailsToVisit=addDetailsToVisit;
+        this.mainVisit=mainVisit;
         this.mainFrame=mainFrame;
         patientTableLoad();
         searchTxtfListener();
@@ -383,12 +370,12 @@ public class SetPatientToVisit extends javax.swing.JFrame {
     
     public void validation()throws AppException{
         if(currentUser.getRole().equals("Doctor")){
-        if (mainDoctorVisit.getPatientID() != null) {
+        if (((DoctorVisit)mainVisit).getPatientID() != null) {
             this.dispose();
             throw new AppException("This visit got a patient assigned.");
         }
         }else if (currentUser.getRole().equals("LaboratorTechnician")){
-            if(mainAnalysisVisit.getPatientID()!=null){
+            if(((AnalysisVisit)mainVisit).getPatientID()!=null){
                 this.dispose();
                 throw new AppException("This analysis got a patient assigned.");
             }
@@ -480,11 +467,28 @@ public class SetPatientToVisit extends javax.swing.JFrame {
 
     private void editVisit(Patient patient)throws AppException {
         if(currentUser.getRole().equals("Doctor")){
-            mainDoctorVisit.setPatientID(patient);
-            doctorVisitIr.edit(mainDoctorVisit);
+            DoctorVisit doctorVisit=((DoctorVisit)mainVisit);
+            doctorVisit.setPatientID(patient);
+            doctorVisitIr.edit(doctorVisit);
         }else if (currentUser.getRole().equals("LaboratorTechnician")){
-            mainAnalysisVisit.setPatientID(patient);
-            mainAnalysisIr.edit(mainAnalysisVisit);
+            AnalysisVisit analysisVisit=((AnalysisVisit)mainVisit);
+            analysisVisit.setPatientID(patient);
+            mainAnalysisIr.edit(analysisVisit);
+        }else if (currentUser.getRole().equals("Recepsion")){
+            if(mainVisit instanceof DoctorVisit){
+                DoctorVisit doctorVisit=((DoctorVisit)mainVisit);
+                doctorVisit.setPatientID(patient);
+                doctorVisitIr.edit(doctorVisit);
+            }else if (mainVisit instanceof AnalysisVisit){
+                AnalysisVisit analysisVisit=((AnalysisVisit)mainVisit);
+                analysisVisit.setPatientID(patient);
+                mainAnalysisIr.edit(analysisVisit);
+            }
+        }
+        if(patientDataFrame instanceof SeeVisits){
+            ((SeeVisits)patientDataFrame).setPatientData(patient);
+        }else if (patientDataFrame instanceof Visits){
+            ((Visits)patientDataFrame).setPatientData(patient);
         }
     }
     
@@ -509,7 +513,7 @@ public class SetPatientToVisit extends javax.swing.JFrame {
                     birthplaceTxtf.setText("");
                     cityTxtf.setText("");
                     allergiesTxtf.setText("");
-                    infoLbl.setForeground(Color.BLACK);
+                    infoLbl.setForeground(Color.WHITE);
                     infoLbl.setText("");
                 }
             }

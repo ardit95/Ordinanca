@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "AnalysisVisit.findByRemark", query = "SELECT a FROM AnalysisVisit a WHERE a.remark = :remark"),
     @NamedQuery(name = "AnalysisVisit.findByTypeOfVisit", query = "SELECT a FROM AnalysisVisit a WHERE a.typeOfVisit = :typeOfVisit"),
     @NamedQuery(name = "AnalysisVisit.findByFinished", query = "SELECT a FROM AnalysisVisit a WHERE a.finished = :finished")})
-public class AnalysisVisit implements Serializable {
+public class AnalysisVisit extends Visit implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

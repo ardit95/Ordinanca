@@ -71,6 +71,12 @@ public class AnalysisVisitRepository extends EntMngClass implements AnalysisVisi
         query.setParameter("currentU",currentUser.getUsername());
         return (List<AnalysisVisit>)query.getResultList();
     }
+    
+    @Override
+    public List<AnalysisVisit> findPresentAndFuture() {
+        Query query = em.createQuery("SELECT Object (analysisVisit) FROM AnalysisVisit analysisVisit WHERE FUNC('date',analysisVisit.timeStamp )>= FUNC('date',CURRENT_TIMESTAMP) ORDER BY analysisVisit.timeStamp ");
+        return (List<AnalysisVisit>)query.getResultList();
+    }
 
     @Override
     public List<AnalysisVisit> findAllForCurrentUser(Staff currentUser) {
@@ -79,12 +85,6 @@ public class AnalysisVisitRepository extends EntMngClass implements AnalysisVisi
         return (List<AnalysisVisit>)query.getResultList();
     }
     
-    @Override
-    public List<AnalysisVisit> findPresentAndFuture() {
-        Query query = em.createQuery("SELECT Object (analysisVisit) FROM AnalysisVisit analysisVisit WHERE FUNC('date',analysisVisit.timeStamp )>= FUNC('date',CURRENT_TIMESTAMP)ORDER BY analysisVisit.timeStamp ");
-        
-        return (List<AnalysisVisit>)query.getResultList();
-    }
     
     @Override
     public List<AnalysisVisit> findByAll(String text) {

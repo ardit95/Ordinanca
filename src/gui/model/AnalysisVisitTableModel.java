@@ -90,4 +90,9 @@ public class AnalysisVisitTableModel extends AbstractTableModel {
     public void remove(int rowIndex) {
         data.remove(rowIndex);
     }
+
+    public void clear() {
+        if(data!=null)
+            data.clear();
+    }
 }

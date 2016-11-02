@@ -254,7 +254,8 @@ public class Login extends javax.swing.JFrame {
         logsIr.create(logs);*/
             if (numberOfLogins == 0) {
                 this.dispose();
-                new PasswordChangeFrame(currentUser).setVisible(true);
+                PasswordChangeFrame passFrame=new PasswordChangeFrame(currentUser);
+                passFrame.setVisible(true);
             } else {
                 MainFrame mainFrame = new MainFrame(emc.getEntityManager(), currentUser);
                 mainFrame.setVisible(true);

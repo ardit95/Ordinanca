@@ -18,6 +18,7 @@ import gui.model.PatientTableModel;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -420,7 +421,10 @@ public class CreateVisit extends javax.swing.JInternalFrame {
     
     private void createDoctorVisit() throws AppException, StopException {
         int rowNumber;
-        DoctorVisit doctorVisit = new DoctorVisit(remarkTxtf.getText().trim(), staffList.get(staffCombo.getSelectedIndex()), currentUser);
+        DoctorVisit doctorVisit = new DoctorVisit(
+                remarkTxtf.getText().trim(), 
+                staffList.get(staffCombo.getSelectedIndex()), 
+                currentUser);
         doctorVisit.setTypeOfVisit(visitCombo.getSelectedItem().toString());
         if (autoDateCBox.isSelected()) {
             doctorVisit.setTimeStamp(new LogsRepository(entityManager).findDate());
@@ -510,12 +514,16 @@ public class CreateVisit extends javax.swing.JInternalFrame {
             visitComboListener();
         }
         else if (currentUser.getRole().equals("Doctor")){
+            staffList=new ArrayList<Staff>(1);
+            staffList.add(currentUser);
             visitCombo.addItem("Choose");
             visitCombo.addItem("Control");
             visitCombo.addItem("Treatment");
             visitCombo.addItem("Ultrasound");
             staffCombo.addItem(currentUser.toString());
         }else if (currentUser.getRole().equals("LaboratorTechnician")){
+            staffList=new ArrayList<Staff>(1);
+            staffList.add(currentUser);
             visitCombo.addItem("Choose");
             visitCombo.addItem("Biochemical Analysis");
             visitCombo.addItem("Microbiology Analysis");

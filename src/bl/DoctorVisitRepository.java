@@ -74,17 +74,18 @@ public class DoctorVisitRepository extends EntMngClass implements DoctorVisitInt
     }
     
     @Override
+    public List<DoctorVisit> findPresentAndFuture() {
+        Query query = em.createQuery("SELECT Object (doctorVisit) FROM DoctorVisit doctorVisit WHERE FUNC('date',doctorVisit.timeStamp)>= FUNC('date',CURRENT_TIMESTAMP) ORDER BY doctorVisit.timeStamp ");
+        return (List<DoctorVisit>)query.getResultList();
+    }
+    
+    @Override
     public List<DoctorVisit> findAllForCurrentUser(Staff currentUser) {
         Query query = em.createQuery("SELECT Object (doctorVisit) FROM DoctorVisit doctorVisit WHERE doctorVisit.doctorID.username = :currentU ORDER BY doctorVisit.timeStamp DESC ");
         query.setParameter("currentU",currentUser.getUsername());
         return (List<DoctorVisit>)query.getResultList();
     }
     
-    @Override
-    public List<DoctorVisit> findPresentAndFuture() {
-        Query query = em.createQuery("SELECT Object (doctorVisit) FROM DoctorVisit doctorVisit WHERE FUNC('date',doctorVisit.timeStamp)>= FUNC('date',CURRENT_TIMESTAMP) ORDER BY doctorVisit.timeStamp ");
-        return (List<DoctorVisit>)query.getResultList();
-    }
     
     @Override
     public List<DoctorVisit> findByAll(String text) {

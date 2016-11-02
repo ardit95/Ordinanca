@@ -100,7 +100,7 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
             Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
             Statement statement = conn.createStatement();
             statement.executeQuery("USE Ordinanca;");
-            statement.executeQuery("SET PASSWORD FOR '" + staff.getUsername() + "'@'%.%.%.%' =PASSWORD('" + text + "'); ");
+            statement.executeQuery("SET PASSWORD FOR '" + staff.getUsername() + "'@'%' =PASSWORD('" + text + "'); ");
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -147,7 +147,7 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
             Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
             Statement statement = conn.createStatement();
             statement.executeQuery("USE Ordinanca;");
-            statement.executeQuery("SET PASSWORD FOR '" + staff.getUsername() + "'@'%.%.%.%' =PASSWORD('12345678'); ");
+            statement.executeQuery("SET PASSWORD FOR '" + staff.getUsername() + "'@'%' =PASSWORD('12345678'); ");
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, ex.getMessage());

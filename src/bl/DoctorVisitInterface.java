@@ -3,6 +3,8 @@ package bl;
 import ExceptionPackage.AppException;
 import ejb.DoctorVisit;
 import ejb.Staff;
+import ejb.Visit;
+import java.util.Collection;
 import java.util.List;
 
 public interface DoctorVisitInterface {

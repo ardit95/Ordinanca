@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "DoctorVisit.findByRemark", query = "SELECT d FROM DoctorVisit d WHERE d.remark = :remark"),
     @NamedQuery(name = "DoctorVisit.findByFinished", query = "SELECT d FROM DoctorVisit d WHERE d.finished = :finished"),
     @NamedQuery(name = "DoctorVisit.findByTypeOfVisit", query = "SELECT d FROM DoctorVisit d WHERE d.typeOfVisit = :typeOfVisit")})
-public class DoctorVisit implements Serializable {
+public class DoctorVisit extends Visit implements Serializable {
     
     private static final long serialVersionUID = 1L;
     @Id

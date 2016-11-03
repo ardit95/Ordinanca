@@ -131,7 +131,7 @@ public class Messages extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Message");
+        setTitle("Messages");
         setMaximumSize(new java.awt.Dimension(1100, 654));
         setMinimumSize(new java.awt.Dimension(1100, 654));
         setPreferredSize(new java.awt.Dimension(1100, 654));
@@ -191,6 +191,7 @@ public class Messages extends javax.swing.JInternalFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        messageTxtf.setBackground(new java.awt.Color(204, 255, 204));
         messageTxtf.setColumns(20);
         messageTxtf.setLineWrap(true);
         messageTxtf.setRows(5);

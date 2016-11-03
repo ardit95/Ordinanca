@@ -59,8 +59,10 @@ public class DiagnosisForVisitTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         DiagnosisForVisit DiagnosisForVisit = (DiagnosisForVisit) data.get(rowIndex);
+        SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
         switch (columnNames[columnIndex]) {
             /*"DiagnosisForVisitID","CurrentPrice","DiagnosisID","DoctorVisitID","Patient","Complaint","Examination","Therapy","Date","Price"*/
+            
             case "DiagnosisForVisitID":
                 return DiagnosisForVisit.getDiagnosisForVisitID();
             case "CurrentPrice":
@@ -78,7 +80,7 @@ public class DiagnosisForVisitTableModel extends AbstractTableModel {
             case "Therapy":
                 return DiagnosisForVisit.getDiagnosisID().getTherapy();
             case "Date":
-                return DiagnosisForVisit.getDoctorVisitID().getTimeStamp();
+                return sdf.format(DiagnosisForVisit.getDoctorVisitID().getTimeStamp());
             case "Price":
                 return DiagnosisForVisit.getDoctorVisitID().getSumPrice();
             default:

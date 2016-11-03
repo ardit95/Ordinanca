@@ -17,5 +17,7 @@
     <class>ejbView.ReportMonthAnalysisVisit</class>
     <class>ejbView.ReportMonthDoctorVisit</class>
     <class>ejb.Analysisvisit_1</class>
+    <class>ejbView.ReportMonthAnalysisSales</class>
+    <class>ejbView.ReportMonthVisitSales</class>
   </persistence-unit>
 </persistence>

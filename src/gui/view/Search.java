@@ -45,7 +45,7 @@ public class Search extends javax.swing.JInternalFrame {
         patientTM = new PatientTableModel(columnNamesPatientTableModel);
         String[] columnNamesAnalysisTableModel = {"Patient", "Analysis", "Date","Price"};
         analysisForVisitTM = new AnalysisForVisitTableModel(columnNamesAnalysisTableModel);
-        String[] columnNamesDiagnosisTableModel = {"Patient", "Complaint", "Examiantion","Therapy", "Date","Price"};
+        String[] columnNamesDiagnosisTableModel = {"Patient", "Complaint", "Examination","Therapy", "Date","Price"};
         diagnosisForVisitTM = new DiagnosisForVisitTableModel(columnNamesDiagnosisTableModel);
         
         clickMoveKey();
@@ -126,6 +126,8 @@ public class Search extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(null);
+
+        searchTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.add(searchTxtf);
         searchTxtf.setBounds(120, 20, 400, 25);
 

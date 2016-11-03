@@ -116,7 +116,7 @@ public class CreateVisit extends javax.swing.JInternalFrame {
         clearBtn = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Create Doctor Visit");
+        setTitle("Create Visit");
         setMaximumSize(new java.awt.Dimension(1100, 654));
         setMinimumSize(new java.awt.Dimension(1100, 654));
         setPreferredSize(new java.awt.Dimension(1100, 654));
@@ -144,6 +144,7 @@ public class CreateVisit extends javax.swing.JInternalFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        remarkTxtf.setBackground(new java.awt.Color(204, 255, 204));
         remarkTxtf.setColumns(20);
         remarkTxtf.setLineWrap(true);
         remarkTxtf.setRows(5);
@@ -156,6 +157,7 @@ public class CreateVisit extends javax.swing.JInternalFrame {
         staffLbl1.setForeground(new java.awt.Color(255, 255, 255));
         staffLbl1.setText("Time of Visit:");
 
+        dateCalendar.setBackground(new java.awt.Color(204, 255, 204));
         dateCalendar.setDateFormatString("dd-MM-yyyy");
 
         autoDateCBox.setForeground(new java.awt.Color(255, 255, 255));

@@ -113,8 +113,8 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
         Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
         Statement statement = conn.createStatement();
         statement.executeUpdate("USE Ordinanca;");
-        statement.executeUpdate("CREATE USER IF NOT EXISTS '" + staff.getUsername() + "'@'%.%.%.%' IDENTIFIED BY '" + text + "'; ");
-        statement.executeUpdate("GRANT SELECT,DELETE,UPDATE,INSERT ON Ordinanca.* TO '" + staff.getUsername() + "'@'%.%.%.%';");
+        statement.executeUpdate("CREATE USER IF NOT EXISTS '" + staff.getUsername() + "'@'localhost' IDENTIFIED BY '" + text + "'; ");
+        statement.executeUpdate("GRANT SELECT,DELETE,UPDATE,INSERT ON Ordinanca.* TO '" + staff.getUsername() + "'@'localhost';");
     }
 
     @Override
@@ -123,7 +123,7 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
         Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
         Statement statement = conn.createStatement();
         statement.executeUpdate("USE Ordinanca;");
-        statement.executeUpdate("DROP USER '" + staff.getUsername() + "'@'%.%.%.%'");
+        statement.executeUpdate("DROP USER '" + staff.getUsername() + "'@'localhost'");
 
     }
 

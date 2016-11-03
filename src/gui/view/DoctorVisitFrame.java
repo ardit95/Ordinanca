@@ -51,6 +51,7 @@ public class DoctorVisitFrame extends javax.swing.JFrame {
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Doctor Visit");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
@@ -99,22 +100,27 @@ public class DoctorVisitFrame extends javax.swing.JFrame {
         jLabel7.setBounds(20, 460, 120, 30);
 
         patientTxtf.setEditable(false);
+        patientTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.add(patientTxtf);
         patientTxtf.setBounds(150, 20, 200, 30);
 
         doctorTxtf.setEditable(false);
+        doctorTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.add(doctorTxtf);
         doctorTxtf.setBounds(150, 60, 200, 30);
 
         dateTxtf.setEditable(false);
+        dateTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.add(dateTxtf);
         dateTxtf.setBounds(150, 410, 200, 30);
 
         priceTxtf.setEditable(false);
+        priceTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.add(priceTxtf);
         priceTxtf.setBounds(150, 460, 200, 30);
 
         examinationTxtf.setEditable(false);
+        examinationTxtf.setBackground(new java.awt.Color(204, 255, 204));
         examinationTxtf.setColumns(20);
         examinationTxtf.setLineWrap(true);
         examinationTxtf.setRows(5);
@@ -125,6 +131,7 @@ public class DoctorVisitFrame extends javax.swing.JFrame {
         jScrollPane1.setBounds(150, 210, 360, 80);
 
         therapyTxtf.setEditable(false);
+        therapyTxtf.setBackground(new java.awt.Color(204, 255, 204));
         therapyTxtf.setColumns(20);
         therapyTxtf.setLineWrap(true);
         therapyTxtf.setRows(5);
@@ -135,6 +142,7 @@ public class DoctorVisitFrame extends javax.swing.JFrame {
         jScrollPane2.setBounds(150, 310, 360, 80);
 
         complaintTxtf.setEditable(false);
+        complaintTxtf.setBackground(new java.awt.Color(204, 255, 204));
         complaintTxtf.setColumns(20);
         complaintTxtf.setLineWrap(true);
         complaintTxtf.setRows(5);

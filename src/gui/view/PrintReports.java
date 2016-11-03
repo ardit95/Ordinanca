@@ -1,40 +1,65 @@
 package gui.view;
 
+import ejbView.ReportMonthAnalysisSales;
+import ejbView.ReportMonthVisitSales;
+import ejb.Staff;
+
+import bl.ReportMonthAnalysisSalesInterface;
+import bl.ReportMonthVisitSalesInterface;
+import bl.ReportMonthAnalysisSalesRepository;
+import bl.ReportMonthVisitSalesRepository;
+
+import gui.model.ReportMonthAnalysisSalesTableModel;
+import gui.model.ReportMonthVisitSalesTableModel;
+
 import java.awt.Dimension;
-import java.awt.Font;
-import java.io.FileOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
+
 import java.util.List;
 import javax.swing.JOptionPane;
 
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.draw.VerticalPositionMark;
-import java.awt.HeadlessException;
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 import javax.swing.JFileChooser;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class PrintReports extends javax.swing.JInternalFrame {
-
-    public PrintReports() {
+    
+    Staff currentUser;
+    EntityManager entityManager;
+    
+    ReportMonthAnalysisSalesInterface analysisSalesIr;
+    ReportMonthVisitSalesInterface visitSalesIr;
+    
+    ReportMonthAnalysisSalesTableModel analysisSalesTM;
+    ReportMonthVisitSalesTableModel visitSalesTM;
+    public PrintReports(Staff currentUser,EntityManager entityManager) {
+        this.currentUser=currentUser;
+        this.entityManager=entityManager;
         initComponents();
+        initInterfaces();
+        initTableModels();
         this.setLocation(220, 10);
         this.setPreferredSize(new Dimension(1100, 654));
+        reportMonthSalesTableLoad();
     }
 
     /**
@@ -46,41 +71,267 @@ public class PrintReports extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        reportMonthSalesTbl = new javax.swing.JTable();
+        background = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Print Reports");
         setMaximumSize(new java.awt.Dimension(1100, 654));
         setMinimumSize(new java.awt.Dimension(1100, 654));
         setPreferredSize(new java.awt.Dimension(1100, 654));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Printo PDF");
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setLayout(null);
+
+        jButton1.setBackground(new java.awt.Color(0, 153, 102));
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(204, 255, 204));
+        jButton1.setText("Printo Excel");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(20, 20, 215, 46);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(816, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(67, 67, 67)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(511, Short.MAX_VALUE))
-        );
+        reportMonthSalesTbl.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(reportMonthSalesTbl);
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 82, 1050, 530);
+
+        background.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.add(background);
+        background.setBounds(0, 0, 1075, 620);
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void reportMonthSalesTableLoad(){
+        if(currentUser.getRole().equals("Doctor")){
+            List<ReportMonthVisitSales>visitSales=visitSalesIr.findAll();
+            visitSalesTM.add(visitSales);
+            reportMonthSalesTbl.setModel(visitSalesTM);
+            visitSalesTM.fireTableDataChanged();
+        }
+        else if(currentUser.getRole().equals("LaboratorTechnician")){
+            List<ReportMonthAnalysisSales>analysisSales=analysisSalesIr.findAll();
+            analysisSalesTM.add(analysisSales);
+            reportMonthSalesTbl.setModel(analysisSalesTM);
+            analysisSalesTM.fireTableDataChanged();
+        }
+    }
+    
+    private void exportExcel(String directory) throws IOException{
+        XSSFWorkbook wb=new XSSFWorkbook();
+        XSSFSheet ws=wb.createSheet();
+        TableModel tm=reportMonthSalesTbl.getModel();
+        int rows=tm.getRowCount();
+        int columns=tm.getColumnCount();
+        
+        
+        TreeMap<String ,Object[]> data=new TreeMap<>();
+        
+        String[] strs=new String [columns];
+        
+        
+        
+        
+        
+        for(int i=0;i<columns;i++){
+            strs[i]=tm.getColumnName(i);
+        }
+        
+        data.put("-1", strs);
+        
+        Object[] o;
+        for(int i=0;i<rows;i++){
+            o=new Object[columns];
+            for(int j=0;j<columns;j++){
+                o[j]= tm.getValueAt(i, j);
+            }
+         data.put(Integer.toString(i),o);
+         
+        }
+        
+        
+        XSSFRow row;
+        int rowID=0;
+        
+        int [] keyat=new int[rows+1];
+        
+        for(int i=0;i<rows+1;i++){
+            keyat[i]=i-1;
+        }
+        
+        
+        
+        for(int key: keyat){
+            row=ws.createRow(rowID++);
+            Object[] values=data.get(Integer.toString(key));
+            int cellID=0;
+            for(Object obj: values){
+                Cell cell=row.createCell(cellID++);
+                cell.setCellValue(obj.toString());
+                
+            }
+        }
+        
+        for(int i=0;i<columns;i++){
+            ws.autoSizeColumn(i);
+        }
+        
+        
+        XSSFCellStyle style =wb.createCellStyle();
+        style.setFillForegroundColor(new XSSFColor(new java.awt.Color(53,100,57)));
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style.setBottomBorderColor(IndexedColors.RED.getIndex());
+        XSSFFont font = wb.createFont();
+        font.setColor(IndexedColors.WHITE.getIndex());
+        font.setBold(true);
+        font.setFontHeight(12);
+        style.setFont(font);
+        
+        XSSFCellStyle style2 =wb.createCellStyle();
+        style2.setBorderBottom(HSSFCellStyle.BORDER_DOTTED);
+        style2.setBorderTop(HSSFCellStyle.BORDER_DOTTED);
+        style2.setBorderLeft(HSSFCellStyle.BORDER_NONE);
+        style2.setBorderRight(HSSFCellStyle.BORDER_NONE);
+        style2.setBottomBorderColor(IndexedColors.RED.getIndex());
+        style2.setTopBorderColor(IndexedColors.RED.getIndex());
+        for(int i=0;i<tm.getColumnCount();i++){
+            ws.getRow(0).getCell(i).setCellStyle(style);
+            
+        }
+        
+        for(int i=0;i<tm.getColumnCount();i++){
+            for(int j=0;j<tm.getRowCount();j++){
+                if(j!=0){
+                    ws.getRow(j).getCell(i).setCellStyle(style2);
+                } 
+            }     
+        }
+        String r=rows+"";
+        String r2=getCol(columns);
+        
+        String range="A1:"+r2+r;
+        
+        ws.setAutoFilter(CellRangeAddress.valueOf(range));
+        ws.setDisplayGridlines(true);
+        
+        
+        /*if(tbl.getModel()==tvtm)
+            exportTrainingView(tm,ws);
+        else if(tbl.getModel()==pvtm)
+            exportParticipantView(tm,ws);  
+        else if(tbl.getModel()==rtevvtm){
+            exportEvaluationView(tm,ws);
+        }*/
+        try{
+            FileOutputStream fos;
+            fos = new FileOutputStream(new File(directory+emertoFilin(reportMonthSalesTbl)+".xlsx"));
+             
+            wb.write(fos);
+            fos.close();
+            JOptionPane.showMessageDialog(null,"U ruajt me sukses");
+        }catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null,"File është i hapur.Mbylleni file-in per ta ruajtur");
+        }
+        
+    }
+    
+    
+    
+    public String getCol(int i){
+        switch(i){
+            case 0:
+                return "A";
+            case 1:
+                return "A";
+            case 2:
+                return "B";
+            case 3:
+                return "C";
+            case 4:
+                return "D";
+            case 5:
+                return "E";
+            case 6:
+                return "F";
+            case 7:
+                return "G";
+            case 8:
+                return "H";
+            case 9:
+                return "I";
+            case 10:
+                return "J";
+            case 11:
+                return "K";
+            case 12:
+                return "L";
+            case 13:
+                return "M";
+            case 14:
+                return "N";
+            case 15:
+                return "O";
+            case 16:
+                return "P";
+            case 17:
+                return "Q";
+            case 18:
+                return "R";
+            case 19:
+                return "S";
+            case 20:
+                return "T";    
+            case 21:
+                return "U";
+            case 22:
+                return "V";
+            case 23:
+                return "W";
+            case 24:
+                return "X";
+            case 25:
+                return "Y";
+            case 26:
+                return "Z";
+            default:
+                return null;
+        }
+    }
+    
+    private String emertoFilin(JTable tbl) {
+     String t="Raport";
+     
+                
+                if(tbl.getModel()==visitSalesTM||tbl.getModel()==analysisSalesTM){
+                    t="Raporti i shitjeve "+currentUser.getName()+" "+currentUser.getSurname();
+                }
+                
+        return t;
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         JFileChooser chooser = new JFileChooser(); 
@@ -98,7 +349,11 @@ public class PrintReports extends javax.swing.JInternalFrame {
             
             directory=chooser.getSelectedFile().toString()+"\\";
             
-                printPdf(directory);
+            try {
+                exportExcel(directory);
+            } catch (IOException ex) {
+                Logger.getLogger(PrintReports.class.getName()).log(Level.SEVERE, null, ex);
+            }
        
         }
         else{
@@ -107,150 +362,26 @@ public class PrintReports extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
     
-    private void printPdf(String directory){
-        Document document=new Document();
-        try{
-            String patientName="Filan";
-            String patientSurname="Fisteku";
-            String patientGender="M";
-            String patientBirthDate="11-02-1972";
-            String patientAllergies="Peniciline,Amoksicelin,Polen";
-            String doctorName="Halim";
-            String doctorSurname="Kadrushi";
-            String complaint="Dhembje koke";
-            String anamnesis="Migren frontale";
-            String examination="Grip sezonal";
-            String therapy="Antibiotik , qaj kamomil";
-            String recommendation="Pushim dhe qetsi";
-            String price="20,00";
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date date = new Date();
-            String today=(dateFormat.format(26/10/2016));
-            
-            
-           
-            
-            String path=directory+" "+patientName+" "+patientSurname+" - "+doctorName+" "+doctorSurname+" - "+".pdf";
-            PdfWriter.getInstance(document, new FileOutputStream(path));
-            document.open();
-           
-            
-            
-            
-            Paragraph para=new Paragraph();
-            Chunk t=new Chunk("Klinika Mjeksore diqka",FontFactory.getFont(FontFactory.HELVETICA,18,Font.BOLD));
-            Chunk space=new Chunk("\n");
-            Phrase prat=new Phrase();
-            
-            prat.add(space);
-            prat.add(space);
-            prat.add(t);
-            para.setAlignment(Element.ALIGN_CENTER);
-            para.add(prat);
-           
-            document.add(para);
-            
-            
-            
-            Phrase pha1=new Phrase();
-            Phrase pha2=new Phrase();
-            Phrase pha3=new Phrase();
-            
-            Paragraph para1=new Paragraph();
-            Paragraph para2=new Paragraph();
-            Paragraph para3=new Paragraph();
-            
-            Chunk glue2 = new Chunk(new VerticalPositionMark());
-            
-            
-            Chunk c1=new Chunk("Pacienti :"+patientName+" "+patientSurname,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            
-            Chunk c2=new Chunk("Gjinia :"+patientGender+"                                    Data e Lindjes :"+patientBirthDate,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            
-            Chunk c3=new Chunk("Alergjitë :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            Chunk c4=new Chunk(patientAllergies);
-            
-            
-            pha1.add(space);
-            pha1.add(space);
-            pha1.add(c1);
-            pha1.add(space);
-            pha1.add(c2);
-            pha1.add(space);
-            pha1.add(c3);
-            pha1.add(space);
-            pha1.add(c4);
-            
-            
-            para1.add(pha1);
-            
-            Chunk c10=new Chunk("Ankesat :",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            Chunk c11=new Chunk(complaint);
-            Chunk c12=new Chunk("Anamnesis ",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            Chunk c13=new Chunk(anamnesis);
-            Chunk c14=new Chunk("Examination :"+patientAllergies,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            Chunk c15=new Chunk(examination);
-            Chunk c16=new Chunk("Therapy ",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            Chunk c17=new Chunk(therapy);
-            Chunk c18=new Chunk("Recommendation :"+patientAllergies,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            Chunk c19=new Chunk(recommendation);
-            
-            pha2.add(space);
-            pha2.add(space);
-            pha2.add(c10);
-            pha2.add(space);
-            pha2.add(c11);
-            pha2.add(space);
-            pha2.add(c12);
-            pha2.add(space);
-            pha2.add(c13);
-            pha2.add(space);
-            pha2.add(c14);
-            pha2.add(space);
-            pha2.add(c15);
-            pha2.add(space);
-            pha2.add(c16);
-            pha2.add(space);
-            pha2.add(c17);
-            pha2.add(space);
-            pha2.add(c18);
-            pha2.add(space);
-            pha2.add(c19);
-            
-            para2.add(pha2);
-            
-            
-            Chunk c20=new Chunk("Doktori :"+doctorName+" "+doctorSurname,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            Chunk c21=new Chunk("Data :"+today,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            Chunk c22=new Chunk("Çmimi : "+price,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            
-            pha3.add(space);
-            pha3.add(space);
-            pha3.add(space);
-            pha3.add(c20);
-            pha3.add(space);
-            pha3.add(c21);
-            pha3.add(new Chunk(glue2));
-            pha3.add(c22);
-            
-            para3.add(pha3);
-            
-            
-            
-            document.add(para1);
-            document.add(para2);
-            document.add(para3);
-            
-            
-            
-            document.close();
-            JOptionPane.showMessageDialog(null,"U ruajt me sukses");
-        }catch(FileNotFoundException | DocumentException | HeadlessException e){
-            e.printStackTrace();
-        }
+    
+    
+    private void initInterfaces(){
+        analysisSalesIr=new ReportMonthAnalysisSalesRepository(entityManager);
+        visitSalesIr=new ReportMonthVisitSalesRepository(entityManager);
+       
+    }
+    
+    private void initTableModels(){
+        String [] reportMonthAnalysisSalesColumnNames={"Year","Month","LaboratorTechnicianName","LaboratorTechnicianSurname","NumberOFAnalysis","Sales"};
+        analysisSalesTM=new ReportMonthAnalysisSalesTableModel(currentUser,reportMonthAnalysisSalesColumnNames);
+        String [] reportMonthVisitSalesColumnNames={"Year","Month","DoctorName","DoctorSurname","NumberOFVisits","Sales"};
+        visitSalesTM=new ReportMonthVisitSalesTableModel(currentUser,reportMonthVisitSalesColumnNames);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel background;
     private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable reportMonthSalesTbl;
     // End of variables declaration//GEN-END:variables
 }

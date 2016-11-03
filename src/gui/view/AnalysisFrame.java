@@ -86,22 +86,27 @@ public class AnalysisFrame extends javax.swing.JFrame {
         jLabel6.setBounds(20, 840, 120, 30);
 
         patientTxtf.setEditable(false);
+        patientTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.add(patientTxtf);
         patientTxtf.setBounds(150, 20, 200, 30);
 
         laboratorTechnicianTxtf.setEditable(false);
+        laboratorTechnicianTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.add(laboratorTechnicianTxtf);
         laboratorTechnicianTxtf.setBounds(150, 60, 200, 30);
 
         analysisTxtf.setEditable(false);
+        analysisTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.add(analysisTxtf);
         analysisTxtf.setBounds(150, 100, 400, 30);
 
         dateTxtf.setEditable(false);
+        dateTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.add(dateTxtf);
         dateTxtf.setBounds(150, 800, 200, 30);
 
         priceTxtf.setEditable(false);
+        priceTxtf.setBackground(new java.awt.Color(204, 255, 204));
         priceTxtf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 priceTxtfActionPerformed(evt);
@@ -111,6 +116,7 @@ public class AnalysisFrame extends javax.swing.JFrame {
         priceTxtf.setBounds(150, 840, 200, 30);
 
         resultsTxtf.setEditable(false);
+        resultsTxtf.setBackground(new java.awt.Color(204, 255, 204));
         resultsTxtf.setColumns(20);
         resultsTxtf.setRows(5);
         jScrollPane1.setViewportView(resultsTxtf);

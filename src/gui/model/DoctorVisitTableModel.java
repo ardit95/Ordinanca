@@ -61,8 +61,9 @@ public class DoctorVisitTableModel extends AbstractTableModel {
     
     @Override 
     public Class<?> getColumnClass(int columnIndex) {
-            if(columnIndex==6)
+            if(columnIndex==6){
                 return JButton.class;
+            }
             return String.class;
         }
 
@@ -93,32 +94,33 @@ public class DoctorVisitTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        DoctorVisit DoctorVisit = (DoctorVisit) data.get(rowIndex);
+        DoctorVisit doctorVisit = (DoctorVisit) data.get(rowIndex);
         switch (columnNames[columnIndex]) {
             /*DoctorVisitID Date SumPrice Remark Finished PatientID DoctorID StaffID */
             case "DoctorVisitID":
-                return DoctorVisit.getDoctorVisitID();
+                return doctorVisit.getDoctorVisitID();
             case "Date":
-                if(dateFormat.format(DoctorVisit.getTimeStamp()).equals(dateFormat.format(today)))
+                if(dateFormat.format(doctorVisit.getTimeStamp()).equals(dateFormat.format(today)))
                     return "Today";
-                return dateFormat.format(DoctorVisit.getTimeStamp());
+                return dateFormat.format(doctorVisit.getTimeStamp());
             case "Time":
-                return timeFormat.format(DoctorVisit.getTimeStamp());
+                return timeFormat.format(doctorVisit.getTimeStamp());
             case "SumPrice":
-                return DoctorVisit.getSumPrice();
+                return doctorVisit.getSumPrice();
             case "Visit Type":
-                    return DoctorVisit.getTypeOfVisit();
+                    return doctorVisit.getTypeOfVisit();
             case "Remark":
-                return DoctorVisit.getRemark();
+                return doctorVisit.getRemark();
             case "Finished":
-                return DoctorVisit.getFinished();
+                return doctorVisit.getFinished();
             case "PatientID":
-                return DoctorVisit.getPatientID();
+                return doctorVisit.getPatientID();
             case "DoctorID":
-                return DoctorVisit.getDoctorID();
+                return doctorVisit.getDoctorID();
             case "StaffID":
-                return DoctorVisit.getStaffID();
+                return doctorVisit.getStaffID();
             case "Button":
+                
                 JButton jb=new JButton("Details");
                 if(addDetailsToVisit!=null){
                     jb.addActionListener(new ActionListener() {

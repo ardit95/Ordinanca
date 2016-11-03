@@ -169,20 +169,42 @@ public class AddPatient extends javax.swing.JInternalFrame {
         nameTxtf8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf8.setText("Allergies :");
         jPanel2.add(nameTxtf8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 120, 20));
+
+        nameTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        nameTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel2.add(nameTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 160, 25));
+
+        surnameTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        surnameTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel2.add(surnameTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 160, 25));
+
+        parentNameTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        parentNameTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel2.add(parentNameTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 160, 25));
+
+        phoneTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        phoneTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel2.add(phoneTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 160, 25));
+
+        emailTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        emailTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel2.add(emailTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 160, 25));
+
+        cityTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        cityTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel2.add(cityTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 160, 25));
 
+        dateOfBirthCalendar.setBackground(new java.awt.Color(204, 255, 204));
         dateOfBirthCalendar.setDateFormatString("dd-MM-yyyy");
+        dateOfBirthCalendar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel2.add(dateOfBirthCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 160, 25));
 
         genderCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "null", "M", "F" }));
         jPanel2.add(genderCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 80, 25));
 
+        allergiesTxtf.setBackground(new java.awt.Color(204, 255, 204));
         allergiesTxtf.setColumns(20);
+        allergiesTxtf.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
         allergiesTxtf.setLineWrap(true);
         allergiesTxtf.setRows(5);
         allergiesTxtf.setWrapStyleWord(true);
@@ -224,6 +246,9 @@ public class AddPatient extends javax.swing.JInternalFrame {
         nameTxtf9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         nameTxtf9.setText("City :");
         jPanel2.add(nameTxtf9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 120, 20));
+
+        birthplaceTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        birthplaceTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel2.add(birthplaceTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 160, 25));
 
         jPanel1.add(jPanel2);
@@ -249,6 +274,8 @@ public class AddPatient extends javax.swing.JInternalFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Search :");
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 22, 179, 35));
+
+        searchTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel3.add(searchTxtf, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 300, 35));
 
         jPanel1.add(jPanel3);

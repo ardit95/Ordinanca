@@ -182,18 +182,33 @@ public class AddUsers extends javax.swing.JInternalFrame {
         jLabel10.setText("Gender :");
         jPanel1.add(jLabel10);
         jLabel10.setBounds(20, 220, 140, 20);
+
+        surnameTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        surnameTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel1.add(surnameTxtf);
         surnameTxtf.setBounds(170, 60, 160, 25);
+
+        usernameTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        usernameTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel1.add(usernameTxtf);
         usernameTxtf.setBounds(170, 100, 160, 25);
+
+        nameTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        nameTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel1.add(nameTxtf);
         nameTxtf.setBounds(170, 20, 160, 25);
 
         genderCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "null", "M", "F" }));
         jPanel1.add(genderCombo);
         genderCombo.setBounds(170, 220, 70, 30);
+
+        rePasswordTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        rePasswordTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel1.add(rePasswordTxtf);
         rePasswordTxtf.setBounds(170, 180, 160, 25);
+
+        passwordTxtf.setBackground(new java.awt.Color(204, 255, 204));
+        passwordTxtf.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel1.add(passwordTxtf);
         passwordTxtf.setBounds(170, 140, 160, 25);
 
@@ -212,7 +227,9 @@ public class AddUsers extends javax.swing.JInternalFrame {
         jPanel1.add(roleCombo);
         roleCombo.setBounds(170, 530, 190, 30);
 
+        dateOfBirthCalendar.setBackground(new java.awt.Color(204, 255, 204));
         dateOfBirthCalendar.setDateFormatString("dd-MM-yyyy");
+        dateOfBirthCalendar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jPanel1.add(dateOfBirthCalendar);
         dateOfBirthCalendar.setBounds(170, 260, 150, 30);
 
@@ -256,16 +273,20 @@ public class AddUsers extends javax.swing.JInternalFrame {
         jPanel1.add(jButton1);
         jButton1.setBounds(270, 580, 110, 23);
 
+        specializationTxtf.setBackground(new java.awt.Color(204, 255, 204));
         specializationTxtf.setColumns(20);
+        specializationTxtf.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
         specializationTxtf.setLineWrap(true);
         specializationTxtf.setRows(5);
         specializationTxtf.setWrapStyleWord(true);
         jScrollPane1.setViewportView(specializationTxtf);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(170, 420, 350, 96);
+        jScrollPane1.setBounds(170, 420, 350, 86);
 
+        educationTxtf.setBackground(new java.awt.Color(204, 255, 204));
         educationTxtf.setColumns(20);
+        educationTxtf.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
         educationTxtf.setLineWrap(true);
         educationTxtf.setRows(5);
         educationTxtf.setToolTipText("");
@@ -273,7 +294,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(educationTxtf);
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(170, 310, 350, 96);
+        jScrollPane2.setBounds(170, 310, 350, 86);
 
         jPanel2.setLayout(null);
 
@@ -291,6 +312,8 @@ public class AddUsers extends javax.swing.JInternalFrame {
 
         jPanel2.add(jScrollPane3);
         jScrollPane3.setBounds(10, 60, 520, 530);
+
+        searchTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel2.add(searchTxtf);
         searchTxtf.setBounds(110, 10, 300, 30);
 
@@ -311,7 +334,7 @@ public class AddUsers extends javax.swing.JInternalFrame {
         background.setBackground(new java.awt.Color(102, 102, 102));
         background.setOpaque(true);
         jPanel1.add(background);
-        background.setBounds(0, 0, 1084, 620);
+        background.setBounds(-20, -10, 1084, 620);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1084, 620));
 

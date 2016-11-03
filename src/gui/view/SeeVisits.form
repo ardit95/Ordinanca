@@ -405,7 +405,13 @@
               <SubComponents>
                 <Component class="javax.swing.JTextArea" name="allergiesTxtf">
                   <Properties>
+<<<<<<< HEAD
                     <Property name="editable" type="boolean" value="false"/>
+=======
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="ff" red="cc" type="rgb"/>
+                    </Property>
+>>>>>>> e2100dd8a81261c37e948223d3966d1692d0bd30
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
                   </Properties>
@@ -429,6 +435,9 @@
               <SubComponents>
                 <Component class="javax.swing.JTextArea" name="remarkTxtf">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="ff" red="cc" type="rgb"/>
+                    </Property>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
                   </Properties>
@@ -503,6 +512,9 @@
                 </Component>
                 <Component class="com.toedter.calendar.JDateChooser" name="dateCalendar">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="ff" red="cc" type="rgb"/>
+                    </Property>
                     <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
                   </Properties>
                 </Component>
@@ -524,6 +536,9 @@
                 </Component>
                 <Component class="javax.swing.JComboBox" name="hourCombo">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="ff" red="cc" type="rgb"/>
+                    </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="0"/>
                     </Property>
@@ -542,6 +557,9 @@
                 </Component>
                 <Component class="javax.swing.JComboBox" name="minuteCombo">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="ff" red="cc" type="rgb"/>
+                    </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="0"/>
                     </Property>

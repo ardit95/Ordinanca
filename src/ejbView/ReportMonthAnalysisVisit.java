@@ -30,12 +30,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ReportMonthAnalysisVisit.findByNumriiPacienteve", query = "SELECT r FROM ReportMonthAnalysisVisit r WHERE r.numriiPacienteve = :numriiPacienteve")})
 public class ReportMonthAnalysisVisit implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Column(name = "Viti")
-    private Integer viti;
+    private String viti;
     @Column(name = "Muaji")
     @Id
-    private Integer muaji;
+    private String muaji;
+
+    private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @Column(name = "Numri_i_Analizave")
     private long numriiAnalizave;
@@ -46,21 +47,6 @@ public class ReportMonthAnalysisVisit implements Serializable {
     public ReportMonthAnalysisVisit() {
     }
 
-    public Integer getViti() {
-        return viti;
-    }
-
-    public void setViti(Integer viti) {
-        this.viti = viti;
-    }
-
-    public Integer getMuaji() {
-        return muaji;
-    }
-
-    public void setMuaji(Integer muaji) {
-        this.muaji = muaji;
-    }
 
     public long getNumriiAnalizave() {
         return numriiAnalizave;
@@ -76,6 +62,22 @@ public class ReportMonthAnalysisVisit implements Serializable {
 
     public void setNumriiPacienteve(long numriiPacienteve) {
         this.numriiPacienteve = numriiPacienteve;
+    }
+
+    public String getViti() {
+        return viti;
+    }
+
+    public void setViti(String viti) {
+        this.viti = viti;
+    }
+
+    public String getMuaji() {
+        return muaji;
+    }
+
+    public void setMuaji(String muaji) {
+        this.muaji = muaji;
     }
     
 }

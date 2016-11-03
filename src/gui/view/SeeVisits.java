@@ -85,7 +85,6 @@ public class SeeVisits extends javax.swing.JInternalFrame {
         setPreferredSize(new Dimension(1100, 654));
         setMaximumSize(new Dimension(1100, 654));
         setMinimumSize(new Dimension(1100, 654));
-        setMaximizable(true);
         fillTimeCombos();
         seeVisitFormListeners();
         setPriority();
@@ -750,6 +749,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
         );
 
         allergiesTxtf.setEditable(false);
+        allergiesTxtf.setBackground(new java.awt.Color(204, 255, 204));
         allergiesTxtf.setColumns(20);
         allergiesTxtf.setRows(5);
         jScrollPane1.setViewportView(allergiesTxtf);
@@ -757,6 +757,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
         allergiesLbl.setForeground(new java.awt.Color(255, 255, 255));
         allergiesLbl.setText("Allergies:");
 
+        remarkTxtf.setBackground(new java.awt.Color(204, 255, 204));
         remarkTxtf.setColumns(20);
         remarkTxtf.setRows(5);
         jScrollPane2.setViewportView(remarkTxtf);
@@ -769,6 +770,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
         staffLbl1.setForeground(new java.awt.Color(255, 255, 255));
         staffLbl1.setText("Time of Visit:");
 
+        dateCalendar.setBackground(new java.awt.Color(204, 255, 204));
         dateCalendar.setDateFormatString("dd-MM-yyyy");
 
         autoDateCBox.setForeground(new java.awt.Color(255, 255, 255));
@@ -777,8 +779,12 @@ public class SeeVisits extends javax.swing.JInternalFrame {
         hourLbl.setForeground(new java.awt.Color(255, 255, 255));
         hourLbl.setText("hour:");
 
+        hourCombo.setBackground(new java.awt.Color(204, 255, 204));
+
         minuteLbl.setForeground(new java.awt.Color(255, 255, 255));
         minuteLbl.setText("minute:");
+
+        minuteCombo.setBackground(new java.awt.Color(204, 255, 204));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);

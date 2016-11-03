@@ -89,6 +89,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.DefaultCaret;
 
@@ -160,6 +161,7 @@ String dateForAnalysis="";
         visitTblListeners();
         mainScrollBarMethods();
         setPriority();
+        setRowColors();
     }
     
     public void setPriority(){
@@ -184,7 +186,9 @@ String dateForAnalysis="";
         jScrollPane6.setMinimumSize(new java.awt.Dimension(166, 56));
         jScrollPane6.setPreferredSize(new java.awt.Dimension(166, 56));
         
-
+        priceTxtf.setBackground(new Color(204,255,204)); 
+        resultTxtf.setBackground(new Color(204,255,204));
+        analysisTxtf.setBackground(new Color(204,255,204));
         resultTxtf.setColumns(20);
         resultTxtf.setLineWrap(true);
         resultTxtf.setRows(5);
@@ -193,9 +197,11 @@ String dateForAnalysis="";
         resultTxtf.setMaximumSize(new java.awt.Dimension(164, 94));
         resultTxtf.setMinimumSize(new java.awt.Dimension(164, 94));
         resultTxtf.setEditable(true);
+        
         jScrollPane6.setViewportView(resultTxtf);
         priceTxtf.setEditable(true);
-
+        
+        
         resultsLbl.setForeground(new java.awt.Color(255, 255, 255));
         resultsLbl.setText("Results:");
         titleOfAnalysisLbl.setText("Title Of Analysis:");
@@ -764,6 +770,7 @@ String dateForAnalysis="";
             .addComponent(patientEmailLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        allergiesTxtf.setBackground(new java.awt.Color(204, 255, 204));
         allergiesTxtf.setColumns(20);
         allergiesTxtf.setRows(5);
         jScrollPane1.setViewportView(allergiesTxtf);
@@ -772,6 +779,7 @@ String dateForAnalysis="";
         allergiesLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         allergiesLbl.setText("Allergies :");
 
+        remarkTxtf.setBackground(new java.awt.Color(204, 255, 204));
         remarkTxtf.setColumns(20);
         remarkTxtf.setRows(5);
         jScrollPane2.setViewportView(remarkTxtf);
@@ -839,8 +847,8 @@ String dateForAnalysis="";
         jScrollPane5.setMaximumSize(new java.awt.Dimension(166, 56));
         jScrollPane5.setMinimumSize(new java.awt.Dimension(166, 56));
         jScrollPane5.setPreferredSize(new java.awt.Dimension(166, 56));
-        
 
+        complaintTxtf.setBackground(new java.awt.Color(204, 255, 204));
         complaintTxtf.setColumns(20);
         complaintTxtf.setLineWrap(true);
         complaintTxtf.setRows(5);
@@ -892,6 +900,7 @@ String dateForAnalysis="";
         jScrollPane6.setMinimumSize(new java.awt.Dimension(166, 56));
         jScrollPane6.setPreferredSize(new java.awt.Dimension(166, 56));
 
+        anamnesisTxtf.setBackground(new java.awt.Color(204, 255, 204));
         anamnesisTxtf.setColumns(20);
         anamnesisTxtf.setLineWrap(true);
         anamnesisTxtf.setRows(5);
@@ -934,6 +943,7 @@ String dateForAnalysis="";
         jScrollPane7.setMinimumSize(new java.awt.Dimension(166, 56));
         jScrollPane7.setPreferredSize(new java.awt.Dimension(166, 56));
 
+        examinationTxtf.setBackground(new java.awt.Color(204, 255, 204));
         examinationTxtf.setColumns(20);
         examinationTxtf.setLineWrap(true);
         examinationTxtf.setRows(5);
@@ -976,6 +986,7 @@ String dateForAnalysis="";
         jScrollPane8.setMinimumSize(new java.awt.Dimension(166, 56));
         jScrollPane8.setPreferredSize(new java.awt.Dimension(166, 56));
 
+        therapyTxtf.setBackground(new java.awt.Color(204, 255, 204));
         therapyTxtf.setColumns(20);
         therapyTxtf.setLineWrap(true);
         therapyTxtf.setRows(5);
@@ -1018,6 +1029,7 @@ String dateForAnalysis="";
         jScrollPane9.setMinimumSize(new java.awt.Dimension(166, 56));
         jScrollPane9.setPreferredSize(new java.awt.Dimension(166, 56));
 
+        recommendationTxtf.setBackground(new java.awt.Color(204, 255, 204));
         recommendationTxtf.setColumns(20);
         recommendationTxtf.setLineWrap(true);
         recommendationTxtf.setRows(5);
@@ -1051,6 +1063,8 @@ String dateForAnalysis="";
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2))
         );
+
+        priceTxtf.setBackground(new java.awt.Color(204, 255, 204));
 
         priceLbl.setForeground(new java.awt.Color(255, 255, 255));
         priceLbl.setText("Price:");
@@ -1251,37 +1265,42 @@ String dateForAnalysis="";
         chooser.setAcceptAllFileFilterUsed(false);
         //    
         
-        if(visitTbl.getModel()==doctorVisitTM&&selectedRow>-1){
-            if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+        if(visitTbl.getModel()==doctorVisitTM){
+            if(selectedRow>-1){
+                if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
 
-                directory=chooser.getSelectedFile().toString()+"\\";
+                    directory=chooser.getSelectedFile().toString()+"\\";
 
-                    printDocotorVisitPdf(directory);
+                        printDocotorVisitPdf(directory);
 
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Duhet te zgjedhni lokacionin se ku deshironi te ruani file ");
-            }
-        }
-        else{
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Duhet te zgjedhni lokacionin se ku deshironi te ruani file ");
+                }
+            }else{
             JOptionPane.showMessageDialog(this, "Choose a visit to print !");
+            }
+            
         }
         
-        if(visitTbl.getModel()==analysisVisitTM&&selectedRow>-1){
-            if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+        
+        if(visitTbl.getModel()==analysisVisitTM){
+            if(selectedRow>-1){
+                if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
 
-                directory=chooser.getSelectedFile().toString()+"\\";
+                    directory=chooser.getSelectedFile().toString()+"\\";
 
-                    printAnalysisVisitPdf(directory);
+                        printAnalysisVisitPdf(directory);
 
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Duhet te zgjedhni lokacionin se ku deshironi te ruani file ");
-            }
-        }
-        else{
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Duhet te zgjedhni lokacionin se ku deshironi te ruani file ");
+                }
+            }else{
             JOptionPane.showMessageDialog(this, "Choose a visit to print !");
         }
+        }
+        
     }//GEN-LAST:event_printBtnActionPerformed
 
     private void jPanel5MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jPanel5MouseWheelMoved
@@ -1551,7 +1570,7 @@ String dateForAnalysis="";
         priceForVisit=selectedDoctorVisit.getSumPrice()+"";
         dateForVisit=sdf.format(selectedDoctorVisit.getTimeStamp());
         
-        List<Diagnosis>diagnosis=diagnosisIr.findByDiagnosisForVisit(doctorVisitId);
+        List<Diagnosis>diagnosis=diagnosisIr.findByDoctorVisit(doctorVisitId);
         String allComplaints="";
         String allAnamnesis="";
         String allExaminations="";
@@ -1606,7 +1625,7 @@ String dateForAnalysis="";
         priceForAnalysis=selectedAnalysisVisit.getSumPrice()+"";
         dateForAnalysis=sdf.format(selectedAnalysisVisit.getTimeStamp());
         
-        List<Analysis> analysis=analysisIr.findByAnalysisForVisit(analysisVisitId);
+        List<Analysis> analysis=analysisIr.findByAnalysisVisit(analysisVisitId);
         String allAnalysis="";
         String allResults="";
         for(int i=0;i<analysis.size();i++){
@@ -2001,4 +2020,36 @@ String dateForAnalysis="";
         remarkLbl.setForeground(Color.WHITE);
     }
     
+    private void setRowColors(){
+        if(visitTbl.getModel()==doctorVisitTM||visitTbl.getModel()==analysisVisitTM){
+        visitTbl.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            @Override
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+                
+                String status="";
+                for(int i=0;i<visitTbl.getColumnCount();i++){
+                    if(visitTbl.getColumnName(i).equals("Finished")){
+                        status=(String)table.getModel().getValueAt(row, i);
+                    }
+                }
+                    
+                if ("No".equals(status)) {
+                    setBackground(new Color(255,200,200));
+                    visitTbl.setSelectionForeground(new Color(0,120,215));
+                    setForeground(Color.BLACK);
+                }
+                else {
+                    setBackground(new Color(200,255,200));
+                    visitTbl.setSelectionForeground(new Color(0,120,215));
+                    setForeground(Color.BLACK);
+                }       
+                
+                return this;
+            }   
+        });
+       }
+    }
 }

@@ -147,6 +147,7 @@ String dateForAnalysis="";
 
         setClosable(true);
         setResizable(true);
+        setTitle("Print Visits");
         setPreferredSize(new java.awt.Dimension(1090, 650));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

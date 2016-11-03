@@ -103,8 +103,12 @@ public class SeeLogs extends javax.swing.JInternalFrame {
         jLabel3.setToolTipText("");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(10, 30, 150, 25);
+
+        messageTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.add(messageTxtf);
         messageTxtf.setBounds(170, 90, 750, 30);
+
+        searchTxtf.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.add(searchTxtf);
         searchTxtf.setBounds(170, 28, 220, 30);
 

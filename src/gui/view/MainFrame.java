@@ -264,7 +264,7 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-        PrintReports printReports = new PrintReports();
+        PrintReports printReports = new PrintReports(currentUser,entityManager);
         desktopPane.add(printReports);
         printReports.show();
     }

@@ -369,18 +369,6 @@ public class SetPatientToVisit extends javax.swing.JFrame {
     }
     
     public void validation()throws AppException{
-        if(currentUser.getRole().equals("Doctor")){
-        if (((DoctorVisit)mainVisit).getPatientID() != null) {
-            this.dispose();
-            throw new AppException("This visit got a patient assigned.");
-        }
-        }else if (currentUser.getRole().equals("LaboratorTechnician")){
-            if(((AnalysisVisit)mainVisit).getPatientID()!=null){
-                this.dispose();
-                throw new AppException("This analysis got a patient assigned.");
-            }
-        }
-        
         if (nameTxtf.getText().trim().isEmpty()) {
             nameTxtf.requestFocus();
             throw new AppException("The name cannot be empty.");
@@ -486,7 +474,8 @@ public class SetPatientToVisit extends javax.swing.JFrame {
             }
         }
         if(patientDataFrame instanceof SeeVisits){
-            ((SeeVisits)patientDataFrame).setPatientData(patient);
+            ((SeeVisits)patientDataFrame).
+                    setPatientData(patient);
         }else if (patientDataFrame instanceof Visits){
             ((Visits)patientDataFrame).setPatientData(patient);
         }

@@ -18,6 +18,8 @@ import gui.model.PatientTableModel;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -382,6 +384,8 @@ public class CreateVisit extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, ae.getMessage());
         }catch(StopException se){
             se.printStackTrace();
+        }catch(ParseException pe){
+            
         }
         synchronized(mainFrame.messagesThread){
             mainFrame.keepRunning = true;
@@ -389,18 +393,28 @@ public class CreateVisit extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_saveBtnActionPerformed
     
-    private void createAnalysisVisit()throws AppException,StopException{
+    private void createAnalysisVisit()throws AppException,StopException, ParseException{
         int rowNumber;
         AnalysisVisit analysisVisit= new AnalysisVisit(remarkTxtf.getText().trim(),staffList.get(staffCombo.getSelectedIndex()),currentUser);
         analysisVisit.setTypeOfVisit(visitCombo.getSelectedItem().toString());
         if(autoDateCBox.isSelected()){
             analysisVisit.setTimeStamp(new LogsRepository(entityManager).findDate());
         }else {
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(dateCalendar.getDate());
-            cal.add(Calendar.HOUR_OF_DAY, hourCombo.getSelectedIndex() - 1);
-            cal.add(Calendar.MINUTE, minuteCombo.getSelectedIndex() - 1);
-            analysisVisit.setTimeStamp(cal.getTime());
+            String temp;
+            String completeDate="";
+            SimpleDateFormat dateFormat=new SimpleDateFormat("HH-mm-dd-MM-yyyy");
+            temp=Integer.toString(hourCombo.getSelectedIndex()-1);
+            if(temp.length()==1)
+                temp="0"+temp;
+            completeDate+=temp;
+            temp=Integer.toString(minuteCombo.getSelectedIndex()-1);
+            if(temp.length()==1)
+                temp="0"+temp;
+            completeDate+="-"+temp;
+            temp=new SimpleDateFormat("dd-MM-yyyy").format(dateCalendar.getDate());
+            completeDate+="-"+temp;
+            JOptionPane.showMessageDialog(null,completeDate);
+            analysisVisit.setTimeStamp(dateFormat.parse(completeDate));
         }
         if ((rowNumber = patientTbl.getSelectedRow()) == -1) {
             String[] opcionet = {"Po", "Jo"};

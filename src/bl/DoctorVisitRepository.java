@@ -55,10 +55,19 @@ public class DoctorVisitRepository extends EntMngClass implements DoctorVisitInt
     }
 
     @Override
-    public void remove(DoctorVisit DoctorVisit) {
-        em.getTransaction().begin();
-        em.remove(DoctorVisit);
-        em.getTransaction().commit();
+    public void remove(DoctorVisit DoctorVisit) throws AppException{
+        try{
+            em.getTransaction().begin();
+            em.remove(DoctorVisit);
+            em.getTransaction().commit();
+        }catch(Throwable thro){
+            thro.printStackTrace();
+            if(thro.getMessage().equals("")){
+                throw new AppException ("shto diqka ");
+            }else{
+                throw new AppException("Class"+thro.getClass()+" - "+thro.getMessage());
+            }
+        }
     }
 
     @Override

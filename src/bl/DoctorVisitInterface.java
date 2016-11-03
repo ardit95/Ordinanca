@@ -13,7 +13,7 @@ public interface DoctorVisitInterface {
 
     void edit(DoctorVisit DoctorVisit) throws AppException;
 
-    void remove(DoctorVisit DoctorVisit);
+    void remove(DoctorVisit DoctorVisit)throws AppException;
 
     List<DoctorVisit> findAll();
 

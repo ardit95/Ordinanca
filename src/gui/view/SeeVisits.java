@@ -14,6 +14,7 @@ import bl.DiagnosisInterface;
 import bl.DiagnosisRepository;
 import bl.DoctorVisitInterface;
 import bl.DoctorVisitRepository;
+import bl.LogsRepository;
 import bl.PatientInterface;
 import bl.PatientRepository;
 import ejb.AnalysisVisit;
@@ -35,11 +36,13 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.CheckBox;
@@ -63,7 +66,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
     VisitTableModel visitTM;
     AnalysisVisitTableModel analysisVisitTM;
     DoctorVisitInterface doctorVisitIr;
-    DiagnosisInterface diagnosisIr=new DiagnosisRepository(entityManager);
+    DiagnosisInterface diagnosisIr = new DiagnosisRepository(entityManager);
     DiagnosisForVisitInterface diagnosisForVisitIr;
     AnalysisVisitInterface analysisVisitIr;
     PatientInterface patientIr;
@@ -71,10 +74,10 @@ public class SeeVisits extends javax.swing.JInternalFrame {
     AnalysisForVisitInterface analysisForVisitIr;
     Visit mainVisit;
 
-    public SeeVisits(EntityManager entityManager,Staff currentUser,MainFrame mainFrame) {
-        this.currentUser=currentUser;
-        this.entityManager=entityManager;
-        this.mainFrame=mainFrame;
+    public SeeVisits(EntityManager entityManager, Staff currentUser, MainFrame mainFrame) {
+        this.currentUser = currentUser;
+        this.entityManager = entityManager;
+        this.mainFrame = mainFrame;
         initComponents();
         initInterfaces();
         initTableModels();
@@ -88,17 +91,17 @@ public class SeeVisits extends javax.swing.JInternalFrame {
         setPriority();
         visitTableLoad();
     }
-    
-    public void setPriority(){
-        if(currentUser.getRole().equals("Recepsion")){
+
+    public void setPriority() {
+        if (currentUser.getRole().equals("Recepsion")) {
             doctorVisitCBox.setSelected(true);
             analysisVisitCBox.setSelected(true);
-        }else{
+        } else {
             doctorVisitCBox.setVisible(false);
             analysisVisitCBox.setVisible(false);
         }
     }
-    
+
     private void clearObject() {
         infoLbl.setText("");
         infoLbl.setForeground(Color.WHITE);
@@ -120,40 +123,40 @@ public class SeeVisits extends javax.swing.JInternalFrame {
         allergiesLbl.setForeground(Color.WHITE);
         remarkTxtf.setText("");
         remarkLbl.setForeground(Color.WHITE);
-        mainVisit=null;
         visitTbl.clearSelection();
     }
-    
-    public void visitTblListeners(){
+
+    public void visitTblListeners() {
         tableMoveKey();
         clickMoveKey();
     }
-    
+
     private void initInterfaces() {
-        doctorVisitIr=new DoctorVisitRepository(entityManager);
-        diagnosisIr=new DiagnosisRepository(entityManager);
-        diagnosisForVisitIr= new DiagnosisForVisitRepository(entityManager);
-        analysisVisitIr=new AnalysisVisitRepository(entityManager);
-        patientIr= new PatientRepository(entityManager);
-        analysisIr=new AnalysisRepository(entityManager);
-        analysisForVisitIr=new AnalysisForVisitRepository(entityManager);
+        doctorVisitIr = new DoctorVisitRepository(entityManager);
+        diagnosisIr = new DiagnosisRepository(entityManager);
+        diagnosisForVisitIr = new DiagnosisForVisitRepository(entityManager);
+        analysisVisitIr = new AnalysisVisitRepository(entityManager);
+        patientIr = new PatientRepository(entityManager);
+        analysisIr = new AnalysisRepository(entityManager);
+        analysisForVisitIr = new AnalysisForVisitRepository(entityManager);
     }
-    
-    private void initTableModels(){
-        String[] doctorVisitColumns={"PatientID","Visit Type","Date","Time","SumPrice","Finished","Button"};
-        doctorVisitTM=new DoctorVisitTableModel(doctorVisitColumns,this);
-        String[] diagnosisForVisitColumns={"Complaint","Examination","Therapy","CurrentPrice"};
-        diagnosisForVisitTM=new DiagnosisForVisitTableModel(diagnosisForVisitColumns);
-        String[] analysisVisitColumns={"PatientID","Visit Type","Date","Time","SumPrice","Finished"};
-        analysisVisitTM= new AnalysisVisitTableModel(analysisVisitColumns);
-        String[] visitColumns={"PatientID","Visit Type","Date","Time","SumPrice","Finished"};
-        visitTM= new VisitTableModel(visitColumns,this);
+
+    private void initTableModels() {
+        String[] doctorVisitColumns = {"PatientID", "Visit Type", "Date", "Time", "SumPrice", "Finished", "Button"};
+        doctorVisitTM = new DoctorVisitTableModel(doctorVisitColumns, this);
+        String[] diagnosisForVisitColumns = {"Complaint", "Examination", "Therapy", "CurrentPrice"};
+        diagnosisForVisitTM = new DiagnosisForVisitTableModel(diagnosisForVisitColumns);
+        String[] analysisVisitColumns = {"PatientID", "Visit Type", "Date", "Time", "SumPrice", "Finished"};
+        analysisVisitTM = new AnalysisVisitTableModel(analysisVisitColumns);
+        String[] visitColumns = {"DoctorID","PatientID", "Visit Type", "Date", "Time", "SumPrice", "Finished"};
+        visitTM = new VisitTableModel(visitColumns, this);
     }
-    
-    public void diagnosisForVisitTableLoad(int row)throws AppException{
-        List<DiagnosisForVisit> diagnosisForVisitList=diagnosisForVisitIr.findByVisit(doctorVisitTM.getDoctorVisit(row));
-        if(diagnosisForVisitList==null || diagnosisForVisitList.isEmpty())
+
+    public void diagnosisForVisitTableLoad(int row) throws AppException {
+        List<DiagnosisForVisit> diagnosisForVisitList = diagnosisForVisitIr.findByVisit(doctorVisitTM.getDoctorVisit(row));
+        if (diagnosisForVisitList == null || diagnosisForVisitList.isEmpty()) {
             throw new AppException("There's no diagnosis for this patient.");
+        }
         diagnosisForVisitTM.add(diagnosisForVisitList);
         visitTbl.setModel(diagnosisForVisitTM);
         diagnosisForVisitTM.fireTableDataChanged();
@@ -172,23 +175,24 @@ public class SeeVisits extends javax.swing.JInternalFrame {
                 int selectedIndex = rowSM.getMinSelectionIndex();
                 if (selectedIndex > -1) {
                     Patient patient = null;
-                    if(currentUser.getRole().equals("Recepsion")){
-                        if(visitTbl.getModel()==visitTM){
-                            try{
-                            mainVisit=visitTM.getVisit(selectedIndex);
-                            if(mainVisit instanceof DoctorVisit){
-                                patient=((DoctorVisit)mainVisit).getPatientID();
-                            }else 
-                                patient=((AnalysisVisit)mainVisit).getPatientID();
-                            
-                            if (patient == null) {
+                    if (currentUser.getRole().equals("Recepsion")) {
+                        if (visitTbl.getModel() == visitTM) {
+                            try {
+                                mainVisit = visitTM.getVisit(selectedIndex);
+                                if (mainVisit instanceof DoctorVisit) {
+                                    patient = ((DoctorVisit) mainVisit).getPatientID();
+                                } else {
+                                    patient = ((AnalysisVisit) mainVisit).getPatientID();
+                                }
+
+                                if (patient == null) {
                                     String[] opcionet = {"Yes", "No"};
                                     int response = JOptionPane.showOptionDialog(null,
                                             "You have to assign a pacient to a visit before giving a diagnosis to it. Press yes to add the patient and no to stop.", "Warning",
                                             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                                             null, opcionet, opcionet[0]);
                                     if (response == 0) {
-                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser,mainFrame,SeeVisits.this);
+                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser, mainFrame, SeeVisits.this);
                                         setPatientToVisit.setVisible(true);
                                         patientNameLbl.setText("");
                                         nameLbl.setForeground(Color.WHITE);
@@ -220,14 +224,14 @@ public class SeeVisits extends javax.swing.JInternalFrame {
                             } catch (StopException se) {
                                 se.printStackTrace();
                             }
-                            
+
                         }
-                        
-                    }else if (currentUser.getRole().equals("Doctor")) {
+
+                    } else if (currentUser.getRole().equals("Doctor")) {
                         if (visitTbl.getModel() == doctorVisitTM) {
                             try {
                                 mainVisit = doctorVisitTM.getDoctorVisit(selectedIndex);
-                                patient = ((DoctorVisit)mainVisit).getPatientID();
+                                patient = ((DoctorVisit) mainVisit).getPatientID();
 
                                 if (patient == null) {
                                     String[] opcionet = {"Yes", "No"};
@@ -236,7 +240,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
                                             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                                             null, opcionet, opcionet[0]);
                                     if (response == 0) {
-                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser,mainFrame,SeeVisits.this);
+                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser, mainFrame, SeeVisits.this);
                                         setPatientToVisit.setVisible(true);
                                         patientNameLbl.setText("");
                                         nameLbl.setForeground(Color.WHITE);
@@ -278,7 +282,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
                         try {
                             if (visitTbl.getModel() == analysisVisitTM) {
                                 mainVisit = analysisVisitTM.getAnalysisVisit(selectedIndex);
-                                patient = ((AnalysisVisit)mainVisit).getPatientID();
+                                patient = ((AnalysisVisit) mainVisit).getPatientID();
                                 if (patient == null) {
                                     String[] opcionet = {"Yes", "No"};
                                     int response = JOptionPane.showOptionDialog(null,
@@ -286,7 +290,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
                                             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                                             null, opcionet, opcionet[0]);
                                     if (response == 0) {
-                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser,mainFrame,SeeVisits.this);
+                                        SetPatientToVisit setPatientToVisit = new SetPatientToVisit(mainVisit, entityManager, currentUser, mainFrame, SeeVisits.this);
                                         setPatientToVisit.setVisible(true);
                                         patientNameLbl.setText("");
                                         nameLbl.setForeground(Color.WHITE);
@@ -323,7 +327,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
             }
         });
     }
-    
+
     public void setPatientData(Patient patient) {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         patientNameLbl.setText(patient.getName() + " (" + patient.getParentName() + ") " + patient.getSurname());
@@ -343,73 +347,71 @@ public class SeeVisits extends javax.swing.JInternalFrame {
         allergiesTxtf.setText(patient.getAllergies());
         allergiesLbl.setForeground(Color.WHITE);
         Date date;
-        if(currentUser.getRole().equals("Doctor")){
-            remarkTxtf.setText(((DoctorVisit)mainVisit).getRemark());
-            date=((DoctorVisit)mainVisit).getTimeStamp();
+        if (currentUser.getRole().equals("Doctor")) {
+            remarkTxtf.setText(((DoctorVisit) mainVisit).getRemark());
+            date = ((DoctorVisit) mainVisit).getTimeStamp();
             dateCalendar.setDate(date);
-            hourCombo.setSelectedIndex(date.getHours()+1);
-            minuteCombo.setSelectedIndex(date.getMinutes()+1);
-            
-        }
-        else if (currentUser.getRole().equals("LaboratorTechnician")){
-            remarkTxtf.setText(((AnalysisVisit)mainVisit).getRemark());
-            date=((AnalysisVisit)mainVisit).getTimeStamp();
+            hourCombo.setSelectedIndex(date.getHours() + 1);
+            minuteCombo.setSelectedIndex(date.getMinutes() + 1);
+
+        } else if (currentUser.getRole().equals("LaboratorTechnician")) {
+            remarkTxtf.setText(((AnalysisVisit) mainVisit).getRemark());
+            date = ((AnalysisVisit) mainVisit).getTimeStamp();
             dateCalendar.setDate(date);
-            hourCombo.setSelectedIndex(date.getHours()+1);
-            minuteCombo.setSelectedIndex(date.getMinutes()+1);
-        }
-        else if (currentUser.getRole().equals("Recepsion")){
-            if(mainVisit instanceof DoctorVisit){
-                remarkTxtf.setText(((DoctorVisit)mainVisit).getRemark());
-            date=((DoctorVisit)mainVisit).getTimeStamp();
-            dateCalendar.setDate(date);
-            hourCombo.setSelectedIndex(date.getHours()+1);
-            minuteCombo.setSelectedIndex(date.getMinutes()+1);
-            }else {
-                remarkTxtf.setText(((AnalysisVisit)mainVisit).getRemark());
-            date=((AnalysisVisit)mainVisit).getTimeStamp();
+            hourCombo.setSelectedIndex(date.getHours() + 1);
+            minuteCombo.setSelectedIndex(date.getMinutes() + 1);
+        } else if (currentUser.getRole().equals("Recepsion")) {
+            if (mainVisit instanceof DoctorVisit) {
+                remarkTxtf.setText(((DoctorVisit) mainVisit).getRemark());
+                date = ((DoctorVisit) mainVisit).getTimeStamp();
                 dateCalendar.setDate(date);
-                hourCombo.setSelectedIndex(date.getHours()+1);
-                minuteCombo.setSelectedIndex(date.getMinutes()+1);
+                hourCombo.setSelectedIndex(date.getHours() + 1);
+                minuteCombo.setSelectedIndex(date.getMinutes() + 1);
+            } else {
+                remarkTxtf.setText(((AnalysisVisit) mainVisit).getRemark());
+                date = ((AnalysisVisit) mainVisit).getTimeStamp();
+                dateCalendar.setDate(date);
+                hourCombo.setSelectedIndex(date.getHours() + 1);
+                minuteCombo.setSelectedIndex(date.getMinutes() + 1);
             }
         }
         remarkLbl.setForeground(Color.WHITE);
     }
-    
+
     private void fillTimeCombos() {
         minuteCombo.addItem("Choose");
         hourCombo.addItem("Choose");
-        for(int i=0;i<60;i++){
+        for (int i = 0; i < 60; i++) {
             minuteCombo.addItem(Integer.toString(i));
-            if(i<24)
+            if (i < 24) {
                 hourCombo.addItem(Integer.toString(i));
+            }
         }
     }
-    
-    public void visitTableLoad(){
+
+    public void visitTableLoad() {
         visitTM.clear();
-        if(currentUser.getRole().equals("Recepsion")){
-            List<Visit> visitsList= new ArrayList<Visit>();
-            if(doctorVisitCBox.isSelected()){
-                if(seeAllCBox.isSelected()){
+        if (currentUser.getRole().equals("Recepsion")) {
+            List<Visit> visitsList = new ArrayList<Visit>();
+            if (doctorVisitCBox.isSelected()) {
+                if (seeAllCBox.isSelected()) {
                     visitsList.addAll(doctorVisitIr.findAll());
-                }else {
+                } else {
                     visitsList.addAll(doctorVisitIr.findPresentAndFuture());
                 }
             }
-            if(analysisVisitCBox.isSelected()){
-                if(seeAllCBox.isSelected()){
+            if (analysisVisitCBox.isSelected()) {
+                if (seeAllCBox.isSelected()) {
                     visitsList.addAll(analysisVisitIr.findAll());
-                }else{
+                } else {
                     visitsList.addAll(analysisVisitIr.findPresentAndFuture());
                 }
             }
-                visitTM.add(visitsList);
-                visitTbl.setModel(visitTM);
-                visitTM.fireTableDataChanged();
-                    
-            
-        }else if(currentUser.getRole().equals("Doctor")){
+            visitTM.add(visitsList);
+            visitTbl.setModel(visitTM);
+            visitTM.fireTableDataChanged();
+
+        } else if (currentUser.getRole().equals("Doctor")) {
             doctorVisitTM.clear();
             List<DoctorVisit> visitList;
             if (seeAllCBox.isSelected()) {
@@ -424,24 +426,37 @@ public class SeeVisits extends javax.swing.JInternalFrame {
 
             TableCellRenderer buttonRenderer = new SeeVisits.JTableButtonRenderer();
             visitTbl.getColumn("Button").setCellRenderer(buttonRenderer);
-        }else if (currentUser.getRole().equals("LaboratorTechnician")){
+        } else if (currentUser.getRole().equals("LaboratorTechnician")) {
             analysisVisitTM.clear();
             List<AnalysisVisit> analysisVisit;
-            if(seeAllCBox.isSelected()){
-                analysisVisit= analysisVisitIr.findAllForCurrentUser(currentUser);
-            }else{
-                analysisVisit= analysisVisitIr.findPresentAndFutureForCurrentUser(currentUser);
+            if (seeAllCBox.isSelected()) {
+                analysisVisit = analysisVisitIr.findAllForCurrentUser(currentUser);
+            } else {
+                analysisVisit = analysisVisitIr.findPresentAndFutureForCurrentUser(currentUser);
             }
             visitTbl.setModel(analysisVisitTM);
             analysisVisitTM.add(analysisVisit);
-            
+
             analysisVisitTM.fireTableDataChanged();
         }
     }
 
-    private void validation()throws AppException {
-        if(visitTbl.getSelectedRow()==-1)
-            throw new AppException ("You have to select the visit you want to edit.");
+    private void validation() throws AppException {
+        if (visitTbl.getSelectedRow() == -1) {
+            throw new AppException("You have to select the visit you want to edit.");
+        }
+        if(mainVisit==null){
+            throw new AppException("You have to deselect and select the visit you want to edit.");
+        }else{
+            
+            if(mainVisit instanceof DoctorVisit){
+                if(((DoctorVisit)mainVisit).getFinished().equals("Yes"))
+                    throw new AppException("This visit is finished it cannot be changed.");
+            }else if(mainVisit instanceof AnalysisVisit){
+                    if(((AnalysisVisit)mainVisit).getFinished().equals("Yes"))
+                        throw new AppException("This visit is finished it cannot be changed.");
+                }
+        }
     }
 
     private void seeVisitFormListeners() {
@@ -450,40 +465,41 @@ public class SeeVisits extends javax.swing.JInternalFrame {
         checkBoxListener(analysisVisitCBox);
         visitTblListeners();
         checkBoxListener();
-        
+
     }
-    
-    private void checkBoxListener(JCheckBox target){
-        target.addItemListener(new ItemListener(){
+
+    private void checkBoxListener(JCheckBox target) {
+        target.addItemListener(new ItemListener() {
             @Override
-            public void itemStateChanged(ItemEvent ie){
+            public void itemStateChanged(ItemEvent ie) {
                 visitTableLoad();
             }
         });
     }
 
-     public void checkBoxListener(){
-        autoDateCBox.addItemListener(new ItemListener(){
+    public void checkBoxListener() {
+        autoDateCBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
-                boolean state=!autoDateCBox.isSelected();
-                    
-                    hourCombo.setEnabled(state);
-                    minuteCombo.setEnabled(state);
-                    dateCalendar.setEnabled(state);
+                boolean state = !autoDateCBox.isSelected();
+
+                hourCombo.setEnabled(state);
+                minuteCombo.setEnabled(state);
+                dateCalendar.setEnabled(state);
             }
-            
+
         });
     }
-    
-    
-    private static class JTableButtonRenderer implements TableCellRenderer {        
-        @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            JButton button = (JButton)value;
-            return button;  
+
+    private static class JTableButtonRenderer implements TableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JButton button = (JButton) value;
+            return button;
         }
     }
-    
+
     public void clickMoveKey() {
 
         visitTbl.addMouseListener(new MouseAdapter() {
@@ -526,10 +542,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
             }
         });
     }
-    
-    
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -572,7 +585,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         visitTbl = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        clearBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         changePatientBtn = new javax.swing.JButton();
         changeDetailsBtn = new javax.swing.JButton();
         doctorVisitCBox = new javax.swing.JCheckBox();
@@ -736,6 +749,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
             .addComponent(patientEmailLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        allergiesTxtf.setEditable(false);
         allergiesTxtf.setColumns(20);
         allergiesTxtf.setRows(5);
         jScrollPane1.setViewportView(allergiesTxtf);
@@ -878,12 +892,12 @@ public class SeeVisits extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
-        clearBtn.setBackground(new java.awt.Color(0, 153, 102));
-        clearBtn.setForeground(new java.awt.Color(204, 255, 204));
-        clearBtn.setText("Clear");
-        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+        deleteBtn.setBackground(new java.awt.Color(0, 153, 102));
+        deleteBtn.setForeground(new java.awt.Color(204, 255, 204));
+        deleteBtn.setText("Delete");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearBtnActionPerformed(evt);
+                deleteBtnActionPerformed(evt);
             }
         });
 
@@ -914,14 +928,14 @@ public class SeeVisits extends javax.swing.JInternalFrame {
                 .addGap(24, 24, 24)
                 .addComponent(changePatientBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clearBtn)
+                    .addComponent(deleteBtn)
                     .addComponent(changePatientBtn)
                     .addComponent(changeDetailsBtn))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -969,45 +983,120 @@ public class SeeVisits extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeDetailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeDetailsBtnActionPerformed
-        if(visitTbl.getSelectedRow()!=-1){
-        
-        }else
-            try {
-                throw new AppException("");
+        mainFrame.keepRunning = false;
+        try {
+            validation();
+            String temp;
+            String completeDate="";
+            Date date;
+            SimpleDateFormat dateFormat=new SimpleDateFormat("HH-mm-dd-MM-yyyy");
+            
+            if(autoDateCBox.isSelected()){
+            date=new LogsRepository(entityManager).findDate();
+        }else {
+            temp=Integer.toString(hourCombo.getSelectedIndex()-1);
+            if(temp.length()==1)
+                temp="0"+temp;
+            completeDate+=temp;
+            temp=Integer.toString(minuteCombo.getSelectedIndex()-1);
+            if(temp.length()==1)
+                temp="0"+temp;
+            completeDate+="-"+temp;
+            temp=   new SimpleDateFormat("dd-MM-yyyy").format(dateCalendar.getDate());
+            completeDate+="-"+temp;
+            JOptionPane.showMessageDialog(null,completeDate);
+            date=dateFormat.parse(completeDate);
+        }
+            JOptionPane.showMessageDialog(this,date);
+            
+                
+            
+            if (mainVisit instanceof DoctorVisit) {
+                DoctorVisit doctorVisit = ((DoctorVisit) mainVisit);
+                
+                if (!remarkTxtf.getText().trim().equals(doctorVisit.getRemark().trim())
+                        || !dateFormat.format(date).equals(dateFormat.format(doctorVisit.getTimeStamp()))) {
+                    if (!remarkTxtf.getText().trim().equals(doctorVisit.getRemark().trim())) {
+                        doctorVisit.setRemark(remarkTxtf.getText().trim());
+                    }
+
+                    if (!dateFormat.format(date).equals(dateFormat.format(doctorVisit.getTimeStamp()))) {
+                        doctorVisit.setTimeStamp(date);
+                    }
+
+                    doctorVisitIr.edit(doctorVisit);
+                }else {
+                    throw new AppException("There are no changes to be saved.");
+                }
+            }else {
+                AnalysisVisit analysisVisit = ((AnalysisVisit)mainVisit);
+                
+                if (!remarkTxtf.getText().trim().equals(analysisVisit.getRemark().trim())
+                        || !dateFormat.format(date).equals(dateFormat.format(analysisVisit.getTimeStamp()))) {
+                    if (!remarkTxtf.getText().trim().equals(analysisVisit.getRemark().trim())) {
+                        analysisVisit.setRemark(remarkTxtf.getText().trim());
+                    }
+
+                    if (!dateFormat.format(date).equals(dateFormat.format(analysisVisit.getTimeStamp()))) {
+                        analysisVisit.setTimeStamp(date);
+                    }
+
+                    analysisVisitIr.edit(analysisVisit);
+                }else {
+                    throw new AppException("There are no changes to be saved.");
+                }
+            }
+            
+            clearObject();
+                JOptionPane.showMessageDialog(this, "The details were changed sucsesfully to this visit.");
         } catch (AppException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (ParseException ex) {
             Logger.getLogger(SeeVisits.class.getName()).log(Level.SEVERE, null, ex);
         }
-        clearObject();
+        
+        synchronized (mainFrame.messagesThread) {
+            mainFrame.keepRunning = true;
+            mainFrame.messagesThread.notifyAll();
+        }
     }//GEN-LAST:event_changeDetailsBtnActionPerformed
 
     private void changePatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePatientBtnActionPerformed
-        mainFrame.keepRunning=false;
+        mainFrame.keepRunning = false;
         try {
             validation();
-            
-            
-            clearObject();
-            
-            JOptionPane.showMessageDialog(this, "The diagnosis was added sucsesfully to this visit.");
-            
-            throw new StopException ("");
-            
+                new SetPatientToVisit(mainVisit,entityManager,currentUser,mainFrame,SeeVisits.this).setVisible(true);
+                clearObject();
         } catch (AppException ae) {
             ae.printStackTrace();
             JOptionPane.showMessageDialog(this, ae.getMessage());
-        }catch(StopException se){
-            se.printStackTrace();
         }
 
-        synchronized(mainFrame.messagesThread){
+        synchronized (mainFrame.messagesThread) {
             mainFrame.keepRunning = true;
             mainFrame.messagesThread.notifyAll();
         }
     }//GEN-LAST:event_changePatientBtnActionPerformed
 
-    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        mainFrame.keepRunning=false;
+        try{
+            validation();
+            if(mainVisit instanceof DoctorVisit){
+                doctorVisitIr.remove((DoctorVisit)mainVisit);
+            }else
+                analysisVisitIr.remove((AnalysisVisit)mainVisit);
+            
+        }catch(AppException ae){
+            ae.printStackTrace();
+            JOptionPane.showMessageDialog(this,ae.getMessage());
+        }
         clearObject();
-    }//GEN-LAST:event_clearBtnActionPerformed
+        synchronized (mainFrame.messagesThread) {
+            mainFrame.keepRunning = true;
+            mainFrame.messagesThread.notifyAll();
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel allergiesLbl;
@@ -1018,9 +1107,9 @@ public class SeeVisits extends javax.swing.JInternalFrame {
     private javax.swing.JButton changeDetailsBtn;
     private javax.swing.JButton changePatientBtn;
     private javax.swing.JLabel cityLbl;
-    private javax.swing.JButton clearBtn;
     private com.toedter.calendar.JDateChooser dateCalendar;
     private javax.swing.JLabel dateOfBirthLbl;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JCheckBox doctorVisitCBox;
     private javax.swing.JLabel emailLbl;
     private javax.swing.JLabel genderLbl;

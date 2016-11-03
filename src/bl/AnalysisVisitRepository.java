@@ -54,10 +54,19 @@ public class AnalysisVisitRepository extends EntMngClass implements AnalysisVisi
     }
 
     @Override
-    public void remove(AnalysisVisit AnalysisVisit) {
+    public void remove(AnalysisVisit AnalysisVisit) throws AppException{
+        try{
         em.getTransaction().begin();
         em.remove(AnalysisVisit);
         em.getTransaction().commit();
+        }catch(Throwable thro){
+            thro.printStackTrace();
+            if(thro.getMessage().equals("")){
+                throw new AppException ("shto diqka ");
+            }else{
+                throw new AppException("Class"+thro.getClass()+" - "+thro.getMessage());
+            }
+        }
     }
 
     @Override

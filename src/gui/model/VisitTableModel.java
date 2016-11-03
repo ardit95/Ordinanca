@@ -93,7 +93,7 @@ public class VisitTableModel extends AbstractTableModel {
                 return analysisVisit.getPatientID();
             case "Visit Type":
                 return analysisVisit.getTypeOfVisit();
-            case "LaboratorTechnicianID":
+            case "DoctorID":
                 return analysisVisit.getLaboratorTechnicianID();
             case "SumPrice":
                 return analysisVisit.getSumPrice();

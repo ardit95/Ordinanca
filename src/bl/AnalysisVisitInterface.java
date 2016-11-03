@@ -13,7 +13,7 @@ public interface AnalysisVisitInterface {
 
     void edit(AnalysisVisit AnalysisVisit) throws AppException;
 
-    void remove(AnalysisVisit AnalysisVisit);
+    void remove(AnalysisVisit AnalysisVisit)throws AppException;
 
     List<AnalysisVisit> findAll();
 

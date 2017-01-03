@@ -8,6 +8,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -178,29 +180,41 @@ public class checkSystemAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameTxtfActionPerformed
 
     private void usernameTxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameTxtfKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            loginMethod();
+        try{
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                loginMethod();
+            }
+        }catch(UnknownHostException uhe){
+            uhe.printStackTrace();
         }
     }//GEN-LAST:event_usernameTxtfKeyPressed
 
     private void passwordTxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordTxtfKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            loginMethod();
+        try{
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                loginMethod();
+            }
+        }catch(UnknownHostException uhe){
+            uhe.printStackTrace();
         }
     }//GEN-LAST:event_passwordTxtfKeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        loginMethod();
+        try{
+            loginMethod();
+        }catch(UnknownHostException uhe){
+            uhe.printStackTrace();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-    private void loginMethod() {
+    private void loginMethod() throws UnknownHostException {
         try {
             validation();
             em = new EntMngClass(usernameTxtf.getText().trim(),
-                    passwordTxtf.getText().trim(), "localhost").getEntityManager();
+                    passwordTxtf.getText().trim(), InetAddress.getLocalHost().getHostAddress()).getEntityManager();
             staffIr = new StaffRepository(em);
             this.dispose();
             new AdministratorRegistration(em).setVisible(true);

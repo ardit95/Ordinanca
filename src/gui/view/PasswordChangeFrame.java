@@ -6,6 +6,8 @@ import bl.StaffInterface;
 import bl.StaffRepository;
 import ejb.Staff;
 import java.awt.event.KeyEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 
 public class PasswordChangeFrame extends javax.swing.JFrame {
@@ -13,11 +15,11 @@ public class PasswordChangeFrame extends javax.swing.JFrame {
     Staff staff;
     StaffInterface staffIr;
 
-    public PasswordChangeFrame(Staff staff) throws AppException {
+    public PasswordChangeFrame(Staff staff) throws AppException, UnknownHostException {
         initComponents();
         this.staff = staff;
         /*Duhet me u zavendsu ma vone gjithqysh jo me root me u bo qekjo query*/
-        staffIr = new StaffRepository(new EntMngClass("root", "12345", "localhost").getEntityManager());
+        staffIr = new StaffRepository(new EntMngClass("root", "12345", InetAddress.getLocalHost().getHostAddress()).getEntityManager());
 
     }
 
@@ -134,7 +136,11 @@ public class PasswordChangeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_exitBtnActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        try{
         changePasswordMethod();
+        }catch(UnknownHostException uhe){
+            uhe.printStackTrace();
+        }
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void password1TxtfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_password1TxtfActionPerformed
@@ -142,14 +148,22 @@ public class PasswordChangeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_password1TxtfActionPerformed
 
     private void password1TxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_password1TxtfKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            changePasswordMethod();
+        try{
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                changePasswordMethod();
+            }
+        }catch(UnknownHostException uhe){
+            uhe.printStackTrace();
         }
     }//GEN-LAST:event_password1TxtfKeyPressed
 
     private void password2TxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_password2TxtfKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            changePasswordMethod();
+        try{
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                changePasswordMethod();
+            }
+        }catch(UnknownHostException uhe){
+            uhe.printStackTrace();
         }
     }//GEN-LAST:event_password2TxtfKeyPressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -162,7 +176,7 @@ public class PasswordChangeFrame extends javax.swing.JFrame {
     private javax.swing.JButton saveBtn;
     private javax.swing.JLabel usernameLbl;
     // End of variables declaration//GEN-END:variables
-    private void changePasswordMethod() {
+    private void changePasswordMethod() throws UnknownHostException {
         try {
             if (!password1Txtf.getText().equals(password2Txtf.getText())) {
                 throw new AppException("Fjalëkalimi i parë dallon nga fjalëkalimi i dytë");

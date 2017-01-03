@@ -75,7 +75,7 @@ public class MessageRepository extends EntMngClass implements MessageInterface {
 
     @Override
     public List<Message> findBySenderAndReciever(Staff reciever, Staff sender) {
-        Query query = em.createQuery("SELECT Object (message) FROM Message message WHERE message.username.username = :reciever AND message.doctorID.username = :sender ");
+        Query query = em.createQuery("SELECT Object (message) FROM Message message WHERE message.username.username = :reciever AND message.doctorID.username = :sender ORDER BY message.timeStamp desc ");
         query.setParameter("sender", sender.getUsername());
         query.setParameter("reciever", reciever.getUsername());
         return (List<Message>) query.getResultList();
@@ -85,7 +85,11 @@ public class MessageRepository extends EntMngClass implements MessageInterface {
     public int countUnseenMessagesForUser(Staff currentUser) {
         Query query = em.createQuery("SELECT Object(message) FROM Message message WHERE message.username.username = :currentU AND message.seen='No'");
         query.setParameter("currentU", currentUser.getUsername());
-        return query.getResultList().size();
+        try{
+            return query.getResultList().size();
+        }catch(NullPointerException npe){
+            return 0;
+        }
     }
 
     @Override

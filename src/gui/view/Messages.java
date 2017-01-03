@@ -10,6 +10,8 @@ import ejb.Message;
 import ejb.Staff;
 import gui.model.MessageTableModel;
 import gui.model.StaffTableModel;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class Messages extends javax.swing.JInternalFrame {
 
@@ -43,10 +46,38 @@ public class Messages extends javax.swing.JInternalFrame {
         this.setLocation(220, 10);
         this.setPreferredSize(new Dimension(1100, 654));
         initInterfaces(entityManager);
+        tableRowsColors();
         initTableModels();
         messageTblListeners();
         staffList = staffIr.findAllWithoutAdministrator();
         fillComboWithStaff(staffList);
+    }
+    
+    public void tableRowsColors(){
+    messageTbl.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
+{
+    private Color green=new Color(204,255,204);
+    private Color darkGreen=new Color(215,255,215);
+    
+    private Color red=new Color(255,40,40);
+    private Color darkRed=new Color(255,80,80);
+    
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+    {
+        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        if(messageTbl.getModel()==messageTM){
+            c.setBackground(messageTM.getMessage(row).getSeen().equals("Yes") ? (row%2==0) ? green :darkGreen 
+                     : (row%2==0) ? red : darkRed);
+        }else 
+            c.setBackground(
+                    messageIr.countUnseenMessagesForSpecificUser(currentUser,staffTM.getStaff(row)) == 0 
+                            ? (row%2==0) ? green :darkGreen 
+                     : (row%2==0) ? red : darkRed);
+        
+        return c;
+    }
+});
     }
 
     public void initTableModels() {

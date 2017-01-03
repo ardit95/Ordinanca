@@ -9,6 +9,7 @@ import bl.StaffRepository;
 import ejb.Staff;
 import java.awt.Color;
 import java.beans.PropertyVetoException;
+import java.net.UnknownHostException;
 import javax.persistence.EntityManager;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -64,7 +65,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
             
             private synchronized void tryThread()throws InterruptedException{
-        
+                try{
                     if ((numberOfMessagesUnseen = messageIr.countUnseenMessagesForUser(currentUser)) > 0) {
                         if (currentUser.getRole().equals("Doctor")||currentUser.getRole().equals("Director")||currentUser.getRole().equals("Recepsion")||currentUser.getRole().equals("LaboratorTechnician")) {
                             if(numberOfMessagesUnseen!=tempUnseenMessages){
@@ -109,6 +110,10 @@ public class MainFrame extends javax.swing.JFrame {
                         
                     sleep(500);
                     run();
+                }catch(NullPointerException npe){
+                    sleep(500);
+                    run();
+                }
     }  
         };
         
@@ -568,6 +573,7 @@ public class MainFrame extends javax.swing.JFrame {
             jButton4.setText("Search");
             jButton5.setText("Add Patient");
             jButton6.setText("Print Reports");
+            jButton6.setVisible(false);
             jButton7.setText("Messages");
         }
         else if (pozita.equals("Director")) {
@@ -595,12 +601,17 @@ public class MainFrame extends javax.swing.JFrame {
             jButton4.setText("Search");
             jButton5.setText("Add Patient");
             jButton6.setText("Print Reports");
+            jButton6.setVisible(false);
             jButton7.setText("Messages");
         }
     }
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        logOutMethod();
+        try{
+            logOutMethod();
+        }catch(UnknownHostException uhe){
+            uhe.printStackTrace();
+        }
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -936,7 +947,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
 
-    private int logOutMethod() {
+    private int logOutMethod() throws UnknownHostException {
         Login login;
         try {
             this.dispose();

@@ -456,13 +456,23 @@ String dateForAnalysis="";
         String allExaminations="";
         String allTherapys="";
         String allRecommendations="";
-        for(int i=0;i<diagnosis.size();i++){
-            int nr=i+1;
-            allComplaints+="    Ankesa "+ nr +" : "+diagnosis.get(i).getComplaint()+" . \n";
-            allAnamnesis+="    Anamneza "+ nr +" : "+diagnosis.get(i).getAnamnesis()+" . \n";
-            allExaminations+="    Examinimi "+ nr +" : "+diagnosis.get(i).getExamination()+" . \n";
-            allTherapys+="    Therapia "+ nr +" : "+diagnosis.get(i).getTherapy()+" . \n";
-            allRecommendations+="    Recommendimi "+ nr +" : "+diagnosis.get(i).getRecommendation()+" . \n";
+        if(diagnosis.size()==1){
+                
+            allComplaints=diagnosis.get(0).getComplaint()+" . \n";
+            allAnamnesis=diagnosis.get(0).getAnamnesis()+" . \n";
+            allExaminations=diagnosis.get(0).getExamination()+" . \n";
+            allTherapys=diagnosis.get(0).getTherapy()+" . \n";
+            allRecommendations+=diagnosis.get(0).getRecommendation()+" . \n";
+        
+        }else{
+            for(int i=0;i<diagnosis.size();i++){
+                int nr=i+1;
+                allComplaints+="    Ankesa "+ nr +" : "+diagnosis.get(i).getComplaint()+" . \n";
+                allAnamnesis+="    Anamneza "+ nr +" : "+diagnosis.get(i).getAnamnesis()+" . \n";
+                allExaminations+="    Examinimi "+ nr +" : "+diagnosis.get(i).getExamination()+" . \n";
+                allTherapys+="    Therapia "+ nr +" : "+diagnosis.get(i).getTherapy()+" . \n";
+                allRecommendations+="    Recommendimi "+ nr +" : "+diagnosis.get(i).getRecommendation()+" . \n";
+            }
         }
         
         
@@ -491,7 +501,7 @@ String dateForAnalysis="";
         doctorNameForAnalysis=selectedAnalysisVisit.getLaboratorTechnicianID().getName();
         doctorSurnameForAnalysis=selectedAnalysisVisit.getLaboratorTechnicianID().getSurname();
         
-        priceForAnalysis=selectedAnalysisVisit.getSumPrice()+"";
+        priceForAnalysis=selectedAnalysisVisit.getSumPrice()+" \u20AC";
         dateForAnalysis=sdf.format(selectedAnalysisVisit.getTimeStamp());
         
         List<Analysis> analysis=analysisIr.findByAnalysisVisit(analysisVisitId);
@@ -605,7 +615,7 @@ String dateForAnalysis="";
             
             Chunk c20=new Chunk("Doktori :"+doctorNameForVisit+" "+doctorSurnameForVisit,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
             Chunk c21=new Chunk("Data :"+dateForVisit,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
-            Chunk c22=new Chunk("Çmimi : "+priceForVisit,FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
+            Chunk c22=new Chunk("Çmimi : "+priceForVisit+" \u20AC ",FontFactory.getFont(FontFactory.HELVETICA,11,Font.BOLD));
             
             pha3.add(space);
             pha3.add(space);

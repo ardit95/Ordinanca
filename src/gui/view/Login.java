@@ -18,6 +18,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -27,7 +31,7 @@ public class Login extends javax.swing.JFrame {
     StaffInterface staffIr;
     LogsInterface logsIr;
 
-    public Login() throws AppException {
+    public Login() throws AppException, UnknownHostException {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception ex) {
@@ -41,7 +45,8 @@ public class Login extends javax.swing.JFrame {
         int locationy = (dim.height - jFrameheight) / 2;
         this.setLocation(locationx, locationy);
         initComponents();
-        staffIr = new StaffRepository(new EntMngClass("Checker", "12345", "localhost").getEntityManager());
+        serverIpTxtf.setText(InetAddress.getLocalHost().getHostAddress());
+        staffIr = new StaffRepository(new EntMngClass("Checker", "12345", InetAddress.getLocalHost().getHostAddress()).getEntityManager());
         usernameTxtf.requestFocus();
         addFocuseListeners();
     }
@@ -103,7 +108,7 @@ public class Login extends javax.swing.JFrame {
 
         serverIpTxtf.setEditable(false);
         serverIpTxtf.setBackground(new java.awt.Color(234, 255, 234));
-        serverIpTxtf.setText("localhost");
+        serverIpTxtf.setText("");
         serverIpTxtf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 serverIpTxtfActionPerformed(evt);
@@ -153,16 +158,23 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void usernameTxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameTxtfKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            loginMethod();
+        try{
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                loginMethod();
+            }
+        }catch(UnknownHostException uhe){
+            uhe.printStackTrace();
         }
     }//GEN-LAST:event_usernameTxtfKeyPressed
     
     
     private void passwordTxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordTxtfKeyPressed
-
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            loginMethod();
+        try{
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                loginMethod();
+            }
+        }catch(UnknownHostException uhe){
+            uhe.printStackTrace();
         }
     }//GEN-LAST:event_passwordTxtfKeyPressed
 
@@ -171,8 +183,12 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_serverIpTxtfActionPerformed
 
     private void serverIpTxtfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_serverIpTxtfKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            loginMethod();
+        try{
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                loginMethod();
+            }
+        }catch(UnknownHostException uhe){
+            uhe.printStackTrace();
         }
     }//GEN-LAST:event_serverIpTxtfKeyPressed
 
@@ -181,7 +197,11 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordTxtfActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        loginMethod();
+        try{
+            loginMethod();
+        }catch(UnknownHostException uhe){
+            uhe.printStackTrace();
+        }
     }//GEN-LAST:event_loginBtnActionPerformed
     
     private void addFocuseListeners(){
@@ -195,7 +215,7 @@ public class Login extends javax.swing.JFrame {
         });
     }
     
-    public static void main(String args[]) {
+    public static void main(String args[]){
         Login login = null;
         try {
             login = new Login();
@@ -204,10 +224,14 @@ public class Login extends javax.swing.JFrame {
             } else {
                 login.setVisible(true);
             }
-        } catch (AppException ex) {
+        } catch (AppException ex ) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, ex.getMessage());
+        }catch(UnknownHostException ex){
+                ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -224,7 +248,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField usernameTxtf;
     // End of variables declaration//GEN-END:variables
 
-    private void loginMethod() {
+    private void loginMethod() throws UnknownHostException {
         String username = usernameTxtf.getText();
         String password = passwordTxtf.getText();
         String serverip = serverIpTxtf.getText();

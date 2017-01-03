@@ -3,6 +3,7 @@ package gui.model;
 import ejb.Message;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
@@ -68,6 +69,10 @@ public class MessageTableModel extends AbstractTableModel {
             case "MessageID":
                 return message.getMessageID();
             case "Date":
+                if(dateFormat.format(message.getTimeStamp())
+                        .equals(dateFormat.format(Calendar.getInstance().getTime()))){
+                    return "Today";
+            }
                 return dateFormat.format(message.getTimeStamp());
             case "Time":
                 return timeFormat.format(message.getTimeStamp());

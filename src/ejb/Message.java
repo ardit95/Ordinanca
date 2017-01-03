@@ -70,6 +70,11 @@ public class Message implements Serializable {
         if (reciever == null) {
             throw new AppException("The reciever cannot be null.");
         }
+        if (message.trim().isEmpty()){
+            throw new AppException("The message cannot be empty");
+        }
+            
+        
         if (message.trim().length() > 500) {
             throw new AppException("The message cannot contain more than 500 letters.");
         }

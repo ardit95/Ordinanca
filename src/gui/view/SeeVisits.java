@@ -329,6 +329,7 @@ public class SeeVisits extends javax.swing.JInternalFrame {
 
     public void setPatientData(Patient patient) {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        try{
         patientNameLbl.setText(patient.getName() + " (" + patient.getParentName() + ") " + patient.getSurname());
         nameLbl.setForeground(Color.WHITE);
         patientGenderLbl.setText(patient.getGender());
@@ -375,6 +376,9 @@ public class SeeVisits extends javax.swing.JInternalFrame {
             }
         }
         remarkLbl.setForeground(Color.WHITE);
+        }catch(NullPointerException npe){
+            
+        }
     }
 
     private void fillTimeCombos() {

@@ -3,6 +3,8 @@ package bl;
 import ExceptionPackage.AppException;
 import ejb.Staff;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -96,7 +98,7 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
     @Override
     public void changeLoginPassword(Staff staff, String text) {
         try {
-            String serverIp = "localhost";
+            String serverIp = InetAddress.getLocalHost().getHostAddress();
             Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
             Statement statement = conn.createStatement();
             statement.executeQuery("USE Ordinanca;");
@@ -104,27 +106,40 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (UnknownHostException ex) {
+            ex.printStackTrace();
         }
     }
 
     @Override
     public void createMySQLUser(Staff staff, String text) throws SQLException {
-        String serverIp = "localhost";
+        String serverIp;
+        try {
+            serverIp = InetAddress.getLocalHost().getHostAddress();
+        
         Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
         Statement statement = conn.createStatement();
         statement.executeUpdate("USE Ordinanca;");
-        statement.executeUpdate("CREATE USER IF NOT EXISTS '" + staff.getUsername() + "'@'localhost' IDENTIFIED BY '" + text + "'; ");
-        statement.executeUpdate("GRANT SELECT,DELETE,UPDATE,INSERT ON Ordinanca.* TO '" + staff.getUsername() + "'@'localhost';");
+        statement.executeUpdate("CREATE USER IF NOT EXISTS '" + staff.getUsername() + "'@'192.168.1.104' IDENTIFIED BY '" + text + "'; ");
+        statement.executeUpdate("GRANT SELECT,DELETE,UPDATE,INSERT ON Ordinanca.* TO '" + staff.getUsername() + "'@'192.168.1.104';");
+        } catch (UnknownHostException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void deleteMySQLUser(Staff staff) throws SQLException {
-        String serverIp = "localhost";
+        String serverIp;
+        try {
+            serverIp = InetAddress.getLocalHost().getHostAddress();
+        
         Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
         Statement statement = conn.createStatement();
         statement.executeUpdate("USE Ordinanca;");
-        statement.executeUpdate("DROP USER '" + staff.getUsername() + "'@'localhost'");
-
+        statement.executeUpdate("DROP USER '" + staff.getUsername() + "'@'192.168.1.104'");
+} catch (UnknownHostException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -143,7 +158,7 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
     @Override
     public void setStaffPassword(Staff staff) {
         try {
-            String serverIp = "localhost";
+            String serverIp = InetAddress.getLocalHost().getHostAddress();
             Connection conn = DriverManager.getConnection("jdbc:mysql://" + serverIp + ":3306/Ordinanca?zeroDateTimeBehavior=convertToNull", "root", "12345");
             Statement statement = conn.createStatement();
             statement.executeQuery("USE Ordinanca;");
@@ -151,6 +166,8 @@ public class StaffRepository extends EntMngClass implements StaffInterface {
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (UnknownHostException ex) {
+            ex.printStackTrace();
         }
     }
 

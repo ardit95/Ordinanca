@@ -5,6 +5,7 @@ import bl.StaffInterface;
 import bl.StaffRepository;
 import ejb.Staff;
 import gui.model.StaffTableModel;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -215,7 +216,9 @@ public class AdministratorRegistration extends javax.swing.JFrame {
         } catch (AppException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         } catch (SQLException ex) {
-            Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (UnknownHostException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_okButtonActionPerformed
 
